@@ -1,5 +1,16 @@
 {
-  "buildCommand": "npm run vercel-build",
-  "outputDirectory": "dist/vet-app-root/browser",
-  "framework": null
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "dist/vet-app" }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
 }
