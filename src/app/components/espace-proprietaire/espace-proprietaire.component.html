@@ -1,0 +1,1405 @@
+<!-- Category Hero Section - Image Left, Description Right -->
+<div class="w-full px-0">
+  <div class="category-hero-section relative overflow-hidden bg-white">
+    <!-- Decorative Blobs -->
+    <div class="absolute top-0 right-0 w-2/3 h-full bg-blue-50/50 -skew-x-12 translate-x-1/4 z-0"></div>
+    <div
+      class="absolute top-10 right-10 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob">
+    </div>
+    <div
+      class="absolute top-10 right-1/3 w-96 h-96 bg-indigo-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000">
+    </div>
+
+    <!-- Back Button -->
+    <button routerLink="/"
+      class="absolute top-6 left-6 z-20 group flex items-center text-gray-500 hover:text-blue-600 transition-all duration-300">
+      <div
+        class="w-8 h-8 rounded-full bg-white shadow-sm border border-gray-100 flex items-center justify-center mr-2 group-hover:bg-blue-50 transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        </svg>
+      </div>
+      <span
+        class="flex items-center text-vet-blue hover:text-blue-700 font-semibold transition-colors duration-200 text-lg">Retour
+        à l'accueil</span>
+    </button>
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <!-- Cat Hero -->
+      <div *ngIf="selectedCategory === 'Chat'"
+        class="flex flex-col md:flex-row items-center min-h-[400px] py-12 md:py-20">
+        <!-- Text Side (Left) -->
+        <div class="w-full md:w-1/2 pr-0 md:pr-8 text-center mb-10 md:mb-0">
+          <span
+            [ngClass]="selectedCategory === 'Chat' ? 'bg-green-100 text-[#74C375]' : selectedCategory === 'Chien' ? 'bg-red-100 text-[#a01867]' : 'bg-blue-100 text-blue-600'"
+            class="inline-block py-1 px-3 rounded-full text-xs font-bold tracking-wider mb-4 uppercase">
+            Gamme Chat
+          </span>
+         <h2 class="hero-heading-fixed text-slate-800 mb-6 text-center font-extrabold">
+          L'aliment pour <span class="text-[#74C375]">chat</span> le plus recommandé<br>
+          par les vétérinaires<br>
+          en <span class="text-red-600">Tunisie</span>
+        </h2>
+          <p class="hero-text-fixed text-slate-600 mb-8 max-w-lg mx-auto">
+            Notre gamme repose sur un équilibre nutritionnel faible en glucides et riche en protéines adapté aux
+            besoins de votre chat, carnivore depuis toujours !
+          </p>
+          <div class="flex flex-col sm:flex-row items-center gap-3 justify-center">
+            <button
+              [ngClass]="selectedCategory === 'Chat' ? 'bg-[#74C375] shadow-green-500/30 hover:shadow-green-500/40' : selectedCategory === 'Chien' ? 'bg-[#a01867] shadow-red-500/30 hover:shadow-red-500/40' : 'bg-blue-600 shadow-blue-500/30 hover:shadow-blue-500/40'"
+              class="px-8 py-3 text-white rounded-full font-semibold shadow-lg hover:-translate-y-1 transition-all duration-300 whitespace-nowrap">
+              Voir les produits
+            </button>
+            <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
+              <svg [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              Fabrication française
+
+            </span>
+            <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
+              <svg [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              Riches en protéines de haute qualité
+            </span>
+            <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
+              <svg [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              Pauvre en glucides.
+
+            </span>
+          </div>
+        </div>
+
+        <!-- Image Side (Right) -->
+        <div class="w-full md:w-1/2 relative flex justify-center md:justify-end md:pl-16">
+          <div class="relative w-full flex justify-center md:justify-end md:translate-x-16">
+            <!-- Organic Blob Background for Image -->
+            <div
+              class="absolute top-0 right-0 w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob">
+            </div>
+            <div
+              class="absolute top-0 right-20 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000">
+            </div>
+            <div
+              class="absolute -bottom-8 right-10 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000">
+            </div>
+
+            <div class="relative transform  transition-transform duration-500">
+              <img src="assets/images/za.png" alt="Chat"
+                style="width: 650px; max-width: 130%;"
+                class="w-full h-auto object-cover transform scale-110 hover:scale-100 transition-transform duration-700 drop-shadow-2xl">
+            </div>
+
+          
+          </div>
+        </div>
+      </div>
+
+      <!-- Dog Hero -->
+      <div *ngIf="selectedCategory === 'Chien'"
+        class="flex flex-col md:flex-row items-center min-h-[400px] py-12 md:py-20">
+        <!-- Text Side (Left) -->
+        <div class="w-full md:w-1/2 pr-0 md:pr-12 text-center md:text-left mb-10 md:mb-0">
+          <span
+            [ngClass]="selectedCategory === 'Chien' ? 'bg-red-100 text-[#a01867]' : 'bg-blue-100 text-blue-600'"
+            class="inline-block py-1 px-3 rounded-full text-xs font-bold tracking-wider mb-4 uppercase">
+            Gamme Chien
+          </span>
+          <div>
+            
+          </div>
+
+          <h2 class="hero-heading-fixed text-slate-800 mb-6 text-center font-extrabold">
+            L'aliment pour <span style="color: rgb(160, 24, 103);">chien</span> le plus recommandé<br>
+            par les vétérinaires en <span style="color: rgb(160, 24, 103);">Tunisie</span>
+          </h2>
+          
+          
+          
+          <p class="hero-text-fixed text-slate-600 mb-8 max-w-lg mx-auto md:mx-0">
+          Notre gamme repose sur un équilibre nutritionnel faible en glucides et riche en protéines
+          adapté aux besoins de votre chien, carnivore depuis toujours !          
+          </p>
+
+          <div class="flex flex-col sm:flex-row items-center gap-4 justify-center">
+            <button
+              [ngClass]="selectedCategory === 'Chien' ? 'bg-[#a01867] shadow-red-500/30 hover:shadow-red-500/40' : 'bg-blue-600 shadow-blue-500/30 hover:shadow-blue-500/40'"
+              class="px-8 py-3 text-white rounded-full font-semibold shadow-lg hover:-translate-y-1 transition-all duration-300 whitespace-nowrap">
+              Voir les produits
+            </button>
+            <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
+              <svg [ngClass]="selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              Fabrication française
+            </span>
+            <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
+              <svg [ngClass]="selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              Riches en protéines de haute qualité
+            </span>
+            <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
+              <svg [ngClass]="selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              Pauvre en glucides.
+            </span>
+          </div>
+        </div>
+
+        <!-- Image Side (Right) -->
+        <div class="w-full md:w-1/2 relative">
+          <div class="relative w-full flex justify-center">
+            <!-- Organic Blob Background for Image -->
+            <div
+              class="absolute top-0 left-1/2 -translate-x-1/2 -left-4 w-72 h-72 bg-orange-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob">
+            </div>
+            <div
+              class="absolute top-0 left-1/2 -translate-x-1/2 -right-4 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000">
+            </div>
+            <div
+              class="absolute -bottom-8 left-1/2 -translate-x-1/2 left-20 w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000">
+            </div>
+
+            <div class="relative transform  transition-transform duration-500">
+              <img src="assets/images/qsqs.png" alt="Chien"
+                style="width: 750px; max-width: 900%;"
+                class="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700 drop-shadow-2xl">
+            </div>
+
+            <!-- Floating Badge -->
+           
+          </div>
+        </div>
+      </div>
+
+      <!-- Default Hero (All Products) -->
+      <div *ngIf="!selectedCategory" class="flex flex-col md:flex-row items-center min-h-[200px] py-10 md:py-20">
+        <!-- Text Side (Left) -->
+        <div class="w-full md:w-7/12 pr-0 md:pr-6 text-center md:text-left mb-10 md:mb-0">
+          <h2 class="hero-heading-fixed text-slate-800 mb-6 font-extrabold">
+            Les produits Adaptés à <br>
+            <span class="text-blue-600 relative inline-block">
+              Votre Chat Ou Votre Chien
+              <svg class="absolute w-full h-3 -bottom-3.5 left-0 text-blue-200 -z-10" viewBox="0 0 100 10"
+                preserveAspectRatio="none">
+                <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none" />
+              </svg>
+            </span>
+          </h2>
+          <div class="hero-text-fixed text-slate-600 mb-8 max-w-3xl mx-auto md:mx-0 font-medium">
+            <p class="mb-2">
+              Votre compagnon, chat ou chien, a des besoins alimentaires, et donc de la nourriture, spécifiques à son
+              espèce.
+            </p>
+            <p>
+              Pour mieux comprendre les différentes diètes félines ou canines, vous pouvez vous rendre dans la section
+              qui
+              vous intéresse.
+            </p>
+          </div>
+          <div class="flex flex-col sm:flex-row items-center gap-4 justify-center">
+          <div
+            class="px-8 py-3 bg-blue-600 text-white rounded-full font-semibold shadow-lg shadow-blue-500/30 hover:shadow-blue-500/40 hover:-translate-y-1 transition-all duration-300 inline-flex items-center justify-center">
+            Découvrir la gamme
+            </div>
+          <button (click)="scrollToSection('demystifier-section')" class="px-8 py-3 border-2 border-blue-600 text-blue-600 rounded-full font-semibold hover:bg-blue-600 hover:text-white transition-all duration-300 cursor-pointer inline-flex items-center justify-center">
+            <svg class="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Expertise Vétérinaire
+          </button>
+        </div>
+        </div>
+
+        <!-- Image Side (Right) - As Background -->
+        <div class="w-full md:w-5/12 relative z-10">
+          <div class="relative w-full h-full flex items-center justify-center">
+            <!-- Organic Blob Background - Same as Cat/Dog pages -->
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 -left-4 w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 -right-4 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+            <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 left-20 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+            
+            <!-- Image without container - just the image itself -->
+            <img src="assets/images/feree.png" alt="Chien et Chat"
+              class="w-[105%] max-w-none h-auto object-contain opacity-100 transform scale-110 hover:scale-115 transition-transform duration-700 pointer-events-none">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modern Decorative Separator -->
+<div class="relative py-12 bg-gradient-to-b from-white via-gray-50 to-gray-50 overflow-hidden">
+  <div class="absolute inset-0 opacity-30">
+    <div class="absolute top-0 left-1/4 w-32 h-32 bg-blue-200 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-0 right-1/4 w-32 h-32 bg-red-200 rounded-full blur-3xl"></div>
+  </div>
+  <div class="container max-w-7xl mx-auto px-4 relative z-10">
+    <div class="flex items-center justify-center gap-4">
+      <div class="flex-grow h-px bg-gradient-to-r from-transparent via-gray-300 to-gray-300 max-w-md"></div>
+      <div class="flex items-center gap-3">
+        <div class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></div>
+        <div class="w-3 h-3 rounded-full bg-red-400 animate-pulse" style="animation-delay: 0.2s;"></div>
+        <div class="w-2 h-2 rounded-full bg-blue-400 animate-pulse" style="animation-delay: 0.4s;"></div>
+      </div>
+      <div class="flex-grow h-px bg-gradient-to-l from-transparent via-gray-300 to-gray-300 max-w-md"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Reorganized Sections - Only for "Tous nos produits" -->
+
+<!-- ROW 1: Démystifier les mythes (LEFT) + Informations & Conseils Vétos (RIGHT) -->
+<section *ngIf="!selectedCategory" class="pb-16 bg-gray-50 section-spacing">
+  <div class="w-full px-6 lg:px-12 xl:px-16 fixed-layout-container">
+    <div class="flex flex-col lg:flex-row gap-8 max-w-[1800px] mx-auto">
+      
+      <!-- LEFT: Démystifier les mythes -->
+      <div class="lg:w-[65%]">
+<div class="bg-white rounded-2xl shadow-xl p-8 md:p-8 border-l-4 border-r-4 border-[#42636E]">
+        <h2 class="text-gray-900 mb-8 text-center" style="color: #42636E; line-height: 1.3; font-size: 28px; font-weight: 600;">
+          Démystifier les mythes courants sur le rationnement alimentaire des croquettes
+        </h2>
+        <div class="w-24 h-1 bg-vet-blue mb-8 mx-auto"></div>
+          <p class="text-gray-700 mb-2 text-justify leading-relaxed" style="font-size: 18px;">
+        La façon traditionnelle de rationner la nourriture consiste simplement à lire le 
+        guide d'alimentation situé à l'arrière de l'emballage et à supposer simplement que 
+        la quantité écrite pour la plage de poids de votre animal est tout simplement 
+        suffisante pour satisfaire ses besoins quotidiens. Ce n'est pas correct !. 
+        VITALFEED, en collaboration avec les spécialistes, a développé un logiciel 
+        complet "VitalNutri" permet de personnaliser les rations (ménagères ou 
+        industrielles) pour chiens et chats, facilitant le suivi médical et le conseil 
+        nutritionnel. VitalNutri est un outil né de la volonté de rendre les dernières 
+        avancées scientifiques en nutrition à la portée de des propriétaires des chats et des 
+        chiens via le vétérinaire praticien. Des données précises, des informations issues 
+        d'examen clinique vétérinaire complet, des commémoratifs sont nécessaires pour 
+        avoir le plan de nutrition dynamique sur mesure.
+        <span class="text-sky-400 font-medium block mt-6">C'est pourquoi une consultation vétérinaire est primordiale.</span>
+      </p>
+      </div>
+      </div>
+
+      <!-- RIGHT: Informations & Conseils Vétos -->
+      <aside class="lg:w-[35%]">
+        <div class="sticky top-6">
+          <div id="conseils" class="rounded-2xl p-6 transition-all duration-500" 
+               [ngClass]="highlightedSection === 'conseils' ? 'ring-8 shadow-2xl scale-105' : 'bg-gray-50 shadow-lg'"
+               [style.background-color]="highlightedSection === 'conseils' ? 'rgba(59, 130, 246, 0.15)' : ''"
+               [style.box-shadow]="highlightedSection === 'conseils' ? '0 0 0 4px rgba(59, 130, 246, 0.5), 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' : ''">
+            <h3 class="text-xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-red-600">
+              Informations & Conseils Vétos  
+            </h3>
+            
+            <div *ngIf="isLoadingBlogs" class="flex justify-center py-8">
+              <div class="animate-spin rounded-full h-8 w-8 border-2 border-blue-600 border-t-transparent"></div>
+            </div>
+
+            <div *ngIf="blogError && !isLoadingBlogs" class="text-center py-8 text-red-600">
+              {{ blogError }}
+            </div>
+
+            <div *ngIf="!isLoadingBlogs && !blogError" class="space-y-6 mb-6">
+              <article *ngFor="let post of getPaginatedBlogPosts()" class="border-b border-gray-200 pb-6 last:border-0 last:pb-0">
+                <time class="text-sm text-gray-500 block mb-2">{{ formatBlogDate(post.createdAt) }}</time>
+                <h4 class="text-base font-bold text-gray-900 mb-2 leading-tight">{{ post.title }}</h4>
+                <p class="text-sm text-gray-600 mb-3 line-clamp-2">{{ post.description }}</p>
+                <button 
+                  (click)="openPdfModal(post)" 
+                  class="text-sm font-semibold transition-colors underline text-red-600 hover:text-blue-600">
+                  Lire la suite
+                </button>
+              </article>
+
+              <div *ngIf="blogPosts.length === 0" class="text-center py-8 text-gray-500">
+                Aucun article disponible pour le moment
+              </div>
+            </div>
+
+            <div *ngIf="!isLoadingBlogs && blogPosts.length > blogItemsPerPage" class="flex items-center justify-between pt-4 border-t border-gray-200">
+              <button 
+                (click)="previousBlogPage()" 
+                [disabled]="blogCurrentPage === 1"
+                class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <span>Précédent</span>
+              </button>
+              
+              <span class="text-sm text-gray-600 font-medium">
+                {{ blogCurrentPage }} / {{ getBlogTotalPages() }}
+              </span>
+              
+              <button 
+                (click)="nextBlogPage()" 
+                [disabled]="blogCurrentPage === getBlogTotalPages()"
+                class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200">
+                <span>Suivant</span>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</section>
+
+<!-- ROW 2: LA QUALITÉ RECONNUE PAR (LEFT) + Stats "Ils nous font confiance" (RIGHT) -->
+<section *ngIf="!selectedCategory" class="pb-8 bg-gray-50 section-spacing">
+  <div class="w-full px-6 lg:px-12 xl:px-16 fixed-layout-container">
+    <div class="flex flex-col lg:flex-row gap-8 max-w-[1800px] mx-auto items-center">
+      
+      <!-- LEFT: LA QUALITÉ RECONNUE PAR -->
+      <div class="lg:w-[65%]">
+        <div class="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 md:p-12 shadow-lg">
+          <div class="text-center mb-12">
+            <h2 class="subheading-fixed text-gray-900 mb-4" style="color: #42636E; line-height: 1.3;">
+              LA QUALITÉ RECONNUE PAR
+            </h2>
+            <div class="w-24 h-1 bg-vet-blue mx-auto"></div>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-8">
+            <div class="text-center">
+              <div class="w-16 h-16 bg-vet-blue rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                </svg>
+              </div>
+              <h4 class="text-xl font-bold text-gray-800 mb-3">Les vétérinaires</h4>
+              <p class="text-gray-600 text-sm leading-relaxed">
+                92 à 94% d'acceptation chez les chiens (selon la race) et 84% par les chats (source : 
+                données internes études appétence en France)               </p>
+            </div>
+
+            <div class="text-center">
+              <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+              </div>
+              <h4 class="text-xl font-bold text-gray-800 mb-3">Les propriétaires</h4>
+              <p class="text-gray-600 text-sm leading-relaxed">
+            Nos aliments obtiennent des notes supérieures à 4/5 (sources : conso animo, 60 
+            millions de consommateurs en France)               </p>
+            </div>
+
+            <div class="text-center">
+              <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                </svg>
+              </div>
+              <h4 class="text-xl font-bold text-gray-800 mb-3">Les animaux</h4>
+              <p class="text-gray-600 text-sm leading-relaxed">
+              80% des vétérinaires interrogés recommandent notre gamme (source : données 
+              internes 2020 - 2 970 vétérinaires répondants en France)               </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Stats "Ils nous font confiance" -->
+      <aside class="lg:w-[35%]">
+        <div class="bg-gradient-to-br from-blue-50 via-white to-green-50 rounded-2xl shadow-xl p-4 border-2 border-blue-100 flex flex-col justify-center h-full">
+          <div class="text-center mb-4">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full mb-2">
+              <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
+              </svg>
+            </div>
+            <h4 class="text-xl font-bold text-gray-900 mb-1">Ils nous font confiance en Tunisie </h4>
+            <p class="text-sm text-gray-600">Des résultats prouvés et reconnus</p>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-3 mb-3">
+            <div class="bg-white rounded-xl p-3 text-center shadow-sm hover:shadow-md transition-shadow">
+              <div class="text-4xl font-bold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent mb-0.5">100%</div>
+              <div class="text-xs text-gray-600 font-medium">Exclusivement vétérinaire </div>
+            </div>
+            <div class="bg-white rounded-xl p-3 text-center shadow-sm hover:shadow-md transition-shadow">
+              <div class="text-4xl font-bold bg-gradient-to-r from-green-600 to-green-700 bg-clip-text text-transparent mb-0.5">4.8/5</div>
+              <div class="text-xs text-gray-600 font-medium">noter par les vétérinaires  </div>
+            </div>
+            <div class="bg-white rounded-xl p-3 text-center shadow-sm hover:shadow-md transition-shadow">
+              <div class="text-4xl font-bold bg-gradient-to-r from-purple-600 to-purple-700 bg-clip-text text-transparent mb-0.5">85%</div>
+              <div class="text-xs text-gray-600 font-medium">de présence dans les cliniques</div>
+            </div>
+            <div class="bg-white rounded-xl p-3 text-center shadow-sm hover:shadow-md transition-shadow">
+              <div class="text-4xl font-bold bg-gradient-to-r from-orange-600 to-orange-700 bg-clip-text text-transparent mb-0.5">98%</div>
+              <div class="text-xs text-gray-600 font-medium">atisfaction des résultats en Diet  </div>
+            </div>
+          </div>
+          
+          <div class="bg-blue-50 rounded-lg p-2 border border-blue-100">
+            <p class="text-xs text-gray-700 text-center leading-relaxed">
+              <span class="font-semibold text-blue-700">Source:</span> Données internes 2020 - 2,970 vétérinaires répondants
+            </p>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</section>
+
+<!-- ROW 3: POURQUOI CHOISIR Veterinary HPM® (LEFT) + Video (RIGHT) -->
+<section *ngIf="!selectedCategory" class="py-8 bg-gray-50 section-spacing">
+  <div class="w-full px-6 lg:px-12 xl:px-16 fixed-layout-container">
+    <div class="flex flex-col lg:flex-row gap-12 items-center max-w-[1800px] mx-auto">
+      
+      <!-- LEFT: POURQUOI CHOISIR Veterinary HPM® -->
+      <div class="lg:w-1/2">
+        <!-- Title -->
+        <h2 class="subheading-fixed mb-8" style="color: #42636E; line-height: 1.3;">
+          POURQUOI CHOISIR Veterinary HPM ® ?
+        </h2>
+
+        <!-- Points List with Checkmarks -->
+        <div class="space-y-5">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-white border-2 flex items-center justify-center mt-1" style="border-color: #42636E;">
+              <svg class="w-5 h-5" style="color: #42636E;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <p class="text-fixed text-gray-700">
+            Riche en protéines (dont 90% de protéines animales) et pauvre en 
+            glucides             </p>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-white border-2 flex items-center justify-center mt-1" style="border-color: #42636E;">
+              <svg class="w-5 h-5" style="color: #42636E;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <p class="text-fixed text-gray-700">
+              Haute appétence
+            </p>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-white border-2 flex items-center justify-center mt-1" style="border-color: #42636E;">
+              <svg class="w-5 h-5" style="color: #42636E;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <p class="text-fixed text-gray-700">
+              Fabrication française sans colorant ni arôme artificiel
+            </p>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-white border-2 flex items-center justify-center mt-1" style="border-color: #42636E;">
+              <svg class="w-5 h-5" style="color: #42636E;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <p class="text-gray-700 text-lg leading-relaxed">
+          Ingrédients santé de haute qualité et “ Brevetés ” 
+                      </p>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-white border-2 flex items-center justify-center mt-1" style="border-color: #42636E;">
+              <svg class="w-5 h-5" style="color: #42636E;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <p class="text-fixed text-gray-700">
+              Basée sur des études scientifiques, avec près de 40 publications.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Side: Video Section -->
+      <div class="lg:w-1/2">
+        <div class="rounded-2xl overflow-hidden shadow-2xl">
+          <!-- YouTube Video Embed -->
+          <iframe 
+            class="w-full aspect-video" 
+            src="https://www.youtube.com/embed/P0DJsShKPyk?start=6" 
+            title="YouTube video player" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div  *ngIf="!selectedCategory"  class="max-w-6xl mx-auto bg-gray-50 py-16 fixed-layout-container section-spacing">
+  <div class="bg-white rounded-2xl shadow-xl p-6 md:p-12 border-l-4 border-r-4 border-[#42636E]">
+    <h2 class="subheading-fixed text-gray-900 mb-4 text-center" style="color: #42636E; line-height: 1.3;">
+      Besoin de Conseils - De nourriture - Adresse de consultation ?
+    </h2>
+    <div class="w-24 h-1 bg-vet-blue mb-8 mx-auto"></div>
+    <p class="text-fixed text-gray-700 mb-10 text-justify">
+      On vous propose de vous accompagner et de vous conseiller sur les différentes 
+      facettes de la nutrition de votre animal, afin que pitou ou minou grandisse et 
+      vieillisse en santé, à vos côtés.
+    </p>
+    <p class="text-fixed text-gray-700 mb-10 text-justify">
+      Parce qu'une bonne alimentation c'est avant tout une histoire de santé, notre gamme 
+      est proposée exclusivement chez votre vétérinaire. Notre carte " Cliniques 
+      partenaires " vous permet de retrouver votre clinique vétérinaire.
+    </p>
+  </div>
+</div>
+
+
+
+<!-- All Products with Pagination -->
+<section   class="all-products bg-white section-spacing fixed-layout-container">
+  <!-- "Tous nos Produits" Header - Only show when no category is selected -->
+  <div *ngIf="!selectedCategory" class="text-center bg-gradient-to-r from-blue-50 to-green-50 rounded-2xl p-3 md:p-4">
+    <div class="mb-2">
+      <h2 class="subheading-fixed text-gray-900 mb-2" style="color: #42636E; line-height: 1.3;">
+        Tous nos Produits
+      </h2>
+      <div class="w-24 h-1 bg-vet-blue mx-auto"></div>
+    </div>
+    <p class="text-fixed text-gray-700 mx-auto whitespace-nowrap">
+      Notre gamme repose sur un équilibre nutritionnel faible en glucides et riche en protéines adapté aux besoins de votre chien, carnivore depuis toujours !
+    </p>
+  </div>
+        
+  <!-- Complément Section - Only show when Complément type is selected -->
+  <div *ngIf="selectedSousCategory === 'Complément'" class="w-full mb-6 fixed-layout-container">
+    <div [ngClass]="selectedCategory === 'Chat' ? 'border-[#74C375]' : selectedCategory === 'Chien' ? 'border-[#a01867]' : 'border-teal-500'" class="rounded-xl p-6 mx-4 sm:mx-6 lg:mx-8 border-l-4 shadow-md" [class]="selectedCategory === 'Chat' ? 'bg-gradient-to-r from-green-50 to-emerald-50' : selectedCategory === 'Chien' ? 'bg-gradient-to-r from-purple-50 to-pink-50' : 'bg-gradient-to-r from-teal-50 to-cyan-50'">
+      <div class="max-w-5xl mx-auto flex items-center gap-4">
+        <div [ngClass]="selectedCategory === 'Chat' ? 'bg-[#74C375]' : selectedCategory === 'Chien' ? 'bg-[#a01867]' : 'bg-teal-500'" class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+          </svg>
+        </div>
+        <div class="flex-1 " >
+          <h2 class="subheading-fixed text-gray-900 mb-4" style="color: #42636E; line-height: 1.3;">
+            Aliments complémentaires : Agir pour la santé !
+          </h2>
+          <p class="text-fixed text-gray-700">
+            Le maintien d'une bonne santé représente un effort de tous les jours, et dépend de nos choix quotidiens. C'est pourquoi nous nous efforçons de prendre en charge un large panel de problèmes de santé que peuvent rencontrer les animaux, pour améliorer à la fois leur qualité de vie et la vôtre.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>  <!-- Three Informational Sections - Show ONLY when Aliment type is selected (not on all products page) -->
+  <div *ngIf="selectedCategory && selectedSousCategory === 'Aliment'" class="w-full mb-12 fixed-layout-container section-spacing">
+    <!-- Two Column Layout: Left = Info Sections, Right = Featured Product -->
+    <div class="flex flex-col lg:flex-row gap-8 mx-4 sm:mx-6 lg:mx-8">
+      
+      <!-- LEFT COLUMN: Information Sections -->
+      <div class="lg:w-[65%] space-y-8">
+        <!-- Section 1: Comment choisir -->
+    <div class="rounded-2xl p-8 md:p-12 mb-8 shadow-lg mx-4 sm:mx-6 lg:mx-8" [ngClass]="selectedCategory === 'Chat' ? 'bg-gradient-to-br from-green-50 to-emerald-50' : 'bg-gradient-to-br from-purple-50 to-pink-50'">
+      <div class="mx-auto">
+        <div class="flex items-start gap-6">
+         <div [ngClass]="selectedCategory === 'Chat' ? 'bg-[#74C375]' : selectedCategory === 'Chien' ? 'bg-[#a01867]' : 'bg-blue-600'" class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <div class="flex-1 text-justify">
+            <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4" style="color: #42636E; line-height: 1.3;">
+              <span *ngIf="selectedCategory === 'Chat'">Pourquoi l’alimentation de votre chat mérite une attention particulière ? </span>
+              <span *ngIf="selectedCategory === 'Chien'" >Pourquoi choisir la meilleure alimentation pour votre chien ? </span>
+            </h3>
+            <p class="text-lg text-gray-700 leading-relaxed text-justify" *ngIf="selectedCategory === 'Chat'">
+              Une nutrition de qualité supérieure doit impérativement répondre aux besoins physiologiques spécifiques de 
+              carnivore strict de votre compagnon. Contrairement à ce que l'on pense, toutes les croquettes pour chat ne se 
+              valent pas : leur composition et leur valeur nutritionnelle font toute la différence. L'alimentation influence de 
+              manière déterminante la santé rénale, l'équilibre du microbiote intestinal .... et même les patterns 
+              comportementaux de votre félin. Comprendre ces mécanismes vous permettra de faire des choix éclairés pour 
+              optimiser la longévité et la vitalité de votre chat.
+            </p>
+            <p class="text-fixed text-gray-700 break-words" *ngIf="selectedCategory === 'Chien'">
+              Le choix d'une alimentation dépend de plusieurs critères : <span class="font-semibold">Race et taille</span> : un yorkshire n'a pas les mêmes besoins qu'un berger allemand. <span class="font-semibold">Mode de vie</span> : chien urbain ou très actif en extérieur. <span class="font-semibold">Âge</span> : chiot, chien adulte ou senior. <span class="font-semibold">Physiologie</span> : stérilisé, gestante ou allaitante. <span class="font-semibold">État de santé</span> : problèmes articulaires, digestion sensible, surpoids.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2: Points clés -->
+
+<div class="bg-white rounded-2xl p-8 md:p-12 mb-8 shadow-lg border-l-4 mx-4 sm:mx-6 lg:mx-8" [ngClass]="selectedCategory === 'Chat' ? 'border-[#74C375]' : 'border-[#a01867]'">
+      <div class="mx-auto text-justify">
+        <h3 class="subheading-fixed text-gray-900 mb-6" style="color: #42636E; line-height: 1.3;">
+          Points clés pour bien choisir les croquettes de votre {{ selectedCategory === 'Chien' ? 'chien' : 'chat' }}
+        </h3>
+        
+        <!-- Two-column layout: Paragraph left, Points right -->
+        <div class="grid md:grid-cols-2 gap-8">
+          
+          <!-- LEFT: Paragraph -->
+          <div class="flex items-start">
+            <div *ngIf="selectedCategory === 'Chat'" class="text-fixed text-gray-700">
+              <p class="text-justify">Les nutriments constitutifs de la croquette pour chat doivent être de qualité. Attention à la rubrique « viande et sous-produits d'origine animale », la viande pouvant ne représenter qu'un très faible pourcentage. Les viandes de qualité, dont la valeur biologique est élevée (la valeur biologique VB correspond à l'efficacité avec laquelle l'organisme du chat va pouvoir absorber les protéines), sont beaucoup plus chères que les sous-produits, ce qui explique le coût des croquettes de qualité par rapport à celles bas de gamme.</p>
+            </div>
+            <div *ngIf="selectedCategory === 'Chien'" class="text-fixed text-gray-700">
+              <p>La qualité de l'alimentation que vous donnez à votre compagnon à quatre pattes joue un rôle très important dans son état de santé général. Mais pour cela, il faut savoir reconnaître des croquettes pour chien de bonne qualité ! Pour vous aider, voici quelques critères de sélections communs que l'on peut retrouver dans des formulations spécifiques pour les chiens :</p>
+            </div>
+          </div>
+          
+          <!-- RIGHT: Points -->
+          <div>
+            
+            <!-- Cat-specific points -->
+            <div *ngIf="selectedCategory === 'Chat'" class="flex flex-col gap-4 text-justify">
+              <div class="flex items-start gap-3">
+                <div class="bg-green-100 flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mt-1">
+                  <svg class="text-[#74C375] w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                  </svg>
+                </div>
+                <p class="text-fixed text-gray-700"><span class="font-semibold">La Viande en Premier Ingrédient</span> avec des protéines de qualité et en quantité suffisante.</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="bg-green-100 flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mt-1">
+                  <svg class="text-[#74C375] w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                  </svg>
+                </div>
+                <p class="text-fixed text-gray-700"><span class="font-semibold">Teneur équilibrée en matières grasses</span> et adaptée à son statut (Stérilisé ou non)</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="bg-green-100 flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mt-1">
+                  <svg class="text-[#74C375] w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                  </svg>
+                </div>
+                <p class="text-fixed text-gray-700"><span class="font-semibold">Faibles teneurs en glucides</span> pour respecter la nature carnivore du chat</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="bg-green-100 flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mt-1">
+                  <svg class="text-[#74C375] w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                  </svg>
+                </div>
+                <p class="text-fixed text-gray-700"><span class="font-semibold">Un Taux de cendres brut contrôlé</span> pour préserver son système urinaire</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="bg-green-100 flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mt-1">
+                  <svg class="text-[#74C375] w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                  </svg>
+                </div>
+                <p class="text-fixed text-gray-700"><span class="font-semibold">Inclure une supplémentation adaptée</span> en vitamines et minéraux essentiels.</p>
+              </div>
+            </div>
+            
+            <!-- Dog-specific points -->
+            <div *ngIf="selectedCategory === 'Chien'" class="flex flex-col gap-4">
+              <div class="flex items-start gap-3">
+                <div class="bg-red-100 flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mt-1">
+                  <svg class="text-[#a01867] w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                  </svg>
+                </div>
+                <p class="text-fixed text-gray-700">Contenir des <span class="font-semibold">protéines de qualité</span> et en quantité suffisante.</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="bg-red-100 flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mt-1">
+                  <svg class="text-[#a01867] w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                  </svg>
+                </div>
+                <p class="text-fixed text-gray-700">Limiter la quantité de <span class="font-semibold">glucides</span> pour respecter la nature carnivore du chien.</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="bg-red-100 flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mt-1">
+                  <svg class="text-[#a01867] w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                  </svg>
+                </div>
+                <p class="text-fixed text-gray-700">Teneur équilibrée en <span class="font-semibold">matières grasses et en cendres.</span></p>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="bg-red-100 flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mt-1">
+                  <svg class="text-[#a01867] w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                  </svg>
+                </div>
+                <p class="text-fixed text-gray-700">Inclure une <span class="font-semibold">supplémentation adaptée</span> en vitamines et minéraux essentiels.</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="bg-red-100 flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mt-1">
+                  <svg class="text-[#a01867] w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                  </svg>
+                </div>
+                <p class="text-fixed text-gray-700">Être adaptées au <span class="font-semibold">stade de vie</span>, qu'il s'agisse d'un chiot, d'un adulte ou senior.</p>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3: Que signifie HPM -->
+    <div class="rounded-2xl p-8 md:p-12 mb-8 shadow-lg mx-4 sm:mx-6 lg:mx-8" [ngClass]="selectedCategory === 'Chat' ? 'bg-gradient-to-br from-green-50 to-emerald-50' : 'bg-gradient-to-br from-purple-50 to-pink-50'">
+      <div class="mx-auto text-justify">
+        <div class="flex items-center justify-center gap-4 mb-6">
+          <div [ngClass]="selectedCategory === 'Chat' ? 'bg-[#74C375]' : selectedCategory === 'Chien' ? 'bg-[#a01867]' : 'bg-purple-600'" class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h3 class="subheading-fixed text-gray-900" style="color: #42636E; line-height: 1.3;">
+            Que signifie « HPM » et quel est le concept de la gamme ?
+          </h3>
+        </div>
+        <div class="space-y-4">
+          <div class="flex items-start gap-3">
+            <div [ngClass]="selectedCategory === 'Chat' ? 'bg-green-100' : selectedCategory === 'Chien' ? 'bg-red-100' : 'bg-purple-100'" class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mt-1">
+              <span [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-purple-600'" class="font-bold">1</span>
+            </div>
+            <p class="text-fixed text-gray-700">
+              Le terme <span [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-purple-600'" class="font-bold">« HPM »</span> signifie <span class="font-semibold">Hyper-Premium</span>, car nous positionnons notre marque au plus haut niveau en termes de qualité des ingrédients et d'équilibre nutritionnel.
+            </p>
+          </div>
+          <div class="flex items-start gap-3">
+            <div [ngClass]="selectedCategory === 'Chat' ? 'bg-green-100' : selectedCategory === 'Chien' ? 'bg-red-100' : 'bg-purple-100'" class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mt-1">
+              <span [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-purple-600'" class="font-bold">2</span>
+            </div>
+            <p class="text-fixed text-gray-700">
+              Avec <span [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-purple-600'" class="font-bold">VETERINARY HPM®</span>, nous souhaitons nous rapprocher au mieux des besoins et préférences des {{ selectedCategory === 'Chien' ? 'chiens' : 'chats' }}. Or ceux-ci étant des carnivores, ils ont besoin de beaucoup de protéines et de peu de glucides. Les protéines apportent de nombreux bénéfices pour la santé. Nous nous sommes donc naturellement dirigés vers un concept <span class="font-semibold">LC-HP (Low carbohydrate – High protein)</span>, pauvre en glucides et riche en protéines. Par ailleurs, dans le respect du régime carnivore nous privilégions les <span class="font-semibold">protéines animales (90% des protéines en moyenne)</span> qui sont par ailleurs bien mieux digestibles que les protéines végétales.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+      </div>
+
+      <!-- RIGHT COLUMN: Featured Product Promotion -->
+      <div class="lg:w-[35%]">
+        <div class="sticky top-6">
+          <!-- Featured Product Card -->
+          <div [ngClass]="selectedCategory === 'Chat' ? 'from-[#74C375] to-[#5ba860]' : selectedCategory === 'Chien' ? 'from-[#a01867] to-[#7d1350]' : 'from-blue-600 to-purple-600'" class="bg-gradient-to-br rounded-2xl shadow-2xl overflow-hidden flex flex-col" style="min-height: 800px;">
+            <div class="p-6 text-white">
+              <div class="flex items-center gap-2 mb-4">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                </svg>
+                <span class="text-sm font-semibold uppercase tracking-wider">PRODUIT LEADER </span>
+              </div>
+              
+             <h3 class="font-bold mb-3 text-white" style="font-size: 22px;">
+              <span *ngIf="selectedCategory === 'Chat'">VETERINARY HPM® KITTEN PRE NEUTRED CAT</span>
+              <span *ngIf="selectedCategory === 'Chien'">VETERINARY HPM® BABY DOG</span>
+            </h3>
+              
+              <p [ngClass]="selectedCategory === 'Chat' ? 'text-green-100' : selectedCategory === 'Chien' ? 'text-red-100' : 'text-blue-100'" class="mb-6 text-sm leading-relaxed">
+                <span *ngIf="selectedCategory === 'Chat'">
+                  Formule LC-HP spécialement conçue pour les chats adultes. Riche en protéines animales (90%) et pauvre en glucides pour une santé optimale.
+                </span>
+                <span *ngIf="selectedCategory === 'Chien'">
+                  Formule LC-HP adaptée aux besoins des chiens adultes. Haute teneur en protéines animales (90%) et faible en glucides pour maintenir la vitalité.
+                </span>
+              </p>
+
+              <!-- Benefits List -->
+              <div class="grid grid-cols-2 gap-3 mb-6">
+  <div class="flex items-center gap-2">
+    <svg [ngClass]="selectedCategory === 'Chat' ? 'text-green-300' : selectedCategory === 'Chien' ? 'text-red-300' : 'text-green-300'" class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+    </svg>
+    <span class="text-sm">90% protéines animales</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <svg [ngClass]="selectedCategory === 'Chat' ? 'text-green-300' : selectedCategory === 'Chien' ? 'text-red-300' : 'text-green-300'" class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+    </svg>
+    <span class="text-sm">Faible en glucides</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <svg [ngClass]="selectedCategory === 'Chat' ? 'text-green-300' : selectedCategory === 'Chien' ? 'text-red-300' : 'text-green-300'" class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+    </svg>
+    <span class="text-sm">Fabrication française</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <svg [ngClass]="selectedCategory === 'Chat' ? 'text-green-300' : selectedCategory === 'Chien' ? 'text-red-300' : 'text-green-300'" class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+    </svg>
+    <span class="text-sm">Recommandé par les vétérinaires</span>
+  </div>
+</div>
+
+              <!-- CTA Button -->
+              <button (click)="scrollToProducts()" [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375] hover:bg-green-50' : selectedCategory === 'Chien' ? 'text-[#a01867] hover:bg-red-50' : 'text-blue-600 hover:bg-blue-50'" class="w-full bg-white font-bold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                Découvrir le produit
+              </button>
+            </div>
+
+            <!-- Product Image Section - Fills remaining space -->
+            <div class="bg-white p-6 flex-grow flex items-center justify-center">
+              <div [ngClass]="selectedCategory === 'Chat' ? 'from-green-50 to-green-100' : selectedCategory === 'Chien' ? 'from-red-50 to-red-100' : 'from-blue-50 to-purple-50'" class="w-full h-full bg-gradient-to-br rounded-xl flex items-center justify-center overflow-hidden">
+                <img 
+                  *ngIf="selectedCategory === 'Chat'" 
+                  src="assets/images/cat8.png" 
+                  alt="Chat - VETERINARY HPM®" 
+                  class="w-full h-full object-cover"
+                  (error)="onImageError($event)">
+                <img 
+                  *ngIf="selectedCategory === 'Chien'" 
+                  src="assets/images/dog8.png" 
+                  alt="Chien - VETERINARY HPM®" 
+                  class="w-full h-full object-cover"
+                  (error)="onImageError($event)">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- Test Rapide Info Section - Show before title when Test Rapide is selected -->
+  <div *ngIf="selectedSousCategory === 'Test rapide'" class="w-full mb-8 mt-2 fixed-layout-container">
+  <div [ngClass]="selectedCategory === 'Chat' ? 'border-[#74C375]' : selectedCategory === 'Chien' ? 'border-[#a01867]' : 'border-orange-500'" class="rounded-xl p-8 mx-4 sm:mx-6 lg:mx-8 border-l-4 shadow-md" [class]="selectedCategory === 'Chat' ? 'bg-gradient-to-r from-green-50 to-emerald-50' : selectedCategory === 'Chien' ? 'bg-gradient-to-r from-purple-50 to-pink-50' : 'bg-gradient-to-r from-orange-50 to-amber-50'">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center">
+        <h2 class="subheading-fixed mb-3" style="color: #42636E; line-height: 1.3;">
+          Des technologies au service du vétérinaire
+        </h2>
+        <p class="text-fixed text-gray-700 mb-6">
+          Basés sur les techniques d'immunochromatographie sur membrane, de microculture en milieu liquide, et d'immunofluorescence, les produits de la gamme Speed sont des outils diagnostic simples et rapides à mettre en oeuvre, dédiés aux vétérinaires.
+        </p>
+        
+        <!-- Centered Icon -->
+        <div class="flex justify-center my-6">
+          <div [ngClass]="selectedCategory === 'Chat' ? 'bg-[#74C375]' : selectedCategory === 'Chien' ? 'bg-[#a01867]' : 'bg-orange-500'" class="w-12 h-12 rounded-lg flex items-center justify-center">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+            </svg>
+          </div>
+        </div>
+        
+        <h3 class="subheading-fixed mb-3" style="color: #42636E; line-height: 1.3;">
+          Des outils utiles dans la pratique quotidienne
+        </h3>
+        <p class="text-fixed text-gray-700">
+          Nos tests rapides apportent au vétérinaire praticien des réponses rapides et fiables, lui permettant d'avancer dans sa démarche diagnostique et de prévention des maladies, afin d'ajuster au mieux sa prescription médicale.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Feeding Guide Section - Only for Aliment type -->
+<section *ngIf="selectedSousCategory === 'Aliment'" class="bg-white" style="padding-top: 1rem; padding-bottom: 3.5rem;">
+  <div class="w-full mx-auto px-4 sm:px-6 lg:px-8 max-w-[1800px]">
+    
+    <!-- Two Column Layout -->
+    <div class="flex flex-col lg:flex-row gap-8">
+      
+      <!-- LEFT COLUMN: Feeding Guide Content (65%) -->
+      <div class="lg:w-[65%]">
+        <div class="bg-gradient-to-br from-gray-50 to-white rounded-2xl shadow-xl p-6 md:p-8 border-t-4" [ngClass]="selectedCategory === 'Chat' ? 'border-[#74C375]' : 'border-[#a01867]'">
+          
+          <!-- Header with Icon -->
+          <div class="flex items-center gap-3 mb-5">
+            <div [ngClass]="selectedCategory === 'Chat' ? 'bg-[#74C375]' : 'bg-[#a01867]'" class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-xl md:text-2xl font-bold" style="color: #42636E; line-height: 1.3;">
+                <span *ngIf="selectedCategory === 'Chat'">Comment Nourrir Votre Chat</span>
+                <span *ngIf="selectedCategory === 'Chien'">Comment Nourrir Votre Chien</span>
+              </h2>
+              <p class="text-sm text-gray-600 mt-1">Guide complet pour une alimentation saine</p>
+            </div>
+          </div>
+
+          <!-- Content Cards -->
+          <div class="space-y-4">
+            
+            <!-- Card 1 -->
+            <div class="bg-white rounded-xl p-3 shadow-md hover:shadow-lg transition-shadow border-l-4" [ngClass]="selectedCategory === 'Chat' ? 'border-[#74C375]' : 'border-[#a01867]'">
+              <div class="flex items-start gap-3">
+                <div [ngClass]="selectedCategory === 'Chat' ? 'bg-green-100' : 'bg-red-100'" class="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                  <span [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : 'text-[#a01867]'" class="font-bold text-sm">1</span>
+                </div>
+                <div class="flex-1">
+                  <h3 class="text-base font-bold text-gray-900 mb-2">
+                    <span *ngIf="selectedCategory === 'Chat'"> Quels besoins nutritionnels pour mon chaton ? </span>
+                    <span *ngIf="selectedCategory === 'Chien'">Quels besoins nutritionnels pour mon chiot ? </span>
+                  </h3>
+                  <p class="text-sm text-gray-700 leading-relaxed">
+                    <span *ngIf="selectedCategory === 'Chat'">
+                    Votre petit chaton va connaître une période de croissance incroyable au cours de sa première année de vie. À 
+                    titre d’exemple, nous, les humains, atteindrons en 18 ans environ 20 fois notre poids de naissance.                     </span>
+                    <span *ngIf="selectedCategory === 'Chien'">
+                    Les besoins énergétiques d'un jeune chiot sont proportionnellement plus élevés que ceux d'un chien adulte. 
+                    Il n'est pas question de le nourrir avec un aliment standard pour chien adulte.                    </span>
+                    <a [routerLink]="['/conseil-articles', selectedCategory === 'Chat' ? 'chat-1' : 'chien-1']"
+                       class="inline-flex items-center gap-1 text-sm font-semibold transition-colors ml-1 underline text-red-600 hover:text-blue-600">
+                      <span>Lire plus</span>
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                      </svg>
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="bg-white rounded-xl p-3 shadow-md hover:shadow-lg transition-shadow border-l-4" [ngClass]="selectedCategory === 'Chat' ? 'border-[#74C375]' : 'border-[#a01867]'">
+              <div class="flex items-start gap-3">
+                <div [ngClass]="selectedCategory === 'Chat' ? 'bg-green-100' : 'bg-red-100'" class="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                  <span [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : 'text-[#a01867]'" class="font-bold text-sm">2</span>
+                </div>
+                <div class="flex-1">
+                  <h3 class="text-base font-bold text-gray-900 mb-2">
+                    <span *ngIf="selectedCategory === 'Chat'">Quels besoins nutritionnels pour mon chat adulte ? </span>
+                    <span *ngIf="selectedCategory === 'Chien'">Quels besoins nutritionnels pour mon chien adulte ?</span>
+                  </h3>
+               
+                    <span *ngIf="selectedCategory === 'Chat'">
+                  Plus de 80 % des chats adultes sont stérilisés. La stérilisation peut prédisposer à l’apparition de deux 
+                  risques majeurs : l'excès de poids (qui peut lui-même favoriser l'apparition du diabète sucré) et les 
+                  affections du bas appareil urinaire.                    </span>
+                    <span *ngIf="selectedCategory === 'Chien'">
+                  A l'âge adulte, le chien doit bénéficier d'une alimentation qui couvre ses besoins nutritionnels de 
+                  carnivore. Divers troubles peuvent apparaître à cette période : surpoids (près de 40% des 
+                  chiens), arthrose...                    </span>
+                   <a [routerLink]="['/conseil-articles', selectedCategory === 'Chat' ? 'chat-2' : 'chien-2']"
+                       class="inline-flex items-center gap-1 text-sm font-semibold transition-colors ml-1 underline text-red-600 hover:text-blue-600">
+                      <span>Lire plus</span>
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                      </svg>
+                    </a>
+                  
+                 
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-white rounded-xl p-3 shadow-md hover:shadow-lg transition-shadow border-l-4" [ngClass]="selectedCategory === 'Chat' ? 'border-[#74C375]' : 'border-[#a01867]'">
+              <div class="flex items-start gap-3">
+                <div [ngClass]="selectedCategory === 'Chat' ? 'bg-green-100' : 'bg-red-100'" class="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                  <span [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : 'text-[#a01867]'" class="font-bold text-sm">3</span>
+                </div>
+                <div class="flex-1">
+                  <h3 class="text-base font-bold text-gray-900 mb-2">
+                    <span *ngIf="selectedCategory === 'Chat'">Quels besoins nutritionnels pour mon chat senior ? </span>
+                    <span *ngIf="selectedCategory === 'Chien'">Quels besoins nutritionnels pour mon chien senior ? </span>
+                  </h3>
+                  <p class="text-sm text-gray-700 leading-relaxed">
+                    <span *ngIf="selectedCategory === 'Chat'">
+                    Aujourd'hui, grâce aux progrès importants réalisés en médecine et en nutrition, un chat peut facilement 
+                    vivre 16 à 20 ans. Vers 10 ans, un chat senior entame donc seulement le dernier tiers de son espérance 
+                    de vie : il a atteint l'équivalent de 55 à 60 ans chez l'homme.                    </span>
+                    <span *ngIf="selectedCategory === 'Chien'">
+                    Le vieillissement est un processus naturel qui peut arriver relativement tôt chez les grandes races. Votre 
+                    chien est en bonne santé mais ses besoins évoluent.                    </span>
+                    <a [routerLink]="['/conseil-articles', selectedCategory === 'Chat' ? 'chat-3' : 'chien-3']"
+                       class="inline-flex items-center gap-1 text-sm font-semibold transition-colors ml-1 underline text-red-600 hover:text-blue-600">
+                      <span>Lire plus</span>
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                      </svg>
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        
+
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: Blog Section (35%) -->
+      <aside class="lg:w-[35%]">
+        <div class="sticky top-6">
+          <div id="conseils" class="rounded-2xl p-6 transition-all duration-500" 
+               [ngClass]="highlightedSection === 'conseils' ? 'ring-8 shadow-2xl scale-105' : 'bg-gray-50 shadow-lg'"
+               [style.background-color]="highlightedSection === 'conseils' ? (selectedCategory === 'Chat' ? 'rgba(116, 195, 117, 0.15)' : 'rgba(160, 24, 103, 0.15)') : ''"
+               [style.box-shadow]="highlightedSection === 'conseils' ? (selectedCategory === 'Chat' ? '0 0 0 4px rgba(116, 195, 117, 0.5), 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' : '0 0 0 4px rgba(160, 24, 103, 0.5), 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)') : ''">
+            <h3 class="text-xl font-bold text-gray-900 mb-6 pb-3 border-b-2" [ngClass]="selectedCategory === 'Chat' ? 'border-[#74C375]' : 'border-[#a01867]'">
+              Informations & Conseils Vétos  
+            </h3>
+            
+            <!-- Loading State -->
+            <div *ngIf="isLoadingBlogs" class="flex justify-center py-8">
+              <div class="animate-spin rounded-full h-8 w-8 border-2 border-blue-600 border-t-transparent"></div>
+            </div>
+
+            <!-- Error State -->
+            <div *ngIf="blogError && !isLoadingBlogs" class="text-center py-8 text-red-600">
+              {{ blogError }}
+            </div>
+
+            <!-- Blog Posts -->
+            <div *ngIf="!isLoadingBlogs && !blogError" class="space-y-6 mb-6">
+              <article *ngFor="let post of getPaginatedBlogPosts()" class="border-b border-gray-200 pb-6 last:border-0 last:pb-0">
+                <time class="text-sm text-gray-500 block mb-2">{{ formatBlogDate(post.createdAt) }}</time>
+                <h4 class="text-base font-bold text-gray-900 mb-2 leading-tight">{{ post.title }}</h4>
+                <p class="text-sm text-gray-600 mb-3 line-clamp-2">{{ post.description }}</p>
+                <button 
+                  (click)="openPdfModal(post)" 
+                  class="text-sm font-semibold transition-colors underline text-red-600 hover:text-blue-600">
+                  Lire la suite
+                </button>
+              </article>
+
+              <!-- Empty State -->
+              <div *ngIf="blogPosts.length === 0" class="text-center py-8 text-gray-500">
+                Aucun article disponible pour le moment
+              </div>
+            </div>
+
+            <!-- Pagination Controls -->
+            <div *ngIf="!isLoadingBlogs && blogPosts.length > blogItemsPerPage" class="flex items-center justify-between pt-4 border-t border-gray-200">
+              <button 
+                (click)="previousBlogPage()" 
+                [disabled]="blogCurrentPage === 1"
+                class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <span>Précédent</span>
+              </button>
+              
+              <span class="text-sm text-gray-600 font-medium">
+                {{ blogCurrentPage }} / {{ getBlogTotalPages() }}
+              </span>
+              
+              <button 
+                (click)="nextBlogPage()" 
+                [disabled]="blogCurrentPage === getBlogTotalPages()"
+                class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200">
+                <span>Suivant</span>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</section>
+
+<!-- Quelques conseils pratique section - Show only for Aliment type -->
+  <div *ngIf="selectedCategory && selectedSousCategory === 'Aliment'" class="mx-4 sm:mx-6 lg:mx-8 mb-8">
+ <div class="rounded-2xl p-8 md:p-12 shadow-lg" [ngClass]="selectedCategory === 'Chat' ? 'bg-gradient-to-br from-green-50 to-emerald-50' : 'bg-gradient-to-br from-purple-50 to-pink-50'"
+       [style.borderLeft]="'4px solid ' + (selectedCategory === 'Chat' ? '#74C375' : '#a01867')"
+       [style.borderRight]="'4px solid ' + (selectedCategory === 'Chat' ? '#74C375' : '#a01867')">
+    <h3 class="text-2xl md:text-3xl font-bold mb-6 text-center" style="color: #42636E; line-height: 1.3;">
+      Quelques conseils pratique :
+    </h3>
+      <!-- Single column layout with text aligned to the right -->
+      <div class="flex justify-end">
+        <div class="w-full text-justify ">
+          <p class="text-lg text-gray-700 leading-relaxed break-words" *ngIf="selectedCategory === 'Chat'">
+            oir absorber les protéines), sont beaucoup plus chères que les sous-praucoup plus chères que les sous-praucoup plus chères que les sous-produits, ce qui explique le coût des croquettes de qualité par rapport à celles bas de gamme.
+          </p>
+          <p class="text-lg text-gray-700 leading-relaxed break-words" *ngIf="selectedCategory === 'Chien'">
+            Les nutriments constitutifs de la croquette pour chat doivent être de qualité. Attention aucoup plus chères que les sous-praucoup plus chères que les sous-prà la rubrique « viande et sous-produits d'origine animale »,
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Products Title -->
+  <div id="products-section" class="products-header mb-8">
+    <h3 class="section-title text-center text-2xl md:text-3xl font-bold text-gray-800">
+      <span *ngIf="selectedCategory && selectedSousCategory && selectedSubSubCategory">
+        {{ selectedSubSubCategory }} - {{ selectedSousCategory }} - {{ selectedCategory }}
+      </span>
+      <span *ngIf="selectedCategory && selectedSousCategory && !selectedSubSubCategory">
+        {{ selectedSousCategory }} - {{ selectedCategory }}
+      </span>
+      <span *ngIf="selectedCategory && !selectedSousCategory">
+        Produits {{ selectedCategory }}
+      </span>
+      <span *ngIf="!selectedCategory && selectedSousCategory">
+        {{ selectedSousCategory }}
+      </span>
+      <!--
+      <span *ngIf="!selectedCategory && !selectedSousCategory">
+        Tous nos Produits
+      </span>
+      -->
+    </h3>
+  </div>
+
+  <!-- Type Aliment Filter (DIETETIQUE/PHYSIO) - Only show when pet and Aliment are selected -->
+  <div *ngIf="shouldShowSubSubCategoryFilter()" class="flex justify-center mb-6 " >
+    <div class="inline-flex gap-3 bg-gray-50 p-2 rounded-xl border border-gray-200">
+      <button (click)="selectSubSubCategory('DIETETIQUE')"
+        [class.bg-gradient-to-r]="selectedSubSubCategory === 'DIETETIQUE'"
+        [class.from-purple-600]="selectedSubSubCategory === 'DIETETIQUE'"
+        [class.to-blue-600]="selectedSubSubCategory === 'DIETETIQUE'"
+        [class.text-white]="selectedSubSubCategory === 'DIETETIQUE'"
+        [class.shadow-lg]="selectedSubSubCategory === 'DIETETIQUE'"
+        [class.bg-white]="selectedSubSubCategory !== 'DIETETIQUE'"
+        [class.text-gray-700]="selectedSubSubCategory !== 'DIETETIQUE'"
+        class="px-6 py-2.5 rounded-lg font-semibold transition-all duration-200 hover:shadow-md">
+        🏥 Diététique
+      </button>
+      <button (click)="selectSubSubCategory('PHYSIO')"
+        [class.bg-gradient-to-r]="selectedSubSubCategory === 'PHYSIO'"
+        [class.from-purple-600]="selectedSubSubCategory === 'PHYSIO'"
+        [class.to-blue-600]="selectedSubSubCategory === 'PHYSIO'"
+        [class.text-white]="selectedSubSubCategory === 'PHYSIO'"
+        [class.shadow-lg]="selectedSubSubCategory === 'PHYSIO'"
+        [class.bg-white]="selectedSubSubCategory !== 'PHYSIO'"
+        [class.text-gray-700]="selectedSubSubCategory !== 'PHYSIO'"
+        class="px-6 py-2.5 rounded-lg font-semibold transition-all duration-200 hover:shadow-md">
+        ⚡ Physiologie
+      </button>
+    </div>
+  </div>
+
+  <!-- Empty State - Show when no products found -->
+  <div *ngIf="!isLoading && getFilteredProducts().length === 0" class="text-center py-16">
+    <div class="flex justify-center mb-6">
+      <svg class="w-24 h-24 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+          d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+      </svg>
+    </div>
+    <h3 class="text-2xl font-semibold text-gray-700 mb-2">Aucun produit trouvé</h3>
+    <p class="text-gray-500">Essayez de modifier vos filtres</p>
+  </div>
+
+  
+
+  <!-- Products Grid - Fixed 7 per row, narrow cards -->
+  <div class="mb-8">
+    <div class="grid gap-3" style="grid-template-columns: repeat(7, 200px); justify-content: center;">
+      <div *ngFor="let product of getPaginatedProducts(); trackBy: trackByProductId"
+        class="bg-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 product-card overflow-hidden flex flex-col"
+        [class.highlighted-product]="highlightedProductId === product.id">
+
+      <!-- Product Image -->
+      <div class="relative bg-white p-4 flex items-center justify-center" style="height: 200px;">
+        <img [src]="product.imageUrl" [alt]="'Image du produit ' + product.name" class="w-full h-full object-contain"
+          (error)="onImageError($event)" loading="lazy">
+
+        <!-- Category Badge - Top Right -->
+        <div class="absolute top-2 right-2">
+          <span class="bg-blue-600 text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-md">
+            {{ product.subCategory === 'ALIMENT' ? 'Aliment' : product.subCategory === 'COMPLEMENT' ? 'Complément' :
+            'Test rapide' }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Product Info -->
+      <div class="p-3 pt-2 flex flex-col flex-grow text-center border-t border-gray-100">
+        <!-- Product Name -->
+        <h3 class="text-sm font-bold mb-2 text-gray-800 leading-tight"
+          style="display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; min-height: 3.6rem; word-break: break-word;">
+          {{ product.name }}
+        </h3>
+
+        <!-- Price Section (Added for taller look and consistency) -->
+
+
+        <!-- Category Badge -->
+        <div class="mb-2 flex justify-center">
+          <span class="text-xs px-3 py-1 bg-gray-100 rounded text-gray-700 font-medium border border-gray-200">
+            {{ product.category }}
+          </span>
+        </div>
+
+        <!-- Action Buttons - Stacked (Matches ProduitsVeterinaire) -->
+        <div class="flex flex-col gap-2 mt-auto">
+          <!-- Details Button -->
+          <a [href]="product.detailsUrl" target="_blank" rel="noopener noreferrer"
+            class="w-full flex items-center justify-center text-blue-700 hover:text-white hover:bg-blue-700 font-semibold text-xs transition-all duration-200 py-2 px-3 rounded border-2 border-blue-700 whitespace-nowrap">
+            <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+              </path>
+            </svg>
+            Détails
+          </a>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination Controls -->
+  <div *ngIf="getTotalPages() > 1" class="flex justify-center items-center gap-2 mt-8">
+    <!-- Previous Button -->
+    <button (click)="previousPage()" [disabled]="currentPage === 1"
+      class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+      </svg>
+    </button>
+
+    <!-- Page Numbers -->
+    <button *ngFor="let page of getPageNumbers()" (click)="goToPage(page)" [class.bg-vet-blue]="currentPage === page"
+      [class.text-white]="currentPage === page" [class.border-vet-blue]="currentPage === page"
+      [class.text-gray-700]="currentPage !== page" [class.border-gray-300]="currentPage !== page"
+      class="px-4 py-2 rounded-lg border hover:bg-blue-50 transition-all duration-200 font-medium">
+      {{ page }}
+    </button>
+
+    <!-- Next Button -->
+    <button (click)="nextPage()" [disabled]="currentPage === getTotalPages()"
+      class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Results Info -->
+  <div class="text-center mt-4 text-gray-600 text-sm">
+    Affichage de {{ (currentPage - 1) * itemsPerPage + 1 }} à {{ Math.min(currentPage * itemsPerPage,
+    getFilteredProducts().length) }} sur {{ getFilteredProducts().length }} produits
+  </div>
+
+
+<!-- Section Démystifier les mythes - Only for "Tous nos produits" -->
+
+    <!-- Call to Action - Consultation Vétérinaire (Full Width Below) -->
+    <div class="mt-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl shadow-lg p-8 md:p-10 text-center max-w-6xl mx-auto">
+      <h3 class="text-xl md:text-2xl font-bold text-white mb-4">
+        C'est pourquoi une consultation vétérinaire est primordiale.
+      </h3>
+      <p class="text-lg text-white mb-6 opacity-90">
+        Trouvez votre clinique près de vous
+      </p>
+      <a routerLink="/ou-trouver-nos-produits"
+        class="inline-flex items-center justify-center px-8 py-3 bg-white text-vet-blue text-base font-semibold rounded-lg hover:bg-gray-100 transition-all duration-300 shadow-md hover:shadow-lg">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+        </svg>
+        Trouver une clinique vétérinaire
+        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </a>
+    </div>
+ 
+
+<!-- Call to Action Section for Veterinarians 
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-card">
+      <div class="cta-content">
+        <h3 class="cta-title">Vous êtes un vétérinaire ?</h3>
+        <p class="cta-text">
+          Rejoignez notre communauté de vétérinaires et découvrez une application innovante
+          conçue spécialement pour simplifier votre pratique quotidienne et améliorer
+          la qualité des soins pour vos patients à quatre pattes.
+        </p>
+        <button class="btn-cta" routerLink="/formulaireUser">Commencer l'essai gratuit</button>
+      </div>
+      <div class="cta-icon">👩‍⚕️</div>
+    </div>
+  </div>
+</section>
+-->
+
+
+<!-- PDF Modal -->
+<div *ngIf="showPdfModal" 
+     class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-75 backdrop-blur-sm"
+     (click)="closePdfModal()">
+  <div class="relative w-full h-full max-w-7xl max-h-[95vh] bg-white rounded-2xl shadow-2xl overflow-hidden"
+       (click)="$event.stopPropagation()">
+    
+    <!-- Modal Header -->
+    <div class="flex items-center justify-between p-2 border-b border-gray-200"
+         [ngStyle]="{
+           'background': selectedCategory && currentPdfPet === 'CAT' ? 'linear-gradient(to right, rgb(116,195,117), rgb(96,175,97))' : 
+                        (selectedCategory && currentPdfPet === 'DOG' ? 'linear-gradient(to right, rgb(160,24,103), rgb(140,20,90))' : 
+                        'linear-gradient(to right, rgb(220,38,38), rgb(185,28,28))')
+         }">
+  <h3 class="text-lg font-bold text-white truncate pr-4">{{ currentPdfTitle }}</h3>
+  <button 
+    (click)="closePdfModal()"
+    class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-white transition-all duration-200"
+    [ngClass]="{
+      'hover:bg-green-100': selectedCategory && currentPdfPet === 'CAT',
+      'hover:bg-pink-100': selectedCategory && currentPdfPet === 'DOG',
+      'hover:bg-red-100': !selectedCategory || !currentPdfPet
+    }"
+    [style.color]="selectedCategory && currentPdfPet === 'CAT' ? 'rgb(116,195,117)' : (selectedCategory && currentPdfPet === 'DOG' ? 'rgb(160,24,103)' : 'rgb(220,38,38)')">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+    </svg>
+  </button>
+</div>
+
+    <!-- PDF Viewer -->
+    <div class="w-full h-[calc(100%-4rem)] overflow-hidden bg-gray-100 relative">
+      <!-- Loading State -->
+      <div *ngIf="isPdfLoading" class="absolute inset-0 flex flex-col items-center justify-center bg-white z-10">
+        <div class="animate-spin rounded-full h-16 w-16 border-4 border-t-transparent mb-4"
+             [style.border-color]="selectedCategory && currentPdfPet === 'CAT' ? 'rgb(116,195,117)' : (selectedCategory && currentPdfPet === 'DOG' ? 'rgb(160,24,103)' : 'rgb(220,38,38)')"></div>
+        <p class="text-gray-600 text-lg font-medium">Chargement du PDF...</p>
+      </div>
+
+      <!-- PDF Content using iframe - Always render but hide during loading -->
+      <div *ngIf="currentPdfUrl" class="w-full h-full" [class.hidden]="isPdfLoading">
+        <iframe 
+          [src]="currentPdfUrl | safe: 'resourceUrl'"
+          class="w-full h-full border-0"
+          title="PDF Viewer"
+          (load)="onPdfLoad()"
+          (error)="onPdfError()"
+          style="background: white;">
+        </iframe>
+      </div>
+
+      <!-- Fallback message if PDF doesn't load -->
+      <div *ngIf="currentPdfUrl" class="absolute bottom-4 right-4 z-20">
+        <a 
+          [href]="currentPdfUrl" 
+          target="_blank"
+          [ngStyle]="{
+            'background-color': selectedCategory && currentPdfPet === 'CAT' ? 'rgb(116,195,117)' : (selectedCategory && currentPdfPet === 'DOG' ? 'rgb(160,24,103)' : 'rgb(220,38,38)')
+          }"
+          class="inline-flex items-center px-4 py-2 text-white text-sm rounded-lg transition-colors shadow-lg hover:opacity-90">
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+          </svg>
+          Ouvrir dans un nouvel onglet
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

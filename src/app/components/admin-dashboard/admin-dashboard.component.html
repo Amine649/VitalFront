@@ -1,0 +1,281 @@
+<!-- Admin Dashboard -->
+<div class="min-h-screen bg-gray-50">
+  <div class="max-w-7xl mx-auto p-6 sm:p-8">
+
+    <!-- Header with Refresh -->
+    <div class="mb-8 pt-4 flex items-center justify-between">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">Tableau de bord</h1>
+        <p class="text-gray-600">Vue d'ensemble de votre plateforme VITALFEED</p>
+      </div>
+      <button (click)="refresh()" [disabled]="loading"
+        class="flex items-center gap-2 bg-vet-blue hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors disabled:opacity-50">
+        <svg class="w-5 h-5" [class.animate-spin]="loading" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+          </path>
+        </svg>
+        <span>Actualiser</span>
+      </button>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error" class="bg-red-50 border border-red-200 rounded-lg p-6 mb-6">
+      <div class="flex items-center gap-3">
+        <svg class="w-6 h-6 text-red-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <div class="flex-1">
+          <h3 class="text-red-800 font-semibold mb-1">Erreur de chargement</h3>
+          <p class="text-red-700 text-sm">{{ error }}</p>
+        </div>
+        <button (click)="refresh()"
+          class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm transition-colors">
+          Réessayer
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="text-center py-16">
+      <div class="inline-block animate-spin rounded-full h-16 w-16 border-4 border-blue-200 border-t-blue-600"></div>
+      <p class="mt-4 text-gray-600 font-medium">Chargement du tableau de bord...</p>
+    </div>
+
+    <!-- Dashboard Content -->
+    <div *ngIf="!loading">
+
+      <!-- Main Stats Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+
+        <!-- Total Users -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+                </path>
+              </svg>
+            </div>
+          </div>
+          <h3 class="text-gray-600 text-sm font-medium mb-1">Utilisateurs</h3>
+          <p class="text-3xl font-bold text-gray-900 mb-2">{{ stats.totalUsers }}</p>
+          <div class="flex items-center text-sm">
+            <span class="text-gray-500">{{ stats.inactiveUsers }} inactifs</span>
+          </div>
+        </div>
+
+        <!-- Total Veterinaires -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+                </path>
+              </svg>
+            </div>
+          </div>
+          <h3 class="text-gray-600 text-sm font-medium mb-1">Vétérinaires</h3>
+          <p class="text-3xl font-bold text-gray-900 mb-2">{{ stats.totalVeterinaires }}</p>
+          <div class="flex items-center text-sm">
+            <span class="text-green-600 font-medium">● Enregistrés</span>
+          </div>
+        </div>
+
+        <!-- Total Products -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+              </svg>
+            </div>
+          </div>
+          <h3 class="text-gray-600 text-sm font-medium mb-1">Produits</h3>
+          <p class="text-3xl font-bold text-gray-900 mb-2">{{ stats.totalProducts }}</p>
+          <div class="flex items-center text-sm">
+            <span class="text-gray-500">Catalogue complet</span>
+          </div>
+        </div>
+
+        <!-- Total Cabinets -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                </path>
+              </svg>
+            </div>
+          </div>
+          <h3 class="text-gray-600 text-sm font-medium mb-1">Cabinets</h3>
+          <p class="text-3xl font-bold text-gray-900 mb-2">{{ stats.totalCabinets }}</p>
+          <div class="flex items-center text-sm">
+            <span class="text-indigo-600 font-medium">⭐ {{ stats.featuredCabinets }} principaux</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Subscription Status Stats -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+
+        <!-- Active Subscriptions -->
+        <div class="bg-gradient-to-br from-green-500 to-green-800 rounded-xl shadow-lg p-6 text-white">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold">Abonnements Actifs</h3>
+            <svg class="w-8 h-8 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <p class="text-4xl font-bold mb-2">{{ stats.activeSubscriptions }}</p>
+          <p class="text-green-100 text-sm">● Abonnements en cours</p>
+        </div>
+
+        <!-- Inactive Subscriptions -->
+        <div class="bg-gradient-to-br from-gray-500 to-gray-800 rounded-xl shadow-lg p-6 text-white">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold">Abonnements Inactifs</h3>
+            <svg class="w-8 h-8 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636">
+              </path>
+            </svg>
+          </div>
+          <p class="text-4xl font-bold mb-2">{{ stats.inactiveUsers }}</p>
+          <p class="text-gray-100 text-sm">● Utilisateurs inactifs</p>
+        </div>
+
+        <!-- Expired Subscriptions -->
+        <div class="bg-gradient-to-br from-red-500 to-red-700 rounded-xl shadow-lg p-6 text-white">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold">Abonnements Expirés</h3>
+            <svg class="w-8 h-8 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <p class="text-4xl font-bold mb-2">{{ stats.expiredSubscriptions }}</p>
+          <p class="text-red-100 text-sm">● Abonnements expirés</p>
+        </div>
+
+      </div>
+
+      <!-- Charts and Recent Activity -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+
+        <!-- Cabinets Overview -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <h3 class="text-lg font-bold text-gray-900 mb-6">Aperçu des Cabinets</h3>
+          <div class="space-y-4">
+            <div class="flex items-center gap-4">
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-sm font-medium text-gray-700">⭐ Cabinets Principaux</span>
+                  <span class="text-sm font-bold text-gray-900">{{ stats.featuredCabinets }}</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-3">
+                  <div
+                    class="h-3 rounded-full transition-all duration-500 bg-gradient-to-r from-indigo-500 to-indigo-600"
+                    [style.width.%]="getPercentage(stats.featuredCabinets, stats.totalCabinets)"></div>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-sm font-medium text-gray-700">🏪 Cabinets Standard</span>
+                  <span class="text-sm font-bold text-gray-900">{{ stats.totalCabinets - stats.featuredCabinets
+                    }}</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-3">
+                  <div class="h-3 rounded-full transition-all duration-500 bg-gradient-to-r from-blue-400 to-blue-500"
+                    [style.width.%]="getPercentage(stats.totalCabinets - stats.featuredCabinets, stats.totalCabinets)">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-6 p-4 bg-indigo-50 rounded-lg">
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-semibold text-indigo-900">Total des Cabinets</span>
+                <span class="text-2xl font-bold text-indigo-600">{{ stats.totalCabinets }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Products by Category -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <h3 class="text-lg font-bold text-gray-900 mb-6">Produits par Catégorie</h3>
+          <div class="space-y-4">
+            <div *ngFor="let item of productChartData" class="flex items-center gap-4">
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-sm font-medium text-gray-700">{{ item.label }}</span>
+                  <span class="text-sm font-bold text-gray-900">{{ item.value }}</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-3">
+                  <div class="h-3 rounded-full transition-all duration-500"
+                    [style.width.%]="getPercentage(item.value, stats.totalProducts)"
+                    [style.background-color]="item.color"></div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-6 p-4 bg-purple-50 rounded-lg">
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-semibold text-purple-900">Total des Produits</span>
+                <span class="text-2xl font-bold text-purple-600">{{ stats.totalProducts }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Recent Subscriptions -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="text-lg font-bold text-gray-900">Abonnements Récents</h3>
+          <a routerLink="/admin/subscriptions" class="text-vet-blue hover:text-blue-700 text-sm font-medium">
+            Voir tout →
+          </a>
+        </div>
+
+        <div *ngIf="stats.recentSubscriptions.length === 0" class="text-center py-8 text-gray-500">
+          Aucun abonnement récent
+        </div>
+
+
+        <div *ngIf="stats.recentSubscriptions.length > 0" class="space-y-3">
+          <div *ngFor="let sub of stats.recentSubscriptions"
+            class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+            <div class="flex items-center gap-4">
+              <div
+                class="w-10 h-10 bg-gradient-to-br from-vet-blue to-blue-600 rounded-full flex items-center justify-center text-white font-bold">
+                {{ sub.user?.nom?.charAt(0) || '?' }}{{ sub.user?.prenom?.charAt(0) || '?' }}
+              </div>
+              <div>
+                <p class="font-semibold text-gray-900">{{ sub.user?.nom }} {{ sub.user?.prenom }}</p>
+                <p class="text-sm text-gray-600">{{ sub.user?.email }}</p>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="inline-block px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full mb-1">
+                {{ getSubscriptionLabel(sub.subscriptionType) }}
+              </span>
+              <p class="text-xs text-gray-500">Date Expiration : {{ formatDate(sub.endDate) }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

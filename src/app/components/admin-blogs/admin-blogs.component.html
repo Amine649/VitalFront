@@ -1,0 +1,609 @@
+<!-- Main Container -->
+<div class="min-h-screen bg-gray-50">
+  
+  <div class="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+    <!-- Header -->
+    <div class="mb-6 pt-4">
+      <h1 class="text-2xl font-bold text-gray-900 flex items-center">
+        <svg class="w-7 h-7 mr-3 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+        </svg>
+        Gestion des Blogs
+      </h1>
+      <p class="text-gray-600 mt-1 ml-10">Gérez les articles pour vétérinaires et propriétaires</p>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      
+      <!-- Total Blogs -->
+      <div class="bg-white rounded-xl shadow-md p-5 border-t-4 border-indigo-500 hover:shadow-lg transition-shadow cursor-pointer">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-xs text-gray-600 mb-1 ">Total Blogs</p>
+            <p class="text-2xl font-bold text-gray-900">{{ blogs.length }}</p>
+          </div>
+          <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center">
+            <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Veterinaire Blogs -->
+      <div class="bg-white rounded-xl shadow-md p-5 border-t-4 border-purple-500 hover:shadow-lg transition-shadow cursor-pointer">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-xs text-gray-600 mb-1">Blogs Vétérinaire</p>
+            <p class="text-2xl font-bold text-gray-900">{{ getVeterinaireCount() }}</p>
+          </div>
+          <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Proprietaire Blogs -->
+      <div class="bg-white rounded-xl shadow-md p-5 border-t-4 border-emerald-500 hover:shadow-lg transition-shadow cursor-pointer">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-xs text-gray-600 mb-1">Blogs Propriétaire</p>
+            <p class="text-2xl font-bold text-gray-900">{{ getProprietaireCount() }}</p>
+          </div>
+          <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
+            <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pet Stats -->
+      <div class="bg-white rounded-xl shadow-md p-5 border-t-4 border-amber-500 hover:shadow-lg transition-shadow cursor-pointer">
+        <div class="flex items-center justify-between">
+         <div class="flex flex-col items-center w-full">
+  <p class="text-xs text-gray-600 mb-1">Animaux</p>
+  <div class="flex items-center justify-center gap-3 mt-1 w-full">
+    <div class="text-center">
+      <p class="text-lg font-bold text-green-600">{{ getCatCount() }}</p>
+      <p class="text-xs text-gray-500">🐱 Chats</p>
+    </div>
+    <div class="w-px h-8 bg-gray-300"></div>
+    <div class="text-center">
+      <p class="text-lg font-bold text-pink-600">{{ getDogCount() }}</p>
+      <p class="text-xs text-gray-500">🐶 Chiens</p>
+    </div>
+  </div>
+</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading && !showAddModal && !showEditModal" class="text-center py-16">
+      <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-indigo-600 mx-auto mb-4"></div>
+      <p class="text-gray-600">Chargement...</p>
+    </div>
+
+    <!-- Blogs List -->
+    <div *ngIf="!isLoading || showAddModal || showEditModal" class="bg-white rounded-xl shadow-md overflow-hidden">
+      <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+        <h2 class="text-lg font-semibold text-gray-900 flex items-center">
+          <svg class="w-5 h-5 text-indigo-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+          Liste des Blogs
+          <span class="ml-3 px-3 py-1 bg-indigo-600 text-white text-sm rounded-full">{{ filteredBlogs.length }}</span>
+        </h2>
+        <div class="flex items-center gap-3">
+          <!-- Search -->
+          <div class="relative" style="width: 250px;">
+            <input
+              type="text"
+              [(ngModel)]="searchTerm"
+              (ngModelChange)="onSearchChange($event)"
+              placeholder="Rechercher un blog..."
+              class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+          </div>
+
+          <!-- Pet Filter -->
+          <select
+            [(ngModel)]="selectedPet"
+            (ngModelChange)="onPetChange($event)"
+            class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+            <option value="ALL">Tous les animaux</option>
+            <option value="CAT"> Chat</option>
+            <option value="DOG"> Chien</option>
+          </select>
+
+          <!-- Type Filter -->
+          <select
+            [(ngModel)]="selectedType"
+            (ngModelChange)="onTypeChange($event)"
+            class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+            <option value="ALL">Tous les types</option>
+            <option value="VETERINAIRE">Vétérinaire</option>
+            <option value="PROPRIETAIRE">Propriétaire</option>
+          </select>
+
+          <!-- Add Button -->
+          <button
+            (click)="openAddModal()"
+            class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+            </svg>
+            Nouveau Blog
+          </button>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div *ngIf="filteredBlogs.length === 0" class="text-center py-12">
+        <svg class="w-16 h-16 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+        </svg>
+        <p class="text-lg font-medium text-gray-900">Aucun Blog</p>
+        <p class="text-sm text-gray-600 mt-2">Commencez par ajouter votre premier blog</p>
+        <button
+          (click)="openAddModal()"
+          class="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors">
+          + Ajouter un Blog
+        </button>
+      </div>
+
+      <!-- Blogs Table -->
+      <div *ngIf="filteredBlogs.length > 0" class="overflow-x-auto">
+        <table class="w-full">
+          <thead class="bg-gray-50 border-b border-gray-200">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Titre</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Animal</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">PDF</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+              <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+          <tr *ngFor="let blog of getPaginatedBlogs()" class="hover:bg-gray-50 transition-colors">
+            <td class="px-6 py-4">
+              <div>
+                <p class="text-sm font-semibold text-gray-900">{{ blog.title }}</p>
+                <p class="text-sm text-gray-500 mt-1 line-clamp-2">{{ blog.description }}</p>
+              </div>
+            </td>
+            <td class="px-6 py-4">
+              <span [class]="'inline-flex px-2.5 py-1 rounded-full text-xs font-semibold ' + getPetBadgeClass(blog.pet)">
+                {{ blog.pet === 'CAT' ? '🐱' : '🐶' }} {{ getPetLabel(blog.pet) }}
+              </span>
+            </td>
+            <td class="px-6 py-4">
+              <span [class]="'inline-flex px-2.5 py-1 rounded-full text-xs font-semibold ' + getTypeBadgeClass(blog.type)">
+                {{ getTypeLabel(blog.type) }}
+              </span>
+            </td>
+            <td class="px-6 py-4">
+              <span *ngIf="blog.pdfUrl" class="inline-flex items-center gap-1 text-sm text-gray-600">
+                <svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/>
+                </svg>
+                Oui
+              </span>
+              <span *ngIf="!blog.pdfUrl" class="text-sm text-gray-400">Non</span>
+            </td>
+            <td class="px-6 py-4 text-sm text-gray-500">
+              {{ blog.createdAt | date:'dd/MM/yyyy' }}
+            </td>
+            <td class="px-6 py-4 text-right">
+              <div class="flex items-center justify-end gap-2">
+                <button
+                  (click)="openEditModal(blog)"
+                  class="p-2 text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
+                  title="Modifier">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                  </svg>
+                </button>
+                <button
+                  (click)="openDeleteModal(blog)"
+                  class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                  title="Supprimer">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Pagination -->
+      <div *ngIf="filteredBlogs.length > itemsPerPage" class="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
+        <p class="text-sm text-gray-600">
+          Affichage de {{ (currentPage - 1) * itemsPerPage + 1 }} à {{ Math.min(currentPage * itemsPerPage, filteredBlogs.length) }} sur {{ filteredBlogs.length }} résultats
+        </p>
+        <div class="flex items-center gap-2">
+          <button
+            (click)="previousPage()"
+            [disabled]="currentPage === 1"
+            class="px-3 py-1.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+            Précédent
+          </button>
+          <button
+            *ngFor="let page of getPageNumbers()"
+            (click)="goToPage(page)"
+            [class]="currentPage === page 
+              ? 'px-3 py-1.5 bg-indigo-600 text-white rounded-lg text-sm font-medium' 
+              : 'px-3 py-1.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors'">
+            {{ page }}
+          </button>
+          <button
+            (click)="nextPage()"
+            [disabled]="currentPage === getTotalPages()"
+            class="px-3 py-1.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+            Suivant
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Add Modal -->
+<div *ngIf="showAddModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+  <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    
+    <!-- Modal Header -->
+    <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+      <h2 class="text-xl font-bold text-gray-900">Ajouter un Blog</h2>
+      <button (click)="closeModals()" class="text-gray-400 hover:text-gray-600 transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="p-6 space-y-5">
+      
+      <!-- Title -->
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-2">
+          Titre <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="text"
+          [(ngModel)]="blogForm.title"
+          placeholder="Ex: Guide complet de nutrition"
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+      </div>
+
+      <!-- Description -->
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-2">
+          Description <span class="text-red-500">*</span>
+        </label>
+        <textarea
+          [(ngModel)]="blogForm.description"
+          rows="4"
+          placeholder="Décrivez le contenu du blog..."
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"></textarea>
+      </div>
+
+      <!-- Pet Selection -->
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-2">
+          Animal <span class="text-red-500">*</span>
+        </label>
+        <div class="grid grid-cols-2 gap-3">
+          <label class="relative cursor-pointer">
+            <input
+              type="radio"
+              name="pet"
+              value="CAT"
+              [(ngModel)]="blogForm.pet"
+              class="peer sr-only">
+            <div class="p-4 border-2 border-gray-200 rounded-lg peer-checked:border-green-500 peer-checked:bg-green-50 transition-all text-center">
+              <div class="text-2xl mb-1">🐱</div>
+              <div class="text-sm font-semibold text-gray-900">Chat</div>
+            </div>
+          </label>
+          
+          <label class="relative cursor-pointer">
+            <input
+              type="radio"
+              name="pet"
+              value="DOG"
+              [(ngModel)]="blogForm.pet"
+              class="peer sr-only">
+            <div class="p-4 border-2 border-gray-200 rounded-lg peer-checked:border-pink-500 peer-checked:bg-pink-50 transition-all text-center">
+              <div class="text-2xl mb-1">🐶</div>
+              <div class="text-sm font-semibold text-gray-900">Chien</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Type -->
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-2">
+          Type <span class="text-red-500">*</span>
+        </label>
+        <div class="grid grid-cols-2 gap-3">
+          <label class="relative cursor-pointer">
+            <input
+              type="radio"
+              name="type"
+              value="PROPRIETAIRE"
+              [(ngModel)]="blogForm.type"
+              class="peer sr-only">
+            <div class="p-4 border-2 border-gray-200 rounded-lg peer-checked:border-blue-500 peer-checked:bg-blue-50 transition-all text-center">
+              <div class="text-2xl mb-1">🐕</div>
+              <div class="text-sm font-semibold text-gray-900">Propriétaire</div>
+            </div>
+          </label>
+          
+          <label class="relative cursor-pointer">
+            <input
+              type="radio"
+              name="type"
+              value="VETERINAIRE"
+              [(ngModel)]="blogForm.type"
+              class="peer sr-only">
+            <div class="p-4 border-2 border-gray-200 rounded-lg peer-checked:border-purple-500 peer-checked:bg-purple-50 transition-all text-center">
+              <div class="text-2xl mb-1">👨‍⚕️</div>
+              <div class="text-sm font-semibold text-gray-900">Vétérinaire</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- PDF Upload -->
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-2">
+          Fichier PDF (optionnel)
+        </label>
+        <input
+          type="file"
+          accept=".pdf"
+          (change)="onFileSelected($event)"
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-blue-50 file:text-blue-700 file:font-semibold hover:file:bg-blue-100">
+        <p class="mt-2 text-xs text-gray-500">Format accepté: PDF uniquement</p>
+      </div>
+
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex items-center justify-end gap-3 rounded-b-xl">
+      <button
+        (click)="closeModals()"
+        class="px-5 py-2.5 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-100 transition-colors">
+        Annuler
+      </button>
+      <button
+        (click)="addBlog()"
+        [disabled]="isLoading"
+        class="px-5 py-2.5 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
+        <span *ngIf="isLoading" class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></span>
+        {{ isLoading ? 'Ajout...' : 'Ajouter' }}
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div *ngIf="showEditModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+  <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    
+    <!-- Modal Header -->
+    <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+      <h2 class="text-xl font-bold text-gray-900">Modifier le Blog</h2>
+      <button (click)="closeModals()" class="text-gray-400 hover:text-gray-600 transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="p-6 space-y-5">
+      
+      <!-- Title -->
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-2">
+          Titre <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="text"
+          [(ngModel)]="blogForm.title"
+          placeholder="Ex: Guide complet de nutrition"
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+      </div>
+
+      <!-- Description -->
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-2">
+          Description <span class="text-red-500">*</span>
+        </label>
+        <textarea
+          [(ngModel)]="blogForm.description"
+          rows="4"
+          placeholder="Décrivez le contenu du blog..."
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"></textarea>
+      </div>
+
+      <!-- Pet Selection -->
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-2">
+          Animal <span class="text-red-500">*</span>
+        </label>
+        <div class="grid grid-cols-2 gap-3">
+          <label class="relative cursor-pointer">
+            <input
+              type="radio"
+              name="pet-edit"
+              value="CAT"
+              [(ngModel)]="blogForm.pet"
+              class="peer sr-only">
+            <div class="p-4 border-2 border-gray-200 rounded-lg peer-checked:border-green-500 peer-checked:bg-green-50 transition-all text-center">
+              <div class="text-2xl mb-1">🐱</div>
+              <div class="text-sm font-semibold text-gray-900">Chat</div>
+            </div>
+          </label>
+          
+          <label class="relative cursor-pointer">
+            <input
+              type="radio"
+              name="pet-edit"
+              value="DOG"
+              [(ngModel)]="blogForm.pet"
+              class="peer sr-only">
+            <div class="p-4 border-2 border-gray-200 rounded-lg peer-checked:border-pink-500 peer-checked:bg-pink-50 transition-all text-center">
+              <div class="text-2xl mb-1">🐶</div>
+              <div class="text-sm font-semibold text-gray-900">Chien</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Type -->
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-2">
+          Type <span class="text-red-500">*</span>
+        </label>
+        <div class="grid grid-cols-2 gap-3">
+          <label class="relative cursor-pointer">
+            <input
+              type="radio"
+              name="type-edit"
+              value="PROPRIETAIRE"
+              [(ngModel)]="blogForm.type"
+              class="peer sr-only">
+            <div class="p-4 border-2 border-gray-200 rounded-lg peer-checked:border-blue-500 peer-checked:bg-blue-50 transition-all text-center">
+              <div class="text-2xl mb-1">🐕</div>
+              <div class="text-sm font-semibold text-gray-900">Propriétaire</div>
+            </div>
+          </label>
+          
+          <label class="relative cursor-pointer">
+            <input
+              type="radio"
+              name="type-edit"
+              value="VETERINAIRE"
+              [(ngModel)]="blogForm.type"
+              class="peer sr-only">
+            <div class="p-4 border-2 border-gray-200 rounded-lg peer-checked:border-purple-500 peer-checked:bg-purple-50 transition-all text-center">
+              <div class="text-2xl mb-1">👨‍⚕️</div>
+              <div class="text-sm font-semibold text-gray-900">Vétérinaire</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- PDF Upload -->
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-2">
+          Nouveau fichier PDF (optionnel)
+        </label>
+        <input
+          type="file"
+          accept=".pdf"
+          (change)="onFileSelected($event)"
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-blue-50 file:text-blue-700 file:font-semibold hover:file:bg-blue-100">
+        <p class="mt-2 text-xs text-gray-500">Laissez vide pour conserver le PDF actuel</p>
+      </div>
+
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex items-center justify-end gap-3 rounded-b-xl">
+      <button
+        (click)="closeModals()"
+        class="px-5 py-2.5 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-100 transition-colors">
+        Annuler
+      </button>
+      <button
+        (click)="updateBlog()"
+        [disabled]="isLoading"
+        class="px-5 py-2.5 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
+        <span *ngIf="isLoading" class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></span>
+        {{ isLoading ? 'Modification...' : 'Modifier' }}
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- Delete Modal -->
+<div *ngIf="showDeleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+  <div class="bg-white rounded-xl shadow-2xl max-w-md w-full">
+    
+    <!-- Modal Header -->
+    <div class="px-6 py-4 border-b border-gray-200">
+      <h2 class="text-xl font-bold text-gray-900">Confirmer la suppression</h2>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="p-6">
+      <p class="text-gray-700 mb-4">
+        Êtes-vous sûr de vouloir supprimer ce blog ?
+      </p>
+      <div *ngIf="selectedBlog" class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+        <p class="font-semibold text-gray-900">{{ selectedBlog.title }}</p>
+        <p class="text-sm text-gray-600 mt-1">{{ selectedBlog.description }}</p>
+      </div>
+      <p class="text-sm text-red-600 mt-4 font-medium">
+        ⚠️ Cette action est irréversible
+      </p>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex items-center justify-end gap-3 rounded-b-xl">
+      <button
+        (click)="closeModals()"
+        class="px-5 py-2.5 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-100 transition-colors">
+        Annuler
+      </button>
+      <button
+        (click)="deleteBlog()"
+        [disabled]="isLoading"
+        class="px-5 py-2.5 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
+        <span *ngIf="isLoading" class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></span>
+        {{ isLoading ? 'Suppression...' : 'Supprimer' }}
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- Notification Toast -->
+<div *ngIf="notification.show" 
+     [class]="'fixed top-6 right-6 z-50 px-6 py-4 rounded-lg shadow-xl flex items-center gap-3 ' + 
+              (notification.type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white')">
+  <svg *ngIf="notification.type === 'success'" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+  </svg>
+  <svg *ngIf="notification.type === 'error'" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+  </svg>
+  <span class="font-semibold">{{ notification.message }}</span>
+  <button (click)="closeNotification()" class="ml-2 hover:bg-white hover:bg-opacity-20 rounded p-1">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+    </svg>
+  </button>
+</div>

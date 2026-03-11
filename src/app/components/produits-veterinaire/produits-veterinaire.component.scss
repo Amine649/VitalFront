@@ -1,0 +1,170 @@
+// ========== MATCHING ESPACE-PROPRIETAIRE STYLES ==========
+.highlighted-product {
+  animation: highlightPulse 2s ease-in-out;
+  border: 3px solid #3b82f6 !important;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2), 0 20px 40px rgba(59, 130, 246, 0.3) !important;
+  transform: scale(1.02);
+  z-index: 10;
+  position: relative;
+}
+
+@keyframes highlightPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7), 0 20px 40px rgba(59, 130, 246, 0.3);
+    transform: scale(1);
+  }
+
+  25% {
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0.3), 0 20px 40px rgba(59, 130, 246, 0.3);
+    transform: scale(1.03);
+  }
+
+  50% {
+    box-shadow: 0 0 0 15px rgba(59, 130, 246, 0.1), 0 20px 40px rgba(59, 130, 246, 0.3);
+    transform: scale(1.02);
+  }
+
+  75% {
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0.3), 0 20px 40px rgba(59, 130, 246, 0.3);
+    transform: scale(1.03);
+  }
+
+  100% {
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2), 0 20px 40px rgba(59, 130, 246, 0.3);
+    transform: scale(1.02);
+  }
+}
+
+.product-card {
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+}
+
+// ======== Category Hero Section — Organic Redesign ========
+.category-hero-section {
+  position: relative;
+  overflow: hidden;
+  background: #ffffff;
+  margin-top: 0;
+  border-radius: 0; // consistent with new design
+
+  // Blob Animation
+  .animate-blob {
+    animation: blob 7s infinite;
+  }
+
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
+
+  @keyframes blob {
+    0% {
+      transform: translate(0px, 0px) scale(1);
+    }
+
+    33% {
+      transform: translate(30px, -50px) scale(1.1);
+    }
+
+    66% {
+      transform: translate(-20px, 20px) scale(0.9);
+    }
+
+    100% {
+      transform: translate(0px, 0px) scale(1);
+    }
+  }
+
+  // Slow Bounce for Badge
+  .animate-bounce-slow {
+    animation: bounce 3s infinite;
+  }
+
+  @keyframes bounce {
+
+    0%,
+    100% {
+      transform: translateY(-5%);
+      animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+
+    50% {
+      transform: translateY(0);
+      animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+  }
+}
+
+// Typography & Elements
+h2 {
+  letter-spacing: -0.02em;
+}
+
+// Responsive Adjustments
+@media (max-width: 768px) {
+  .category-hero-section {
+    text-align: center;
+  }
+
+  .hero-text-side {
+    padding-right: 0;
+  }
+}
+
+.products-header {
+  position: relative;
+}
+
+// ---- Animations ----
+@keyframes heroEnter {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Fix for line-clamp to ensure proper text truncation
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
+  overflow: hidden;
+}

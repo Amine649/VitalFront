@@ -1,0 +1,670 @@
+<!-- Products Management Page -->
+<div class="min-h-screen bg-gray-50">
+  <div class="max-w-7xl mx-auto p-6 sm:p-8">
+    <!-- Page Header -->
+    <div class="mb-6 pt-4">
+  <h1 class="text-2xl font-bold text-gray-900 flex items-center">
+    <svg class="w-7 h-7 mr-3 text-vet-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+    </svg>
+    Gestion des Produits
+  </h1>
+  <p class="text-gray-600 mt-1 ml-10">Ajoutez, modifiez ou supprimez des produits du catalogue</p>
+</div>
+
+    <!-- Actions Bar -->
+    <div class="mb-6 space-y-4">
+      <!-- Top Row: Search, Filter, View Toggle -->
+      <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full lg:w-auto">
+          <!-- Search -->
+          <div class="relative w-full sm:w-72">
+            <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange($event)"
+              placeholder="Rechercher un produit..."
+              class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm">
+            <svg class="absolute left-3 top-3 w-5 h-5 text-gray-400" fill="none" stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
+
+          <!-- Category Filter -->
+          <select [(ngModel)]="selectedCategory" (ngModelChange)="onCategoryChange($event)"
+            class="w-full sm:w-auto px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 shadow-sm bg-white">
+            <option value="">Toutes les catégories</option>
+            <option value="CHIEN"> Chien</option>
+            <option value="CHAT"> Chat</option>
+          </select>
+
+          <!-- SubCategory Filter -->
+          <select [(ngModel)]="selectedSubCategory" (ngModelChange)="onSubCategoryChange($event)"
+            class="w-full sm:w-auto px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 shadow-sm bg-white">
+            <option value="">Tous les types</option>
+            <option value="ALIMENT"> Aliment</option>
+            <option value="COMPLEMENT"> Complément</option>
+            <option value="TEST_RAPIDE"> Test rapide</option>
+          </select>
+
+          <!-- Reset Filters Button -->
+          <button *ngIf="searchTerm || selectedCategory || selectedSubCategory" (click)="resetFilters()"
+            class="px-4 py-2.5 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+            Réinitialiser
+          </button>
+        </div>
+
+        <!-- Right Side: View Toggle & Add Button -->
+        <div class="flex items-center gap-3 w-full lg:w-auto">
+          <!-- View Toggle -->
+          <div class="flex items-center bg-white border border-gray-300 rounded-lg shadow-sm">
+            <button (click)="toggleViewMode('grid')" [class.bg-blue-600]="viewMode === 'grid'"
+              [class.text-white]="viewMode === 'grid'" [class.text-gray-600]="viewMode !== 'grid'"
+              class="p-2.5 rounded-l-lg transition-colors hover:bg-blue-50">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
+                </path>
+              </svg>
+            </button>
+            <button (click)="toggleViewMode('list')" [class.bg-blue-600]="viewMode === 'list'"
+              [class.text-white]="viewMode === 'list'" [class.text-gray-600]="viewMode !== 'list'"
+              class="p-2.5 rounded-r-lg transition-colors hover:bg-blue-50 border-l border-gray-300">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                </path>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Add Product Button -->
+          <button (click)="openAddModal()"
+            class="flex-1 lg:flex-none bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg flex items-center justify-center gap-2 transition-colors shadow-sm">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+            Ajouter
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error" class="bg-red-50 border border-red-200 rounded-lg p-6 mb-6">
+      <div class="flex items-center gap-3">
+        <svg class="w-6 h-6 text-red-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <div class="flex-1">
+          <h3 class="text-red-800 font-semibold mb-1">Erreur de chargement</h3>
+          <p class="text-red-700 text-sm">Impossible de charger les produits. Veuillez vérifier votre connexion et
+            réessayer.</p>
+        </div>
+        <button (click)="loadProducts()"
+          class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm transition-colors">
+          Réessayer
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="text-center py-16">
+      <div class="inline-block animate-spin rounded-full h-16 w-16 border-4 border-blue-200 border-t-blue-600"></div>
+      <p class="mt-4 text-gray-600 font-medium">Chargement des produits...</p>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!loading && !error && filteredProducts.length === 0 && products.length === 0"
+      class="text-center py-16 bg-white rounded-xl border-2 border-dashed border-gray-300">
+      <svg class="mx-auto h-16 w-16 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4">
+        </path>
+      </svg>
+      <h3 class="text-xl font-semibold text-gray-700 mb-2">Aucun produit</h3>
+      <p class="text-gray-500 mb-4">Commencez par ajouter votre premier produit</p>
+      <button (click)="openAddModal()"
+        class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+        </svg>
+        Ajouter un produit
+      </button>
+    </div>
+
+    <!-- No Results State -->
+    <div *ngIf="!loading && !error && filteredProducts.length === 0 && products.length > 0"
+      class="text-center py-16 bg-white rounded-xl border border-gray-200">
+      <svg class="mx-auto h-16 w-16 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+      </svg>
+      <h3 class="text-xl font-semibold text-gray-700 mb-2">Aucun résultat</h3>
+      <p class="text-gray-500 mb-4">Aucun produit ne correspond à votre recherche</p>
+      <button (click)="resetFilters()"
+        class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+          </path>
+        </svg>
+        Réinitialiser les filtres
+      </button>
+    </div>
+
+    <!-- Products Grid View -->
+    <div *ngIf="!loading && !error && filteredProducts.length > 0 && viewMode === 'grid'"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div *ngFor="let product of getPaginatedProducts()"
+        class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+        <!-- Product Image -->
+        <div class="relative h-56 bg-gradient-to-br from-blue-50 to-green-50 flex items-center justify-center p-4">
+          <img [src]="product.imageUrl" [alt]="'Image du produit ' + product.name" class="w-full h-full object-contain"
+            (error)="onImageError($event)" loading="lazy">
+        </div>
+
+        <!-- Product Info -->
+        <div class="p-5">
+          <div class="flex items-start justify-between mb-3">
+            <h3 class="font-bold text-gray-900 text-lg leading-tight flex-1 pr-2">{{ product.name }}</h3>
+          </div>
+          <p class="text-gray-600 text-sm mb-4 line-clamp-2 min-h-[2.5rem]">{{ product.description }}</p>
+
+          <div class="flex items-center justify-between mb-4 pb-4 border-b border-gray-100">
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-medium text-gray-600">{{ getCategoryLabel(product.category) }}</span>
+            </div>
+            <div class="text-right">
+              <span class="text-2xl font-bold text-blue-600">{{ getProductPrice(product) }} TND</span>
+              <p *ngIf="getProductPackaging(product)" 
+                 class="text-xs text-gray-500 mt-1">{{ getProductPackaging(product) }}</p>
+            </div>
+          </div>
+
+          <!-- Badges (centered between buttons) -->
+          <div class="flex justify-center gap-2 mb-3">
+            <span [class]="product.inStock ? 'bg-green-500' : 'bg-red-500'"
+              class="px-3 py-1 text-xs font-semibold text-white rounded-full shadow-sm">
+              {{ product.inStock ? '✓ En stock' : '✗ Rupture' }}
+            </span>
+            <span class="bg-blue-500 text-white px-3 py-1 text-xs font-semibold rounded-full shadow-sm">
+              {{ getSubCategoryLabel(product.subCategory) }}
+            </span>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex flex-col gap-2">
+            <div class="flex gap-2">
+              <button (click)="openEditModal(product)"
+                class="flex-1 bg-blue-50 hover:bg-blue-100 text-blue-600 font-medium px-4 py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                  </path>
+                </svg>
+                Modifier
+              </button>
+              <button (click)="openDeleteModal(product)"
+                class="flex-1 bg-red-50 hover:bg-red-100 text-red-600 font-medium px-4 py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                  </path>
+                </svg>
+                Supprimer
+              </button>
+            </div>
+            <button (click)="openVariantModal(product)"
+              class="w-full bg-purple-50 hover:bg-purple-100 text-purple-600 font-medium px-4 py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4">
+                </path>
+              </svg>
+              Packaging
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Products List View -->
+    <div *ngIf="!loading && !error && filteredProducts.length > 0 && viewMode === 'list'" class="space-y-4">
+      <div *ngFor="let product of getPaginatedProducts()"
+        class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all duration-300">
+        <div class="flex flex-col sm:flex-row">
+          <!-- Product Image -->
+          <div
+            class="relative w-full sm:w-48 h-48 bg-gradient-to-br from-blue-50 to-green-50 flex items-center justify-center p-4 flex-shrink-0">
+            <img [src]="product.imageUrl" [alt]="'Image du produit ' + product.name"
+              class="w-full h-full object-contain" (error)="onImageError($event)" loading="lazy">
+          </div>
+
+          <!-- Product Info -->
+          <div class="flex-1 p-5">
+            <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+              <!-- Left Side: Product Details -->
+              <div class="flex-1">
+                <div class="flex items-start gap-3 mb-2">
+                  <h3 class="font-bold text-gray-900 text-xl leading-tight flex-1">{{ product.name }}</h3>
+                  <div class="flex gap-2 flex-shrink-0">
+                    <span [class]="product.inStock ? 'bg-green-500' : 'bg-red-500'"
+                      class="px-3 py-1 text-xs font-semibold text-white rounded-full">
+                      {{ product.inStock ? '✓ En stock' : '✗ Rupture' }}
+                    </span>
+                    <span class="bg-blue-500 text-white px-3 py-1 text-xs font-semibold rounded-full">
+                      {{ getSubCategoryLabel(product.subCategory) }}
+                    </span>
+                  </div>
+                </div>
+
+                <p class="text-gray-600 text-sm mb-4">{{ product.description }}</p>
+
+                <div class="flex items-center gap-4 text-sm text-gray-500">
+                  <span class="font-medium">Catégorie: {{ getCategoryLabel(product.category) }}</span>
+                  <div class="flex items-baseline gap-2">
+                    <span class="text-2xl font-bold text-blue-600">{{ getProductPrice(product) }} TND</span>
+                    <span *ngIf="getProductPackaging(product)" 
+                          class="text-sm text-gray-500">{{ getProductPackaging(product) }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Side: Actions -->
+              <div class="flex sm:flex-col gap-2 sm:w-32">
+                <button (click)="openEditModal(product)"
+                  class="flex-1 sm:flex-none bg-blue-50 hover:bg-blue-100 text-blue-600 font-medium px-4 py-2 rounded-lg transition-colors flex items-center justify-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                    </path>
+                  </svg>
+                  <span class="hidden sm:inline">Modifier</span>
+                </button>
+                <button (click)="openDeleteModal(product)"
+                  class="flex-1 sm:flex-none bg-red-50 hover:bg-red-100 text-red-600 font-medium px-4 py-2 rounded-lg transition-colors flex items-center justify-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                    </path>
+                  </svg>
+                  <span class="hidden sm:inline">Supprimer</span>
+                </button>
+                <button (click)="openVariantModal(product)"
+                  class="flex-1 sm:flex-none bg-purple-50 hover:bg-purple-100 text-purple-600 font-medium px-4 py-2 rounded-lg transition-colors flex items-center justify-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4">
+                    </path>
+                  </svg>
+                  <span class="hidden sm:inline">Packaging</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Count -->
+    <div *ngIf="!loading && !error && filteredProducts.length > 0" class="mt-6 text-center text-gray-600">
+      Affichage de {{ (currentPage - 1) * itemsPerPage + 1 }} à {{ Math.min(currentPage * itemsPerPage, filteredProducts.length) }} sur {{ filteredProducts.length }} produits
+    </div>
+
+    <!-- Pagination Controls -->
+    <div *ngIf="!loading && !error && getTotalPages() > 1" class="flex justify-center items-center gap-2 mt-8">
+      <!-- Previous Button -->
+      <button (click)="previousPage()" [disabled]="currentPage === 1"
+        class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+      </button>
+
+      <!-- Page Numbers -->
+      <button *ngFor="let page of getPageNumbers()" (click)="goToPage(page)" 
+        [class.bg-blue-600]="currentPage === page"
+        [class.text-white]="currentPage === page" 
+        [class.border-blue-600]="currentPage === page"
+        [class.text-gray-700]="currentPage !== page" 
+        [class.border-gray-300]="currentPage !== page"
+        class="px-4 py-2 rounded-lg border hover:bg-blue-50 transition-all duration-200 font-medium">
+        {{ page }}
+      </button>
+
+      <!-- Next Button -->
+      <button (click)="nextPage()" [disabled]="currentPage === getTotalPages()"
+        class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </button>
+    </div>
+      
+    </div>
+  </div>
+
+
+<!-- Add/Edit Product Modal -->
+<div *ngIf="showAddModal || showEditModal"
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+  <div class="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <div class="p-6 border-b border-gray-200">
+      <h2 class="text-2xl font-bold text-gray-900">
+        {{ showAddModal ? 'Ajouter un produit' : 'Modifier le produit' }}
+      </h2>
+    </div>
+    <div class="p-6 space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Nom du produit</label>
+        <input type="text" [(ngModel)]="productForm.name"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+        <textarea [(ngModel)]="productForm.description" rows="3"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Prix (TND)</label>
+          <input type="number" [(ngModel)]="productForm.price"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Catégorie</label>
+          <select [(ngModel)]="productForm.category"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+            <option value="">Sélectionner</option>
+            <option value="CHIEN">Chien</option>
+            <option value="CHAT">Chat</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Sous-catégorie</label>
+        <select [(ngModel)]="productForm.subCategory"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+          <option value="">Sélectionner</option>
+          <option value="ALIMENT">Aliment</option>
+          <option value="COMPLEMENT">Complément</option>
+          <option value="TEST_RAPIDE">Test rapide</option>
+        </select>
+      </div>
+      <div *ngIf="productForm.subCategory === 'ALIMENT'">
+        <label class="block text-sm font-medium text-gray-700 mb-2">Sous-sous-catégorie</label>
+        <select [(ngModel)]="productForm.subSubCategory"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+          <option value="">Sélectionner</option>
+          <option value="DIETETIQUE">Diététique</option>
+          <option value="PHYSIO">Physioloqiue</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">URL des détails</label>
+        <input type="text" [(ngModel)]="productForm.detailsUrl" placeholder="https://tn.virbac.com/products/..."
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Packaging (optionnel)</label>
+        <select [(ngModel)]="productForm.packaging"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white">
+          <option value="">-- Sélectionner un packaging --</option>
+          <option value="1.5 kg">1.5 kg</option>
+          <option value="3 kg">3 kg</option>
+          <option value="7 kg">7 kg</option>
+          <option value="12 kg">12 kg</option>
+          <option value="16 kg">16 kg</option>
+          <option value="Boite 12*85">Boite 12*85</option>
+        </select>
+        <p class="text-xs text-gray-500 mt-1">Laissez vide si le produit n'a pas de variante de packaging</p>
+      </div>
+      <div class="flex items-center">
+        <input type="checkbox" [(ngModel)]="productForm.inStock" id="inStock" class="mr-2">
+        <label for="inStock" class="text-sm font-medium text-gray-700">En stock</label>
+      </div>
+    </div>
+    <div class="p-6 border-t border-gray-200 flex gap-3">
+      <button (click)="closeModals()"
+        class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-2 rounded-lg transition-colors">
+        Annuler
+      </button>
+      <button (click)="showAddModal ? addProduct() : updateProduct()"
+        class="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors">
+        {{ showAddModal ? 'Ajouter' : 'Enregistrer' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div *ngIf="showDeleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+  <div class="bg-white rounded-xl shadow-xl max-w-md w-full">
+    <div class="p-6">
+      <div class="flex items-center justify-center w-12 h-12 mx-auto bg-red-100 rounded-full mb-4">
+        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+          </path>
+        </svg>
+      </div>
+      <h3 class="text-lg font-semibold text-gray-900 text-center mb-2">Supprimer le produit</h3>
+      <p class="text-gray-600 text-center mb-6">
+        Êtes-vous sûr de vouloir supprimer "{{ selectedProduct?.name }}" ? Cette action est irréversible.
+      </p>
+      <div class="flex gap-3">
+        <button (click)="closeModals()"
+          class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-2 rounded-lg transition-colors">
+          Annuler
+        </button>
+        <button (click)="deleteProduct()"
+          class="flex-1 bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg transition-colors">
+          Supprimer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Variant Management Modal -->
+<div *ngIf="showVariantModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+  <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+    <!-- Modal Header -->
+    <div class="p-6 border-b border-gray-200 bg-gradient-to-r from-purple-50 to-blue-50">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-2xl font-bold text-gray-900">Gestion des Variantes</h2>
+          <p class="text-sm text-gray-600 mt-1">{{ selectedProduct?.name }}</p>
+        </div>
+        <button (click)="closeVariantModal()" class="text-gray-400 hover:text-gray-600 transition-colors">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="flex-1 overflow-y-auto p-6">
+      <!-- Add New Variant Form -->
+      <div class="bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl p-6 mb-6 border border-purple-100">
+        <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+          <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+          </svg>
+          Ajouter une Variante
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Packaging</label>
+            <select [(ngModel)]="variantForm.packaging"
+              class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white">
+              <option value="">-- Sélectionner un packaging --</option>
+              <option value="1.5 kg" [disabled]="isPackagingUsed('1.5 kg')" [class.text-gray-400]="isPackagingUsed('1.5 kg')">1.5 kg{{ isPackagingUsed('1.5 kg') ? ' (déjà utilisé)' : '' }}</option>
+              <option value="3 kg" [disabled]="isPackagingUsed('3 kg')" [class.text-gray-400]="isPackagingUsed('3 kg')">3 kg{{ isPackagingUsed('3 kg') ? ' (déjà utilisé)' : '' }}</option>
+              <option value="7 kg" [disabled]="isPackagingUsed('7 kg')" [class.text-gray-400]="isPackagingUsed('7 kg')">7 kg{{ isPackagingUsed('7 kg') ? ' (déjà utilisé)' : '' }}</option>
+              <option value="12 kg" [disabled]="isPackagingUsed('12 kg')" [class.text-gray-400]="isPackagingUsed('12 kg')">12 kg{{ isPackagingUsed('12 kg') ? ' (déjà utilisé)' : '' }}</option>
+              <option value="16 kg" [disabled]="isPackagingUsed('16 kg')" [class.text-gray-400]="isPackagingUsed('16 kg')">16 kg{{ isPackagingUsed('16 kg') ? ' (déjà utilisé)' : '' }}</option>
+              <option value="Boite 12*85" [disabled]="isPackagingUsed('Boite 12*85')" [class.text-gray-400]="isPackagingUsed('Boite 12*85')">Boite 12*85{{ isPackagingUsed('Boite 12*85') ? ' (déjà utilisé)' : '' }}</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Prix (TND)</label>
+            <input type="number" [(ngModel)]="variantForm.price" placeholder="0.00" step="0.01" min="0"
+              class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+          </div>
+        </div>
+        <button (click)="addVariant()"
+          class="mt-4 w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+          </svg>
+          Ajouter la Variante
+        </button>
+      </div>
+
+      <!-- Existing Variants List -->
+      <div>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+          <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+          </svg>
+          Variantes Existantes
+          <span class="ml-auto text-sm font-normal text-gray-500">({{ productVariants.length }})</span>
+        </h3>
+
+        <!-- Loading State -->
+        <div *ngIf="loadingVariants" class="flex items-center justify-center py-12">
+          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+        </div>
+
+        <!-- Empty State -->
+        <div *ngIf="!loadingVariants && productVariants.length === 0"
+          class="text-center py-12 bg-gray-50 rounded-xl border-2 border-dashed border-gray-300">
+          <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+          </svg>
+          <p class="text-gray-500 font-medium">Aucune variante pour ce produit</p>
+          <p class="text-sm text-gray-400 mt-1">Ajoutez votre première variante ci-dessus</p>
+        </div>
+
+        <!-- Variants Grid -->
+        <div *ngIf="!loadingVariants && productVariants.length > 0" class="grid gap-3">
+          <div *ngFor="let variant of productVariants"
+            class="bg-white border border-gray-200 rounded-xl p-4 hover:shadow-md transition-all flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-gradient-to-br from-purple-100 to-blue-100 rounded-lg flex items-center justify-center">
+                <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                </svg>
+              </div>
+              <div>
+                <p class="font-semibold text-gray-900">{{ variant.packaging }}</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="text-right">
+                <p class="text-lg font-bold text-purple-600">{{ variant.price | number:'1.2-2' }} TND</p>
+              </div>
+              <button (click)="openDeleteVariantModal(variant)"
+                class="bg-red-500 hover:bg-red-600 text-white p-2 rounded-lg transition-colors shadow-sm hover:shadow-md">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                  </path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Footer -->
+    <div class="p-6 border-t border-gray-200 bg-gray-50">
+      <button (click)="closeVariantModal()"
+        class="w-full bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors">
+        Fermer
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Delete Variant Confirmation Modal -->
+<div *ngIf="showDeleteVariantModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[60] p-4">
+  <div class="bg-white rounded-xl shadow-xl max-w-md w-full">
+    <div class="p-6">
+      <div class="flex items-center justify-center w-12 h-12 mx-auto bg-red-100 rounded-full mb-4">
+        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+          </path>
+        </svg>
+      </div>
+      <h3 class="text-lg font-semibold text-gray-900 text-center mb-2">Supprimer la variante</h3>
+      <p class="text-gray-600 text-center mb-2">
+        Êtes-vous sûr de vouloir supprimer cette variante ?
+      </p>
+      <div class="bg-purple-50 rounded-lg p-4 mb-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm text-gray-600">Packaging</p>
+            <p class="font-semibold text-gray-900">{{ variantToDelete?.packaging }}</p>
+          </div>
+          <div class="text-right">
+            <p class="text-sm text-gray-600">Prix</p>
+            <p class="font-bold text-purple-600">{{ variantToDelete?.price | number:'1.2-2' }} TND</p>
+          </div>
+        </div>
+      </div>
+      <p class="text-sm text-gray-500 text-center mb-6">Cette action est irréversible.</p>
+      <div class="flex gap-3">
+        <button (click)="closeDeleteVariantModal()"
+          class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-2 rounded-lg transition-colors">
+          Annuler
+        </button>
+        <button (click)="confirmDeleteVariant()"
+          class="flex-1 bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg transition-colors">
+          Supprimer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Toast Notification -->
+<div *ngIf="notification" [class]="notification.type === 'success' ? 'notification-success' : 'notification-error'"
+  class="notification-toast">
+  <div class="notification-content">
+    <div class="notification-icon">
+      <svg *ngIf="notification.type === 'success'" class="w-6 h-6" fill="none" stroke="currentColor"
+        viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+      <svg *ngIf="notification.type === 'error'" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+    </div>
+    <div class="notification-message">
+      <p class="notification-title">{{ notification.type === 'success' ? 'Succès' : 'Erreur' }}</p>
+      <p class="notification-text">{{ notification.message }}</p>
+    </div>
+    <button (click)="closeNotification()" class="notification-close">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+  </div>
+  <div class="notification-progress" [class.success]="notification.type === 'success'"
+    [class.error]="notification.type === 'error'"></div>
+</div>

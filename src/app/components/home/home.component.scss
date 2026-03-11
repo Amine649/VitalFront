@@ -1,0 +1,444 @@
+/* Styles spécifiques au composant Home */
+
+// Animation pour les éléments
+.fade-in {
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+.slide-in {
+  animation: slideIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Styles pour le carrousel de produits
+.overflow-x-auto {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59, 130, 246, 0.3) transparent;
+  
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: rgba(59, 130, 246, 0.3);
+    border-radius: 4px;
+    
+    &:hover {
+      background: rgba(59, 130, 246, 0.5);
+    }
+  }
+}
+
+// Limitation de lignes pour les descriptions de produits
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// Effet hover pour les cartes produits
+.product-card {
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+  
+  &:active {
+    animation: cardPulse 0.4s ease;
+  }
+}
+
+@keyframes cardPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.98);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+// Boutons du carrousel
+.carousel-button {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+// Enhanced product view button
+.product-view-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1.2rem;
+  background: linear-gradient(135deg, #667eea 0%, #3B82F6 100%);
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 3px 12px rgba(102, 126, 234, 0.3);
+  position: relative;
+  overflow: hidden;
+  width: auto;
+  min-width: 100px;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s;
+  }
+  
+  &:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+    
+    &::before {
+      left: 100%;
+    }
+  }
+  
+  &:active {
+    transform: translateY(-1px) scale(0.98);
+  }
+  
+  .icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.5rem;
+    
+    svg {
+      flex-shrink: 0;
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+    }
+  }
+  
+  .text-label {
+    font-weight: 600;
+    letter-spacing: 0.025em;
+  }
+}
+
+
+// ========== HERO IMAGE STYLING ==========
+.hero-image-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  animation: float 3s ease-in-out infinite;
+  
+  .hero-image {
+    width: 100%;
+    height: auto;
+    border-radius: 2rem;
+    box-shadow: 0 20px 60px rgba(59, 130, 246, 0.3);
+    transition: transform 0.3s ease;
+    
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+// Interactive "chasing" image effect
+.hero-image-wrapper-interactive {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  cursor: pointer;
+  overflow: visible;
+  padding: 40px; // Extra space for movement
+  margin: -40px; // Compensate padding
+  
+  .hero-image-chase {
+    width: 100%;
+    height: auto;
+    border-radius: 2rem;
+    box-shadow: 0 20px 60px rgba(59, 130, 246, 0.3);
+    transition: box-shadow 0.3s ease;
+    will-change: transform;
+    transform-origin: center center;
+    
+    &:hover {
+      box-shadow: 0 30px 80px rgba(59, 130, 246, 0.5), 0 0 40px rgba(59, 130, 246, 0.2);
+    }
+  }
+  
+  // Add a subtle glow effect when active
+  &:hover .hero-image-chase {
+    filter: brightness(1.05);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+
+// ========== MODERN HERO ANIMATIONS ==========
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes float-delayed {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 8s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 0.1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.15;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 10s ease-in-out infinite;
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.8s ease-out;
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.8s ease-out;
+}
+
+@keyframes gradient {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 3s ease infinite;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  80% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-scroll {
+  animation: scroll 2s ease-in-out infinite;
+}
+
+// Grid Pattern Background
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+// Enhanced Shadow
+.shadow-3xl {
+  box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
+}
+
+// Backdrop Blur Support
+.backdrop-blur-sm {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+
+// ========== FIXED-WIDTH COMPROMISE LAYOUT ==========
+// Keeps layout stable on zoom while maintaining mobile responsiveness
+
+// Main container with fixed max-width
+.fixed-layout-container {
+  max-width: 1900px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 2rem;
+  
+  // On mobile, use full width
+  @media (max-width: 768px) {
+    max-width: 100%;
+    padding: 0 1rem;
+  }
+}
+
+// Fixed spacing for sections
+.section-spacing {
+  padding-top: 50px;
+  padding-bottom: 80px;
+  
+  @media (max-width: 768px) {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+}
+
+// Fixed grid for nutrition cards
+.nutrition-grid-fixed {
+  display: grid;
+  grid-template-columns: repeat(4, 300px);
+  gap: 24px;
+  justify-content: center;
+  
+  @media (max-width: 1400px) {
+    grid-template-columns: repeat(2, 300px);
+  }
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+
+// Fixed sidebar width
+.sidebar-fixed {
+  width: 260px;
+  flex-shrink: 0;
+  
+  @media (max-width: 1024px) {
+    width: 100%;
+  }
+}
+
+// Fixed content area
+.content-fixed {
+  flex: 1;
+  max-width: calc(1600px - 260px - 32px); // container - sidebar - gap
+  
+  @media (max-width: 1400px) {
+    width: 100%;
+  }
+}
+
+// Prevent text from scaling too much
+.text-fixed {
+  font-size: 16px !important;
+  line-height: 1.5 !important;
+}
+
+.heading-fixed {
+  font-size: 32px !important;
+  line-height: 1.2 !important;
+  
+  @media (max-width: 768px) {
+    font-size: 24px !important;
+  }
+}
+
+// Fixed button sizes
+.button-fixed {
+  padding: 12px 24px !important;
+  font-size: 16px !important;
+  
+  @media (max-width: 768px) {
+    padding: 10px 20px !important;
+    font-size: 14px !important;
+  }
+}

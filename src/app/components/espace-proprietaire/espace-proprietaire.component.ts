@@ -1,0 +1,578 @@
+import { Component, OnInit, HostListener } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router, ActivatedRoute, RouterModule } from '@angular/router';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { CartService } from '../../services/cart.service';
+import { ProductService } from '../../services/product.service';
+import { Product } from '../../models/product.model';
+import { environment } from '../../../environments/environment';
+import { SafePipe } from '../../pipes/safe.pipe';
+
+interface BlogPost {
+  id: number;
+  title: string;
+  description: string;
+  type: string;
+  pet?: 'CAT' | 'DOG';
+  pdfFilename: string;
+  pdfRelativePath: string;
+  fileSize: number;
+  createdAt: string;
+}
+
+@Component({
+  selector: 'app-espace-proprietaire',
+  standalone: true,
+  imports: [CommonModule, RouterModule, HttpClientModule, SafePipe],
+  templateUrl: './espace-proprietaire.component.html',
+  styleUrls: ['./espace-proprietaire.component.scss']
+})
+export class EspaceProprietaireComponent implements OnInit {
+  isLoading: boolean = true;
+  errorMessage: string = '';
+  categories = [
+    { name: 'Chien', icon: '🐶', color: '#3B82F6' },
+    { name: 'Chat', icon: '🐱', color: '#EF4444' }
+  ];
+
+  sousCategories = [
+    { name: 'Aliment', icon: '🍖', description: 'Nourriture et friandises' },
+    { name: 'Complément', icon: '💊', description: 'Suppléments nutritionnels' },
+    { name: 'Test rapide', icon: '🧪', description: 'Tests de diagnostic' }
+  ];
+
+  products: Product[] = [];
+
+  selectedCategory: string | null = null;
+  selectedSousCategory: string | null = null;
+  selectedSubSubCategory: string | null = null;
+
+  currentPage = 1;
+  itemsPerPage = 15;
+  Math = Math; // Make Math available in template
+  highlightedProductId: number | null = null;
+  highlightedSection: string | null = null;
+
+  // Blog pagination
+  blogCurrentPage = 1;
+  blogItemsPerPage = 2;
+  blogPosts: BlogPost[] = [];
+  isLoadingBlogs = false;
+  blogError = '';
+  
+  // PDF Modal
+  showPdfModal = false;
+  currentPdfUrl = '';
+  currentPdfTitle = '';
+  currentPdfPet: 'CAT' | 'DOG' | null = null;
+  isPdfLoading = false;
+  pdfBlobUrl: any = null;
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private cartService: CartService,
+    private productService: ProductService,
+    private http: HttpClient
+  ) { }
+
+  ngOnInit() {
+    // Load products from API
+    this.loadProducts();
+
+    // Listen to query parameters from the navigation menu
+    this.route.queryParams.subscribe(params => {
+      if (params['animal']) {
+        this.selectedCategory = this.capitalizeFirst(params['animal']);
+        
+        // If animal is selected but no type is specified, default to 'Aliment'
+        if (!params['type']) {
+          this.selectedSousCategory = 'Aliment';
+          // Update URL with default type (this will trigger subscription again)
+          this.router.navigate([], {
+            relativeTo: this.route,
+            queryParams: { animal: params['animal'], type: 'aliment' },
+            queryParamsHandling: 'merge'
+          });
+          // Don't load blogs here - wait for the URL update to trigger subscription
+        } else {
+          this.selectedSousCategory = this.mapProductType(params['type']);
+          // Only load blogs when type parameter exists (after URL is properly set)
+          this.loadBlogPosts(params['animal']);
+        }
+      } else {
+        this.selectedCategory = null;
+        this.selectedSousCategory = null;
+        
+        // Load all proprietaire blogs when no animal is selected
+        this.loadBlogPosts();
+      }
+
+      // Check for highlighted product
+      if (params['highlight']) {
+        this.highlightedProductId = +params['highlight'];
+        // Scroll to top first
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Remove highlight after animation completes
+        setTimeout(() => {
+          this.highlightedProductId = null;
+        }, 3000);
+      }
+
+      // Check for highlighted section
+      if (params['highlightSection']) {
+        this.highlightedSection = params['highlightSection'];
+        // Scroll to top first
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Use requestAnimationFrame to ensure DOM is updated, then wait for render
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            const element = document.getElementById(params['highlightSection']);
+            if (element) {
+              element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }, 500);
+        });
+        // Remove highlight after 5 seconds
+        setTimeout(() => {
+          this.highlightedSection = null;
+        }, 3500);
+      }
+
+      // Reset to first page when filters change
+      this.currentPage = 1;
+    });
+
+    // Setup navbar scroll behavior to stop at footer
+    this.setupNavbarScrollBehavior();
+  }
+
+  /**
+   * Setup navbar to stop scrolling when footer appears
+   */
+  private setupNavbarScrollBehavior(): void {
+    // Wait for DOM to be ready
+    setTimeout(() => {
+      this.handleNavbarScroll();
+    }, 100);
+  }
+
+  /**
+   * Handle scroll event to stop navbar at footer
+   */
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll(): void {
+    this.handleNavbarScroll();
+  }
+
+  /**
+   * Calculate and apply navbar position based on footer visibility
+   */
+  private handleNavbarScroll(): void {
+    const header = document.querySelector('header');
+    const footer = document.querySelector('footer');
+
+    if (!header || !footer) return;
+
+    const footerRect = footer.getBoundingClientRect();
+    const headerHeight = header.offsetHeight;
+    const windowHeight = window.innerHeight;
+
+    // Check if footer is entering the viewport
+    if (footerRect.top <= windowHeight) {
+      // Footer is visible, calculate how much to push navbar up
+      const overlap = windowHeight - footerRect.top;
+      const maxPush = footerRect.height;
+      const pushAmount = Math.min(overlap, maxPush);
+
+      // Apply transform to push navbar up
+      if (pushAmount > 0) {
+        header.style.transform = `translateY(-${pushAmount}px)`;
+        header.style.transition = 'transform 0.1s ease-out';
+      }
+    } else {
+      // Footer not visible, reset navbar position
+      header.style.transform = 'translateY(0)';
+    }
+  }
+
+  /**
+   * Load products from API
+   */
+  loadProducts(): void {
+    this.isLoading = true;
+    this.errorMessage = '';
+
+    this.productService.getAllProducts().subscribe({
+      next: (products) => {
+        console.log('Products loaded:', products.length, products);
+        this.products = products;
+        this.isLoading = false;
+        console.log('Filtered products:', this.getFilteredProducts().length);
+      },
+      error: (error) => {
+        console.error('Error loading products:', error);
+        this.errorMessage = error.message;
+        this.isLoading = false;
+      }
+    });
+  }
+
+  private capitalizeFirst(str: string): string {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
+  private mapProductType(type: string): string {
+    const typeMap: { [key: string]: string } = {
+      'aliment': 'Aliment',
+      'complement': 'Complément',
+      'test-rapide': 'Test rapide'
+    };
+    return typeMap[type] || type;
+  }
+
+
+
+  navigateTo(route: string) {
+
+    if (route === 'ou-trouver-nos-produits') {
+      this.router.navigate(['/ou-trouver-nos-produits']);
+    } else {
+      this.router.navigate(['/espace-proprietaire', route]);
+    }
+  }
+
+  selectCategory(cat: string) {
+    // If clicking the same category, keep it selected (don't toggle off)
+    // If clicking a different category, switch to it
+    if (this.selectedCategory !== cat) {
+      this.selectedCategory = cat;
+      this.selectedSousCategory = null;
+      this.selectedSubSubCategory = null;
+    }
+  }
+
+  selectSousCategory(sub: string) {
+    this.selectedSousCategory = this.selectedSousCategory === sub ? null : sub;
+    this.selectedSubSubCategory = null;
+  }
+
+  selectSubSubCategory(subSub: string) {
+    this.selectedSubSubCategory = this.selectedSubSubCategory === subSub ? null : subSub;
+  }
+
+  shouldShowSubSubCategoryFilter(): boolean {
+    return this.selectedCategory !== null && this.selectedSousCategory === 'Aliment';
+  }
+
+  getFilteredProducts(): Product[] {
+    // When on /espace-proprietaire without any filters, show ALL products
+    if (!this.selectedCategory && !this.selectedSousCategory && !this.selectedSubSubCategory) {
+      return this.products; // Return ALL products from API
+    }
+
+    // Apply filters only when category/subcategory is selected
+    return this.products.filter(product => {
+      const normalizeString = (str: string) => {
+        return str.toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/[\s_-]/g, '');
+      };
+
+      const productCategory = normalizeString(product.category);
+      const productSubCategory = normalizeString(product.subCategory);
+      const productSubSubCategory = product.subSubCategory ? normalizeString(product.subSubCategory) : null;
+      const filterCategory = this.selectedCategory ? normalizeString(this.selectedCategory) : null;
+      const filterSubCategory = this.selectedSousCategory ? normalizeString(this.selectedSousCategory) : null;
+      const filterSubSubCategory = this.selectedSubSubCategory ? normalizeString(this.selectedSubSubCategory) : null;
+
+      if (!filterCategory && filterSubCategory && !filterSubSubCategory) {
+        return productSubCategory === filterSubCategory;
+      }
+
+      if (filterCategory && !filterSubCategory && !filterSubSubCategory) {
+        return productCategory === filterCategory;
+      }
+
+      if (filterCategory && filterSubCategory && !filterSubSubCategory) {
+        return productCategory === filterCategory && productSubCategory === filterSubCategory;
+      }
+
+      if (filterCategory && filterSubCategory && filterSubSubCategory) {
+        return productCategory === filterCategory && 
+               productSubCategory === filterSubCategory && 
+               productSubSubCategory === filterSubSubCategory;
+      }
+
+      if (!filterCategory && !filterSubCategory && filterSubSubCategory) {
+        return productSubSubCategory === filterSubSubCategory;
+      }
+
+      return true;
+    });
+  }
+
+  getPaginatedProducts(): Product[] {
+    const filtered = this.getFilteredProducts();
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return filtered.slice(startIndex, endIndex);
+  }
+
+  getTotalPages(): number {
+    const filtered = this.getFilteredProducts();
+    return Math.ceil(filtered.length / this.itemsPerPage);
+  }
+
+  getPageNumbers(): number[] {
+    return Array.from({ length: this.getTotalPages() }, (_, i) => i + 1);
+  }
+
+  goToPage(page: number): void {
+    if (page >= 1 && page <= this.getTotalPages()) {
+      this.currentPage = page;
+      // Scroll to top of products
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.getTotalPages()) {
+      this.goToPage(this.currentPage + 1);
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.goToPage(this.currentPage - 1);
+    }
+  }
+
+  addToCart(product: Product) {
+    this.cartService.addToCart(product);
+    // Optional: Show a toast notification here
+  }
+
+  viewProductDetails(product: Product) {
+    // Logique pour voir les détails du produit
+  }
+
+  trackByProductId(index: number, product: Product): number {
+    return product.id;
+  }
+
+  trackByCategoryName(index: number, category: any): string {
+    return category.name;
+  }
+
+  trackBySubCategoryName(index: number, subCategory: any): string {
+    return subCategory.name;
+  }
+
+  trackByIndex(index: number, item: any): number {
+    return index;
+  }
+
+  navigateToVetSpace(): void {
+    this.router.navigate(['/']);
+  }
+
+  /**
+   * Handle image load error
+   */
+  onImageError(event: Event): void {
+    const img = event.target as HTMLImageElement;
+    // Prevent infinite loop by checking if we already tried to set a fallback
+    if (!img.src.includes('data:image')) {
+      // Use a simple SVG placeholder instead of trying to load another image
+      img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2YzZjRmNiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5Y2EzYWYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZSBub24gZGlzcG9uaWJsZTwvdGV4dD48L3N2Zz4=';
+    }
+  }
+
+  /**
+   * Scroll to a specific section on the page
+   */
+  scrollToSection(sectionId: string): void {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const yOffset = -80; // Offset for fixed header
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  }
+
+  /**
+   * Scroll to products section
+   */
+  scrollToProducts(): void {
+    this.scrollToSection('products-section');
+  }
+
+  /**
+   * Load blog posts from API
+   */
+  loadBlogPosts(animal?: string): void {
+    this.isLoadingBlogs = true;
+    this.blogError = '';
+
+    // Determine the API endpoint based on animal selection
+    let endpoint: string;
+    if (animal) {
+      // Convert 'chat' to 'CAT' and 'chien' to 'DOG'
+      const pet = animal.toLowerCase() === 'chat' ? 'CAT' : 'DOG';
+      endpoint = `${environment.apiUrl}/blogs/pet/${pet}`;
+    } else {
+      // Load all proprietaire blogs when no animal is selected
+      endpoint = `${environment.apiUrl}/blogs/type/PROPRIETAIRE`;
+    }
+
+    this.http.get<BlogPost[]>(endpoint, {
+      withCredentials: true
+    }).subscribe({
+      next: (posts) => {
+        this.blogPosts = posts;
+        this.isLoadingBlogs = false;
+      },
+      error: (error) => {
+        console.error('Error loading blog posts:', error);
+        this.blogError = 'Erreur lors du chargement des articles';
+        this.isLoadingBlogs = false;
+      }
+    });
+  }
+
+  /**
+   * Format date for display
+   */
+  formatBlogDate(dateString: string): string {
+    const date = new Date(dateString);
+    const months = [
+      'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
+      'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'
+    ];
+    
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+    
+    return `${day} ${month} ${year}`;
+  }
+
+  /**
+   * Open PDF in modal
+   */
+  openPdfModal(post: BlogPost): void {
+      console.log('=== NAVIGATING TO CONSEIL-ARTICLES WITH PDF ===');
+      console.log('Post data:', post);
+      console.log('Post pet:', post.pet);
+
+      if (!post.pdfRelativePath) {
+        console.error('ERROR: No PDF path available');
+        return;
+      }
+
+      console.log('PDF Relative Path:', post.pdfRelativePath);
+
+      // Extract year, month, and filename from pdfRelativePath
+      const pathParts = post.pdfRelativePath.replace('/uploads/pdfs', '').split('/').filter(p => p);
+
+      console.log('Path parts after split:', pathParts);
+
+      if (pathParts.length >= 3) {
+        const year = pathParts[0];
+        const month = pathParts[1];
+        const filename = pathParts[2];
+
+        const pdfUrl = `${environment.apiUrl}/blogs/pdf/${year}/${month}/${filename}`;
+        console.log('✓ PDF URL constructed:', pdfUrl);
+
+        // Navigate to conseil-articles with blog data
+        this.router.navigate(['/conseil-articles', 'blog-pdf'], {
+          state: {
+            blogPost: {
+              title: post.title,
+              category: 'Informations & Conseils Vétos',
+              animal: post.pet === 'CAT' ? 'chat' : 'chien',
+              pdfUrl: pdfUrl,
+              pet: post.pet
+            }
+          }
+        });
+      } else {
+        console.error('ERROR: Invalid PDF path format:', post.pdfRelativePath);
+        console.error('Expected at least 3 parts, got:', pathParts.length);
+      }
+    }
+
+
+
+  /**
+   * Close PDF modal
+   */
+  closePdfModal(): void {
+    this.showPdfModal = false;
+    this.isPdfLoading = false;
+    this.currentPdfPet = null;
+    
+    // Revoke blob URL to free memory
+    if (this.pdfBlobUrl) {
+      URL.revokeObjectURL(this.pdfBlobUrl);
+      this.pdfBlobUrl = null;
+    }
+    
+    this.currentPdfUrl = '';
+    this.currentPdfTitle = '';
+    
+    // Restore body scroll
+    document.body.style.overflow = 'auto';
+  }
+
+  /**
+   * Handle PDF iframe load event
+   */
+  onPdfLoad(): void {
+    console.log('PDF iframe loaded successfully');
+  }
+
+  /**
+   * Handle PDF iframe error event
+   */
+  onPdfError(): void {
+    console.error('PDF iframe failed to load');
+  }
+
+  /**
+   * Get paginated blog posts
+   */
+  getPaginatedBlogPosts(): BlogPost[] {
+    const startIndex = (this.blogCurrentPage - 1) * this.blogItemsPerPage;
+    const endIndex = startIndex + this.blogItemsPerPage;
+    return this.blogPosts.slice(startIndex, endIndex);
+  }
+
+  /**
+   * Get total blog pages
+   */
+  getBlogTotalPages(): number {
+    return Math.ceil(this.blogPosts.length / this.blogItemsPerPage);
+  }
+
+  /**
+   * Navigate to next blog page
+   */
+  nextBlogPage(): void {
+    if (this.blogCurrentPage < this.getBlogTotalPages()) {
+      this.blogCurrentPage++;
+    }
+  }
+
+  /**
+   * Navigate to previous blog page
+   */
+  previousBlogPage(): void {
+    if (this.blogCurrentPage > 1) {
+      this.blogCurrentPage--;
+    }
+  }
+}

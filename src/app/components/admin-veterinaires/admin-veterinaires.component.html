@@ -1,0 +1,320 @@
+<div class="min-h-screen bg-gray-50">
+  <div class="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+    <!-- Header -->
+    <div class="mb-6 pt-4">
+      <h1 class="text-3xl font-bold text-gray-900 flex items-center">
+        <svg class="w-7 h-7 mr-3 text-vet-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+          </path>
+        </svg>
+        Nos Vétérinaires
+      </h1>
+      <p class="text-gray-600 mt-1 ml-10">Gérez la liste des vétérinaires partenaires</p>
+    </div>
+
+    <!-- Two Column Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+      <!-- Left Column - Upload Section -->
+      <div class="lg:col-span-1">
+        <!-- Stats Card -->
+        <div class="bg-white rounded-xl shadow-md p-5 mb-6">
+          <h3 class="text-sm font-semibold text-gray-700 mb-4 flex items-center">
+            <svg class="w-4 h-4 mr-2 text-vet-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+              </path>
+            </svg>
+            Statistiques
+          </h3>
+          <div class="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
+            <div class="flex items-center">
+              <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+                  </path>
+                </svg>
+              </div>
+              <span class="text-sm font-medium text-gray-700">Total Vétérinaires</span>
+            </div>
+            <span class="text-2xl font-bold text-gray-900">{{ veterinaires.length }}</span>
+          </div>
+        </div>
+
+        <!-- Upload Section -->
+        <div class="bg-white rounded-xl shadow-md p-6">
+          <div class="flex items-center mb-4">
+            <svg class="w-5 h-5 text-vet-blue mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+            </svg>
+            <h2 class="text-lg font-semibold text-gray-900">Importer des Vétérinaires</h2>
+          </div>
+
+          <!-- Drag and Drop Zone -->
+          <div (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)"
+            [class.border-vet-blue]="isDragging" [class.bg-blue-50]="isDragging"
+            class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center transition-all duration-200">
+
+            <input type="file" id="fileInput" (change)="onFileSelected($event)" accept=".xlsx,.xls" class="hidden">
+
+            <div *ngIf="!selectedFile">
+              <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+              </svg>
+              <p class="text-lg font-medium text-gray-700 mb-2">Glissez-déposez votre fichier Excel ici</p>
+              <p class="text-sm text-gray-500 mb-4">ou</p>
+              <label for="fileInput"
+                class="inline-block bg-vet-blue hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg cursor-pointer transition-colors">
+                Parcourir les fichiers
+              </label>
+              <p class="text-xs text-gray-500 mt-4">Formats acceptés: .xlsx, .xls (Max 5MB)</p>
+            </div>
+
+            <div *ngIf="selectedFile" class="flex items-center justify-center">
+              <div class="bg-green-50 border border-green-200 rounded-lg p-4 flex items-center">
+                <svg class="w-10 h-10 text-green-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                  </path>
+                </svg>
+                <div class="flex-1 text-left">
+                  <p class="font-semibold text-gray-900">{{ selectedFile.name }}</p>
+                  <p class="text-sm text-gray-600">{{ (selectedFile.size / 1024).toFixed(2) }} KB</p>
+                </div>
+                <button (click)="removeFile()" class="ml-4 text-red-600 hover:text-red-800">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Upload Button -->
+          <div class="mt-4 flex flex-col items-center">
+            <button (click)="uploadExcel()" [disabled]="!selectedFile || uploadLoading"
+              class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-8 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center">
+              <svg *ngIf="uploadLoading" class="animate-spin h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                </path>
+              </svg>
+              {{ uploadLoading ? 'Importation...' : 'Importer' }}
+            </button>
+            <div class="mt-3 text-xs text-gray-600 text-center flex items-center">
+              <svg class="w-3.5 h-3.5 inline mr-1 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              Le fichier Excel doit contenir les colonnes: nom, prenom, matricule
+            </div>
+          </div>
+
+          <!-- Messages -->
+          <div *ngIf="error"
+            class="mt-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-start">
+            <svg class="w-5 h-5 mr-2 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>{{ error }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column - Veterinaires List -->
+      <div class="lg:col-span-2">
+        <!-- Search -->
+        <div class="bg-white rounded-xl shadow-md p-5 mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Rechercher un vétérinaire</label>
+          <div class="relative">
+            <svg class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none"
+              stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="searchVeterinaires()"
+              placeholder="Nom, prénom ou matricule..." style="padding-left: 2.5rem;"
+              class="w-full pr-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-vet-blue focus:border-transparent">
+          </div>
+        </div>
+
+        <!-- Loading State -->
+        <div *ngIf="loading" class="text-center py-16">
+          <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-vet-blue mx-auto mb-4"></div>
+          <p class="text-gray-600">Chargement des vétérinaires...</p>
+        </div>
+
+        <!-- Veterinaires List -->
+        <div *ngIf="!loading" class="bg-white rounded-xl shadow-md overflow-hidden">
+          <div class="px-6 py-4 border-b border-gray-200">
+            <h2 class="text-lg font-semibold text-gray-900 flex items-center">
+              <svg class="w-5 h-5 text-vet-blue mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2">
+                </path>
+              </svg>
+              Liste des Vétérinaires
+              <span class="ml-3 px-3 py-1 bg-vet-blue text-white text-sm rounded-full">{{ filteredVeterinaires.length
+                }}</span>
+            </h2>
+          </div>
+
+          <!-- List View -->
+          <div class="divide-y divide-gray-200">
+            <div *ngIf="filteredVeterinaires.length === 0" class="text-center py-12">
+              <svg class="w-16 h-16 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                </path>
+              </svg>
+              <p class="text-lg font-medium text-gray-900">Aucun vétérinaire trouvé</p>
+              <p class="text-sm text-gray-600 mt-2">Importez un fichier Excel pour ajouter des vétérinaires</p>
+            </div>
+
+            <div *ngFor="let vet of paginatedVeterinaires; let i = index"
+              class="px-5 py-3 hover:bg-blue-50 transition-all duration-200 flex items-center justify-between group cursor-pointer border-l-4 border-transparent hover:border-vet-blue">
+              <div class="flex items-center flex-1">
+                <!-- Index Number -->
+                <div class="w-6 text-center mr-3">
+                  <span class="text-xs font-semibold text-gray-400 group-hover:text-vet-blue transition-colors">
+                    {{ (currentPage - 1) * itemsPerPage + i + 1 }}
+                  </span>
+                </div>
+
+                <!-- Avatar -->
+                <div
+                  class="w-10 h-10 bg-gradient-to-br from-vet-blue to-blue-600 rounded-full flex items-center justify-center mr-3 shadow-sm group-hover:shadow-md transition-shadow">
+                  <span class="text-white font-semibold text-sm">{{ getInitials(vet.prenom, vet.nom) }}</span>
+                </div>
+
+                <!-- Info -->
+                <div class="flex-1">
+                  <div class="flex items-center">
+                    <h3 class="font-semibold text-gray-900 text-base group-hover:text-vet-blue transition-colors">
+                      Dr. {{ vet.prenom }} {{ vet.nom }}
+                    </h3>
+                    <span class="ml-2 px-2 py-0.5 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
+                      Vétérinaire
+                    </span>
+                  </div>
+                  <div class="flex items-center mt-0.5">
+                    <svg class="w-3.5 h-3.5 text-gray-400 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2">
+                      </path>
+                    </svg>
+                    <p class="text-xs text-gray-600">Matricule: <span class="text-gray-900 font-medium">{{ vet.matricule
+                        }}</span>
+                    </p>
+                    <p class="text-xs text-gray-600 ml-3 ">Email: <span class="text-gray-900 font-medium">{{ vet.email
+                        }}</span>
+                    </p>
+                  </div>
+                  
+                </div>
+              </div>
+
+              <!-- Action Icon -->
+              <div class="ml-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                <svg class="w-4 h-4 text-vet-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pagination -->
+          <div *ngIf="filteredVeterinaires.length > 0" class="px-6 py-4 border-t border-gray-200 bg-gray-50">
+            <div class="flex items-center justify-between">
+              <div class="text-sm text-gray-600">
+                Affichage {{ (currentPage - 1) * itemsPerPage + 1 }} -
+                {{ Math.min(currentPage * itemsPerPage, filteredVeterinaires.length) }}
+                sur {{ filteredVeterinaires.length }}
+              </div>
+              <div class="flex items-center space-x-2">
+                <button (click)="previousPage()" [disabled]="currentPage === 1"
+                  class="px-3 py-1 rounded-lg border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                  </svg>
+                </button>
+
+                <div class="flex space-x-1">
+                  <button *ngFor="let page of getPageNumbers()" (click)="goToPage(page)"
+                    [class.bg-vet-blue]="currentPage === page" [class.text-white]="currentPage === page"
+                    [class.text-gray-700]="currentPage !== page"
+                    class="px-3 py-1 rounded-lg text-sm font-medium hover:bg-blue-100 transition-colors">
+                    {{ page }}
+                  </button>
+                </div>
+
+                <button (click)="nextPage()" [disabled]="currentPage === totalPages"
+                  class="px-3 py-1 rounded-lg border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Success Modal -->
+  <div *ngIf="showSuccessModal" class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog"
+    aria-modal="true">
+    <!-- Background overlay -->
+    <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" (click)="closeSuccessModal()"></div>
+
+      <!-- Modal panel -->
+      <div
+        class="inline-block align-bottom bg-white rounded-2xl text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-md sm:w-full">
+
+        <!-- Close button -->
+        <button (click)="closeSuccessModal()"
+          class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+
+        <div class="px-6 pt-8 pb-6">
+          <!-- Success Icon -->
+          <div class="mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-green-100 mb-6">
+            <svg class="h-12 w-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+            </svg>
+          </div>
+
+          <!-- Title -->
+          <h3 class="text-2xl font-bold text-gray-900 mb-3" id="modal-title">
+            Succès
+          </h3>
+
+          <!-- Message -->
+          <p class="text-gray-600 mb-8 px-4">
+            {{ successMessage || 'Le fichier Excel a été importé avec succès. Les vétérinaires ont été ajoutés à la base
+            de données.' }}
+          </p>
+
+          <!-- OK Button -->
+          <button (click)="closeSuccessModal()"
+            class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+            OK
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

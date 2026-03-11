@@ -1,0 +1,449 @@
+<div class="min-h-screen bg-gray-50">
+  <div class="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+    <!-- Page Title -->
+    <div class="mb-6 pt-4">
+      <h1 class="text-3xl font-bold text-gray-900 flex items-center">
+        <svg class="w-8 h-8 mr-3 text-vet-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+        </svg>
+        Gestion des Boutiques
+      </h1>
+      <p class="text-gray-600 mt-1 ml-11">Gérez vos points de vente VITALFEED</p>
+    </div>
+
+    <!-- Success Message -->
+    <div *ngIf="successMessage"
+      class="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg flex items-center justify-between animate-fade-in">
+      <div class="flex items-center">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <span class="font-medium">{{ successMessage }}</span>
+      </div>
+      <button (click)="successMessage = ''" class="text-green-700 hover:text-green-900">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+          </path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Integrated Toolbar: Stats + Search + Actions -->
+    <div class="bg-white rounded-xl shadow-sm p-5 mb-6">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+        <!-- Left: Inline Stats -->
+        <div class="flex items-center gap-6">
+
+          <div class="flex items-center gap-3" align-middle>
+            <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center">
+              <svg class="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+              </svg>
+            </div>
+            <div>
+              <div class="text-xs text-gray-600 mb-1">Total Boutiques</div>
+              <div class="text-2xl font-bold text-gray-900">{{ boutiques.length }}</div>
+            </div>
+          </div>
+
+          <div class="w-px h-14 bg-gray-200"></div>
+
+          <div class="flex items-center gap-3">
+            <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center">
+              <svg class="w-7 h-7 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                </path>
+              </svg>
+            </div>
+            <div>
+              <div class="text-xs text-gray-600 mb-1">Boutiques Premium</div>
+              <div class="text-2xl font-bold text-gray-900">{{ featuredCount }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Search + Filter + Action -->
+        <div class="flex items-center gap-3">
+          <div class="relative">
+            <svg class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none"
+              stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="applyFilters()"
+              placeholder="Rechercher une boutique..."
+              class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-vet-blue focus:border-transparent w-64">
+          </div>
+
+          <button (click)="openAddForm()"
+            class="bg-vet-blue hover:bg-blue-600 text-white font-semibold py-2 px-5 rounded-lg transition-colors flex items-center shadow-sm">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
+              </path>
+            </svg>
+            Nouvelle Boutique
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading && !showForm" class="text-center py-16">
+      <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-vet-blue mx-auto mb-4"></div>
+      <p class="text-gray-600">Chargement des boutiques...</p>
+    </div>
+
+    <!-- Boutiques List - Compact Card Layout -->
+    <div *ngIf="!loading || showForm" class="space-y-3">
+      <div *ngFor="let boutique of filteredBoutiques"
+        class="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow">
+        <div class="flex items-center justify-between gap-4">
+          <!-- Left: Icon + Main Info -->
+          <div class="flex items-center gap-4 flex-1 min-w-0">
+            <div
+              class="w-10 h-10 bg-gradient-to-br from-vet-blue to-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z">
+                </path>
+              </svg>
+            </div>
+
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <h3 class="font-semibold text-gray-900 truncate">{{ boutique.name }}</h3>
+                <span *ngIf="boutique.isFeatured"
+                  class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 flex-shrink-0">
+                  ⭐ Premium
+                </span>
+              </div>
+              <div class="text-sm text-gray-600">
+                {{ boutique.address }}, {{ boutique.city }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Matricule + Phone + Actions -->
+          <div class="flex items-center gap-4 flex-shrink-0">
+            <div class="text-sm text-gray-600">
+              <span class="font-mono">Matricule : {{ boutique.matricule }}</span>
+            </div>
+            <div class="text-sm text-gray-600">
+              <span class="font-mono">Téléphone : {{ boutique.phone }}</span>
+            </div>
+
+            <div class="flex items-center gap-1">
+              <button (click)="openEditForm(boutique)"
+                class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="Modifier">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                  </path>
+                </svg>
+              </button>
+              <button (click)="confirmDelete(boutique)"
+                class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Supprimer">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                  </path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Enhanced Empty State -->
+    <div *ngIf="filteredBoutiques.length === 0 && !loading"
+      class="bg-white rounded-xl border-2 border-dashed border-gray-300 p-12">
+      <div class="max-w-3xl mx-auto">
+        <!-- Center: Illustration + CTA -->
+        <div class="text-center mb-8">
+          <div class="w-20 h-20 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <svg class="w-10 h-10 text-vet-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z">
+              </path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">Aucune boutique</h3>
+          <p class="text-gray-600 mb-6">
+            Commencez par ajouter votre premier point de vente VITALFEED
+          </p>
+          <button (click)="openAddForm()"
+            class="bg-vet-blue hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors inline-flex items-center shadow-sm">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
+              </path>
+            </svg>
+            Ajouter une Boutique
+          </button>
+        </div>
+
+        <!-- Features - Centered -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <div class="text-center">
+            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-3">
+              <svg class="w-6 h-6 text-vet-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+            </div>
+            <h4 class="font-semibold text-gray-900 mb-1">Géolocalisation GPS</h4>
+            <p class="text-sm text-gray-600">Coordonnées précises pour chaque point de vente</p>
+          </div>
+
+          <div class="text-center">
+            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-3">
+              <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                </path>
+              </svg>
+            </div>
+            <h4 class="font-semibold text-gray-900 mb-1">Boutiques Premium</h4>
+            <p class="text-sm text-gray-600">Mettez en avant vos points de vente principaux</p>
+          </div>
+
+          <div class="text-center">
+            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-3">
+              <svg class="w-6 h-6 text-vet-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2">
+                </path>
+              </svg>
+            </div>
+            <h4 class="font-semibold text-gray-900 mb-1">Gestion Complète</h4>
+            <p class="text-sm text-gray-600">Informations détaillées et modification facile</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Add/Edit Form Modal -->
+<div *ngIf="showForm" class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog"
+  aria-modal="true">
+  <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" (click)="closeForm()"></div>
+
+    <div
+      class="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+      <!-- Header -->
+      <div class="bg-gradient-to-r from-vet-blue to-blue-600 px-6 py-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xl font-bold text-white flex items-center">
+            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z">
+              </path>
+            </svg>
+            {{ isEditing ? 'Modifier la Boutique' : 'Nouvelle Boutique' }}
+          </h3>
+          <button (click)="closeForm()" class="text-white hover:text-gray-200 transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <form (ngSubmit)="saveBoutique()" class="px-6 py-6">
+        <!-- Error Message -->
+        <div *ngIf="error"
+          class="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-start">
+          <svg class="w-5 h-5 mr-2 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <span>{{ error }}</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Name -->
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Nom de la Boutique <span class="text-red-500">*</span>
+            </label>
+            <input type="text" [(ngModel)]="currentBoutique.name" name="name" required
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-vet-blue focus:border-transparent"
+              placeholder="Ex: Boutique Animalia">
+          </div>
+
+          <!-- Address -->
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Adresse <span class="text-red-500">*</span>
+            </label>
+            <input type="text" [(ngModel)]="currentBoutique.address" name="address" required
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-vet-blue focus:border-transparent"
+              placeholder="Ex: 8 av Habib Bourguiba">
+          </div>
+
+          <!-- City -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Ville <span class="text-red-500">*</span>
+            </label>
+            <input type="text" [(ngModel)]="currentBoutique.city" name="city" required
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-vet-blue focus:border-transparent"
+              placeholder="Ex: Sfax">
+          </div>
+
+          <!-- Phone -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Téléphone <span class="text-red-500">*</span>
+            </label>
+            <input type="tel" [(ngModel)]="currentBoutique.phone" name="phone" required
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-vet-blue focus:border-transparent"
+              placeholder="Ex: 21698123456">
+          </div>
+
+          <!-- Matricule -->
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Matricule <span class="text-red-500">*</span>
+            </label>
+            <input type="text" [(ngModel)]="currentBoutique.matricule" name="matricule" required
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-vet-blue focus:border-transparent"
+              placeholder="Ex: m005">
+          </div>
+
+          <!-- GPS Coordinates Section -->
+          <div class="md:col-span-2 bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <div class="flex items-start mb-3">
+              <svg class="w-5 h-5 text-blue-600 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <div class="text-sm text-blue-800">
+                <p class="font-medium mb-1">Coordonnées GPS</p>
+                <p class="text-xs">Utilisez Google Maps ou OpenStreetMap pour obtenir les coordonnées
+                  exactes</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+              <!-- Latitude -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                  Latitude <span class="text-red-500">*</span>
+                </label>
+                <input type="number" step="any" [(ngModel)]="currentBoutique.latitude" name="latitude" required
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-vet-blue focus:border-transparent"
+                  placeholder="Ex: 34.7406">
+              </div>
+
+              <!-- Longitude -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                  Longitude <span class="text-red-500">*</span>
+                </label>
+                <input type="number" step="any" [(ngModel)]="currentBoutique.longitude" name="longitude" required
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-vet-blue focus:border-transparent"
+                  placeholder="Ex: 10.7603">
+              </div>
+            </div>
+          </div>
+
+          <!-- Featured -->
+          <div class="md:col-span-2">
+            <label class="flex items-center cursor-pointer">
+              <input type="checkbox" [(ngModel)]="currentBoutique.isFeatured" name="isFeatured"
+                class="w-5 h-5 text-vet-blue border-gray-300 rounded focus:ring-vet-blue">
+              <span class="ml-3 text-sm font-medium text-gray-700">
+                Marquer comme Boutique Premium
+                <span class="text-xs text-gray-500 block">Les boutiques premium sont mises en avant</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="mt-6 flex items-center justify-end space-x-3">
+          <button type="button" (click)="closeForm()"
+            class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium transition-colors">
+            Annuler
+          </button>
+          <button type="submit" [disabled]="loading"
+            class="px-6 py-2 bg-vet-blue hover:bg-blue-600 text-white font-semibold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center">
+            <svg *ngIf="loading" class="animate-spin h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+              </circle>
+              <path class="opacity-75" fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+              </path>
+            </svg>
+            {{ loading ? 'Enregistrement...' : (isEditing ? 'Modifier' : 'Ajouter') }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div *ngIf="showDeleteModal" class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog"
+  aria-modal="true">
+  <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" (click)="showDeleteModal = false"></div>
+
+    <div
+      class="inline-block align-bottom bg-white rounded-2xl text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-md sm:w-full">
+      <div class="px-6 pt-8 pb-6">
+        <!-- Warning Icon -->
+        <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 mb-4">
+          <svg class="h-8 w-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+            </path>
+          </svg>
+        </div>
+
+        <!-- Title -->
+        <h3 class="text-xl font-bold text-gray-900 mb-2">
+          Confirmer la suppression
+        </h3>
+
+        <!-- Message -->
+        <p class="text-gray-600 mb-6">
+          Êtes-vous sûr de vouloir supprimer la boutique<br>
+          <span class="font-semibold text-gray-900">{{ boutiqueToDelete?.name }}</span> ?<br>
+          <span class="text-sm text-red-600">Cette action est irréversible.</span>
+        </p>
+
+        <!-- Actions -->
+        <div class="flex items-center justify-center space-x-3">
+          <button (click)="showDeleteModal = false"
+            class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium transition-colors">
+            Annuler
+          </button>
+          <button (click)="deleteBoutique()" [disabled]="loading"
+            class="px-6 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center">
+            <svg *ngIf="loading" class="animate-spin h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+              </circle>
+              <path class="opacity-75" fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+              </path>
+            </svg>
+            {{ loading ? 'Suppression...' : 'Supprimer' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

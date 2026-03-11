@@ -1,0 +1,241 @@
+<section class="ou-trouver-section">
+  <div class="container">
+    <!-- Back Button -->
+    <div class="mb-6">
+      <button (click)="navigateBack()"
+        class="flex items-center text-vet-blue hover:text-blue-700 font-semibold transition-colors duration-200 text-lg">
+        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        </svg>
+        Retour à l'Espace Propriétaire
+      </button>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <h1 class="page-title">Nos Lieux Partenaires VITALFEED</h1>
+      <p class="page-description">
+        La santé commence par la nutrition
+Le vétérinaire praticien est notre partenaire essentiel
+      </p>
+    </div>
+
+    <!-- Split Header Section (Cabinets & Boutiques) -->
+    <div class="split-header-grid">
+      <!-- Left: Cabinets (Blue Theme) -->
+      <div class="header-card is-cabinet">
+        <div class="card-icon-wrapper">
+          <div class="card-icon">🏥</div>
+        </div>
+        <div class="card-content">
+          <h2 class="card-title">Où trouver Nos Produits</h2>
+          <p class="card-description">
+            Parce qu'une bonne alimentation c'est avant tout une histoire de santé,Parce que chaque animal est unique, son alimentation doit être adaptée à ses besoins nutritionnels spécifiques, qui varient selon son espèce, sa taille, son âge, son activité ou son état de santé.
+
+            notre gamme est proposée chez votre vétérinaire.
+          </p>
+          <div class="card-features">
+            <div class="feature-tag">🩺 Soins Experts</div>
+            <div class="feature-tag">💊 Produits VITALFEED</div>
+            <div class="feature-tag">🐾 Suivi Personnalisé</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Boutiques (Orange Theme) -->
+      <div class="header-card is-boutique">
+        <div class="card-icon-wrapper">
+          <div class="card-icon">🛍️</div>
+        </div>
+        <div class="card-content">
+          <h2 class="card-title">Notre Stratégie</h2>
+          <p class="card-description">
+           Nous ne proposons pas de vente directe aux propriétaires.
+            Pour toute question en lien avec un produit , une commande,
+            vous devez vous adresser au vétérinaires le plus proche de
+            vous .
+          </p>
+          <div class="card-features">
+            <div class="feature-tag">🛒 Large Choix</div>
+            <div class="feature-tag">⭐ Service Premium</div>
+            <div class="feature-tag">📍 Proximité</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Map and Locations Section -->
+    <div class="map-locations-section">
+      <h2 class="section-title">🗺️ Trouvez Un Cabinet ou Une Boutique Près de Chez Vous</h2>
+
+      <div class="map-content-grid">
+        <!-- Interactive Map -->
+        <div class="map-container">
+          <div class="map-card">
+            <div class="map-header">
+              <div class="map-header-content">
+                <h3 class="map-title">Carte Interactive</h3>
+                <p class="map-subtitle">{{ filteredLocations.length }} cabinet(s) avec marqueurs</p>
+              </div>
+              <button class="maximize-btn" (click)="maximizeMap()" title="Agrandir la carte">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4">
+                  </path>
+                </svg>
+              </button>
+            </div>
+            <div class="map-embed">
+              <div id="map"></div>
+            </div>
+
+            <!-- Map Info -->
+            <div class="px-4 py-3 bg-green-50 border-t border-green-100">
+              <div class="flex items-center justify-center text-sm text-green-800">
+                <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span class="text-center"><strong>{{ filteredLocations.length }} cabinet(s) affiché(s) sur la
+                    carte.</strong> Cliquez sur les marqueurs pour voir les détails de chaque cabinet.</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Locations List -->
+        <div class="locations-container">
+          <div class="locations-header">
+            <h3 class="locations-title">Nos Cabinets ({{ filteredLocations.length }})</h3>
+            <div class="filter-buttons">
+              <button class="filter-btn" [class.active]="selectedFilter === 'all'"
+                (click)="filterLocations('all')">Tous</button>
+              <button class="filter-btn" [class.active]="selectedFilter === 'CABINET'"
+                (click)="filterLocations('CABINET')">Cabinets</button>
+              <button class="filter-btn" [class.active]="selectedFilter === 'BOUTIQUE'"
+                (click)="filterLocations('BOUTIQUE')">Boutiques</button>
+            </div>
+          </div>
+
+          <!-- Loading State -->
+          <div *ngIf="loading" class="text-center py-12">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-vet-blue mx-auto mb-4"></div>
+            <p class="text-gray-600">Chargement des points de vente...</p>
+          </div>
+
+          <!-- Error State -->
+          <div *ngIf="error && !loading" class="text-center py-12">
+            <svg class="w-16 h-16 mx-auto mb-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <p class="text-red-600 font-medium">{{ error }}</p>
+          </div>
+
+          <!-- Locations List -->
+          <div *ngIf="!loading && !error" class="locations-list">
+            <!-- No results -->
+            <div *ngIf="filteredLocations.length === 0" class="text-center py-12">
+              <svg class="w-16 h-16 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+              <p class="text-lg font-medium text-gray-900">Aucun point de vente trouvé</p>
+              <p class="text-sm text-gray-600 mt-2">Essayez un autre filtre</p>
+            </div>
+
+            <!-- Location Cards -->
+            <div *ngFor="let location of paginatedLocations" class="location-card" [class.featured]="location.featured"
+              [class.boutique-card]="location.type === 'BOUTIQUE' || location.type === 'Boutique'">
+              <div class="location-badge"
+                [ngClass]="{'bg-orange-100 text-orange-800': location.type === 'BOUTIQUE' || location.type === 'Boutique', 'bg-blue-100 text-blue-800': location.type === 'CABINET'}">
+                <span *ngIf="location.featured">⭐ Principal</span>
+                <span *ngIf="!location.featured">
+                  {{ (location.type === 'BOUTIQUE' || location.type === 'Boutique') ? '🛍️ Boutique' : '🏥 Cabinet' }}
+                </span>
+              </div>
+              <h4 class="location-name">{{ location.name }}</h4>
+              <div class="location-details">
+                <div class="location-info">
+                  <span class="info-icon">📍</span>
+                  <span class="info-text">{{ location.address }}, {{ location.city }}</span>
+                </div>
+
+              </div>
+              <div class="location-actions">
+                <button class="btn-location primary" (click)="getDirections(location)" title="Obtenir l'itinéraire">
+                  🧭 Itinéraire
+                </button>
+
+              </div>
+            </div>
+
+            <!-- Pagination -->
+            <div *ngIf="filteredLocations.length > itemsPerPage" class="pagination-container">
+              <div class="pagination-info">
+                Affichage {{ (currentPage - 1) * itemsPerPage + 1 }} - {{ Math.min(currentPage * itemsPerPage,
+                filteredLocations.length) }} sur {{ filteredLocations.length }}
+              </div>
+              <div class="pagination-controls">
+                <button (click)="previousPage()" [disabled]="currentPage === 1" class="pagination-btn">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                  </svg>
+                </button>
+
+                <div class="pagination-pages">
+                  <button *ngFor="let page of getPageNumbers()" (click)="goToPage(page)"
+                    [class.active]="currentPage === page" class="page-btn">
+                    {{ page }}
+                  </button>
+                </div>
+
+                <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="pagination-btn">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Call to Action Section -->
+    <div class="cta-section">
+      <div class="cta-card">
+        <div class="cta-content">
+          <h3 class="cta-title">Vous êtes un vétérinaire ?</h3>
+          <p class="cta-text">
+            Rejoignez notre communauté de vétérinaires et découvrez une application innovante
+            conçue spécialement pour simplifier votre pratique quotidienne et améliorer
+            la qualité des soins pour vos patients à quatre pattes.
+          </p>
+          <button class="btn-cta" (click)="navigateToVetSpace()">Découvrir l'Espace Vétérinaire</button>
+        </div>
+        <div class="cta-icon">👩‍⚕️</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Map Modal -->
+<div *ngIf="isMapMaximized" class="map-modal-overlay" (click)="minimizeMap()">
+  <div class="map-modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3 class="modal-title">Carte Interactive - Vue Étendue</h3>
+      <button class="minimize-btn" (click)="minimizeMap()" title="Fermer">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-map-container">
+      <div id="modalMap"></div>
+    </div>
+  </div>
+</div>

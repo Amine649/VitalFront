@@ -1,0 +1,26 @@
+// Style moderne pour le formulaire de connexion
+.fade-in {
+  animation: fadeIn 0.7s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: none; }
+}
+
+input.ng-invalid.ng-touched, input.ng-invalid.ng-dirty {
+  border-color: #ef4444;
+}
+
+.bg-vet-blue {
+  background-color: #2563eb;
+}
+
+.text-vet-blue {
+  color: #2563eb;
+}
+
+button[disabled] {
+  opacity: 0.7;
+  cursor: not-allowed;
+} 

@@ -1,0 +1,640 @@
+<div class="flex flex-col h-full">
+
+
+  <!-- Navbar is provided by app component, no need for duplicate navbar here -->
+
+  <!-- Hero Section (Full Width) -->
+  <div class="w-full px-0 mb-6">
+    <div class="category-hero-section relative overflow-hidden bg-white">
+      <!-- Decorative Blobs -->
+      <div class="absolute top-0 right-0 w-2/3 h-full bg-blue-50/50 -skew-x-12 translate-x-1/4 z-0"></div>
+      <div
+        class="absolute top-10 right-10 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob">
+      </div>
+      <div
+        class="absolute top-10 right-1/3 w-96 h-96 bg-indigo-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000">
+      </div>
+
+      <!-- Back Button -->
+      <button (click)="navigateToVetSpace()"
+        class="absolute top-6 left-6 z-20 group flex items-center text-gray-500 hover:text-blue-600 transition-all duration-300">
+        <div
+          class="w-8 h-8 rounded-full bg-white shadow-sm border border-gray-100 flex items-center justify-center mr-2 group-hover:bg-blue-50 transition-colors">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18">
+            </path>
+          </svg>
+        </div>
+        <span
+          class="flex items-center text-vet-blue hover:text-blue-700 font-semibold transition-colors duration-200 text-lg">
+          Retour à l'espace vétérinaire
+        </span>
+      </button>
+
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+        <!-- Cat Hero -->
+        <div *ngIf="selectedCategory === 'Chat'"
+        class="flex flex-col md:flex-row items-center min-h-[400px] py-12 md:py-20">
+        <!-- Text Side (Left) -->
+        <div class="w-full md:w-1/2 pr-0 md:pr-8 text-center mb-10 md:mb-0">
+          <span
+            [ngClass]="selectedCategory === 'Chat' ? 'bg-green-100 text-[#74C375]' : selectedCategory === 'Chien' ? 'bg-red-100 text-[#a01867]' : 'bg-blue-100 text-blue-600'"
+            class="inline-block py-1 px-3 rounded-full text-xs font-bold tracking-wider mb-4 uppercase">
+            Gamme Chat
+          </span>
+          <h2 class="text-4xl md:text-5xl font-extrabold text-slate-800 leading-tight mb-6">
+            Aliments <span class="relative" [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-blue-600'">
+              Pour Chat
+              <svg class="absolute w-full h-3 -bottom-1 left-0 -z-10" [ngClass]="selectedCategory === 'Chat' ? 'text-green-200' : selectedCategory === 'Chien' ? 'text-red-200' : 'text-blue-200'" viewBox="0 0 100 10"
+                preserveAspectRatio="none">
+                <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none" />
+              </svg>
+            </span><br>
+            <span class="whitespace-nowrap">Choisir le bon aliment !!!</span>
+          </h2>
+          <p class="text-lg text-slate-600 mb-8 leading-relaxed max-w-lg mx-auto">
+            Notre gamme repose sur un équilibre nutritionnel faible en glucides et riche en protéines adapté aux
+            besoins de votre chat, carnivore depuis toujours !
+          </p>
+          <div class="flex flex-col sm:flex-row items-center gap-3 justify-center">
+            <button
+              [ngClass]="selectedCategory === 'Chat' ? 'bg-[#74C375] shadow-green-500/30 hover:shadow-green-500/40' : selectedCategory === 'Chien' ? 'bg-[#a01867] shadow-red-500/30 hover:shadow-red-500/40' : 'bg-blue-600 shadow-blue-500/30 hover:shadow-blue-500/40'"
+              class="px-8 py-3 text-white rounded-full font-semibold shadow-lg hover:-translate-y-1 transition-all duration-300 whitespace-nowrap">
+              Voir les produits
+            </button>
+            <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
+              <svg [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              Fabrication française
+
+            </span>
+            <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
+              <svg [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              Riches en protéines de haute qualité
+            </span>
+            <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
+              <svg [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              Pauvre en glucides.
+
+            </span>
+          </div>
+        </div>
+
+        <!-- Image Side (Right) -->
+        <div class="w-full md:w-1/2 relative flex justify-center md:justify-end md:pl-16">
+          <div class="relative w-full flex justify-center md:justify-end md:translate-x-16">
+            <!-- Organic Blob Background for Image -->
+            <div
+              class="absolute top-0 right-0 w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob">
+            </div>
+            <div
+              class="absolute top-0 right-20 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000">
+            </div>
+            <div
+              class="absolute -bottom-8 right-10 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000">
+            </div>
+
+            <div class="relative transform  transition-transform duration-500">
+              <img src="assets/images/za.png" alt="Chat"
+                style="width: 650px; max-width: 130%;"
+                class="w-full h-auto object-cover transform scale-110 hover:scale-100 transition-transform duration-700 drop-shadow-2xl">
+            </div>
+
+          
+          </div>
+        </div>
+      </div>
+
+        <!-- Dog Hero -->
+        <div *ngIf="selectedCategory === 'Chien'"
+        class="flex flex-col md:flex-row items-center min-h-[400px] py-12 md:py-20">
+        <!-- Text Side (Left) -->
+        <div class="w-full md:w-1/2 pr-0 md:pr-12 text-center md:text-left mb-10 md:mb-0">
+          <span
+            [ngClass]="selectedCategory === 'Chien' ? 'bg-red-100 text-[#a01867]' : 'bg-blue-100 text-blue-600'"
+            class="inline-block py-1 px-3 rounded-full text-xs font-bold tracking-wider mb-4 uppercase">
+            Gamme Chien
+          </span>
+          <div>
+            
+          </div>
+          <h2 class="text-4xl md:text-5xl font-extrabold text-slate-800 leading-tight mb-6">
+          <span [ngClass]="selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-blue-600'" class="relative inline-block whitespace-nowrap">
+            Aliments pour chiens
+          </span>
+          <br>
+          <span class="whitespace-nowrap">Trouver le bon aliment !!!</span>
+        </h2>
+          
+          <p class="text-lg text-slate-600 mb-8 leading-relaxed max-w-lg mx-auto md:mx-0">
+          Notre gamme repose sur un équilibre nutritionnel faible en glucides et riche en protéines
+          adapté aux besoins de votre chien, carnivore depuis toujours !          
+          </p>
+
+          <div class="flex flex-col sm:flex-row items-center gap-4 justify-center">
+            <button
+              [ngClass]="selectedCategory === 'Chien' ? 'bg-[#a01867] shadow-red-500/30 hover:shadow-red-500/40' : 'bg-blue-600 shadow-blue-500/30 hover:shadow-blue-500/40'"
+              class="px-8 py-3 text-white rounded-full font-semibold shadow-lg hover:-translate-y-1 transition-all duration-300 whitespace-nowrap">
+              Voir les produits
+            </button>
+            <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
+              <svg [ngClass]="selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              Fabrication française
+            </span>
+            <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
+              <svg [ngClass]="selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              Riches en protéines de haute qualité
+            </span>
+            <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
+              <svg [ngClass]="selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              Pauvre en glucides.
+            </span>
+          </div>
+        </div>
+
+        <!-- Image Side (Right) -->
+        <div class="w-full md:w-1/2 relative">
+          <div class="relative w-full flex justify-center">
+            <!-- Organic Blob Background for Image -->
+            <div
+              class="absolute top-0 left-1/2 -translate-x-1/2 -left-4 w-72 h-72 bg-orange-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob">
+            </div>
+            <div
+              class="absolute top-0 left-1/2 -translate-x-1/2 -right-4 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000">
+            </div>
+            <div
+              class="absolute -bottom-8 left-1/2 -translate-x-1/2 left-20 w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000">
+            </div>
+
+            <div class="relative transform  transition-transform duration-500">
+              <img src="assets/images/qsqs.png" alt="Chien"
+                style="width: 750px; max-width: 900%;"
+                class="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700 drop-shadow-2xl">
+            </div>
+
+           
+          </div>
+        </div>
+      </div>
+
+        <!-- Default Hero (All Products) -->
+        <div *ngIf="!selectedCategory" class="flex flex-col md:flex-row items-center min-h-[200px] py-10 md:py-20">
+        <!-- Text Side (Left) -->
+        <div class="w-full md:w-7/12 pr-0 md:pr-6 text-center md:text-left mb-10 md:mb-0">
+          <h2 class="text-4xl md:text-5xl font-extrabold text-slate-800 leading-tight mb-6">
+            Les produits Adaptés à <br>
+            <span class="text-blue-600 relative inline-block">
+              Votre Chat Ou Votre Chien
+              <svg class="absolute w-full h-3 -bottom-3.5 left-0 text-blue-200 -z-10" viewBox="0 0 100 10"
+                preserveAspectRatio="none">
+                <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none" />
+              </svg>
+            </span>
+          </h2>
+          <div class="text-lg text-slate-600 mb-8 leading-relaxed max-w-3xl mx-auto md:mx-0 font-medium">
+            <p class="mb-2">
+              Votre compagnon, chat ou chien, a des besoins alimentaires, et donc de la nourriture, spécifiques à son
+              espèce.
+            </p>
+            <p>
+              Pour mieux comprendre les différentes diètes félines ou canines, vous pouvez vous rendre dans la section
+              qui
+              vous intéresse.
+            </p>
+          </div>
+          <div class="flex flex-col sm:flex-row items-center gap-4 justify-center">
+          <div
+            class="px-8 py-3 bg-blue-600 text-white rounded-full font-semibold shadow-lg shadow-blue-500/30 hover:shadow-blue-500/40 hover:-translate-y-1 transition-all duration-300 inline-flex items-center justify-center">
+            Découvrir la gamme
+            </div>
+          <button  class="px-8 py-3 border-2 border-blue-600 text-blue-600 rounded-full font-semibold hover:bg-blue-600 hover:text-white transition-all duration-300 cursor-pointer inline-flex items-center justify-center">
+            <svg class="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Expertise Vétérinaire
+          </button>
+        </div>
+        </div>
+
+        <!-- Image Side (Right) - As Background -->
+        <div class="w-full md:w-5/12 relative z-10">
+          <div class="relative w-full h-full flex items-center justify-center">
+            <!-- Organic Blob Background - Same as Cat/Dog pages -->
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 -left-4 w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 -right-4 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+            <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 left-20 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+            
+            <!-- Image without container - just the image itself -->
+            <img src="assets/images/feree.png" alt="Chien et Chat"
+              class="w-[105%] max-w-none h-auto object-contain opacity-100 transform scale-110 hover:scale-115 transition-transform duration-700 pointer-events-none">
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Products Section -->
+  <section class="py-6 bg-white flex-grow">
+    <div class="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- Products Title -->
+      <div class="products-header mb-8">
+        <h3 class="section-title text-center text-2xl md:text-3xl font-bold text-gray-800">
+          <span *ngIf="selectedCategory && selectedSousCategory && selectedSubSubCategory">
+            {{ selectedSubSubCategory }} - {{ selectedSousCategory }} - {{ selectedCategory }}
+          </span>
+          <span *ngIf="selectedCategory && selectedSousCategory && !selectedSubSubCategory">
+            {{ selectedSousCategory }} - {{ selectedCategory }}
+          </span>
+          <span *ngIf="selectedCategory && !selectedSousCategory">
+            Produits {{ selectedCategory }}
+          </span>
+          <span *ngIf="!selectedCategory && selectedSousCategory">
+            {{ selectedSousCategory }}
+          </span>
+          <span *ngIf="!selectedCategory && !selectedSousCategory">
+            Tous nos Produits
+          </span>
+        </h3>
+      </div>
+
+      <!-- Type Aliment Filter (DIETETIQUE/PHYSIO) - Only show when pet and Aliment are selected -->
+      <div *ngIf="shouldShowSubSubCategoryFilter()" class="flex justify-center mb-6">
+        <div class="inline-flex gap-3 bg-gray-50 p-2 rounded-xl border border-gray-200">
+          <button (click)="selectSubSubCategory('DIETETIQUE')"
+            [class.bg-gradient-to-r]="selectedSubSubCategory === 'DIETETIQUE'"
+            [class.from-purple-600]="selectedSubSubCategory === 'DIETETIQUE'"
+            [class.to-blue-600]="selectedSubSubCategory === 'DIETETIQUE'"
+            [class.text-white]="selectedSubSubCategory === 'DIETETIQUE'"
+            [class.shadow-lg]="selectedSubSubCategory === 'DIETETIQUE'"
+            [class.bg-white]="selectedSubSubCategory !== 'DIETETIQUE'"
+            [class.text-gray-700]="selectedSubSubCategory !== 'DIETETIQUE'"
+            class="px-6 py-2.5 rounded-lg font-semibold transition-all duration-200 hover:shadow-md">
+            🏥 Diététique
+          </button>
+          <button (click)="selectSubSubCategory('PHYSIO')"
+            [class.bg-gradient-to-r]="selectedSubSubCategory === 'PHYSIO'"
+            [class.from-purple-600]="selectedSubSubCategory === 'PHYSIO'"
+            [class.to-blue-600]="selectedSubSubCategory === 'PHYSIO'"
+            [class.text-white]="selectedSubSubCategory === 'PHYSIO'"
+            [class.shadow-lg]="selectedSubSubCategory === 'PHYSIO'"
+            [class.bg-white]="selectedSubSubCategory !== 'PHYSIO'"
+            [class.text-gray-700]="selectedSubSubCategory !== 'PHYSIO'"
+            class="px-6 py-2.5 rounded-lg font-semibold transition-all duration-200 hover:shadow-md">
+            ⚡ Physiologie
+          </button>
+        </div>
+      </div>
+
+      <!-- Initial Loading State with Skeleton -->
+      <div *ngIf="isLoading"
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-8">
+        <app-product-skeleton [count]="12"></app-product-skeleton>
+      </div>
+
+      <!-- Error State -->
+      <div *ngIf="!isLoading && errorMessage" class="text-center py-16">
+        <div class="flex justify-center mb-6">
+          <svg class="w-24 h-24 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-semibold text-gray-700 mb-2">Erreur de chargement</h3>
+        <p class="text-gray-500 mb-4">Impossible de charger les produits. Veuillez vérifier votre connexion et
+          réessayer.
+        </p>
+        <button (click)="loadProducts()"
+          class="bg-vet-blue hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg">
+          Réessayer
+        </button>
+      </div>
+
+      <!-- Empty State -->
+      <div *ngIf="!isLoading && !errorMessage && getTotalProductsCount() === 0" class="text-center py-16">
+        <div class="flex justify-center mb-6">
+          <svg class="w-24 h-24 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-semibold text-gray-700 mb-2">Aucun produit trouvé</h3>
+        <p class="text-gray-500">Essayez de modifier vos filtres</p>
+      </div>
+
+      <!-- Products Grid -->
+      <div *ngIf="!isLoading && !errorMessage">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-5 mb-8">
+          <div *ngFor="let product of displayedProducts; trackBy: trackByProductId"
+            class="bg-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 product-card overflow-hidden flex flex-col max-w-[280px] mx-auto w-full"
+            [class.highlighted-product]="highlightedProductId === product.id">
+
+            <!-- Product Image -->
+            <div class="relative bg-white p-4 flex items-center justify-center" style="height: 200px;">
+              <img appLazyLoadImage [src]="product.imageUrl"
+                [alt]="'Image du produit ' + product.name + ' - ' + product.description"
+                class="w-full h-full object-contain">
+
+              <!-- Category Badge - Top Right -->
+              <div class="absolute top-2 right-2">
+                <span class="bg-blue-600 text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-md">
+                  {{ getSubCategoryLabel(product.subCategory) }}
+                </span>
+              </div>
+
+              <!-- Out of Stock Badge - Top Left -->
+              <div class="absolute top-2 left-2" *ngIf="!product.inStock">
+                <span class="bg-red-500 text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-md">
+                  Rupture
+                </span>
+              </div>
+            </div>
+
+            <!-- Product Info -->
+            <div class="p-3 pt-2 flex flex-col flex-grow text-center border-t border-gray-100">
+              <!-- Product Name -->
+              <h3 class="text-sm font-bold mb-2 text-gray-800 leading-tight"
+                style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; min-height: 3.6rem; word-break: break-word;">
+                {{ product.name }}
+              </h3>
+
+              <!-- Price Section (Kept but styled purely) -->
+              <div class="mb-2">
+                <p *ngIf="getProductPackaging(product)" class="text-xs text-gray-500 mt-1">
+                  {{ getSelectedVariantPackaging(product) }}
+                </p>
+                <p class="text-xl font-bold text-blue-700">{{ product.price | number:'1.2-2' }} TND</p>
+              </div>
+
+              <!-- Packaging Selector
+              <div *ngIf="product.variants && product.variants.length > 1" class="mb-3">
+                <select 
+                  [ngModel]="product.selectedVariantId"
+                  (ngModelChange)="product.selectedVariantId = $event; onProductVariantChange(product)"
+                  class="w-full text-xs border border-gray-300 rounded-md px-2 py-1.5 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white">
+                  <option *ngFor="let variant of product.variants" [ngValue]="variant.id">
+                    {{ variant.packaging }} - {{ variant.price | number:'1.2-2' }} TND
+                  </option>
+                </select>
+              </div>
+               -->
+
+              <!-- Category Badge -->
+              <div class="mb-2 flex justify-center">
+                <span class="text-xs px-3 py-1 bg-gray-100 rounded text-gray-700 font-medium border border-gray-200">
+                  {{ product.category }}
+                </span>
+              </div>
+
+              <!-- Action Buttons - Stacked -->
+              <div class="flex flex-col gap-2 mt-auto">
+                <!-- Details Button (on top) -->
+                <a [href]="product.detailsUrl" target="_blank" rel="noopener noreferrer"
+                  class="w-full flex items-center justify-center text-blue-700 hover:text-white hover:bg-blue-700 font-semibold text-xs transition-all duration-200 py-2 px-3 rounded border-2 border-blue-700 whitespace-nowrap">
+                  <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                    </path>
+                  </svg>
+                  Détails
+                </a>
+
+                <!-- Add to Cart Button (below) -->
+                <button
+                  class="w-full bg-blue-900 hover:bg-blue-800 text-white font-bold text-xs py-2.5 px-3 rounded transition-all duration-300 flex items-center justify-center shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed uppercase tracking-wide whitespace-nowrap"
+                  (click)="addToCart(product)" [disabled]="!product.inStock">
+                  <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
+                    </path>
+                  </svg>
+                  {{ product.inStock ? 'Ajouter au panier' : 'Indisponible' }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+       <!-- Results Count -->
+        <div *ngIf="displayedProducts.length > 0" class="mt-6 text-center text-gray-600">
+          Affichage de {{ (currentPage - 1) * itemsPerPage + 1 }} à {{ Math.min(currentPage * itemsPerPage, getTotalProductsCount()) }} sur {{ getTotalProductsCount() }} produits
+        </div>
+
+        <!-- Pagination Controls -->
+        <div *ngIf="getTotalPages() > 1" class="flex justify-center items-center gap-2 mt-8">
+          <!-- Previous Button -->
+          <button (click)="previousPage()" [disabled]="currentPage === 1"
+            class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+          </button>
+
+          <!-- Page Numbers -->
+          <button *ngFor="let page of getPageNumbers()" (click)="goToPage(page)" 
+            [class.bg-blue-600]="currentPage === page"
+            [class.text-white]="currentPage === page" 
+            [class.border-blue-600]="currentPage === page"
+            [class.text-gray-700]="currentPage !== page" 
+            [class.border-gray-300]="currentPage !== page"
+            class="px-4 py-2 rounded-lg border hover:bg-blue-50 transition-all duration-200 font-medium">
+            {{ page }}
+          </button>
+
+          <!-- Next Button -->
+          <button (click)="nextPage()" [disabled]="currentPage === getTotalPages()"
+            class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+
+  <!-- Password Change Modal -->
+  <div *ngIf="showPasswordModal" class="fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-50"
+    (click)="closePasswordModal()">
+    <div class="bg-white rounded-xl shadow-2xl w-full max-w-md mx-4" (click)="$event.stopPropagation()">
+      <!-- Modal Header -->
+      <div class="flex justify-between items-center p-6 border-b border-gray-200">
+        <h3 class="text-xl font-bold text-gray-800">Changer le mot de passe</h3>
+        <button (click)="closePasswordModal()" class="text-gray-400 hover:text-gray-600 transition-colors">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <form [formGroup]="passwordForm" (ngSubmit)="changePassword()" class="p-6 space-y-4">
+        <!-- Current Password -->
+        <div>
+          <label for="currentPassword" class="block text-sm font-medium text-gray-700 mb-2">Mot de passe actuel</label>
+          <div class="relative">
+            <input [type]="showCurrentPassword ? 'text' : 'password'" id="currentPassword"
+              formControlName="currentPassword"
+              class="w-full px-4 py-3 pr-12 rounded-lg border border-gray-300 focus:ring-2 focus:ring-vet-blue focus:border-transparent"
+              [ngClass]="{'border-red-500': passwordForm.get('currentPassword')?.invalid && passwordForm.get('currentPassword')?.touched}"
+              placeholder="Entrez votre mot de passe actuel">
+            <button type="button" (click)="toggleCurrentPasswordVisibility()"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
+              tabindex="-1">
+              <svg *ngIf="!showCurrentPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                </path>
+              </svg>
+              <svg *ngIf="showCurrentPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21">
+                </path>
+              </svg>
+            </button>
+          </div>
+          <div *ngIf="passwordForm.get('currentPassword')?.invalid && passwordForm.get('currentPassword')?.touched"
+            class="text-red-500 text-sm mt-1">
+            <span *ngIf="passwordForm.get('currentPassword')?.errors?.['required']">Le mot de passe actuel est
+              requis</span>
+          </div>
+        </div>
+
+        <!-- New Password -->
+        <div>
+          <label for="newPassword" class="block text-sm font-medium text-gray-700 mb-2">Nouveau mot de passe</label>
+          <div class="relative">
+            <input [type]="showNewPassword ? 'text' : 'password'" id="newPassword" formControlName="newPassword"
+              class="w-full px-4 py-3 pr-12 rounded-lg border border-gray-300 focus:ring-2 focus:ring-vet-blue focus:border-transparent"
+              [ngClass]="{'border-red-500': passwordForm.get('newPassword')?.invalid && passwordForm.get('newPassword')?.touched}"
+              placeholder="Entrez le nouveau mot de passe">
+            <button type="button" (click)="toggleNewPasswordVisibility()"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
+              tabindex="-1">
+              <svg *ngIf="!showNewPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                </path>
+              </svg>
+              <svg *ngIf="showNewPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21">
+                </path>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Password Strength Indicator -->
+          <div *ngIf="passwordForm.get('newPassword')?.value" class="mt-2">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-xs font-medium text-gray-600">Force du mot de passe:</span>
+              <span class="text-xs font-semibold" [style.color]="passwordStrengthColor">{{ passwordStrengthText
+                }}</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+              <div class="h-full transition-all duration-300 rounded-full" [style.width.%]="passwordStrength"
+                [style.background-color]="passwordStrengthColor"></div>
+            </div>
+          </div>
+          <div *ngIf="passwordForm.get('newPassword')?.invalid && passwordForm.get('newPassword')?.touched"
+            class="text-red-500 text-sm mt-1 space-y-1">
+            <div *ngIf="passwordForm.get('newPassword')?.errors?.['required']">• Le mot de passe est requis</div>
+            <div *ngIf="passwordForm.get('newPassword')?.errors?.['minLength']">• Minimum 8 caractères</div>
+            <div *ngIf="passwordForm.get('newPassword')?.errors?.['noUpperCase']">• Au moins une lettre majuscule</div>
+            <div *ngIf="passwordForm.get('newPassword')?.errors?.['noSpecialChar']">• Au moins un caractère spécial
+              (!&#64;#$%^&*...)</div>
+          </div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div>
+          <label for="confirmPassword" class="block text-sm font-medium text-gray-700 mb-2">Confirmer le mot de
+            passe</label>
+          <div class="relative">
+            <input [type]="showConfirmPassword ? 'text' : 'password'" id="confirmPassword"
+              formControlName="confirmPassword"
+              class="w-full px-4 py-3 pr-12 rounded-lg border border-gray-300 focus:ring-2 focus:ring-vet-blue focus:border-transparent"
+              [ngClass]="{'border-red-500': passwordForm.get('confirmPassword')?.invalid && passwordForm.get('confirmPassword')?.touched}"
+              placeholder="Confirmez le nouveau mot de passe">
+            <button type="button" (click)="toggleConfirmPasswordVisibility()"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
+              tabindex="-1">
+              <svg *ngIf="!showConfirmPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                </path>
+              </svg>
+              <svg *ngIf="showConfirmPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21">
+                </path>
+              </svg>
+            </button>
+          </div>
+          <div *ngIf="passwordForm.get('confirmPassword')?.invalid && passwordForm.get('confirmPassword')?.touched"
+            class="text-red-500 text-sm mt-1">
+            <span *ngIf="passwordForm.get('confirmPassword')?.errors?.['required']">La confirmation est requise</span>
+            <span *ngIf="passwordForm.get('confirmPassword')?.errors?.['passwordMismatch']">Les mots de passe ne
+              correspondent pas</span>
+          </div>
+        </div>
+
+        <div *ngIf="passwordError" class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+          {{ passwordError }}
+        </div>
+
+        <div *ngIf="passwordSuccess"
+          class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm">
+          {{ passwordSuccess }}
+        </div>
+
+        <div class="flex gap-3 pt-4">
+          <button type="submit" [disabled]="passwordLoading || passwordForm.invalid"
+            class="flex-1 bg-vet-blue hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+            <span *ngIf="!passwordLoading">Modifier</span>
+            <span *ngIf="passwordLoading" class="flex items-center justify-center">
+              <svg class="animate-spin h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                </path>
+              </svg>
+              Modification...
+            </span>
+          </button>
+          <button type="button" (click)="closePasswordModal()"
+            class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-3 px-6 rounded-lg transition-all duration-300">
+            Annuler
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

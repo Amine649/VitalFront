@@ -1,0 +1,807 @@
+<!-- Section Hero -->
+<section class="relative bg-gradient-to-b from-white via-blue-50 to-vet-beige overflow-hidden" style="padding-top: 1rem;">
+  <!-- Decorative Background Elements -->
+  <div class="absolute top-0 right-0 w-64 h-64 bg-blue-100 rounded-full opacity-20 -mr-32 -mt-32"></div>
+  <div class="absolute bottom-0 left-0 w-96 h-96 bg-green-100 rounded-full opacity-20 -ml-48 -mb-48"></div>
+
+  <div class="container max-w-7xl mx-auto relative z-10" style="padding-left: 0.5rem; padding-right: 1rem;">
+    <div class="flex flex-col md:flex-row items-center" style="gap: 3rem;">
+      <div class="fade-in" style="width: 100%; max-width: 650px; padding-left: 0;">
+        <div class="flex justify-center">
+          <div class="inline-block mb-4 px-4 py-2 bg-blue-100 rounded-full">
+            <span class="text-blue-600 font-bold text-sm uppercase tracking-wider">Plateforme De Nutrition Vétérinaire</span>
+          </div>
+        </div>
+     <h1 class="font-bold mb-4 text-vet-blue leading-tight text-center" style="font-size: 47px;">
+  Nutrition 360°
+</h1>
+<p class="mb-6 text-gray-600 leading-relaxed text-center" style="font-size: 23px;">
+  Aller plus loin que la prise en charge nutritionnelle 
+  classique 
+</p>
+
+        <!-- Button for Veterinarians -->
+        <div class="mb-6 flex justify-center">
+          <button (click)="navigateToVetSpace()"
+            class="bg-vet-blue hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl inline-flex items-center">
+            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+              </path>
+            </svg>
+            Vous êtes vétérinaire ? Découvrez votre espace
+          </button>
+        </div>
+      </div>
+      <div class="mt-6 md:mt-0 fade-in flex-shrink-0">
+        <div class="relative flex justify-center items-center" style="min-height: 550px;">
+          <div class="hero-image-wrapper-interactive relative" 
+               (mousemove)="onImageMouseMove($event)"
+               (mouseleave)="onImageMouseLeave()">
+            <!-- Organic Blob Background for Image -->
+            <div
+              class="absolute top-0 left-1/2 -translate-x-1/2 -left-4 w-72 h-72 bg-orange-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob">
+            </div>
+            <div
+              class="absolute top-0 left-1/2 -translate-x-1/2 -right-4 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000">
+            </div>
+            <div
+              class="absolute -bottom-8 left-1/2 -translate-x-1/2 left-20 w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000">
+            </div>
+            
+            <!-- Organic Blob Background - Same as Cat/Dog pages -->
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 -left-4 w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 -right-4 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+            <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 left-20 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+            
+            <!-- Image without container - just the image itself -->
+            <img src="assets/images/catDog2.png" alt="Chien et Chat"
+              class="relative z-10"
+              style="width: 650px; max-width: none; height: auto; object-fit: contain; opacity: 1; transform: scale(1.15);"
+              [style.transform]="imageTransform">
+          
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Modern Separator -->
+<div class="relative py-8 bg-gradient-to-r from-blue-50 via-white to-green-50 overflow-hidden">
+  <div class="container max-w-7xl mx-auto px-4">
+    <!-- Decorative Line with Gradient -->
+    <div class="relative flex items-center justify-center">
+      <div class="flex-grow h-px bg-gradient-to-r from-transparent via-blue-300 to-transparent"></div>
+      <div class="mx-8 flex items-center gap-4">
+        <div class="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
+        <div class="w-2 h-2 bg-purple-500 rounded-full animate-pulse" style="animation-delay: 0.3s;"></div>
+        <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse" style="animation-delay: 0.6s;"></div>
+      </div>
+      <div class="flex-grow h-px bg-gradient-to-r from-transparent via-green-300 to-transparent"></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Platform Introduction Section - Enhanced with Dynamic Elements -->
+<section class="relative py-20 bg-gradient-to-br from-blue-50 via-purple-50 to-green-50 overflow-hidden">
+  <!-- Animated Background Elements -->
+  <div class="absolute top-0 right-0 w-96 h-96 bg-green-300 rounded-full opacity-20 blur-3xl animate-pulse" style="animation-delay: 1.5s;"></div>
+  <div class="absolute bottom-0 left-0 w-96 h-96 bg-blue-300 rounded-full opacity-20 blur-3xl animate-pulse" style="animation-delay: 0.75s;"></div>
+  
+  <div class="container max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    
+    <!-- Section Header with Animation -->
+    <div class="text-center mb-16">
+      <div class="inline-flex items-center gap-2 mb-4">
+        <svg class="w-8 h-8 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+        </svg>
+        <span class="text-lg font-bold text-gray-700">Tout Ce Dont Vous Avez Besoin</span>
+      </div>
+      <h2 class="text-4xl md:text-5xl font-bold mb-6" style="color: #2c3e50;">
+        Pourquoi Choisir VitalNutri ?
+      </h2>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Une plateforme complète qui combine expertise vétérinaire, nutrition premium et technologie innovante pour la santé de votre compagnon
+      </p>
+    </div>
+
+    <!-- Main Content: Cards + Images — full-width, no extra wrapper max-width -->
+    <div class="space-y-8">
+      
+  <!-- Row 1: Veterinaire Card + Image -->
+  <div class="flex flex-col lg:flex-row gap-6" style="align-items: stretch;">
+    <!-- Card -->
+    <div class="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border-2 border-transparent hover:border-blue-400 transform hover:-translate-y-2 relative flex-1 min-w-0">
+      <div class="absolute top-6 right-6">
+        <span class="bg-gradient-to-r from-blue-500 to-blue-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">
+          Nouveau
+        </span>
+      </div>
+      <div class="flex items-center gap-8">
+        <div class="flex-shrink-0 mt-2">
+          <div class="w-28 h-28 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
+            <svg class="w-14 h-14 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="flex-1">
+          <h3 class="text-3xl font-bold text-gray-900 mb-3">Vous êtes vétérinaire ?</h3>
+          <h4 class="text-xl font-semibold mb-4" style="color: #dc2626;">
+            VitalNutri : Une nécessité pour gagner en efficacité
+          </h4>
+          <p class="text-gray-600 leading-relaxed text-base text-justify">
+            en clinique des animaux de compagnie et souhaitez en apprendre davantage sur la nutrition diététique, ses facettes, ses exigences, ses débouchés et les synergies avec les autres actes de la médicine préventive, nous mettons à votre disposition notre logiciel VitalNutri pour une meilleure vision de l'alimentation canine et féline et de l'évolution dans l'accompagnement en santé et le bien-être animal.
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Image: same height as card -->
+    <div style="width: 320px; align-self: stretch; overflow: hidden; border-radius: 1rem;">
+      <img 
+        src="assets/images/apphome.png" 
+        alt="Application VitalNutri" 
+        style="width: 100%; height: 100%; object-fit: cover; object-position: center;"
+      />
+    </div>
+  </div>
+
+  <!-- Row 2: Proprietaire Card + Image -->
+  <div class="flex flex-col lg:flex-row gap-6" style="align-items: stretch;">
+    <!-- Card -->
+    <div class="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border-2 border-transparent hover:border-green-400 transform hover:-translate-y-2 relative flex-1 min-w-0">
+      <div class="absolute top-6 right-6">
+        <span class="bg-gradient-to-r from-green-500 to-green-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">
+          Premium
+        </span>
+      </div>
+      <div class="flex items-center gap-8">
+        <div class="flex-shrink-0 mt-2">
+          <div class="w-28 h-28 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
+            <svg class="w-14 h-14 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="flex-1">
+          <h3 class="text-3xl font-bold text-gray-900 mb-3">Vous êtes propriétaire ?</h3>
+          <h4 class="text-xl font-semibold mb-4" style="color: #16a34a;">
+            Procurer des bienfaits supplémentaires pour la santé
+          </h4>
+          <p class="text-gray-600 leading-relaxed text-base text-justify">
+            Si vous êtes parent d'un chat ou d'un chien, nous mettons à votre disposition une gamme complète qui offre une gestion nutritionnelle avancée grâce à son approche novatrice et de soins vétérinaires globaux, qui va au-delà de besoins physiologiques et la gestion de l'affection principale pour soutenir les affections concomitantes, rétablir la composition corporelle et procurer des bienfaits supplémentaires pour la santé.
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Image: same height as card -->
+    <div style="width: 320px; align-self: stretch; overflow: hidden; border-radius: 1rem;">
+      <img 
+        src="assets/images/Produitss.png" 
+        alt="Produits Premium" 
+        style="width: 100%; height: 100%; object-fit: cover; object-position: center;"
+      />
+    </div>
+  </div>
+
+</div>
+
+    <!-- Stats Row -->
+    <div class="mt-12">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      
+        <div class="group bg-white/90 backdrop-blur-sm rounded-xl p-4 shadow-md border border-gray-100 hover:shadow-xl hover:border-blue-300 transition-all duration-300 transform hover:-translate-y-1">
+            <div class="flex flex-col items-center justify-center text-center gap-3">
+              <div class="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+              <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <div >
+              <p class="font-bold text-gray-900 text-lg">80%</p>
+              <p class="text-xs text-gray-600">Recommandé par vétérinaires</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="group bg-white/90 backdrop-blur-sm rounded-xl p-4 shadow-md border border-gray-100 hover:shadow-xl hover:border-green-300 transition-all duration-300 transform hover:-translate-y-1">
+          <div class="flex flex-col items-center justify-center text-center gap-3">
+            <div class="w-12 h-12 bg-gradient-to-br from-green-100 to-green-200 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+              <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <div>
+              <p class="font-bold text-gray-900 text-lg">24/7</p>
+              <p class="text-xs text-gray-600">Suivi personnalisé</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="group bg-white/90 backdrop-blur-sm rounded-xl p-4 shadow-md border border-gray-100 hover:shadow-xl hover:border-purple-300 transition-all duration-300 transform hover:-translate-y-1">
+<div class="flex flex-col items-center justify-center text-center gap-3">
+              <div class="w-12 h-12 bg-gradient-to-br from-purple-100 to-purple-200 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+              <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+              </svg>
+            </div>
+            <div>
+              <p class="font-bold text-gray-900 text-lg">40+</p>
+              <p class="text-xs text-gray-600">Études scientifiques</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="group bg-white/90 backdrop-blur-sm rounded-xl p-4 shadow-md border border-gray-100 hover:shadow-xl hover:border-yellow-300 transition-all duration-300 transform hover:-translate-y-1">
+<div class="flex flex-col items-center justify-center text-center gap-3">
+              <div class="w-12 h-12 bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+              <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <div>
+              <p class="font-bold text-gray-900 text-lg">100%</p>
+              <p class="text-xs text-gray-600">Fabrication française</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="relative py-8 bg-gradient-to-r from-blue-50 via-white to-green-50 overflow-hidden">
+  <div class="container max-w-7xl mx-auto px-4">
+    <!-- Decorative Line with Gradient -->
+    <div class="relative flex items-center justify-center">
+      <div class="flex-grow h-px bg-gradient-to-r from-transparent via-blue-300 to-transparent"></div>
+      <div class="mx-8 flex items-center gap-4">
+        <div class="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
+        <div class="w-2 h-2 bg-purple-500 rounded-full animate-pulse" style="animation-delay: 0.3s;"></div>
+        <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse" style="animation-delay: 0.6s;"></div>
+      </div>
+      <div class="flex-grow h-px bg-gradient-to-r from-transparent via-green-300 to-transparent"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Wrapper for Sidebar + Content (Cat, Dog, and Products sections) -->
+<div class="relative bg-white section-spacing">
+  
+  <div class="fixed-layout-container">
+    <div class="flex flex-col lg:flex-row gap-8">
+      
+      <!-- Left Sidebar Navigation - Sticky -->
+      <aside class="lg:w-64 flex-shrink-0">
+        <div class="sticky top-24 bg-gray-100 rounded-2xl p-6 h-[calc(100vh-8rem)]">
+          
+          <nav class="space-y-2">
+            
+            <!-- Mon Animal -->
+            <div class="mb-6 relative">
+              <div class="flex items-center gap-3 px-4 py-2 mb-2">
+                <span class="text-xl">🐾</span>
+                <span class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Mon Animal</span>
+              </div>
+              
+              <!-- Tree connector line -->
+              <div class="absolute left-8 top-12 bottom-0 w-0.5 bg-gray-300" style="height: 80px;"></div>
+              
+              <div class="relative pl-6">
+                <a routerLink="/espace-proprietaire" [queryParams]="{animal: 'chat', type: 'aliment'}" 
+                   class="flex items-center justify-between px-4 py-3 rounded-xl bg-white hover:bg-gray-50 transition-all duration-200 group mb-2 relative">
+                  <!-- Horizontal connector -->
+                  <div class="absolute left-0 top-0 -ml-6 w-6" style="height: calc(50% + 1px);">
+                    <!-- Vertical part -->
+                    <div class="absolute left-0 top-0 w-0.5 bg-gray-300 h-full"></div>
+                    <!-- Horizontal part -->
+                    <div class="absolute bottom-0 left-0 w-full h-0.5 bg-gray-300"></div>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <span class="text-sm font-medium text-gray-700">Chat</span>
+                  </div>
+                </a>
+                <a routerLink="/espace-proprietaire" [queryParams]="{animal: 'chien', type: 'aliment'}" 
+                   class="flex items-center justify-between px-4 py-3 rounded-xl bg-white hover:bg-gray-50 transition-all duration-200 group relative">
+                  <!-- Horizontal connector -->
+<div class="absolute left-0 top-0 -ml-6 w-6" style="height: calc(50% + 1px);">
+  <!-- Vertical part -->
+  <div class="absolute left-0 top-0 w-0.5 bg-gray-300 h-full"></div>
+  <!-- Horizontal part -->
+  <div class="absolute bottom-0 left-0 w-full h-0.5 bg-gray-300"></div>
+</div>                  <div class="flex items-center gap-3">
+                    <span class="text-sm font-medium text-gray-700">Chien</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <!-- Separator Line -->
+            <div class="border-t border-gray-300 my-4"></div>
+
+            <!-- Santé et bien-être -->
+            <div class="mb-6 relative">
+              <div class="flex items-center gap-3 px-4 py-2 mb-2">
+                <span class="text-xl">💚</span>
+                <span class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Conseils</span>
+              </div>
+              
+              <!-- Tree connector line -->
+              <div class="absolute left-8 top-12 bottom-0 w-0.5 bg-gray-300" style="height: 80px;"></div>
+              
+              <div class="relative pl-6">
+                <a routerLink="/espace-proprietaire" [queryParams]="{animal: 'chat', type: 'aliment', highlightSection: 'conseils'}"
+                   class="flex items-center justify-between px-4 py-3 rounded-xl bg-white hover:bg-gray-50 transition-all duration-200 group mb-2 relative">
+                  <!-- Horizontal connector -->
+<div class="absolute left-0 top-0 -ml-6 w-6" style="height: calc(50% + 1px);">
+  <!-- Vertical part -->
+  <div class="absolute left-0 top-0 w-0.5 bg-gray-300 h-full"></div>
+  <!-- Horizontal part -->
+  <div class="absolute bottom-0 left-0 w-full h-0.5 bg-gray-300"></div>
+</div>                  <span class="text-sm font-medium text-gray-700">Chat</span>
+                </a>
+                <a routerLink="/espace-proprietaire" [queryParams]="{animal: 'chien', type: 'aliment', highlightSection: 'conseils'}"
+                   class="flex items-center justify-between px-4 py-3 rounded-xl bg-white hover:bg-gray-50 transition-all duration-200 group relative">
+                  <!-- Horizontal connector -->
+<div class="absolute left-0 top-0 -ml-6 w-6" style="height: calc(50% + 1px);">
+  <!-- Vertical part -->
+  <div class="absolute left-0 top-0 w-0.5 bg-gray-300 h-full"></div>
+  <!-- Horizontal part -->
+  <div class="absolute bottom-0 left-0 w-full h-0.5 bg-gray-300"></div>
+</div>                  <span class="text-sm font-medium text-gray-700">Chien</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Separator Line -->
+            <div class="border-t border-gray-300 my-4"></div>
+
+            <!-- Produits -->
+            <a routerLink="/espace-proprietaire" 
+               class="flex items-center justify-between px-4 py-3 rounded-xl bg-white hover:bg-gray-50 transition-all duration-200 group mb-2">
+              <div class="flex items-center gap-3">
+                <span class="text-lg">📦</span>
+                <span class="text-sm font-medium text-gray-700">Produits</span>
+              </div>
+              <span *ngIf="allProducts.length > 0" class="text-xs font-semibold text-white bg-orange-400 rounded-full px-2 py-1">{{ allProducts.length }}</span>
+            </a>
+
+
+            <!-- Separator Line -->
+            <div class="border-t border-gray-300 my-4"></div>
+
+            <!-- Où acheter -->
+            <a routerLink="/ou-trouver-nos-produits" 
+               class="flex items-center justify-between px-4 py-3 rounded-xl bg-white hover:bg-gray-50 transition-all duration-200 group mb-2">
+              <div class="flex items-center gap-3">
+                <span class="text-lg">📍</span>
+                <span class="text-sm font-medium text-gray-700">Où acheter ?</span>
+              </div>
+            </a>
+
+            <!-- Separator Line -->
+            <div class="border-t border-gray-300 my-4"></div>
+
+            <!-- Nous contacter -->
+            <a (click)="scrollToFooter()" 
+               class="flex items-center justify-between px-4 py-3 rounded-xl bg-white hover:bg-gray-50 transition-all duration-200 group cursor-pointer">
+              <div class="flex items-center gap-3">
+                <span class="text-lg">✉️</span>
+                <span class="text-sm font-medium text-gray-700">Contact</span>
+              </div>
+            </a>
+
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Right Content Area -->
+      <div class="flex-1 flex justify-center">
+        <div class="w-full max-w-7xl">
+
+<!-- Section Caractéristiques Nutritionnelles – Chat  -->
+<section id="caracteristiques-nutritionnelles" class="mb-12">
+    <h2 class="text-4xl md:text-5xl font-bold mb-4 text-gray-800 text-center" style="color: #42636E; line-height: 1.3;">Caractéristiques Nutritionnelles – Chat –</h2>
+    <div class="w-32 h-1 bg-vet-blue mx-auto mb-8"></div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Chaton -->
+      <div class="nutrition-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
+        <div class="nutrition-image-wrapper">
+          <img src="assets/images/cat-kitten.jpg" alt="Chaton - Besoins nutritionnels" class="w-full h-64 object-cover">
+        </div>
+        <div class="p-8">
+          <h3 class="text-2xl font-bold mb-4 text-vet-blue text-center">CHATON</h3>
+          <p class="text-gray-600 text-base leading-relaxed">
+            La demande en énergie peut aller d'un besoin 50 % plus élevé chez les chatons de 9 à 12 mois, jusqu'à 150 % plus élevé chez les chats jusqu'à 4 mois. Les chatons auront besoin de deux fois plus de calories dans leur nourriture par rapport à un adulte (selon leur poids).
+          </p>
+        </div>
+      </div>
+
+      <!-- Adulte Entier -->
+      <div class="nutrition-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
+        <div class="nutrition-image-wrapper">
+          <img src="assets/images/cat-adult-entire.jpg" alt="Chat adulte entier - Besoins nutritionnels" class="w-full h-64 object-cover">
+        </div>
+        <div class="p-8">
+          <h3 class="text-2xl font-bold mb-4 text-vet-blue text-center">ADULTE ENTIER</h3>
+          <p class="text-gray-600 text-base leading-relaxed">
+            À l'âge adulte, il est important de regarder la quantité de nourriture fournie. Les chats non stérilisés et en particulier ceux qui vont en extérieur ont besoin de consommer plus (protéines et graisses) que les chats stérilisés et/ou sédentaires.
+          </p>
+        </div>
+      </div>
+
+      <!-- Adulte Stérilisé -->
+      <div class="nutrition-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
+        <div class="nutrition-image-wrapper">
+          <img src="assets/images/cat-adult-sterilized.jpg" alt="Chat adulte stérilisé - Besoins nutritionnels" class="w-full h-64 object-cover">
+        </div>
+        <div class="p-8">
+          <h3 class="text-2xl font-bold mb-4 text-vet-blue text-center">ADULTE STÉRILISÉ</h3>
+          <p class="text-gray-600 text-base leading-relaxed">
+            Les chats stérilisés ont des besoins énergétiques plus faibles en raison de la rareté des comportements liés à la reproduction. Les changements hormonaux réduisent également le taux métabolique. Il faut donc proposer des aliments moins caloriques.
+          </p>
+        </div>
+      </div>
+
+      <!-- Senior -->
+      <div class="nutrition-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
+        <div class="nutrition-image-wrapper">
+          <img src="assets/images/cat-senior.jpg" alt="Chat senior - Besoins nutritionnels" class="w-full h-64 object-cover">
+        </div>
+        <div class="p-8">
+          <h3 class="text-2xl font-bold mb-4 text-vet-blue text-center">SENIOR</h3>
+          <p class="text-gray-600 text-base leading-relaxed">
+            Les chats âgés ont tendance à réduire considérablement la quantité d'activité physique, passant plus d'heures à dormir. Cette réduction des calories consommées appelle une alimentation pauvre en glucides et riche en protéines.
+          </p>
+        </div>
+      </div>
+    </div>
+</section>
+
+<!-- Section Caractéristiques Nutritionnelles – Chien -->
+<section id="caracteristiques-nutritionnelles-chien" class="mb-12">
+    <h2 class="text-4xl md:text-5xl font-bold mb-4 text-gray-800 text-center" style="color: #42636E; line-height: 1.3;">Caractéristiques Nutritionnelles – Chien –</h2>
+    <div class="w-32 h-1 bg-vet-blue mx-auto mb-8"></div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Chiot -->
+      <div class="nutrition-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
+        <div class="nutrition-image-wrapper">
+          <img src="assets/images/Chiot.jpg" alt="Chiot - Besoins nutritionnels" class="w-full h-64 object-cover">
+        </div>
+        <div class="p-8">
+          <h3 class="text-2xl font-bold mb-4 text-vet-blue text-center">CHIOT</h3>
+          <p class="text-gray-600 text-base leading-relaxed">
+            Bien 
+            nourrir 
+            nécessite d'être vigilant non
+            seulement quant au nombre
+            de calories qu'il reçoit chaque
+            jour, mais aussi quant à ce
+            que contiennent exactement
+            les aliments qu'on lui donne.
+            En effet, il est essentiel que
+            ces derniers lui procurent des
+            nutriments 
+            en 
+            appropriée. À défaut, il risque
+            de développer des carences
+            alimentaires.           </p>
+        </div>
+      </div>
+
+      <!-- Adulte Actif -->
+      <div class="nutrition-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
+        <div class="nutrition-image-wrapper">
+          <img src="assets/images/dog-adult-active.jpg" alt="Chien adulte actif - Besoins nutritionnels" class="w-full h-64 object-cover">
+        </div>
+        <div class="p-8">
+          <h3 class="text-2xl font-bold mb-4 text-vet-blue text-center">ADULTE ENTIER</h3>
+          <p class="text-gray-600 text-base leading-relaxed">
+            A l’âge adulte, pour avoir un
+            chien en pleine forme, il faut
+            répondre à ses besoins
+            alimentaires et énergétiques
+            en tenant compte de certains
+            paramètres (race, âge...) et lui
+            fournir 
+            une alimentation
+            équilibrée 
+            lipides...). 
+            (protéines,
+            Un manque de
+            protéines conduit à un
+            amaigrissement, à une fatigue
+            et à une diminution des
+            défenses immunitaires.          </p>
+        </div>
+      </div>
+
+      <!-- Adulte Stérilisé -->
+      <div class="nutrition-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
+        <div class="nutrition-image-wrapper">
+          <img src="assets/images/dog-adult-sterilized.jpg" alt="Chien adulte stérilisé - Besoins nutritionnels" class="w-full h-64 object-cover">
+        </div>
+        <div class="p-8">
+          <h3 class="text-2xl font-bold mb-4 text-vet-blue text-center">ADULTE STÉRILISÉ</h3>
+          <p class="text-gray-600 text-base leading-relaxed">
+            Chez le chien stérilisé ou
+            castré il faut  se montrer plus
+            vigilant 
+            vis-à-vis 
+            alimentation. 
+            de son
+            Avec 
+            un
+            métabolisme modifié, le chien
+            aura 
+            un besoin moins
+            important en énergie ; si son
+            alimentation ne change pas, il
+            est plus susceptible d'être
+            victime 
+            d'obésité. 
+            Une
+            chienne en gestation  ou en
+            lactation a une dépense
+            énergétique plus élevée qu'à
+            la normale.          </p>
+        </div>
+      </div>
+
+      <!-- Senior -->
+      <div class="nutrition-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
+        <div class="nutrition-image-wrapper">
+          <img src="assets/images/dog-senior.jpg" alt="Chien senior - Besoins nutritionnels" class="w-full h-64 object-cover">
+        </div>
+        <div class="p-8">
+          <h3 class="text-2xl font-bold mb-4 text-vet-blue text-center">SENIOR</h3>
+          <p class="text-gray-600 text-base leading-relaxed">
+          Un chien âgé n'a plus les
+          mêmes besoins énergétiques
+          que lorsqu'il était plus jeune.
+          Du fait de la vieillesse du
+          chien , celui-ci est peu actif, se
+          dépense moins, et son
+          métabolisme est plus lent,
+          emmagasinant alors plus
+          facilement les calories. Tout
+          en étant attentifs aux besoins
+          nutritifs 
+          spécifiques 
+          pour
+          prévenir certains problèmes
+          de santé liés à son âge.          </p>
+        </div>
+      </div>
+    </div>
+</section>
+
+<!-- Decorative Divider -->
+<div class="relative py-8 bg-gradient-to-b from-vet-beige to-white">
+  <div class="container max-w-7xl mx-auto px-4">
+    <div class="flex items-center justify-center">
+      <div class="flex-grow border-t-2 border-gray-300"></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- BESOIN DE CONSEILS OU DE NOURRITURE Section -->
+<section class="pt-8 pb-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Two Column Layout: Image + Content -->
+    <div class="flex flex-col lg:flex-row gap-12 items-center">
+      
+      <!-- Left Side: Image -->
+      <div class="lg:w-1/2">
+        <div class="rounded-2xl overflow-hidden shadow-xl">
+          <img 
+            src="assets/images/ownDog.png" 
+            alt="Veterinary HPM" 
+            class="w-full h-auto object-cover"
+            (error)="onImageError($event)">
+        </div>
+      </div>
+
+      <!-- Right Side: Content -->
+      <div class="lg:w-1/2">
+        <!-- Title -->
+        <h2 class="text-3xl md:text-4xl font-bold mb-6" style="color: #42636E; line-height: 1.3;">
+          BESOIN DE CONSEILS OU DE NOURRITURE?
+        </h2>
+
+        <!-- Description -->
+        <p class="text-gray-700 text-lg leading-relaxed mb-8">
+          On vous propose de vous accompagner et de vous conseiller sur les différentes facettes de la
+          nutrition de votre animal, afin que pitou ou minou grandisse et vieillisse en santé, à vos côtés.        </p>
+
+        <p class="text-gray-700 text-lg leading-relaxed mb-8">
+            Parce qu'une bonne alimentation c'est avant tout une histoire de santé, notre gamme est
+            proposée exclusivement chez votre vétérinaire. Notre carte VETERINARY HPM® vous permet
+            de retrouver votre clinique vétérinaire         </p>
+
+        <!-- Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a 
+            routerLink="/ou-trouver-nos-produits" 
+            class="inline-flex items-center justify-center px-8 py-3 border-2 rounded-full text-base font-semibold transition-all duration-300 hover:shadow-lg"
+            style="border-color: #42636E; color: #42636E;"
+            onmouseover="this.style.backgroundColor='#42636E'; this.style.color='white';"
+            onmouseout="this.style.backgroundColor='transparent'; this.style.color='#42636E';">
+            OÙ ACHETER
+          </a>
+          
+          <a 
+            routerLink="/espace-proprietaire" 
+            class="inline-flex items-center justify-center px-8 py-3 border-2 rounded-full text-base font-semibold transition-all duration-300 hover:shadow-lg"
+            style="border-color: #42636E; color: #42636E;"
+            onmouseover="this.style.backgroundColor='#42636E'; this.style.color='white';"
+            onmouseout="this.style.backgroundColor='transparent'; this.style.color='#42636E';">
+            DÉCOUVRIR NOS ALIMENTS
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Decorative Divider -->
+<div class="relative py-12 bg-gradient-to-r from-blue-50 via-green-50 to-blue-50">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center">
+      <div class="flex items-center justify-center mb-6">
+        <div class="flex-grow border-t-2 border-blue-300 max-w-xs"></div>
+        <div class="mx-6">
+          <div class="flex items-center space-x-3">
+            <span class="text-3xl">🛒</span>
+            <span class="text-2xl font-bold text-vet-blue">Nos Produits</span>
+            <span class="text-3xl">🐕</span>
+          </div>
+        </div>
+        <div class="flex-grow border-t-2 border-blue-300 max-w-xs"></div>
+      </div>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        Découvrez notre sélection de produits vétérinaires de qualité premium
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Section Espace de Vente - Produits -->
+<section id="produits" class="py-12">
+  <div class="w-full">
+    
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="text-center py-16">
+      <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-vet-blue mx-auto mb-4"></div>
+      <p class="text-gray-600">Chargement des produits...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="!isLoading && errorMessage" class="text-center py-16">
+      <svg class="w-16 h-16 text-red-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+      <p class="text-red-600 mb-4">{{ errorMessage }}</p>
+      <button (click)="loadProducts()" class="text-vet-blue hover:underline">Réessayer</button>
+    </div>
+
+    <!-- No Products State -->
+    <div *ngIf="!isLoading && !errorMessage && displayProducts.length === 0" class="text-center py-16">
+      <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4">
+        </path>
+      </svg>
+      <p class="text-gray-600">Aucun produit disponible pour le moment</p>
+    </div>
+
+    <!-- Automatic Product Carousel -->
+    <div *ngIf="!isLoading && !errorMessage && displayProducts.length > 0" class="relative">
+      <!-- Carousel Container -->
+      <div class="overflow-hidden">
+        <div class="flex transition-transform duration-500 ease-in-out" [style.transform]="getTransformValue()">
+          <div *ngFor="let product of displayProducts; trackBy: trackByProductId"
+            class="flex-shrink-0 w-full md:w-1/3 lg:w-1/5 px-2">
+            <div
+              class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 product-card h-full w-full flex flex-col">
+              <div class="relative">
+                <div
+                  class="w-full h-40 bg-gradient-to-br from-blue-50 to-green-50 rounded-t-xl flex items-center justify-center overflow-hidden">
+                  <img [src]="product.imageUrl" [alt]="'Image du produit ' + product.name + ' - ' + product.description" class="w-full h-full object-contain p-3"
+                    (error)="onImageError($event)" loading="lazy">
+                </div>
+                <div class="absolute top-3 right-3">
+                  <span class="bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded-full shadow-md">{{
+                    product.subCategory === 'ALIMENT' ? 'Aliment' : product.subCategory === 'COMPLEMENT' ? 'Complément'
+                    : 'Test rapide' }}</span>
+                </div>
+                <div class="absolute top-3 left-3" *ngIf="!product.inStock">
+                  <span
+                    class="bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full shadow-md">Rupture</span>
+                </div>
+              </div>
+              <div class="p-4 flex flex-col flex-grow">
+                <h3 class="text-lg font-semibold mb-2 text-gray-800 h-14 line-clamp-2">{{ product.name }}</h3>
+                <p class="text-gray-600 mb-3 text-sm line-clamp-2 h-10">{{ product.description }}</p>
+                <div class="flex items-center justify-center mb-4">
+                  <span class="text-xs px-3 py-1 bg-gray-100 rounded-full text-gray-600 font-medium">{{ product.category === 'CHIEN' ? 'Chien' : 'Chat' }}</span>
+                </div>
+                <div class="flex justify-center w-full mt-auto">
+                  <button
+                    class="w-full flex items-center justify-center text-white bg-vet-blue hover:bg-blue-600 font-semibold py-3 px-4 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg active:scale-95"
+                    (click)="viewProductInShop(product)">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                      </path>
+                    </svg>
+                    Voir les détails
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Arrows -->
+      <button (click)="prevSlide()"
+        class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white shadow-lg rounded-full p-3 transition-all duration-200 z-10">
+        <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+      </button>
+
+      <button (click)="nextSlide()"
+        class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white shadow-lg rounded-full p-3 transition-all duration-200 z-10">
+        <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Slide Indicators -->
+    <div class="flex justify-center mt-6 space-x-2">
+      <button *ngFor="let indicator of getSlideIndicators(); let i = index; trackBy: trackByIndex"
+        (click)="goToSlide(i)" [class.bg-blue-500]="getCurrentIndicator() === i"
+        [class.bg-gray-300]="getCurrentIndicator() !== i"
+        class="w-2 h-2 rounded-full transition-colors duration-200 hover:bg-blue-400">
+      </button>
+    </div>
+
+    <!-- Lien vers le catalogue complet -->
+    <div class="text-center mt-8">
+      <a routerLink="/espace-proprietaire"
+        class="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 inline-flex items-center shadow-lg hover:shadow-xl transform hover:scale-105">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+        </svg>
+        Voir tous nos produits
+        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+        </div>
+      </div>
+      
+    </div>
+  </div>

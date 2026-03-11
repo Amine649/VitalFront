@@ -1,0 +1,119 @@
+<section class="py-16 bg-gradient-to-b from-white to-vet-beige">
+  <div class="container max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h1 class="text-3xl md:text-4xl font-bold mb-4 text-vet-blue">Inscription Utilisateur VITALFEED</h1>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Complétez le formulaire ci-dessous pour créer votre compte.
+        Notre équipe vous contactera dans les plus brefs délais.
+      </p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-md p-8 fade-in">
+      <form [formGroup]="demandeForm" (ngSubmit)="onSubmit()" class="space-y-6">
+        <!-- Informations personnelles -->
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <label for="nom" class="block text-sm font-medium text-gray-700 mb-1">Nom *</label>
+            <input type="text" id="nom" formControlName="nom"
+              class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-vet-blue focus:border-transparent"
+              [ngClass]="{'border-red-500': submitted && f['nom'].errors}" placeholder="Entrez votre nom">
+            <div *ngIf="submitted && f['nom'].errors" class="text-red-500 text-sm mt-1">
+              <span *ngIf="f['nom'].errors['required']">Le nom est requis</span>
+              <span *ngIf="f['nom'].errors['minlength']">Le nom doit contenir au moins 2 caractères</span>
+            </div>
+          </div>
+
+          <div>
+            <label for="prenom" class="block text-sm font-medium text-gray-700 mb-1">Prénom *</label>
+            <input type="text" id="prenom" formControlName="prenom"
+              class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-vet-blue focus:border-transparent"
+              [ngClass]="{'border-red-500': submitted && f['prenom'].errors}" placeholder="Entrez votre prénom">
+            <div *ngIf="submitted && f['prenom'].errors" class="text-red-500 text-sm mt-1">
+              <span *ngIf="f['prenom'].errors['required']">Le prénom est requis</span>
+              <span *ngIf="f['prenom'].errors['minlength']">Le prénom doit contenir au moins 2 caractères</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email professionnel *</label>
+            <input type="email" id="email" formControlName="email"
+              class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-vet-blue focus:border-transparent"
+              [ngClass]="{'border-red-500': submitted && f['email'].errors}" placeholder="Entrez Votre Email">
+            <div *ngIf="submitted && f['email'].errors" class="text-red-500 text-sm mt-1">
+              <span *ngIf="f['email'].errors['required']">L'email est requis</span>
+              <span *ngIf="f['email'].errors['email']">Veuillez entrer une adresse email valide</span>
+            </div>
+          </div>
+
+          <div class="telephone-container">
+            <label for="telephone" class="block text-sm font-medium text-gray-700 mb-1">Téléphone (optionnel)</label>
+            <div class="tel-input-wrapper">
+              <ngx-intl-tel-input [cssClass]="'form-control custom-tel-input'" [preferredCountries]="preferredCountries"
+                [enableAutoCountrySelect]="true" [enablePlaceholder]="false" [searchCountryFlag]="true"
+                [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
+                [selectedCountryISO]="CountryISO.France" [phoneValidation]="true" [separateDialCode]="separateDialCode"
+                [numberFormat]="PhoneNumberFormat.International" name="telephone" formControlName="telephone"
+                placeholder="Entrez Votre Numéro de Téléphone ou bien de cabinet"></ngx-intl-tel-input>
+            </div>
+            <div *ngIf="submitted && f['telephone'].errors" class="text-red-500 text-sm mt-1">
+              <span *ngIf="f['telephone'].errors['validatePhoneNumber']">Veuillez entrer un numéro de téléphone
+                valide</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Adresse du cabinet -->
+        <div>
+          <label for="adresseCabinet" class="block text-sm font-medium text-gray-700 mb-1">Adresse du cabinet *</label>
+          <input type="text" id="adresseCabinet" formControlName="adresseCabinet"
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-vet-blue focus:border-transparent"
+            [ngClass]="{'border-red-500': submitted && f['adresseCabinet'].errors}" placeholder="Entrez Votre Adresse">
+          <div *ngIf="submitted && f['adresseCabinet'].errors?.['required']" class="text-red-500 text-sm mt-1">
+            L'adresse du cabinet est requise
+          </div>
+        </div>
+        <!-- Numéro matricule -->
+        <div>
+          <label for="numMatricule" class="block text-sm font-medium text-gray-700 mb-1">Numéro Matricule Fiscale
+            *</label>
+          <input type="text" id="numMatricule" formControlName="numMatricule"
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-vet-blue focus:border-transparent"
+            [ngClass]="{'border-red-500': submitted && f['numMatricule'].errors}"
+            placeholder="Entrez votre numéro matricule Fiscale '1234567A'">
+          <div *ngIf="submitted && f['numMatricule'].errors?.['required']" class="text-red-500 text-sm mt-1">
+            Le numéro matricule est requis
+          </div>
+        </div>
+
+        <div *ngIf="error" class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+          {{ error }}
+        </div>
+
+        <div *ngIf="successMessage" class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
+          {{ successMessage }}
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 pt-4">
+          <button type="submit"
+            class="bg-vet-blue hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 flex items-center justify-center"
+            [disabled]="loading">
+            <svg *ngIf="loading" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"
+              fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+              </path>
+            </svg>
+            {{ loading ? 'Inscription en cours...' : 'S\'inscrire' }}
+          </button>
+          <a routerLink="/"
+            class="bg-white hover:bg-gray-100 text-gray-700 font-semibold py-3 px-6 rounded-lg border border-gray-300 transition-all duration-300 text-center">
+            Retour à l'accueil
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
