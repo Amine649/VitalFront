@@ -105,7 +105,6 @@ export class FormulaireComponent implements OnInit {
       },
       error: (error: any) => {
         this.loading = false;
-        console.error('Registration error:', error);
 
         // Handle different error scenarios with user-friendly messages
         if (error.error && typeof error.error === 'string') {

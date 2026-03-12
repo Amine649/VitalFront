@@ -79,9 +79,9 @@ export class OuTrouverNosProduitsComponent implements OnInit, AfterViewInit {
    */
   initMap(): void {
     // Standard Leaflet icon setup (will be overridden by custom icons per marker)
-    const iconRetinaUrl = 'assets/marker-icon-2x.png';
-    const iconUrl = 'assets/marker-icon.png';
-    const shadowUrl = 'assets/marker-shadow.png';
+    const iconRetinaUrl = 'assets/Maps/marker-icon-2x.png';
+    const iconUrl = 'assets/Maps/marker-icon.png';
+    const shadowUrl = 'assets/Maps/marker-shadow.png';
     const iconDefault = L.icon({
       iconRetinaUrl,
       iconUrl,
@@ -199,14 +199,12 @@ export class OuTrouverNosProduitsComponent implements OnInit, AfterViewInit {
     // Wrap each request in catchError to allow partial success
     const cabinets$ = this.http.get<any[]>(`${environment.apiUrl}/cabinets/all`).pipe(
       catchError(err => {
-        console.error('Error loading cabinets:', err);
         return of([]); // Return empty array on error
       })
     );
 
     const boutiques$ = this.http.get<any[]>(`${environment.apiUrl}/boutiques/all`).pipe(
       catchError(err => {
-        console.error('Error loading boutiques:', err);
         // Ensure we don't break the whole page if boutiques fail (e.g. 401)
         return of([]);
       })
@@ -254,7 +252,6 @@ export class OuTrouverNosProduitsComponent implements OnInit, AfterViewInit {
         }
       },
       error: (error) => {
-        console.error('Error loading locations:', error);
         this.error = 'Erreur lors du chargement des points de vente';
         this.loading = false;
       }

@@ -199,26 +199,21 @@ export class ConseilArticlesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('ConseilArticlesComponent initialized');
     
     this.route.params.subscribe(params => {
       const articleId = params['id'];
-      console.log('Article ID from route:', articleId);
       
       // Check if this is a blog PDF navigation
       if (articleId === 'blog-pdf') {
         const navigation = this.router.getCurrentNavigation();
         const state = navigation?.extras?.state || (history.state as any);
         
-        console.log('Navigation state:', state);
         
         if (state && state.blogPost) {
-          console.log('Blog post data found:', state.blogPost);
           this.isBlogPdf = true;
           this.blogPdfData = state.blogPost;
           this.loadBlogPdf();
         } else {
-          console.error('No blog post data in navigation state');
           // No blog data, redirect back
           this.router.navigate(['/espace-proprietaire']);
         }
@@ -236,11 +231,9 @@ export class ConseilArticlesComponent implements OnInit {
 
   loadBlogPdf(): void {
     if (!this.blogPdfData || !this.blogPdfData.pdfUrl) {
-      console.error('No PDF URL available');
       return;
     }
 
-    console.log('Loading blog PDF:', this.blogPdfData.pdfUrl);
     this.isPdfLoading = true;
 
     // Fetch PDF as blob with credentials
@@ -249,9 +242,7 @@ export class ConseilArticlesComponent implements OnInit {
       withCredentials: true
     }).subscribe({
       next: (blob: Blob) => {
-        console.log('✓ PDF blob received!');
-        console.log('Blob size:', blob.size, 'bytes');
-
+     
         // Revoke old blob URL if exists
         if (this.pdfBlobUrl) {
           URL.revokeObjectURL(this.pdfBlobUrl);
@@ -263,18 +254,15 @@ export class ConseilArticlesComponent implements OnInit {
         // Add parameters to hide PDF viewer toolbar and controls
         this.safePdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.pdfBlobUrl + '#toolbar=0&navpanes=0&scrollbar=0');
 
-        console.log('✓ Blob URL created:', this.pdfBlobUrl);
 
         // Render PDF using PDF.js
         this.renderPdfWithPdfJs(this.pdfBlobUrl);
       },
       error: (error) => {
-        console.error('✗ Error fetching PDF:', error);
         this.isPdfLoading = false;
         
         // Fallback: try direct URL
         if (error.status === 200 || error.status === 0) {
-          console.log('Trying fallback: direct URL');
           this.safePdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.blogPdfData!.pdfUrl + '#toolbar=0&navpanes=0&scrollbar=0');
           this.renderPdfWithPdfJs(this.blogPdfData!.pdfUrl);
         } else {
@@ -289,7 +277,6 @@ export class ConseilArticlesComponent implements OnInit {
     setTimeout(() => {
       // Check if PDF.js is loaded
       if (typeof (window as any).pdfjsLib === 'undefined') {
-        console.error('PDF.js not loaded, falling back to iframe');
         this.isPdfLoading = false;
         // Fallback: show error message
         const container = document.getElementById('pdf-container');
@@ -311,17 +298,14 @@ export class ConseilArticlesComponent implements OnInit {
       // Set worker source
       pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-      console.log('Loading PDF with PDF.js:', pdfUrl);
 
       // Load the PDF document
       const loadingTask = pdfjsLib.getDocument(pdfUrl);
       
       loadingTask.promise.then((pdf: any) => {
-        console.log('PDF loaded successfully, pages:', pdf.numPages);
         
         const container = document.getElementById('pdf-container');
         if (!container) {
-          console.error('PDF container not found in DOM');
           this.isPdfLoading = false;
           return;
         }
@@ -337,13 +321,10 @@ export class ConseilArticlesComponent implements OnInit {
 
         Promise.all(renderPromises).then(() => {
           this.isPdfLoading = false;
-          console.log('✓ All PDF pages rendered successfully');
         }).catch((error: any) => {
-          console.error('Error rendering pages:', error);
           this.isPdfLoading = false;
         });
       }).catch((error: any) => {
-        console.error('Error loading PDF document:', error);
         this.isPdfLoading = false;
         
         // Show error message

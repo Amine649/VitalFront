@@ -12,13 +12,9 @@ export class SafePipe implements PipeTransform {
     if (!url) {
       return '';
     }
-    
-    console.log('SafePipe - URL:', url);
-    console.log('SafePipe - Type:', type);
-    
+      
     if (type === 'resourceUrl') {
       const safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-      console.log('SafePipe - Sanitized URL:', safeUrl);
       return safeUrl;
     }
     

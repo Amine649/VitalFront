@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterModule } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-formulaire-vet',
@@ -33,7 +34,8 @@ export class FormulaireVetComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private authService: AuthService
   ) {
     this.subscriptionForm = this.formBuilder.group({
       subscriptionType: ['', Validators.required],
@@ -51,16 +53,11 @@ export class FormulaireVetComponent implements OnInit {
     // Try to load user data if they're logged in (optional)
     this.loading = true;
 
-    this.http.get<any>(`${environment.apiUrl}/veterinaires/me`, { withCredentials: true }).subscribe({
+    this.authService.loadUserData().subscribe({
       next: (data) => {
         this.userData = data;
         this.loading = false;
-        
-        // Store userId if not already in localStorage
-        if (data.id || data.userId) {
-          const id = data.id || data.userId;
-          localStorage.setItem('userId', id.toString());
-        }
+        this.authService.storeUserData(data);
       },
       error: (error) => {
         this.loading = false;
@@ -152,7 +149,6 @@ export class FormulaireVetComponent implements OnInit {
       },
       error: (error) => {
         this.submitting = false;
-        console.error('Subscription update error:', error);
         
         if (error.status === 401) {
           this.error = 'Session expirée. Veuillez vous reconnecter.';

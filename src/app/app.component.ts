@@ -7,6 +7,7 @@ import { filter } from 'rxjs/operators';
 import { CartService } from './services/cart.service';
 import { AuthMonitorService } from './services/auth-monitor.service';
 import { AuthService } from './services/auth.service';
+import { PasswordValidationService } from './services/password-validation.service';
 import { ToastComponent } from './components/toast/toast.component';
 import { environment } from '../environments/environment';
 
@@ -54,6 +55,7 @@ export class AppComponent implements OnInit {
     private cartService: CartService,
     private authMonitor: AuthMonitorService,
     private authService: AuthService,
+    private passwordValidation: PasswordValidationService,
     private http: HttpClient,
     private formBuilder: FormBuilder
   ) {
@@ -63,9 +65,14 @@ export class AppComponent implements OnInit {
     // Initialize password form
     this.passwordForm = this.formBuilder.group({
       currentPassword: ['', [Validators.required]],
-      newPassword: ['', [Validators.required, Validators.minLength(8)]],
+      newPassword: ['', [Validators.required, Validators.minLength(8), this.passwordValidation.passwordStrengthValidator]],
       confirmPassword: ['', [Validators.required]]
-    }, { validators: this.passwordMatchValidator });
+    }, { validators: this.passwordValidation.passwordMatchValidator });
+    
+    // Listen to password changes for strength indicator
+    this.passwordForm.get('newPassword')?.valueChanges.subscribe(password => {
+      this.updatePasswordStrength(password);
+    });
     // Listen to route changes
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
@@ -279,16 +286,6 @@ export class AppComponent implements OnInit {
     }
   }
 
-  passwordMatchValidator(form: FormGroup) {
-    const password = form.get('newPassword');
-    const confirmPassword = form.get('confirmPassword');
-    if (password && confirmPassword && password.value !== confirmPassword.value) {
-      confirmPassword.setErrors({ passwordMismatch: true });
-      return { passwordMismatch: true };
-    }
-    return null;
-  }
-
   openPasswordModal(): void {
     this.showPasswordModal = true;
     this.showProfileDropdown = false;
@@ -319,56 +316,25 @@ export class AppComponent implements OnInit {
   }
 
   updatePasswordStrength(password: string): void {
-    if (!password) {
-      this.passwordStrength = 0;
-      this.passwordStrengthText = '';
-      this.passwordStrengthColor = '';
-      return;
-    }
-    let strength = 0;
-    const checks = {
-      length: password.length >= 8,
-      uppercase: /[A-Z]/.test(password),
-      lowercase: /[a-z]/.test(password),
-      number: /[0-9]/.test(password),
-      special: /[!@#$%^&*(),.?":{}|<>]/.test(password)
-    };
-    if (checks.length) strength += 20;
-    if (checks.uppercase) strength += 20;
-    if (checks.lowercase) strength += 20;
-    if (checks.number) strength += 20;
-    if (checks.special) strength += 20;
-    this.passwordStrength = strength;
-    if (strength <= 40) {
-      this.passwordStrengthText = 'Faible';
-      this.passwordStrengthColor = '#ef4444';
-    } else if (strength <= 60) {
-      this.passwordStrengthText = 'Moyen';
-      this.passwordStrengthColor = '#f59e0b';
-    } else if (strength <= 80) {
-      this.passwordStrengthText = 'Bon';
-      this.passwordStrengthColor = '#3b82f6';
-    } else {
-      this.passwordStrengthText = 'Excellent';
-      this.passwordStrengthColor = '#10b981';
-    }
+    const info = this.passwordValidation.getPasswordStrengthInfo(password);
+    this.passwordStrength = info.percentage;
+    this.passwordStrengthText = info.label;
+    this.passwordStrengthColor = info.color;
   }
 
   changePassword(): void {
     if (this.passwordForm.invalid) {
       return;
     }
+    
     this.passwordLoading = true;
     this.passwordError = '';
     this.passwordSuccess = '';
-    const body = {
-      currentPassword: this.passwordForm.value.currentPassword,
-      newPassword: this.passwordForm.value.newPassword
-    };
-    this.http.post(`${environment.apiUrl}/reset-password`, body, {
-      withCredentials: true,
-      responseType: 'text'
-    }).subscribe({
+
+    this.authService.changePassword(
+      this.passwordForm.value.currentPassword,
+      this.passwordForm.value.newPassword
+    ).subscribe({
       next: () => {
         this.passwordLoading = false;
         this.passwordSuccess = 'Mot de passe modifié avec succès !';
@@ -378,35 +344,12 @@ export class AppComponent implements OnInit {
       },
       error: (error) => {
         this.passwordLoading = false;
-        console.error('Password change error:', error);
-        let errorMessage = 'Une erreur est survenue. Veuillez réessayer.';
-        if (error.status === 401) {
-          errorMessage = 'Session expirée. Veuillez vous reconnecter.';
-        } else if (error.status === 400) {
-          errorMessage = 'Le mot de passe actuel est incorrect.';
-        }
-        this.passwordError = errorMessage;
+        this.passwordError = this.authService.getPasswordChangeErrorMessage(error);
       }
     });
   }
 
   logout() {
-    // Call backend to clear HttpOnly cookie
-    this.http.post(`${environment.apiUrl}/logout`, {}, { withCredentials: true }).subscribe({
-      next: () => {
-        localStorage.clear();
-        if ('caches' in window) {
-          caches.keys().then(function (names) {
-            for (let name of names) caches.delete(name);
-          });
-        }
-        this.router.navigate(['/login']);
-      },
-      error: (error) => {
-        console.error('Logout error:', error);
-        localStorage.clear();
-        this.router.navigate(['/login']);
-      }
-    });
+    this.authService.logout('/login');
   }
 }

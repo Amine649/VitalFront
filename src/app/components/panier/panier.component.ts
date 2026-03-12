@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { CartService, CartItem, ProductVariant } from '../../services/cart.service';
 import { environment } from '../../../environments/environment';
 import { forkJoin } from 'rxjs';
+import { ImageErrorHandlerService } from '../../services/image-error-handler.service';
 
 @Component({
   selector: 'app-panier',
@@ -31,7 +32,8 @@ export class PanierComponent implements OnInit {
   constructor(
     private cartService: CartService,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private imageErrorHandler: ImageErrorHandlerService
   ) { }
 
   ngOnInit() {
@@ -43,8 +45,6 @@ export class PanierComponent implements OnInit {
 
     // Subscribe to cart updates
     this.cartService.cartItems$.subscribe(items => {
-      console.log('Cart items updated from backend:', items);
-      
       // Preserve the order of existing items
       if (this.itemOrder.length === 0 && items.length > 0) {
         // First load - store the initial order
@@ -95,7 +95,6 @@ export class PanierComponent implements OnInit {
 
   loadVariantsForCartItems(): void {
     if (this.loadingVariants) {
-      console.log('Already loading variants, skipping...');
       return;
     }
     
@@ -103,9 +102,6 @@ export class PanierComponent implements OnInit {
     
     // Load saved variant selections from localStorage
     const savedVariants = this.getSavedVariantSelections();
-    console.log('=== Loading Variants ===');
-    console.log('Saved variants from localStorage:', savedVariants);
-    console.log('Current cart items:', this.cartItems.map(i => ({ id: i.id, productId: i.productId, price: i.price })));
     
     // Create requests for all products
     const variantRequests = this.cartItems
@@ -122,8 +118,6 @@ export class PanierComponent implements OnInit {
 
     forkJoin(variantRequests).subscribe({
       next: (variantsArray) => {
-        console.log('Received variants from API:', variantsArray);
-        
         // Attach variants to each cart item
         let variantIndex = 0;
         this.cartItems.forEach(item => {
@@ -148,45 +142,33 @@ export class PanierComponent implements OnInit {
               }
             }
             
-            console.log(`\nProcessing cart item ${item.id} (product ${item.productId}):`);
-            console.log('  Current price from backend:', item.price);
-            console.log('  Saved variant ID:', savedVariantId, 'from key:', usedKey);
-            console.log('  Available variants:', item.variants);
-            
             if (savedVariantId) {
               // Use saved variant selection - THIS IS THE KEY PART
               const savedVariant = item.variants?.find(v => v.id === savedVariantId);
               if (savedVariant) {
                 item.selectedVariantId = savedVariantId;
                 item.price = savedVariant.price; // OVERRIDE the backend price
-                console.log('  ✓ Applied saved variant:', savedVariant);
               } else {
-                console.log('  ✗ Saved variant not found, matching by price');
                 const currentVariant = item.variants?.find(v => v.price === item.price);
                 if (currentVariant) {
                   item.selectedVariantId = currentVariant.id;
-                  console.log('  ✓ Matched by price:', currentVariant);
                 } else {
                   const sortedVariants = [...item.variants].sort((a, b) => a.id - b.id);
                   if (sortedVariants.length > 0) {
                     item.selectedVariantId = sortedVariants[0].id;
                     item.price = sortedVariants[0].price;
-                    console.log('  ✓ Using first variant:', sortedVariants[0]);
                   }
                 }
               }
             } else {
-              console.log('  No saved variant, matching by backend price');
               const currentVariant = item.variants?.find(v => v.price === item.price);
               if (currentVariant) {
                 item.selectedVariantId = currentVariant.id;
-                console.log('  ✓ Matched by backend price:', currentVariant);
               } else {
                 const sortedVariants = [...item.variants].sort((a, b) => a.id - b.id);
                 if (sortedVariants.length > 0) {
                   item.selectedVariantId = sortedVariants[0].id;
                   item.price = sortedVariants[0].price;
-                  console.log('  ✓ Using first variant (no match):', sortedVariants[0]);
                 }
               }
             }
@@ -200,18 +182,8 @@ export class PanierComponent implements OnInit {
         
         this.loadingVariants = false;
         this.recalculateTotal();
-        console.log('=== Final Cart State ===');
-        console.log('Cart items:', this.cartItems.map(i => ({ 
-          id: i.id, 
-          productId: i.productId, 
-          selectedVariantId: i.selectedVariantId,
-          price: i.price,
-          quantity: i.quantity
-        })));
-        console.log('Total:', this.cartTotal);
       },
       error: (err) => {
-        console.error('Error loading variants:', err);
         this.loadingVariants = false;
         this.recalculateTotal();
       }
@@ -222,7 +194,6 @@ export class PanierComponent implements OnInit {
     this.cartTotal = this.cartItems.reduce((total, item) => 
       total + (item.price * item.quantity), 0
     );
-    console.log('Recalculated total:', this.cartTotal);
   }
 
   onVariantChange(item: CartItem, variantId: number | string): void {
@@ -232,8 +203,6 @@ export class PanierComponent implements OnInit {
     const selectedVariant = item.variants?.find(v => v.id === numericVariantId);
     
     if (selectedVariant) {
-      console.log('Variant changed for cart item', item.id, ':', selectedVariant);
-      
       // Update the item's price and selected variant
       item.price = selectedVariant.price;
       item.selectedVariantId = numericVariantId;
@@ -249,8 +218,6 @@ export class PanierComponent implements OnInit {
       
       // Recalculate cart total
       this.recalculateTotal();
-      
-      console.log('Updated cart item:', item);
     }
   }
 
@@ -265,7 +232,6 @@ export class PanierComponent implements OnInit {
     savedVariants[productKey] = variantId;
     
     localStorage.setItem('cartVariantSelections', JSON.stringify(savedVariants));
-    console.log('Saved variant selection:', { cartItemKey, productKey, variantId });
   }
 
   getSavedVariantSelections(): { [key: string]: number } {
@@ -275,7 +241,6 @@ export class PanierComponent implements OnInit {
 
   clearSavedVariantSelections(): void {
     localStorage.removeItem('cartVariantSelections');
-    console.log('Cleared saved variant selections');
   }
 
   updateQuantity(productId: number, quantity: number): void {
@@ -309,7 +274,7 @@ export class PanierComponent implements OnInit {
         this.newEmail = this.userEmail; // Pre-fill with current email
       },
       error: (error) => {
-        console.error('Error loading user email:', error);
+        // Silent error - user email is optional
       }
     });
   }
@@ -357,7 +322,6 @@ export class PanierComponent implements OnInit {
       },
       error: (error) => {
         this.isCheckingOut = false;
-        console.error('Checkout error:', error);
         this.emailError = 'Erreur lors de la commande. Veuillez réessayer.';
       }
     });
@@ -422,11 +386,6 @@ export class PanierComponent implements OnInit {
    * Handle image load error
    */
   onImageError(event: Event): void {
-    const img = event.target as HTMLImageElement;
-    // Prevent infinite loop by checking if we already tried to set a fallback
-    if (!img.src.includes('data:image')) {
-      // Use a simple SVG placeholder instead of trying to load another image
-      img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2YzZjRmNiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5Y2EzYWYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZSBub24gZGlzcG9uaWJsZTwvdGV4dD48L3N2Zz4=';
-    }
+    this.imageErrorHandler.handleImageError(event);
   }
 }

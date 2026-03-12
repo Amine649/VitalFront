@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
+import { AuthService } from '../../services/auth.service';
 
 interface Boutique {
   id?: number;
@@ -40,7 +41,10 @@ export class AdminBoutiquesComponent implements OnInit {
   showDeleteModal = false;
   boutiqueToDelete: Boutique | null = null;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
     this.loadBoutiques();
@@ -60,24 +64,17 @@ export class AdminBoutiquesComponent implements OnInit {
     };
   }
 
-  private getRequestOptions() {
-    return {
-      withCredentials: true
-    };
-  }
-
   loadBoutiques(): void {
     this.loading = true;
     this.error = '';
 
-    this.http.get<Boutique[]>(`${environment.apiUrl}/boutiques/all`, this.getRequestOptions())
+    this.http.get<Boutique[]>(`${environment.apiUrl}/boutiques/all`, this.authService.getRequestOptions())
       .subscribe({
         next: (data) => {
           this.boutiques = data;
           this.loading = false;
         },
         error: (error) => {
-          console.error('Error loading boutiques:', error);
           this.error = 'Erreur lors du chargement des boutiques';
           this.loading = false;
         }
@@ -141,7 +138,7 @@ export class AdminBoutiquesComponent implements OnInit {
   }
 
   addBoutique(): void {
-    this.http.post<any>(`${environment.apiUrl}/boutiques/add`, this.currentBoutique, this.getRequestOptions())
+    this.http.post<any>(`${environment.apiUrl}/boutiques/add`, this.currentBoutique, this.authService.getRequestOptions())
       .subscribe({
         next: (response) => {
           this.loading = false;
@@ -152,14 +149,13 @@ export class AdminBoutiquesComponent implements OnInit {
         },
         error: (error) => {
           this.loading = false;
-          console.error('Error adding boutique:', error);
           this.error = error.error?.message || 'Erreur lors de l\'ajout de la boutique';
         }
       });
   }
 
   updateBoutique(): void {
-    this.http.put<any>(`${environment.apiUrl}/boutiques/update/${this.currentBoutique.id}`, this.currentBoutique, this.getRequestOptions())
+    this.http.put<any>(`${environment.apiUrl}/boutiques/update/${this.currentBoutique.id}`, this.currentBoutique, this.authService.getRequestOptions())
       .subscribe({
         next: (response) => {
           this.loading = false;
@@ -170,7 +166,6 @@ export class AdminBoutiquesComponent implements OnInit {
         },
         error: (error) => {
           this.loading = false;
-          console.error('Error updating boutique:', error);
           this.error = error.error?.message || 'Erreur lors de la modification de la boutique';
         }
       });
@@ -185,7 +180,7 @@ export class AdminBoutiquesComponent implements OnInit {
     if (!this.boutiqueToDelete?.id) return;
 
     this.loading = true;
-    this.http.delete(`${environment.apiUrl}/boutiques/delete/${this.boutiqueToDelete.id}`, { ...this.getRequestOptions(), responseType: 'text' })
+    this.http.delete(`${environment.apiUrl}/boutiques/delete/${this.boutiqueToDelete.id}`, { ...this.authService.getRequestOptions(), responseType: 'text' })
       .subscribe({
         next: () => {
           this.boutiques = this.boutiques.filter(b => b.id !== this.boutiqueToDelete?.id);
@@ -196,7 +191,6 @@ export class AdminBoutiquesComponent implements OnInit {
         },
         error: (error) => {
           this.loading = false;
-          console.error('Error deleting boutique:', error);
           this.error = 'Erreur lors de la suppression de la boutique';
           this.showDeleteModal = false;
         }

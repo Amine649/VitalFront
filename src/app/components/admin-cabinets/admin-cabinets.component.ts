@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
+import { AuthService } from '../../services/auth.service';
 
 interface Cabinet {
     id?: number;
@@ -44,7 +45,10 @@ export class AdminCabinetsComponent implements OnInit {
     showMapModal = false;
     private modalMap: any = null;
 
-    constructor(private http: HttpClient) { }
+    constructor(
+        private http: HttpClient,
+        private authService: AuthService
+    ) { }
 
     ngOnInit(): void {
         this.loadCabinets();
@@ -68,30 +72,19 @@ export class AdminCabinetsComponent implements OnInit {
     }
 
     /**
-     * Get request options with credentials
-     * Cookie is automatically sent by browser when withCredentials is true
-     */
-    private getRequestOptions() {
-        return {
-            withCredentials: true
-        };
-    }
-
-    /**
      * Load all cabinets
      */
     loadCabinets(): void {
         this.loading = true;
         this.error = '';
 
-        this.http.get<Cabinet[]>(`${environment.apiUrl}/cabinets/all`, this.getRequestOptions())
+        this.http.get<Cabinet[]>(`${environment.apiUrl}/cabinets/all`, this.authService.getRequestOptions())
             .subscribe({
                 next: (data) => {
                     this.cabinets = data.filter((c: Cabinet) => c.type === 'BOUTIQUE');
                     this.loading = false;
                 },
                 error: (error) => {
-                    console.error('Error loading cabinets:', error);
                     this.error = 'Erreur lors du chargement des cabinets';
                     this.loading = false;
                 }
@@ -178,7 +171,7 @@ export class AdminCabinetsComponent implements OnInit {
         const cabinetData = { ...this.currentCabinet };
         cabinetData.type = 'BOUTIQUE'; // Force type to BOUTIQUE
 
-        this.http.post<any>(`${environment.apiUrl}/cabinets/add`, cabinetData, this.getRequestOptions())
+        this.http.post<any>(`${environment.apiUrl}/cabinets/add`, cabinetData, this.authService.getRequestOptions())
             .subscribe({
                 next: (response) => {
                     this.loading = false;
@@ -191,7 +184,6 @@ export class AdminCabinetsComponent implements OnInit {
                 },
                 error: (error) => {
                     this.loading = false;
-                    console.error('Error adding cabinet:', error);
 
                     // Handle specific error messages
                     let errorMessage = 'Erreur lors de l\'ajout du cabinet';
@@ -229,7 +221,7 @@ export class AdminCabinetsComponent implements OnInit {
     updateCabinet(): void {
         const cabinetData = { ...this.currentCabinet };
 
-        this.http.put<any>(`${environment.apiUrl}/cabinets/update/${this.currentCabinet.id}`, cabinetData, this.getRequestOptions())
+        this.http.put<any>(`${environment.apiUrl}/cabinets/update/${this.currentCabinet.id}`, cabinetData, this.authService.getRequestOptions())
             .subscribe({
                 next: (response) => {
                     // Immediately update in local array for instant UI update
@@ -246,7 +238,6 @@ export class AdminCabinetsComponent implements OnInit {
                 },
                 error: (error) => {
                     this.loading = false;
-                    console.error('Error updating cabinet:', error);
 
                     // Handle specific error messages
                     let errorMessage = 'Erreur lors de la modification du cabinet';
@@ -332,7 +323,6 @@ export class AdminCabinetsComponent implements OnInit {
                         setTimeout(() => this.successMessage = '', 3000);
                     } else {
                         this.loading = false;
-                        console.error('Error deleting cabinet:', error);
                         this.error = error.error?.message || 'Erreur lors de la suppression du cabinet';
                         this.closeDeleteModal();
                     }

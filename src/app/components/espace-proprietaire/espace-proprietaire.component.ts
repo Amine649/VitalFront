@@ -7,6 +7,7 @@ import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product.model';
 import { environment } from '../../../environments/environment';
 import { SafePipe } from '../../pipes/safe.pipe';
+import { ImageErrorHandlerService } from '../../services/image-error-handler.service';
 
 interface BlogPost {
   id: number;
@@ -73,7 +74,8 @@ export class EspaceProprietaireComponent implements OnInit {
     private route: ActivatedRoute,
     private cartService: CartService,
     private productService: ProductService,
-    private http: HttpClient
+    private http: HttpClient,
+    private imageErrorHandler: ImageErrorHandlerService
   ) { }
 
   ngOnInit() {
@@ -205,13 +207,10 @@ export class EspaceProprietaireComponent implements OnInit {
 
     this.productService.getAllProducts().subscribe({
       next: (products) => {
-        console.log('Products loaded:', products.length, products);
         this.products = products;
         this.isLoading = false;
-        console.log('Filtered products:', this.getFilteredProducts().length);
       },
       error: (error) => {
-        console.error('Error loading products:', error);
         this.errorMessage = error.message;
         this.isLoading = false;
       }
@@ -266,51 +265,12 @@ export class EspaceProprietaireComponent implements OnInit {
   }
 
   getFilteredProducts(): Product[] {
-    // When on /espace-proprietaire without any filters, show ALL products
-    if (!this.selectedCategory && !this.selectedSousCategory && !this.selectedSubSubCategory) {
-      return this.products; // Return ALL products from API
-    }
-
-    // Apply filters only when category/subcategory is selected
-    return this.products.filter(product => {
-      const normalizeString = (str: string) => {
-        return str.toLowerCase()
-          .normalize('NFD')
-          .replace(/[\u0300-\u036f]/g, '')
-          .replace(/[\s_-]/g, '');
-      };
-
-      const productCategory = normalizeString(product.category);
-      const productSubCategory = normalizeString(product.subCategory);
-      const productSubSubCategory = product.subSubCategory ? normalizeString(product.subSubCategory) : null;
-      const filterCategory = this.selectedCategory ? normalizeString(this.selectedCategory) : null;
-      const filterSubCategory = this.selectedSousCategory ? normalizeString(this.selectedSousCategory) : null;
-      const filterSubSubCategory = this.selectedSubSubCategory ? normalizeString(this.selectedSubSubCategory) : null;
-
-      if (!filterCategory && filterSubCategory && !filterSubSubCategory) {
-        return productSubCategory === filterSubCategory;
-      }
-
-      if (filterCategory && !filterSubCategory && !filterSubSubCategory) {
-        return productCategory === filterCategory;
-      }
-
-      if (filterCategory && filterSubCategory && !filterSubSubCategory) {
-        return productCategory === filterCategory && productSubCategory === filterSubCategory;
-      }
-
-      if (filterCategory && filterSubCategory && filterSubSubCategory) {
-        return productCategory === filterCategory && 
-               productSubCategory === filterSubCategory && 
-               productSubSubCategory === filterSubSubCategory;
-      }
-
-      if (!filterCategory && !filterSubCategory && filterSubSubCategory) {
-        return productSubSubCategory === filterSubSubCategory;
-      }
-
-      return true;
-    });
+    return this.productService.filterProducts(
+      this.products,
+      this.selectedCategory,
+      this.selectedSousCategory,
+      this.selectedSubSubCategory
+    );
   }
 
   getPaginatedProducts(): Product[] {
@@ -354,10 +314,6 @@ export class EspaceProprietaireComponent implements OnInit {
     // Optional: Show a toast notification here
   }
 
-  viewProductDetails(product: Product) {
-    // Logique pour voir les détails du produit
-  }
-
   trackByProductId(index: number, product: Product): number {
     return product.id;
   }
@@ -382,12 +338,7 @@ export class EspaceProprietaireComponent implements OnInit {
    * Handle image load error
    */
   onImageError(event: Event): void {
-    const img = event.target as HTMLImageElement;
-    // Prevent infinite loop by checking if we already tried to set a fallback
-    if (!img.src.includes('data:image')) {
-      // Use a simple SVG placeholder instead of trying to load another image
-      img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2YzZjRmNiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5Y2EzYWYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZSBub24gZGlzcG9uaWJsZTwvdGV4dD48L3N2Zz4=';
-    }
+    this.imageErrorHandler.handleImageError(event);
   }
 
   /**
@@ -435,7 +386,6 @@ export class EspaceProprietaireComponent implements OnInit {
         this.isLoadingBlogs = false;
       },
       error: (error) => {
-        console.error('Error loading blog posts:', error);
         this.blogError = 'Erreur lors du chargement des articles';
         this.isLoadingBlogs = false;
       }
@@ -463,21 +413,12 @@ export class EspaceProprietaireComponent implements OnInit {
    * Open PDF in modal
    */
   openPdfModal(post: BlogPost): void {
-      console.log('=== NAVIGATING TO CONSEIL-ARTICLES WITH PDF ===');
-      console.log('Post data:', post);
-      console.log('Post pet:', post.pet);
-
       if (!post.pdfRelativePath) {
-        console.error('ERROR: No PDF path available');
         return;
       }
 
-      console.log('PDF Relative Path:', post.pdfRelativePath);
-
       // Extract year, month, and filename from pdfRelativePath
       const pathParts = post.pdfRelativePath.replace('/uploads/pdfs', '').split('/').filter(p => p);
-
-      console.log('Path parts after split:', pathParts);
 
       if (pathParts.length >= 3) {
         const year = pathParts[0];
@@ -485,7 +426,6 @@ export class EspaceProprietaireComponent implements OnInit {
         const filename = pathParts[2];
 
         const pdfUrl = `${environment.apiUrl}/blogs/pdf/${year}/${month}/${filename}`;
-        console.log('✓ PDF URL constructed:', pdfUrl);
 
         // Navigate to conseil-articles with blog data
         this.router.navigate(['/conseil-articles', 'blog-pdf'], {
@@ -499,9 +439,6 @@ export class EspaceProprietaireComponent implements OnInit {
             }
           }
         });
-      } else {
-        console.error('ERROR: Invalid PDF path format:', post.pdfRelativePath);
-        console.error('Expected at least 3 parts, got:', pathParts.length);
       }
     }
 
@@ -532,14 +469,12 @@ export class EspaceProprietaireComponent implements OnInit {
    * Handle PDF iframe load event
    */
   onPdfLoad(): void {
-    console.log('PDF iframe loaded successfully');
   }
 
   /**
    * Handle PDF iframe error event
    */
   onPdfError(): void {
-    console.error('PDF iframe failed to load');
   }
 
   /**

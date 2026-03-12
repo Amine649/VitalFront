@@ -6,6 +6,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, FormsModule } 
 import { CartService, CartItem, ProductVariant } from '../../services/cart.service';
 import { environment } from '../../../environments/environment';
 import { forkJoin } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
+import { ImageErrorHandlerService } from '../../services/image-error-handler.service';
 
 @Component({
     selector: 'app-panier-commercial',
@@ -49,7 +51,9 @@ export class PanierCommercialComponent implements OnInit {
         private cartService: CartService,
         private router: Router,
         private http: HttpClient,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private authService: AuthService,
+        private imageErrorHandler: ImageErrorHandlerService
     ) {
         this.passwordForm = this.fb.group({
             oldPassword: ['', Validators.required],
@@ -65,7 +69,6 @@ export class PanierCommercialComponent implements OnInit {
         if (this.vetMatricule) {
             this.cartService.loadCommercialCart(this.vetMatricule);
         } else {
-            console.error('No validated matricule found for cart load');
             this.cartService.loadCartFromBackend();
         }
 
@@ -133,7 +136,6 @@ export class PanierCommercialComponent implements OnInit {
                 this.recalculateTotal();
             },
             error: (err) => {
-                console.error('Error loading variants:', err);
                 this.loadingVariants = false;
                 this.recalculateTotal();
             }
@@ -225,7 +227,6 @@ export class PanierCommercialComponent implements OnInit {
                     },
                     error: (error) => {
                         this.isCheckingOut = false;
-                        console.error('Checkout error:', error);
                         alert('Erreur lors de la commande. Veuillez réessayer.');
                     }
                 });
@@ -246,7 +247,6 @@ export class PanierCommercialComponent implements OnInit {
                     },
                     error: (error) => {
                         this.isCheckingOut = false;
-                        console.error('Checkout error:', error);
                         alert('Erreur lors de la commande. Veuillez réessayer.');
                     }
                 });
@@ -311,10 +311,7 @@ export class PanierCommercialComponent implements OnInit {
      * Handle image load error
      */
     onImageError(event: Event): void {
-        const img = event.target as HTMLImageElement;
-        if (!img.src.includes('data:image')) {
-            img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2YzZjRmNiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5Y2EzYWYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZSBub24gZGlzcG9uaWJsZTwvdGV4dD48L3N2Zz4=';
-        }
+        this.imageErrorHandler.handleImageError(event);
     }
 
     // Navbar UI Methods
@@ -389,7 +386,6 @@ export class PanierCommercialComponent implements OnInit {
             },
             error: (error) => {
                 this.passwordLoading = false;
-                console.error('Password change error:', error);
 
                 if (error.status === 401) {
                     this.passwordError = 'Ancien mot de passe incorrect.';
@@ -403,18 +399,6 @@ export class PanierCommercialComponent implements OnInit {
     }
 
     logout() {
-        this.http.post(`${environment.apiUrl}/logout`, {}, { withCredentials: true }).subscribe({
-            next: () => {
-                localStorage.clear();
-                sessionStorage.clear();
-                this.router.navigate(['/login']);
-            },
-            error: (err) => {
-                console.error('Logout error', err);
-                localStorage.clear();
-                sessionStorage.clear();
-                this.router.navigate(['/login']);
-            }
-        });
+        this.authService.logout('/login');
     }
 }

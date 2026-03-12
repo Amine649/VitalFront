@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
+import { AuthService } from '../../services/auth.service';
 
 interface User {
   id: number;
@@ -67,7 +68,10 @@ export class AdminSubscriptionsComponent implements OnInit {
     { value: 'SIX_MONTHS', label: '6 mois' }
   ];
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
     this.loadUsers();
@@ -75,20 +79,41 @@ export class AdminSubscriptionsComponent implements OnInit {
   }
 
   /**
-   * Get request options with credentials for JSON
-   * Cookie is automatically sent by browser when withCredentials is true
+   * Load all users
    */
-  private getRequestOptions() {
-    return {
-      withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
+  loadUsers(): void {
+    this.http.get<User[]>(`${environment.apiUrl}/users/all`, this.authService.getRequestOptions())
+      .subscribe({
+        next: (data) => {
+          this.users = data;
+        },
+        error: (error) => {
+          this.error = this.getFriendlyErrorMessage(error);
+        }
+      });
   }
 
   /**
-   * Get request options with credentials for form data
+   * Load all subscriptions
+   */
+  loadSubscriptions(): void {
+    this.loading = true;
+    this.http.get<Subscription[]>(`${environment.apiUrl}/subscriptions/all`, this.authService.getRequestOptions())
+      .subscribe({
+        next: (data) => {
+          this.subscriptions = data;
+          this.applyFilters();
+          this.loading = false;
+        },
+        error: (error) => {
+          this.error = this.getFriendlyErrorMessage(error);
+          this.loading = false;
+        }
+      });
+  }
+
+  /**
+   * Get request options for form data
    */
   private getRequestOptionsFormData() {
     return {
@@ -100,50 +125,12 @@ export class AdminSubscriptionsComponent implements OnInit {
   }
 
   /**
-   * Get request options with credentials (no Content-Type for FormData)
+   * Get request options for multipart (no Content-Type for FormData)
    */
   private getRequestOptionsMultipart() {
     return {
       withCredentials: true
     };
-  }
-
-  /**
-   * Load all users
-   */
-  loadUsers(): void {
-    this.http.get<User[]>(`${environment.apiUrl}/users/all`, this.getRequestOptions())
-      .subscribe({
-        next: (data) => {
-          this.users = data;
-          console.log('Users loaded:', data.length);
-        },
-        error: (error) => {
-          console.error('Error loading users:', error);
-          this.error = this.getFriendlyErrorMessage(error);
-        }
-      });
-  }
-
-  /**
-   * Load all subscriptions
-   */
-  loadSubscriptions(): void {
-    this.loading = true;
-    this.http.get<Subscription[]>(`${environment.apiUrl}/subscriptions/all`, this.getRequestOptions())
-      .subscribe({
-        next: (data) => {
-          this.subscriptions = data;
-          this.applyFilters();
-          this.loading = false;
-          console.log('Subscriptions loaded:', data.length);
-        },
-        error: (error) => {
-          console.error('Error loading subscriptions:', error);
-          this.error = this.getFriendlyErrorMessage(error);
-          this.loading = false;
-        }
-      });
   }
 
   /**
@@ -240,7 +227,6 @@ export class AdminSubscriptionsComponent implements OnInit {
       next: (response) => {
         this.assignLoading = false;
         this.successMessage = 'Abonnement assigné avec succès ! Un email a été envoyé à l\'utilisateur.';
-        console.log('Success:', response);
 
         // Reload data
         setTimeout(() => {
@@ -251,7 +237,6 @@ export class AdminSubscriptionsComponent implements OnInit {
       },
       error: (error) => {
         this.assignLoading = false;
-        console.error('Error assigning subscription:', error);
 
         // Check if it's actually a success (status 200) but Angular treated it as error
         if (error.status === 200) {
@@ -430,7 +415,6 @@ export class AdminSubscriptionsComponent implements OnInit {
       },
       error: (error) => {
         this.updateLoading = false;
-        console.error('Error updating subscription:', error);
 
         // Check if it's actually a success (status 200) but Angular treated it as error
         if (error.status === 200) {
@@ -462,7 +446,7 @@ export class AdminSubscriptionsComponent implements OnInit {
 
     this.http.delete(
       `${environment.apiUrl}/subscriptions/delete/${this.selectedSubscription.id}`,
-      this.getRequestOptions()
+      this.authService.getRequestOptions()
     ).subscribe({
       next: () => {
         this.deleteLoading = false;
@@ -477,7 +461,6 @@ export class AdminSubscriptionsComponent implements OnInit {
       },
       error: (error) => {
         this.deleteLoading = false;
-        console.error('Error deleting subscription:', error);
         this.error = this.getFriendlyErrorMessage(error);
       }
     });

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
+import { AuthService } from '../../services/auth.service';
 
 interface Veterinaire {
   id: number;
@@ -38,20 +39,13 @@ export class AdminVeterinairesComponent implements OnInit {
   itemsPerPage = 5;
   paginatedVeterinaires: Veterinaire[] = [];
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
     this.loadVeterinaires();
-  }
-
-  /**
-   * Get request options with credentials
-   * Cookie is automatically sent by browser when withCredentials is true
-   */
-  private getRequestOptions() {
-    return {
-      withCredentials: true
-    };
   }
 
   /**
@@ -61,7 +55,7 @@ export class AdminVeterinairesComponent implements OnInit {
     this.loading = true;
     this.error = '';
 
-    this.http.get<Veterinaire[]>(`${environment.apiUrl}/ourveterinaires/all`, this.getRequestOptions())
+    this.http.get<Veterinaire[]>(`${environment.apiUrl}/ourveterinaires/all`, this.authService.getRequestOptions())
       .subscribe({
         next: (data) => {
           this.veterinaires = data;
@@ -71,7 +65,6 @@ export class AdminVeterinairesComponent implements OnInit {
           this.loading = false;
         },
         error: (error) => {
-          console.error('Error loading veterinaires:', error);
           this.error = 'Erreur lors du chargement des vétérinaires';
           this.loading = false;
         }
@@ -170,7 +163,7 @@ export class AdminVeterinairesComponent implements OnInit {
       .subscribe({
         next: (response) => {
           this.uploadLoading = false;
-          console.log('Upload response:', response);
+        
 
           // Check if response indicates success
           if (response && (response.success === false || response.error)) {
@@ -191,7 +184,6 @@ export class AdminVeterinairesComponent implements OnInit {
         },
         error: (error) => {
           this.uploadLoading = false;
-          console.error('Error uploading file:', error);
 
           // Handle specific error messages
           let errorMessage = 'Erreur lors de l\'importation du fichier';

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-espace-commercial',
@@ -32,7 +33,8 @@ export class EspaceCommercialComponent {
     constructor(
         private formBuilder: FormBuilder,
         private router: Router,
-        private http: HttpClient
+        private http: HttpClient,
+        private authService: AuthService
     ) {
         this.matriculeForm = this.formBuilder.group({
             matricule: ['', [Validators.required, Validators.minLength(3)]]
@@ -84,7 +86,6 @@ export class EspaceCommercialComponent {
                 },
                 error: (error) => {
                     this.loading = false;
-                    console.error('Matricule validation error:', error);
 
                     if (error.status === 404) {
                         this.error = 'Matricule fiscale non trouvé. Veuillez vérifier et réessayer.';
@@ -162,7 +163,6 @@ export class EspaceCommercialComponent {
             },
             error: (error) => {
                 this.passwordLoading = false;
-                console.error('Password change error:', error);
 
                 if (error.status === 401) {
                     this.passwordError = 'Ancien mot de passe incorrect.';
@@ -176,19 +176,6 @@ export class EspaceCommercialComponent {
     }
 
     logout() {
-        this.http.post(`${environment.apiUrl}/logout`, {}, { withCredentials: true }).subscribe({
-            next: () => {
-                localStorage.clear();
-                sessionStorage.clear();
-                this.router.navigate(['/login']);
-            },
-            error: (err) => {
-                console.error('Logout error', err);
-                // Force logout anyway
-                localStorage.clear();
-                sessionStorage.clear();
-                this.router.navigate(['/login']);
-            }
-        });
+        this.authService.logout('/login');
     }
 }

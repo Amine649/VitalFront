@@ -77,7 +77,6 @@ export class ProductService {
       errorMessage = `Erreur ${error.status}: ${error.message}`;
     }
 
-    console.error('ProductService Update Error:', errorMessage);
     return throwError(() => new Error(errorMessage));
   }
 
@@ -93,7 +92,6 @@ export class ProductService {
       errorMessage = `Erreur ${error.status}: ${error.message}`;
     }
 
-    console.error('ProductService Delete Error:', errorMessage);
     return throwError(() => new Error(errorMessage));
   }
 
@@ -109,7 +107,6 @@ export class ProductService {
       errorMessage = `Erreur ${error.status}: ${error.message}`;
     }
 
-    console.error('ProductService Add Error:', errorMessage);
     return throwError(() => new Error(errorMessage));
   }
 
@@ -202,15 +199,76 @@ export class ProductService {
     // User-friendly error message without exposing API details
     const errorMessage = 'Impossible de charger les produits pour le moment. Veuillez réessayer plus tard.';
 
-    // Log detailed error for debugging (only visible in console)
-    if (error.error instanceof ErrorEvent) {
-      // Client-side error
-      console.error('ProductService Error:', error.error.message);
-    } else {
-      // Server-side error
-      console.error('ProductService Error:', `Status ${error.status}: ${error.message}`);
+    return throwError(() => new Error(errorMessage));
+  }
+
+  /**
+   * Normalize string for comparison (remove accents, spaces, lowercase)
+   */
+  normalizeString(str: string): string {
+    if (!str) return '';
+    return str.toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[\s_-]/g, '');
+  }
+
+  /**
+   * Filter products by category, subcategory, and sub-subcategory
+   * @param products - Array of products to filter
+   * @param selectedCategory - Selected category filter (null = no filter)
+   * @param selectedSousCategory - Selected subcategory filter (null = no filter)
+   * @param selectedSubSubCategory - Selected sub-subcategory filter (null = no filter)
+   * @returns Filtered array of products
+   */
+  filterProducts(
+    products: Product[],
+    selectedCategory: string | null,
+    selectedSousCategory: string | null,
+    selectedSubSubCategory: string | null
+  ): Product[] {
+    // No filters selected - return all products
+    if (!selectedCategory && !selectedSousCategory && !selectedSubSubCategory) {
+      return products;
     }
 
-    return throwError(() => new Error(errorMessage));
+    return products.filter(product => {
+      const productCategory = this.normalizeString(product.category);
+      const productSubCategory = this.normalizeString(product.subCategory);
+      const productSubSubCategory = product.subSubCategory ? this.normalizeString(product.subSubCategory) : null;
+      
+      const filterCategory = selectedCategory ? this.normalizeString(selectedCategory) : null;
+      const filterSubCategory = selectedSousCategory ? this.normalizeString(selectedSousCategory) : null;
+      const filterSubSubCategory = selectedSubSubCategory ? this.normalizeString(selectedSubSubCategory) : null;
+      
+      // Only subcategory filter
+      if (!filterCategory && filterSubCategory && !filterSubSubCategory) {
+        return productSubCategory === filterSubCategory;
+      }
+      
+      // Only category filter
+      if (filterCategory && !filterSubCategory && !filterSubSubCategory) {
+        return productCategory === filterCategory;
+      }
+      
+      // Category + subcategory filters
+      if (filterCategory && filterSubCategory && !filterSubSubCategory) {
+        return productCategory === filterCategory && productSubCategory === filterSubCategory;
+      }
+      
+      // All three filters
+      if (filterCategory && filterSubCategory && filterSubSubCategory) {
+        return productCategory === filterCategory && 
+               productSubCategory === filterSubCategory && 
+               productSubSubCategory === filterSubSubCategory;
+      }
+      
+      // Only sub-subcategory filter
+      if (!filterCategory && !filterSubCategory && filterSubSubCategory) {
+        return productSubSubCategory === filterSubSubCategory;
+      }
+      
+      return true;
+    });
   }
 }

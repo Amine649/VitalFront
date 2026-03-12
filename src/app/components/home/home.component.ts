@@ -6,6 +6,7 @@ import { CartService } from '../../services/cart.service';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product.model';
 import { LazyLoadImageDirective } from '../../directives/lazy-load-image.directive';
+import { ImageErrorHandlerService } from '../../services/image-error-handler.service';
 
 @Component({
   selector: 'app-home',
@@ -43,7 +44,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     private cartService: CartService, 
     private router: Router,
-    private productService: ProductService
+    private productService: ProductService,
+    private imageErrorHandler: ImageErrorHandlerService
   ) { }
 
   ngOnInit() {
@@ -75,7 +77,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.startAutoSlide();
       },
       error: (error) => {
-        console.error('Error loading products:', error);
         this.errorMessage = error.message;
         this.isLoading = false;
       }
@@ -245,11 +246,7 @@ export class HomeComponent implements OnInit, OnDestroy {
    * Handle image load error - use a simple placeholder
    */
   onImageError(event: Event): void {
-    const img = event.target as HTMLImageElement;
-    // Remove error handler FIRST to prevent infinite loop
-    img.onerror = null;
-    // Use a simple SVG placeholder instead of trying to load a missing image
-    img.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"%3E%3Crect fill="%23f3f4f6" width="200" height="200"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="16" fill="%239ca3af"%3EProduit%3C/text%3E%3C/svg%3E';
+    this.imageErrorHandler.handleImageError(event, 'Produit');
   }
 
   /**

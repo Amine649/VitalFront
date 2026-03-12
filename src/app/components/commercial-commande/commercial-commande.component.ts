@@ -10,6 +10,8 @@ import { environment } from '../../../environments/environment';
 import { InfiniteScrollDirective } from '../../directives/infinite-scroll.directive';
 import { ProductSkeletonComponent } from '../product-skeleton/product-skeleton.component';
 import { LazyLoadImageDirective } from '../../directives/lazy-load-image.directive';
+import { AuthService } from '../../services/auth.service';
+import { ImageErrorHandlerService } from '../../services/image-error-handler.service';
 
 @Component({
     selector: 'app-commercial-commande',
@@ -90,7 +92,9 @@ export class CommercialCommandeComponent implements OnInit {
         private productService: ProductService,
         private http: HttpClient,
         private fb: FormBuilder,
-        private cdr: ChangeDetectorRef
+        private cdr: ChangeDetectorRef,
+        private authService: AuthService,
+        private imageErrorHandler: ImageErrorHandlerService
     ) {
         this.passwordForm = this.fb.group({
             oldPassword: ['', Validators.required],
@@ -157,9 +161,7 @@ export class CommercialCommandeComponent implements OnInit {
                         sessionStorage.setItem('vetId', this.vetId);
                     }
                 },
-                error: (error) => {
-                    console.error('Error fetching users:', error);
-                }
+                
             });
     }
 
@@ -184,7 +186,6 @@ export class CommercialCommandeComponent implements OnInit {
                 this.isLoading = false;
             },
             error: (error: any) => {
-                console.error('Error loading products:', error);
                 this.errorMessage = 'Erreur lors du chargement des produits';
                 this.isLoading = false;
             }
@@ -202,11 +203,9 @@ export class CommercialCommandeComponent implements OnInit {
             const selectedVariant = product.variants.find((v: any) => v.id === selectedId);
             if (selectedVariant) {
                 product.price = selectedVariant.price;
-                console.log('Variant changed for product', product.id, ':', selectedVariant, 'New price:', product.price);
                 // Manually trigger change detection to ensure UI updates
                 this.cdr.detectChanges();
             } else {
-                console.warn('Selected variant not found:', selectedId, 'Available variants:', product.variants);
             }
         }
     }
@@ -299,31 +298,16 @@ export class CommercialCommandeComponent implements OnInit {
     }
 
     getFilteredProducts(): Product[] {
-        let filtered = this.allProducts;
-
-        if (!this.showAllProducts) {
-            if (this.selectedCategory) {
-                filtered = filtered.filter(p =>
-                    this.normalizeString(p.category || '') === this.normalizeString(this.selectedCategory || '')
-                );
-            }
-            if (this.selectedSousCategory) {
-                filtered = filtered.filter(p =>
-                    this.normalizeString(p.subCategory || '') === this.normalizeString(this.selectedSousCategory || '')
-                );
-            }
-            if (this.selectedSubSubCategory) {
-                filtered = filtered.filter(p =>
-                    p.subSubCategory && this.normalizeString(p.subSubCategory) === this.normalizeString(this.selectedSubSubCategory || '')
-                );
-            }
+        if (this.showAllProducts) {
+            return this.allProducts;
         }
-
-        return filtered;
-    }
-
-    normalizeString(str: string): string {
-        return str ? str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/_/g, " ").toLowerCase() : '';
+        
+        return this.productService.filterProducts(
+            this.allProducts,
+            this.selectedCategory,
+            this.selectedSousCategory,
+            this.selectedSubSubCategory
+        );
     }
 
     getCategoryLabel(category: string): string {
@@ -339,7 +323,6 @@ export class CommercialCommandeComponent implements OnInit {
         if (matricule) {
             this.cartService.addToCommercialCart(product, matricule);
         } else {
-            console.error('No validated matricule found');
             this.cartService.addToCart(product);
         }
 
@@ -360,8 +343,7 @@ export class CommercialCommandeComponent implements OnInit {
     }
 
     onImageError(event: Event): void {
-        const img = event.target as HTMLImageElement;
-        img.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"%3E%3Crect fill="%23f3f4f6" width="200" height="200"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="16" fill="%239ca3af"%3EProduit%3C/text%3E%3C/svg%3E';
+        this.imageErrorHandler.handleImageError(event, 'Produit');
     }
 
     scrollToProducts(): void {
@@ -434,7 +416,6 @@ export class CommercialCommandeComponent implements OnInit {
             },
             error: (error) => {
                 this.passwordLoading = false;
-                console.error('Password change error:', error);
 
                 if (error.status === 401) {
                     this.passwordError = 'Ancien mot de passe incorrect.';
@@ -448,18 +429,6 @@ export class CommercialCommandeComponent implements OnInit {
     }
 
     logout() {
-        this.http.post(`${environment.apiUrl}/logout`, {}, { withCredentials: true }).subscribe({
-            next: () => {
-                localStorage.clear();
-                sessionStorage.clear();
-                this.router.navigate(['/login']);
-            },
-            error: (err) => {
-                console.error('Logout error', err);
-                localStorage.clear();
-                sessionStorage.clear();
-                this.router.navigate(['/login']);
-            }
-        });
+        this.authService.logout('/login');
     }
 }

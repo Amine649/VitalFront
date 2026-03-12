@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment';
 import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ProductService } from '../../services/product.service';
+import { AuthService } from '../../services/auth.service';
 
 interface DashboardStats {
   // Users & Subscriptions
@@ -59,20 +60,12 @@ export class AdminDashboardComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private productService: ProductService
+    private productService: ProductService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
     this.loadDashboardData();
-  }
-
-  /**
-   * Get request options with credentials
-   */
-  private getRequestOptions() {
-    return {
-      withCredentials: true
-    };
   }
 
   /**
@@ -83,33 +76,28 @@ export class AdminDashboardComponent implements OnInit {
     this.error = '';
 
     forkJoin({
-      users: this.http.get<any[]>(`${environment.apiUrl}/users/all`, this.getRequestOptions()).pipe(
+      users: this.http.get<any[]>(`${environment.apiUrl}/users/all`, this.authService.getRequestOptions()).pipe(
         catchError(err => {
-          console.error('Error loading users:', err);
           return of([]);
         })
       ),
-      subscriptions: this.http.get<any[]>(`${environment.apiUrl}/subscriptions/all`, this.getRequestOptions()).pipe(
+      subscriptions: this.http.get<any[]>(`${environment.apiUrl}/subscriptions/all`, this.authService.getRequestOptions()).pipe(
         catchError(err => {
-          console.error('Error loading subscriptions:', err);
           return of([]);
         })
       ),
       products: this.productService.getAllProducts().pipe(
         catchError(err => {
-          console.error('Error loading products:', err);
           return of([]);
         })
       ),
-      cabinets: this.http.get<any[]>(`${environment.apiUrl}/cabinets/all`, this.getRequestOptions()).pipe(
+      cabinets: this.http.get<any[]>(`${environment.apiUrl}/cabinets/all`, this.authService.getRequestOptions()).pipe(
         catchError(err => {
-          console.error('Error loading cabinets:', err);
           return of([]);
         })
       ),
-      veterinaires: this.http.get<any[]>(`${environment.apiUrl}/ourveterinaires/all`, this.getRequestOptions()).pipe(
+      veterinaires: this.http.get<any[]>(`${environment.apiUrl}/ourveterinaires/all`, this.authService.getRequestOptions()).pipe(
         catchError(err => {
-          console.error('Error loading veterinaires:', err);
           return of([]);
         })
       )
@@ -119,7 +107,6 @@ export class AdminDashboardComponent implements OnInit {
         this.loading = false;
       },
       error: (err) => {
-        console.error('Error loading dashboard data:', err);
         this.error = 'Erreur lors du chargement du tableau de bord';
         this.loading = false;
       }

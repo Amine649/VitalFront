@@ -55,9 +55,7 @@ export class LazyLoadImageDirective implements OnInit {
     this.renderer.listen(img, 'error', () => {
       if (errorHandled) return; // Prevent infinite loop
       errorHandled = true;
-      
-      console.warn(`Failed to load image: ${this.src}`);
-      
+            
       // Set a data URL placeholder to avoid further errors
       const placeholderSvg = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"%3E%3Crect fill="%23f3f4f6" width="200" height="200"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="14" fill="%239ca3af"%3EImage non disponible%3C/text%3E%3C/svg%3E';
       this.renderer.setAttribute(img, 'src', placeholderSvg);

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-admin-layout',
@@ -16,7 +17,8 @@ export class AdminLayoutComponent {
 
   constructor(
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private authService: AuthService
   ) {
     this.checkAuthentication();
   }
@@ -37,31 +39,7 @@ export class AdminLayoutComponent {
   }
 
   logout() {
-    // Call backend to clear HttpOnly cookie
-    this.http.post(`${environment.apiUrl}/logout`, {}, { withCredentials: true }).subscribe({
-      next: () => {
-        // Clear user data from localStorage
-        localStorage.removeItem('isAdmin');
-        localStorage.removeItem('userId');
-        localStorage.clear();
-        
-        // Clear browser cache
-        if ('caches' in window) {
-          caches.keys().then(function(names) {
-            for (let name of names) caches.delete(name);
-          });
-        }
-        
-        // Redirect to home
-        this.router.navigate(['/login']);
-      },
-      error: (error) => {
-        console.error('Logout error:', error);
-        // Even if backend fails, clear local data and redirect
-        localStorage.clear();
-        this.router.navigate(['/']);
-      }
-    });
+    this.authService.logout('/login');
   }
 
   isActive(route: string): boolean {

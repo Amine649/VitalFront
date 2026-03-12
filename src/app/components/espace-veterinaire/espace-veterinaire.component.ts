@@ -8,6 +8,9 @@ import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product.model';
 import { environment } from '../../../environments/environment';
 import { SafePipe } from '../../pipes/safe.pipe';
+import { AuthService } from '../../services/auth.service';
+import { PasswordValidationService } from '../../services/password-validation.service';
+import { ImageErrorHandlerService } from '../../services/image-error-handler.service';
 
 interface BlogPost {
   id: number;
@@ -207,13 +210,16 @@ export class EspaceVeterinaireComponent implements OnInit, OnDestroy {
     private productService: ProductService,
     private router: Router,
     private http: HttpClient,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private passwordValidation: PasswordValidationService,
+    private imageErrorHandler: ImageErrorHandlerService
   ) {
     this.passwordForm = this.formBuilder.group({
       currentPassword: ['', [Validators.required]],
-      newPassword: ['', [Validators.required, Validators.minLength(8), this.passwordStrengthValidator]],
+      newPassword: ['', [Validators.required, Validators.minLength(8), this.passwordValidation.passwordStrengthValidator]],
       confirmPassword: ['', [Validators.required]]
-    }, { validators: this.passwordMatchValidator });
+    }, { validators: this.passwordValidation.passwordMatchValidator });
 
     // Watch for password changes to update strength indicator
     this.passwordForm.get('newPassword')?.valueChanges.subscribe(password => {
@@ -221,80 +227,14 @@ export class EspaceVeterinaireComponent implements OnInit, OnDestroy {
     });
   }
 
-  passwordMatchValidator(form: FormGroup) {
-    const password = form.get('newPassword');
-    const confirmPassword = form.get('confirmPassword');
-
-    if (password && confirmPassword && password.value !== confirmPassword.value) {
-      confirmPassword.setErrors({ passwordMismatch: true });
-      return { passwordMismatch: true };
-    }
-    return null;
-  }
-
-  /**
-   * Custom validator for password strength
-   * Requires: min 8 chars, 1 uppercase, 1 special character
-   */
-  passwordStrengthValidator(control: any) {
-    const password = control.value;
-    if (!password) return null;
-
-    const hasUpperCase = /[A-Z]/.test(password);
-    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-    const hasMinLength = password.length >= 8;
-
-    const errors: any = {};
-    if (!hasUpperCase) errors.noUpperCase = true;
-    if (!hasSpecialChar) errors.noSpecialChar = true;
-    if (!hasMinLength) errors.minLength = true;
-
-    return Object.keys(errors).length > 0 ? errors : null;
-  }
-
   /**
    * Update password strength indicator
    */
   updatePasswordStrength(password: string): void {
-    if (!password) {
-      this.passwordStrength = 0;
-      this.passwordStrengthText = '';
-      this.passwordStrengthColor = '';
-      return;
-    }
-
-    let strength = 0;
-    const checks = {
-      length: password.length >= 8,
-      uppercase: /[A-Z]/.test(password),
-      lowercase: /[a-z]/.test(password),
-      number: /[0-9]/.test(password),
-      special: /[!@#$%^&*(),.?":{}|<>]/.test(password)
-    };
-
-    // Calculate strength
-    if (checks.length) strength += 20;
-    if (checks.uppercase) strength += 20;
-    if (checks.lowercase) strength += 20;
-    if (checks.number) strength += 20;
-    if (checks.special) strength += 20;
-
-    this.passwordStrength = strength;
-
-    // Set text and color based on strength
-    if (strength <= 40) {
-      this.passwordStrengthText = 'Faible';
-      this.passwordStrengthColor = '#ef4444'; // red
-    } else if (strength <= 60) {
-      this.passwordStrengthText = 'Moyen';
-      this.passwordStrengthColor = '#f59e0b'; // orange
-    } else if (strength <= 80) {
-      this.passwordStrengthText = 'Bon';
-      this.passwordStrengthColor = '#3b82f6'; // blue
-    } else {
-      this.passwordStrengthText = 'Excellent';
-      this.passwordStrengthColor = '#10b981'; // green
-    }
+    const info = this.passwordValidation.getPasswordStrengthInfo(password);
+    this.passwordStrength = info.percentage;
+    this.passwordStrengthText = info.label;
+    this.passwordStrengthColor = info.color;
   }
 
   /**
@@ -344,36 +284,16 @@ export class EspaceVeterinaireComponent implements OnInit, OnDestroy {
    * Load user data to get status
    */
   loadUserData(): void {
-    const apiUrl = `${environment.apiUrl}/veterinaires/me`;
-
-    this.http.get<any>(apiUrl, { withCredentials: true }).subscribe({
+    this.authService.loadUserData(true).subscribe({
       next: (data) => {
-        // Store userId if not already in localStorage
-        if (data.id || data.userId) {
-          const id = data.id || data.userId;
-          localStorage.setItem('userId', id.toString());
-        }
-
         this.userStatus = data.status || '';
         this.userName = data.nom || '';
-        const fullName = `${data.prenom || ''} ${data.nom || ''}`.trim();
-        if (fullName) {
-          this.userFullName = fullName;
-          // Update localStorage with fresh data
-          localStorage.setItem('userFullName', fullName);
-        }
-
-        // Store status in localStorage
-        if (this.userStatus) {
-          localStorage.setItem('userStatus', this.userStatus);
-        }
+        this.userFullName = `${data.prenom || ''} ${data.nom || ''}`.trim();
+        this.authService.storeUserData(data, true);
       },
       error: (error) => {
-        console.error('Error loading user data:', error);
-
         // If 401, session expired - redirect to login
         if (error.status === 401) {
-          console.warn('Session expired or invalid. Redirecting to login.');
           localStorage.clear();
           this.router.navigate(['/login']);
         } else {
@@ -437,54 +357,20 @@ export class EspaceVeterinaireComponent implements OnInit, OnDestroy {
     this.passwordError = '';
     this.passwordSuccess = '';
 
-    const body = {
-      currentPassword: this.passwordForm.value.currentPassword,
-      newPassword: this.passwordForm.value.newPassword
-    };
-
-    this.http.post(`${environment.apiUrl}/reset-password`, body, {
-      withCredentials: true,
-      responseType: 'text'
-    }).subscribe({
-      next: (response) => {
+    this.authService.changePassword(
+      this.passwordForm.value.currentPassword,
+      this.passwordForm.value.newPassword
+    ).subscribe({
+      next: () => {
         this.passwordLoading = false;
         this.passwordSuccess = 'Mot de passe modifié avec succès !';
-
-        // Close modal after 2 seconds
         setTimeout(() => {
           this.closePasswordModal();
         }, 2000);
       },
       error: (error) => {
         this.passwordLoading = false;
-        console.error('Password change error:', error);
-
-        // Try to get the error message from the API response
-        let errorMessage = 'Une erreur est survenue. Veuillez réessayer.';
-
-        if (error.status === 401) {
-          errorMessage = 'Session expirée. Veuillez vous reconnecter.';
-        } else if (error.status === 400) {
-          // Check if there's a specific error message from the API
-          let apiError = '';
-          if (error.error && typeof error.error === 'string') {
-            apiError = error.error;
-          } else if (error.error?.message) {
-            apiError = error.error.message;
-          }
-
-          // Translate common API errors to French
-          if (apiError.toLowerCase().includes('current password is incorrect') ||
-            apiError.toLowerCase().includes('mot de passe actuel incorrect')) {
-            errorMessage = 'Le mot de passe actuel est incorrect.';
-          } else if (apiError) {
-            errorMessage = apiError;
-          } else {
-            errorMessage = 'Le mot de passe ne respecte pas les critères requis.';
-          }
-        }
-
-        this.passwordError = errorMessage;
+        this.passwordError = this.authService.getPasswordChangeErrorMessage(error);
       }
     });
   }
@@ -493,32 +379,7 @@ export class EspaceVeterinaireComponent implements OnInit, OnDestroy {
    * Logout user
    */
   logout(): void {
-    // Call backend to clear HttpOnly cookie
-    this.http.post(`${environment.apiUrl}/logout`, {}, { withCredentials: true }).subscribe({
-      next: () => {
-        // Clear user data from localStorage
-        localStorage.removeItem('isAdmin');
-        localStorage.removeItem('userId');
-        localStorage.removeItem('userFullName');
-        localStorage.clear();
-
-        // Clear browser cache
-        if ('caches' in window) {
-          caches.keys().then(function (names) {
-            for (let name of names) caches.delete(name);
-          });
-        }
-
-        // Redirect to login
-        this.router.navigate(['/login']);
-      },
-      error: (error) => {
-        console.error('Logout error:', error);
-        // Even if backend fails, clear local data and redirect
-        localStorage.clear();
-        this.router.navigate(['/login']);
-      }
-    });
+    this.authService.logout('/login');
   }
 
   /**
@@ -554,7 +415,6 @@ export class EspaceVeterinaireComponent implements OnInit, OnDestroy {
         this.startAutoSlide();
       },
       error: (error) => {
-        console.error('Error loading products:', error);
         this.errorMessage = error.message;
         this.isLoading = false;
       }
@@ -590,7 +450,6 @@ export class EspaceVeterinaireComponent implements OnInit, OnDestroy {
         this.isLoadingBlogs = false;
       },
       error: (error) => {
-        console.error('Error loading blog posts:', error);
         this.blogError = 'Erreur lors du chargement des articles';
         this.isLoadingBlogs = false;
       }
@@ -618,19 +477,11 @@ export class EspaceVeterinaireComponent implements OnInit, OnDestroy {
    * Open PDF in modal
    */
   openPdfModal(post: BlogPost): void {
-    console.log('=== OPENING PDF MODAL ===');
-    console.log('Post data:', post);
-
     if (!post.pdfRelativePath) {
-      console.error('ERROR: No PDF path available');
       return;
     }
 
-    console.log('PDF Relative Path:', post.pdfRelativePath);
-
     const pathParts = post.pdfRelativePath.replace('/uploads/pdfs', '').split('/').filter(p => p);
-    
-    console.log('Path parts after split:', pathParts);
     
     if (pathParts.length >= 3) {
       const year = pathParts[0];
@@ -638,22 +489,17 @@ export class EspaceVeterinaireComponent implements OnInit, OnDestroy {
       const filename = pathParts[2];
       
       const pdfUrl = `${environment.apiUrl}/blogs/pdf/${year}/${month}/${filename}`;
-      console.log('✓ PDF URL constructed:', pdfUrl);
       
       this.currentPdfTitle = post.title;
       this.showPdfModal = true;
       this.isPdfLoading = true;
       document.body.style.overflow = 'hidden';
       
-      console.log('✓ Fetching PDF from API...');
-      
       this.http.get(pdfUrl, {
         responseType: 'blob',
         withCredentials: true
       }).subscribe({
         next: (blob: Blob) => {
-          console.log('✓ PDF received! Size:', blob.size, 'Type:', blob.type);
-          
           if (this.pdfBlobUrl) {
             URL.revokeObjectURL(this.pdfBlobUrl);
           }
@@ -662,25 +508,15 @@ export class EspaceVeterinaireComponent implements OnInit, OnDestroy {
           this.pdfBlobUrl = URL.createObjectURL(pdfBlob);
           this.currentPdfUrl = this.pdfBlobUrl;
           
-          console.log('✓ Blob URL:', this.pdfBlobUrl);
-          
           setTimeout(() => {
             this.isPdfLoading = false;
-            console.log('✓ PDF ready!');
           }, 300);
         },
         error: (error) => {
-          console.error('✗ Error fetching PDF:', error);
-          console.error('Error status:', error.status);
-          console.error('Error statusText:', error.statusText);
-          console.error('Error url:', error.url);
-          console.error('Error message:', error.message);
-
           this.isPdfLoading = false;
           
           // If status is 200 or 0 but still error (CORS issue), try direct URL fallback
           if (error.status === 200 || error.status === 0) {
-            console.log('Status 200 but error - trying fallback: direct URL in iframe');
             this.currentPdfUrl = pdfUrl;
             setTimeout(() => {
               this.isPdfLoading = false;
@@ -692,8 +528,6 @@ export class EspaceVeterinaireComponent implements OnInit, OnDestroy {
           }
         }
       });
-    } else {
-      console.error('ERROR: Invalid path:', post.pdfRelativePath);
     }
   }
 
@@ -721,14 +555,12 @@ export class EspaceVeterinaireComponent implements OnInit, OnDestroy {
    * Handle PDF iframe load event
    */
   onPdfLoad(): void {
-    console.log('PDF iframe loaded successfully');
   }
 
   /**
    * Handle PDF iframe error event
    */
   onPdfError(): void {
-    console.error('PDF iframe failed to load');
   }
 
   /**
@@ -834,11 +666,6 @@ export class EspaceVeterinaireComponent implements OnInit, OnDestroy {
 
   addToCart(product: Product) {
     this.cartService.addToCart(product);
-
-  }
-
-  viewProductDetails(product: Product) {
-    // Logique pour voir les détails du produit
 
   }
 
@@ -1003,10 +830,6 @@ export class EspaceVeterinaireComponent implements OnInit, OnDestroy {
    * Handle image load error - use a simple placeholder
    */
   onImageError(event: Event): void {
-    const img = event.target as HTMLImageElement;
-    // Remove error handler FIRST to prevent infinite loop
-    img.onerror = null;
-    // Use a simple SVG placeholder instead of trying to load a missing image
-    img.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"%3E%3Crect fill="%23f3f4f6" width="200" height="200"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="16" fill="%239ca3af"%3EProduit%3C/text%3E%3C/svg%3E';
+    this.imageErrorHandler.handleImageError(event, 'Produit');
   }
 }

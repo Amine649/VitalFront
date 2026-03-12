@@ -5,7 +5,6 @@ import { ConfirmationComponent } from './components/confirmation/confirmation.co
 import { LoginComponent } from './components/login/login.component';
 import { AdminLayoutComponent } from './components/admin-layout/admin-layout.component';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
-import { AdminComponent } from './components/admin/admin.component';
 import { AdminProductsComponent } from './components/admin-products/admin-products.component';
 import { AdminSubscriptionsComponent } from './components/admin-subscriptions/admin-subscriptions.component';
 import { AdminVeterinairesComponent } from './components/admin-veterinaires/admin-veterinaires.component';
@@ -43,7 +42,6 @@ export const routes: Routes = [
       { path: 'cabinets', component: AdminCabinetsComponent },
       { path: 'boutiques', component: AdminBoutiquesComponent },
       { path: 'products', component: AdminProductsComponent },
-      { path: 'users', component: AdminComponent },
       { path: 'blogs', component: AdminBlogsComponent }
     ]
   },

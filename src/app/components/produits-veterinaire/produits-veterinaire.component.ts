@@ -10,6 +10,9 @@ import { environment } from '../../../environments/environment';
 import { InfiniteScrollDirective } from '../../directives/infinite-scroll.directive';
 import { ProductSkeletonComponent } from '../product-skeleton/product-skeleton.component';
 import { LazyLoadImageDirective } from '../../directives/lazy-load-image.directive';
+import { AuthService } from '../../services/auth.service';
+import { PasswordValidationService } from '../../services/password-validation.service';
+import { ImageErrorHandlerService } from '../../services/image-error-handler.service';
 
 @Component({
   selector: 'app-produits-veterinaire',
@@ -83,76 +86,27 @@ export class ProduitsVeterinaireComponent implements OnInit {
     private productService: ProductService,
     private http: HttpClient,
     private formBuilder: FormBuilder,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private authService: AuthService,
+    private passwordValidation: PasswordValidationService,
+    private imageErrorHandler: ImageErrorHandlerService
   ) {
     this.passwordForm = this.formBuilder.group({
       currentPassword: ['', [Validators.required]],
-      newPassword: ['', [Validators.required, Validators.minLength(8), this.passwordStrengthValidator]],
+      newPassword: ['', [Validators.required, Validators.minLength(8), this.passwordValidation.passwordStrengthValidator]],
       confirmPassword: ['', [Validators.required]]
-    }, { validators: this.passwordMatchValidator });
+    }, { validators: this.passwordValidation.passwordMatchValidator });
 
     this.passwordForm.get('newPassword')?.valueChanges.subscribe(password => {
       this.updatePasswordStrength(password);
     });
   }
 
-  passwordMatchValidator(form: FormGroup) {
-    const password = form.get('newPassword');
-    const confirmPassword = form.get('confirmPassword');
-    if (password && confirmPassword && password.value !== confirmPassword.value) {
-      confirmPassword.setErrors({ passwordMismatch: true });
-      return { passwordMismatch: true };
-    }
-    return null;
-  }
-
-  passwordStrengthValidator(control: any) {
-    const password = control.value;
-    if (!password) return null;
-    const hasUpperCase = /[A-Z]/.test(password);
-    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-    const hasMinLength = password.length >= 8;
-    const errors: any = {};
-    if (!hasUpperCase) errors.noUpperCase = true;
-    if (!hasSpecialChar) errors.noSpecialChar = true;
-    if (!hasMinLength) errors.minLength = true;
-    return Object.keys(errors).length > 0 ? errors : null;
-  }
-
   updatePasswordStrength(password: string): void {
-    if (!password) {
-      this.passwordStrength = 0;
-      this.passwordStrengthText = '';
-      this.passwordStrengthColor = '';
-      return;
-    }
-    let strength = 0;
-    const checks = {
-      length: password.length >= 8,
-      uppercase: /[A-Z]/.test(password),
-      lowercase: /[a-z]/.test(password),
-      number: /[0-9]/.test(password),
-      special: /[!@#$%^&*(),.?":{}|<>]/.test(password)
-    };
-    if (checks.length) strength += 20;
-    if (checks.uppercase) strength += 20;
-    if (checks.lowercase) strength += 20;
-    if (checks.number) strength += 20;
-    if (checks.special) strength += 20;
-    this.passwordStrength = strength;
-    if (strength <= 40) {
-      this.passwordStrengthText = 'Faible';
-      this.passwordStrengthColor = '#ef4444';
-    } else if (strength <= 60) {
-      this.passwordStrengthText = 'Moyen';
-      this.passwordStrengthColor = '#f59e0b';
-    } else if (strength <= 80) {
-      this.passwordStrengthText = 'Bon';
-      this.passwordStrengthColor = '#3b82f6';
-    } else {
-      this.passwordStrengthText = 'Excellent';
-      this.passwordStrengthColor = '#10b981';
-    }
+    const info = this.passwordValidation.getPasswordStrengthInfo(password);
+    this.passwordStrength = info.percentage;
+    this.passwordStrengthText = info.label;
+    this.passwordStrengthColor = info.color;
   }
 
   toggleCurrentPasswordVisibility(): void {
@@ -209,36 +163,17 @@ export class ProduitsVeterinaireComponent implements OnInit {
   }
 
   loadUserData(): void {
-    this.http.get<any>(`${environment.apiUrl}/veterinaires/me`, { withCredentials: true }).subscribe({
+    this.authService.loadUserData().subscribe({
       next: (data) => {
         this.userName = data.nom || '';
         this.userFullName = `${data.prenom || ''} ${data.nom || ''}`.trim();
-        if (this.userFullName) {
-          localStorage.setItem('userFullName', this.userFullName);
-        }
-        if (data.id || data.userId) {
-          const id = data.id || data.userId;
-          localStorage.setItem('userId', id.toString());
-        }
-      },
-      error: (error) => {
-        console.error('Error loading user data:', error);
+        this.authService.storeUserData(data);
       }
     });
   }
 
   logout(): void {
-    this.http.post(`${environment.apiUrl}/logout`, {}, { withCredentials: true }).subscribe({
-      next: () => {
-        localStorage.clear();
-        this.router.navigate(['/login']);
-      },
-      error: (error) => {
-        console.error('Logout error:', error);
-        localStorage.clear();
-        this.router.navigate(['/login']);
-      }
-    });
+    this.authService.logout('/login');
   }
 
   navigateToPanier(): void {
@@ -265,7 +200,6 @@ export class ProduitsVeterinaireComponent implements OnInit {
         this.updateDisplayedProducts();
       },
       error: (error) => {
-        console.error('Error loading products:', error);
         this.errorMessage = error.message;
         this.isLoading = false;
       }
@@ -283,11 +217,8 @@ export class ProduitsVeterinaireComponent implements OnInit {
       const selectedVariant = product.variants.find((v: any) => v.id === selectedId);
       if (selectedVariant) {
         product.price = selectedVariant.price;
-        console.log('Variant changed for product', product.id, ':', selectedVariant, 'New price:', product.price);
         // Manually trigger change detection to ensure UI updates
         this.cdr.detectChanges();
-      } else {
-        console.warn('Selected variant not found:', selectedId, 'Available variants:', product.variants);
       }
     }
   }
@@ -388,42 +319,12 @@ export class ProduitsVeterinaireComponent implements OnInit {
   }
 
   getFilteredProducts(): Product[] {
-    if (!this.selectedCategory && !this.selectedSousCategory && !this.selectedSubSubCategory) {
-      return this.allProducts;
-    }
-    return this.allProducts.filter(product => {
-      const normalizeString = (str: string) => {
-        return str.toLowerCase()
-          .normalize('NFD')
-          .replace(/[\u0300-\u036f]/g, '')
-          .replace(/[\s_-]/g, '');
-      };
-      const productCategory = normalizeString(product.category);
-      const productSubCategory = normalizeString(product.subCategory);
-      const productSubSubCategory = product.subSubCategory ? normalizeString(product.subSubCategory) : null;
-      const filterCategory = this.selectedCategory ? normalizeString(this.selectedCategory) : null;
-      const filterSubCategory = this.selectedSousCategory ? normalizeString(this.selectedSousCategory) : null;
-      const filterSubSubCategory = this.selectedSubSubCategory ? normalizeString(this.selectedSubSubCategory) : null;
-      
-      if (!filterCategory && filterSubCategory && !filterSubSubCategory) {
-        return productSubCategory === filterSubCategory;
-      }
-      if (filterCategory && !filterSubCategory && !filterSubSubCategory) {
-        return productCategory === filterCategory;
-      }
-      if (filterCategory && filterSubCategory && !filterSubSubCategory) {
-        return productCategory === filterCategory && productSubCategory === filterSubCategory;
-      }
-      if (filterCategory && filterSubCategory && filterSubSubCategory) {
-        return productCategory === filterCategory && 
-               productSubCategory === filterSubCategory && 
-               productSubSubCategory === filterSubSubCategory;
-      }
-      if (!filterCategory && !filterSubCategory && filterSubSubCategory) {
-        return productSubSubCategory === filterSubSubCategory;
-      }
-      return true;
-    });
+    return this.productService.filterProducts(
+      this.allProducts,
+      this.selectedCategory,
+      this.selectedSousCategory,
+      this.selectedSubSubCategory
+    );
   }
 
   getCategoryLabel(category: string): string {
@@ -449,11 +350,7 @@ export class ProduitsVeterinaireComponent implements OnInit {
       price: product.price // This already has the updated price from onProductVariantChange
     };
     
-    console.log('Adding to cart:', productToAdd.name, 'Price:', productToAdd.price, 'Variant ID:', productToAdd.selectedVariantId);
     this.cartService.addToCart(productToAdd);
-  }
-
-  viewProductDetails(product: Product) {
   }
 
   removeFromCart(productId: number): void {
@@ -524,18 +421,16 @@ export class ProduitsVeterinaireComponent implements OnInit {
     if (this.passwordForm.invalid) {
       return;
     }
+    
     this.passwordLoading = true;
     this.passwordError = '';
     this.passwordSuccess = '';
-    const body = {
-      currentPassword: this.passwordForm.value.currentPassword,
-      newPassword: this.passwordForm.value.newPassword
-    };
-    this.http.post(`${environment.apiUrl}/reset-password`, body, {
-      withCredentials: true,
-      responseType: 'text'
-    }).subscribe({
-      next: (response) => {
+
+    this.authService.changePassword(
+      this.passwordForm.value.currentPassword,
+      this.passwordForm.value.newPassword
+    ).subscribe({
+      next: () => {
         this.passwordLoading = false;
         this.passwordSuccess = 'Mot de passe modifié avec succès !';
         setTimeout(() => {
@@ -544,27 +439,7 @@ export class ProduitsVeterinaireComponent implements OnInit {
       },
       error: (error) => {
         this.passwordLoading = false;
-        console.error('Password change error:', error);
-        let errorMessage = 'Une erreur est survenue. Veuillez réessayer.';
-        if (error.status === 401) {
-          errorMessage = 'Session expirée. Veuillez vous reconnecter.';
-        } else if (error.status === 400) {
-          let apiError = '';
-          if (error.error && typeof error.error === 'string') {
-            apiError = error.error;
-          } else if (error.error?.message) {
-            apiError = error.error.message;
-          }
-          if (apiError.toLowerCase().includes('current password is incorrect') ||
-            apiError.toLowerCase().includes('mot de passe actuel incorrect')) {
-            errorMessage = 'Le mot de passe actuel est incorrect.';
-          } else if (apiError) {
-            errorMessage = apiError;
-          } else {
-            errorMessage = 'Le mot de passe ne respecte pas les critères requis.';
-          }
-        }
-        this.passwordError = errorMessage;
+        this.passwordError = this.authService.getPasswordChangeErrorMessage(error);
       }
     });
   }
@@ -573,22 +448,8 @@ export class ProduitsVeterinaireComponent implements OnInit {
     this.router.navigate(['/espace-veterinaire']);
   }
 
-  goToCart(): void {
-  }
-
-  checkout(): void {
-  }
-
   onImageError(event: Event): void {
-    const img = event.target as HTMLImageElement;
-    // Prevent infinite loop by removing error handler first
-    img.onerror = null;
-
-    // Only set placeholder if not already a data URL
-    if (!img.src.includes('data:image')) {
-      // SVG with "Image non disponible" text
-      img.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"%3E%3Crect fill="%23f3f4f6" width="200" height="200"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="14" fill="%239ca3af"%3EImage non disponible%3C/text%3E%3C/svg%3E';
-    }
+    this.imageErrorHandler.handleImageError(event);
   }
   scrollToProducts(): void {
     const productsElement = document.querySelector('.products-header');

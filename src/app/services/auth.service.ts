@@ -18,17 +18,53 @@ export class AuthService {
     '/login'
   ];
 
-  private protectedRoutes = [
-    '/espace-veterinaire',
-    '/produits-veterinaire',
-    '/panier'
-  ];
-
   constructor(
     private http: HttpClient,
     private router: Router
   ) {
     this.initNavigationWatcher();
+  }
+
+  /**
+   * Get request options with credentials for API calls
+   * Cookie is automatically sent by browser when withCredentials is true
+   */
+  getRequestOptions() {
+    return {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+  }
+
+  /**
+   * Logout user - clears session and redirects
+   * @param redirectTo - Optional redirect path (default: '/')
+   */
+  logout(redirectTo: string = '/'): void {
+    // Call backend to clear HttpOnly cookie
+    this.http.post(`${environment.apiUrl}/logout`, {}, { withCredentials: true }).subscribe({
+      next: () => {
+        // Clear user data from localStorage
+        localStorage.clear();
+        
+        // Clear browser cache
+        if ('caches' in window) {
+          caches.keys().then(function(names) {
+            for (let name of names) caches.delete(name);
+          });
+        }
+        
+        // Redirect
+        this.router.navigate([redirectTo]);
+      },
+      error: (error) => {
+        // Even if backend fails, clear local data and redirect
+        localStorage.clear();
+        this.router.navigate([redirectTo]);
+      }
+    });
   }
 
   /**
@@ -101,16 +137,90 @@ export class AuthService {
         // Session cleared successfully
       },
       error: (error) => {
-        console.error('AuthService: Error clearing backend session', error);
+        // Session clearing failed
       }
     });
   }
 
   /**
-   * Logout user and redirect to login
+   * Change user password
+   * @param currentPassword - Current password
+   * @param newPassword - New password
+   * @returns Observable with success/error callbacks
    */
-  logout(): void {
-    this.clearAuthentication();
-    this.router.navigate(['/login']);
+  changePassword(currentPassword: string, newPassword: string) {
+    const body = {
+      currentPassword,
+      newPassword
+    };
+
+    return this.http.post(`${environment.apiUrl}/reset-password`, body, {
+      withCredentials: true,
+      responseType: 'text'
+    });
+  }
+
+  /**
+   * Parse password change error and return user-friendly message
+   */
+  getPasswordChangeErrorMessage(error: any): string {
+    if (error.status === 401) {
+      return 'Session expirée. Veuillez vous reconnecter.';
+    } else if (error.status === 400) {
+      // Check if there's a specific error message from the API
+      let apiError = '';
+      if (error.error && typeof error.error === 'string') {
+        apiError = error.error;
+      } else if (error.error?.message) {
+        apiError = error.error.message;
+      }
+
+      // Translate common API errors to French
+      if (apiError.toLowerCase().includes('current password is incorrect') ||
+          apiError.toLowerCase().includes('mot de passe actuel incorrect')) {
+        return 'Le mot de passe actuel est incorrect.';
+      } else if (apiError) {
+        return apiError;
+      } else {
+        return 'Le mot de passe ne respecte pas les critères requis.';
+      }
+    }
+    return 'Une erreur est survenue. Veuillez réessayer.';
+  }
+
+  /**
+   * Load current user data from /veterinaires/me endpoint
+   * Stores userId, userFullName, and optionally status in localStorage
+   * @param includeStatus - Whether to store and return user status (default: false)
+   * @returns Observable with user data
+   */
+  loadUserData(includeStatus: boolean = false) {
+    return this.http.get<any>(`${environment.apiUrl}/veterinaires/me`, { 
+      withCredentials: true 
+    });
+  }
+
+  /**
+   * Process and store user data in localStorage
+   * @param data - User data from API
+   * @param includeStatus - Whether to store user status
+   */
+  storeUserData(data: any, includeStatus: boolean = false): void {
+    // Store userId
+    if (data.id || data.userId) {
+      const id = data.id || data.userId;
+      localStorage.setItem('userId', id.toString());
+    }
+
+    // Store full name
+    const fullName = `${data.prenom || ''} ${data.nom || ''}`.trim();
+    if (fullName) {
+      localStorage.setItem('userFullName', fullName);
+    }
+
+    // Store status if requested
+    if (includeStatus && data.status) {
+      localStorage.setItem('userStatus', data.status);
+    }
   }
 }

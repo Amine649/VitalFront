@@ -7,6 +7,7 @@ import { ProductService } from '../../services/product.service';
 import { Product, ProductVariant } from '../../models/product.model';
 import { environment } from '../../../environments/environment';
 import { forkJoin } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-admin-products',
@@ -66,7 +67,8 @@ export class AdminProductsComponent implements OnInit {
   constructor(
     private router: Router,
     private productService: ProductService,
-    private http: HttpClient
+    private http: HttpClient,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -93,7 +95,6 @@ export class AdminProductsComponent implements OnInit {
       error: (err) => {
         this.error = err.message || 'Erreur lors du chargement des produits';
         this.loading = false;
-        console.error('Error loading products:', err);
       }
     });
   }
@@ -130,7 +131,6 @@ export class AdminProductsComponent implements OnInit {
         this.loading = false;
       },
       error: (err) => {
-        console.error('Error loading variants:', err);
         // Still show products even if variants fail to load
         this.filteredProducts = products;
         this.loading = false;
@@ -260,7 +260,6 @@ export class AdminProductsComponent implements OnInit {
         this.addProductVariant(newProduct.id, this.productForm.price, this.productForm.packaging);
       },
       error: (err) => {
-        console.error('Error adding product:', err);
         this.showErrorMessage('Erreur lors de l\'ajout du produit. Veuillez réessayer.');
       }
     });
@@ -287,7 +286,6 @@ export class AdminProductsComponent implements OnInit {
         this.showSuccessMessage('Produit et variante ajoutés avec succès!');
       },
       error: (err) => {
-        console.error('Error adding product variant:', err);
         this.closeModals();
         this.showErrorMessage('Produit ajouté, mais erreur lors de l\'ajout de la variante.');
       }
@@ -334,7 +332,6 @@ export class AdminProductsComponent implements OnInit {
         this.showSuccessMessage('Produit modifié avec succès!');
       },
       error: (err) => {
-        console.error('Error updating product:', err);
         this.showErrorMessage('Erreur lors de la modification du produit. Veuillez réessayer.');
       }
     });
@@ -352,7 +349,6 @@ export class AdminProductsComponent implements OnInit {
         this.showSuccessMessage('Produit supprimé avec succès!');
       },
       error: (err) => {
-        console.error('Error deleting product:', err);
         this.showErrorMessage('Erreur lors de la suppression du produit. Veuillez réessayer.');
       }
     });
@@ -377,8 +373,7 @@ export class AdminProductsComponent implements OnInit {
   }
 
   logout() {
-    localStorage.clear();
-    this.router.navigate(['/']);
+    this.authService.logout('/');
   }
 
   onImageError(event: Event) {
@@ -455,7 +450,6 @@ export class AdminProductsComponent implements OnInit {
         this.loadingVariants = false;
       },
       error: (err) => {
-        console.error('Error loading variants:', err);
         this.showErrorMessage('Erreur lors du chargement des variantes');
         this.loadingVariants = false;
       }
@@ -508,7 +502,6 @@ export class AdminProductsComponent implements OnInit {
         this.loadProducts();
       },
       error: (err) => {
-        console.error('Error adding variant:', err);
         this.showErrorMessage('Erreur lors de l\'ajout de la variante');
       }
     });
@@ -546,7 +539,6 @@ export class AdminProductsComponent implements OnInit {
         this.loadProducts();
       },
       error: (err) => {
-        console.error('Error deleting variant:', err);
         this.showErrorMessage('Erreur lors de la suppression de la variante');
       }
     });

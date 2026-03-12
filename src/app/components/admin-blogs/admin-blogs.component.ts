@@ -87,7 +87,6 @@ export class AdminBlogsComponent implements OnInit {
           this.isLoading = false;
         },
         error: (error) => {
-          console.error('Error loading blogs:', error);
           this.showErrorMessage('Erreur lors du chargement des blogs');
           this.isLoading = false;
         }
@@ -206,7 +205,6 @@ export class AdminBlogsComponent implements OnInit {
           this.loadBlogs();
         },
         error: (error) => {
-          console.error('Error adding blog:', error);
           this.showErrorMessage('Erreur lors de l\'ajout du blog');
           this.isLoading = false;
         }
@@ -246,7 +244,6 @@ export class AdminBlogsComponent implements OnInit {
           this.loadBlogs();
         },
         error: (error) => {
-          console.error('Error updating blog:', error);
           this.showErrorMessage('Erreur lors de la modification du blog');
           this.isLoading = false;
         }
@@ -266,7 +263,6 @@ export class AdminBlogsComponent implements OnInit {
           this.loadBlogs();
         },
         error: (error) => {
-          console.error('Error deleting blog:', error);
           this.showErrorMessage('Erreur lors de la suppression du blog');
           this.isLoading = false;
         }

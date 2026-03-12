@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterModule } from '@angular/router';
 import { HttpClient, HttpErrorResponse, HttpClientModule } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { PasswordValidationService } from '../../services/password-validation.service';
 
 @Component({
   selector: 'app-login',
@@ -33,7 +34,8 @@ export class LoginComponent {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private passwordValidation: PasswordValidationService
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -45,7 +47,7 @@ export class LoginComponent {
       otp: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
       newPassword: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]]
-    }, { validators: this.passwordMatchValidator });
+    }, { validators: this.passwordValidation.passwordMatchValidator });
   }
 
   get f() { return this.loginForm.controls; }
@@ -76,9 +78,7 @@ export class LoginComponent {
         // No need to manually store token - browser handles it
         if (response) {
           // Debug: Log the entire response to see what backend is returning
-          console.log('Login response:', response);
-          console.log('is_commercial field:', response.is_commercial);
-          console.log('isCommercial field:', response.isCommercial);
+          
 
           // Check for isAdmin in different formats
           const isAdmin = response.isAdmin === true ||
@@ -92,9 +92,7 @@ export class LoginComponent {
             response.is_commercial === 'true' ||
             response.isCommercial === 'true';
 
-          console.log('isAdmin:', isAdmin);
-          console.log('isCommercial:', isCommercial);
-
+        
           // Only store non-sensitive user info
           if (isAdmin) {
             localStorage.setItem('isAdmin', 'true');
@@ -146,13 +144,12 @@ export class LoginComponent {
             }
           }
         } else {
-          this.loading = false;
-          this.error = "Identifiants invalides ou réponse inattendue.";
-        }
+        this.loading = false;
+        this.error = "Identifiants invalides ou réponse inattendue.";
+      }
       },
       error: (error: HttpErrorResponse) => {
         this.loading = false;
-        console.error('Login error:', error);
 
         // User-friendly error messages
         if (error.status === 401) {
@@ -180,13 +177,10 @@ export class LoginComponent {
         this.router.navigate(['/espace-veterinaire']);
       },
       error: (error) => {
-        console.error('Error fetching from /api/veterinaires/me:', error);
-
         // If 401, the backend might be rejecting non-ACTIVE users
         // This is a backend issue - /me should work for all authenticated users
         // For now, navigate anyway and let the page handle it
         this.loading = false;
-        console.warn('Navigating to /espace-veterinaire despite error (backend should fix /me endpoint)');
         this.router.navigate(['/espace-veterinaire']);
       }
     });
@@ -208,15 +202,6 @@ export class LoginComponent {
   }
 
   // ===== FORGOT PASSWORD METHODS =====
-
-  /**
-   * Custom validator to check if passwords match
-   */
-  passwordMatchValidator(group: FormGroup): { [key: string]: boolean } | null {
-    const newPassword = group.get('newPassword')?.value;
-    const confirmPassword = group.get('confirmPassword')?.value;
-    return newPassword === confirmPassword ? null : { passwordMismatch: true };
-  }
 
   /**
    * Show forgot password form
@@ -276,7 +261,6 @@ export class LoginComponent {
 
     this.http.post<any>(`${environment.apiUrl}/forgot-password-otp`, { email }).subscribe({
       next: (response) => {
-        console.log('OTP send success:', response);
         this.forgotPasswordLoading = false;
         this.forgotPasswordSuccess = 'Un code OTP a été envoyé à votre adresse email.';
         // Move to step 2 after a brief delay to let user see success message
@@ -287,12 +271,6 @@ export class LoginComponent {
       },
       error: (error: any) => {
         this.forgotPasswordLoading = false;
-        console.error('Send OTP error:', error);
-        console.error('Error status:', error.status);
-        console.error('Error statusText:', error.statusText);
-        console.error('Error message:', error.message);
-        console.error('Error name:', error.name);
-        console.error('Full error object:', error);
 
         // WORKAROUND: Multiple checks for CORS issues where backend actually succeeded
         const isCorsError = error.status === 0 ||
@@ -301,7 +279,6 @@ export class LoginComponent {
           error.name === 'HttpErrorResponse';
 
         if (isCorsError && error.status !== 404 && error.status !== 500 && error.status !== 400) {
-          console.warn('Possible CORS error detected, treating as success. Status:', error.status);
           this.forgotPasswordSuccess = 'Un code OTP a été envoyé à votre adresse email.';
           setTimeout(() => {
             this.forgotPasswordStep = 2;
@@ -358,7 +335,6 @@ export class LoginComponent {
 
     this.http.post<any>(`${environment.apiUrl}/reset-password-otp`, resetData).subscribe({
       next: (response) => {
-        console.log('Password reset success:', response);
         this.forgotPasswordLoading = false;
         this.forgotPasswordSuccess = 'Votre mot de passe a été réinitialisé avec succès. Vous pouvez maintenant vous connecter.';
         // Clear form and return to login after delay
@@ -368,12 +344,6 @@ export class LoginComponent {
       },
       error: (error: any) => {
         this.forgotPasswordLoading = false;
-        console.error('Reset password error:', error);
-        console.error('Error status:', error.status);
-        console.error('Error statusText:', error.statusText);
-        console.error('Error message:', error.message);
-        console.error('Error name:', error.name);
-        console.error('Full error object:', error);
 
         // WORKAROUND: Multiple checks for CORS issues where backend actually succeeded
         const isCorsError = error.status === 0 ||
@@ -382,7 +352,6 @@ export class LoginComponent {
           error.name === 'HttpErrorResponse';
 
         if (isCorsError && error.status !== 404 && error.status !== 500 && error.status !== 400) {
-          console.warn('Possible CORS error detected, treating as success. Status:', error.status);
           this.forgotPasswordSuccess = 'Votre mot de passe a été réinitialisé avec succès. Vous pouvez maintenant vous connecter.';
           setTimeout(() => {
             this.backToLogin();

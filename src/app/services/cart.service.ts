@@ -77,7 +77,6 @@ export class CartService {
       { withCredentials: true }
     ).pipe(
       catchError(error => {
-        console.error('Error loading cart:', error);
         // Fallback to localStorage if backend fails
         this.loadCartFromStorage();
         return of({ items: [], totalItems: 0, totalPrice: 0 });
@@ -112,7 +111,6 @@ export class CartService {
   addToCart(product: any): void {
     const userId = this.getUserId();
     if (!userId) {
-      console.error('User not logged in');
       return;
     }
 
@@ -139,12 +137,9 @@ export class CartService {
       }
     ).pipe(
       catchError(error => {
-        console.error('Error adding to cart:', error);
-        console.error('Error status:', error.status);
-
+    
         // If it's a 200 but parsing failed, it's actually success
         if (error.status === 200 || error.status === 204) {
-          console.log('Add successful despite parsing error');
           this.loadCartFromBackend();
           this.toastService.success('Produit ajouté au panier');
         } else {
@@ -165,7 +160,6 @@ export class CartService {
 
       // Handle 204 No Content
       if (httpResponse.status === 204) {
-        console.log('204 No Content - reloading cart');
         this.loadCartFromBackend();
         this.toastService.success('Produit ajouté au panier');
         return;
@@ -194,7 +188,6 @@ export class CartService {
         this.toastService.success('Produit ajouté au panier');
       } else {
         // Response doesn't have items, reload from backend
-        console.warn('Response missing items array, reloading cart');
         this.loadCartFromBackend();
         this.toastService.success('Produit ajouté au panier');
       }
@@ -224,7 +217,6 @@ export class CartService {
       }
     ).pipe(
       catchError(error => {
-        console.error('Error adding to commercial cart:', error);
 
         // If it's a 200 or 204 but parsing failed, it's actually success
         if (error.status === 200 || error.status === 204) {
@@ -254,7 +246,6 @@ export class CartService {
       { withCredentials: true }
     ).pipe(
       catchError(error => {
-        console.error('Error loading commercial cart:', error);
         // Fallback to localStorage if backend fails
         this.loadCartFromStorage();
         return of({ items: [], totalAmount: 0 });
@@ -304,7 +295,6 @@ export class CartService {
       requestBody.variantId = null;
     }
 
-    console.log('Updating commercial cart item:', itemId, 'Body:', requestBody);
 
     this.http.patch<any>(
       `${environment.apiUrl}/commercial/orders/cart/${vetMatricule}/items/${itemId}`,
@@ -315,7 +305,6 @@ export class CartService {
       }
     ).pipe(
       catchError(error => {
-        console.error('Error updating commercial cart item:', error);
 
         if (error.status === 200 || error.status === 204) {
           this.loadCommercialCart(vetMatricule);
@@ -347,7 +336,6 @@ export class CartService {
       }
     ).pipe(
       catchError(error => {
-        console.error('Error removing commercial cart item:', error);
 
         if (error.status === 200 || error.status === 204) {
           this.loadCommercialCart(vetMatricule);
@@ -379,7 +367,6 @@ export class CartService {
       }
     ).pipe(
       catchError(error => {
-        console.error('Error clearing commercial cart:', error);
 
         if (error.status === 200 || error.status === 204) {
           this.loadCommercialCart(vetMatricule);
@@ -424,7 +411,6 @@ export class CartService {
         return { success: false, error: 'Une erreur inconnue est survenue' };
       }),
       catchError(error => {
-        console.error('Error confirming commercial order:', error);
         return of({ success: false, error: error.message || 'Erreur lors de la confirmation' });
       })
     );
@@ -436,7 +422,6 @@ export class CartService {
   updateQuantity(itemId: number, quantity: number, variantId?: number): void {
     const userId = this.getUserId();
     if (!userId) {
-      console.error('User not logged in');
       return;
     }
 
@@ -456,8 +441,6 @@ export class CartService {
       requestBody.variantId = null;
     }
 
-    console.log('Updating cart item:', itemId, 'Body:', requestBody);
-
     this.http.put<any>(
       `${environment.apiUrl}/cart/items/${itemId}?userId=${userId}`,
       requestBody,
@@ -467,12 +450,9 @@ export class CartService {
       }
     ).pipe(
       catchError(error => {
-        console.error('Error updating quantity:', error);
-        console.error('Error status:', error.status);
-
+     
         // If it's a 200/204 but parsing failed, it's actually success
         if (error.status === 200 || error.status === 204) {
-          console.log('Update successful despite parsing error');
           this.loadCartFromBackend();
           this.toastService.success('Quantité mise à jour');
         } else {
@@ -492,7 +472,6 @@ export class CartService {
 
       // Handle 204 No Content
       if (httpResponse.status === 204) {
-        console.log('204 No Content - reloading cart');
         this.loadCartFromBackend();
         this.toastService.success('Quantité mise à jour');
         return;
@@ -518,7 +497,6 @@ export class CartService {
         this.toastService.success('Quantité mise à jour');
       } else {
         // No items in response - reload cart
-        console.warn('Response missing items array, reloading cart');
         this.loadCartFromBackend();
         this.toastService.success('Quantité mise à jour');
       }
@@ -531,7 +509,6 @@ export class CartService {
   removeFromCart(itemId: number): void {
     const userId = this.getUserId();
     if (!userId) {
-      console.error('User not logged in');
       return;
     }
 
@@ -545,12 +522,9 @@ export class CartService {
       }
     ).pipe(
       catchError(error => {
-        console.error('Error removing from cart:', error);
-        console.error('Error status:', error.status);
-
+     
         // If it's a 200/204 but parsing failed, it's actually success
         if (error.status === 200 || error.status === 204) {
-          console.log('Delete successful despite parsing error');
           this.loadCartFromBackend();
           this.toastService.success('Produit retiré du panier');
         } else {
@@ -570,7 +544,6 @@ export class CartService {
 
       // Handle 204 No Content
       if (httpResponse.status === 204) {
-        console.log('204 No Content - reloading cart');
         this.loadCartFromBackend();
         this.toastService.success('Produit retiré du panier');
         return;
@@ -596,7 +569,6 @@ export class CartService {
         this.toastService.success('Produit retiré du panier');
       } else {
         // No items in response or empty response - reload cart
-        console.warn('Response missing items array, reloading cart');
         this.loadCartFromBackend();
         this.toastService.success('Produit retiré du panier');
       }
@@ -609,7 +581,6 @@ export class CartService {
   clearCart(): void {
     const userId = this.getUserId();
     if (!userId) {
-      console.error('User not logged in');
       return;
     }
 
@@ -618,7 +589,6 @@ export class CartService {
       { withCredentials: true }
     ).pipe(
       catchError(error => {
-        console.error('Error clearing cart:', error);
         // Fallback to localStorage
         this.updateLocalCart([]);
         return of(null);
@@ -661,7 +631,6 @@ export class CartService {
         return response;
       }),
       catchError(error => {
-        console.error('Error during checkout:', error);
         return of({ error: error.message || 'Checkout failed' });
       })
     );
@@ -741,7 +710,6 @@ export class CartService {
         const items = JSON.parse(savedCart);
         this.updateLocalCart(items);
       } catch (error) {
-        console.error('Error parsing cart from localStorage:', error);
         this.updateLocalCart([]);
       }
     }
@@ -756,7 +724,6 @@ export class CartService {
     const selections = stored ? JSON.parse(stored) : {};
     selections[productId] = { variantId, price };
     localStorage.setItem(key, JSON.stringify(selections));
-    console.log('Stored variant selection:', productId, variantId, price);
   }
 
   /**
@@ -775,11 +742,9 @@ export class CartService {
           const selection = selections[productId];
           item.price = selection.price;
           item.selectedVariantId = selection.variantId;
-          console.log('Applied variant selection to cart item:', productId, 'Price:', selection.price);
         }
       });
     } catch (error) {
-      console.error('Error applying variant selections:', error);
     }
   }
 }
