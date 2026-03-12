@@ -61,7 +61,7 @@ export class AdminVeterinairesComponent implements OnInit {
     this.loading = true;
     this.error = '';
 
-    this.http.get<Veterinaire[]>(`${environment.apiUrl}/veterinaires/all`, this.getRequestOptions())
+    this.http.get<Veterinaire[]>(`${environment.apiUrl}/ourveterinaires/all`, this.getRequestOptions())
       .subscribe({
         next: (data) => {
           this.veterinaires = data;
@@ -166,7 +166,7 @@ export class AdminVeterinairesComponent implements OnInit {
       responseType: 'text' as 'json'  // Handle text response from API
     };
 
-    this.http.post<any>(`${environment.apiUrl}/veterinaires/upload-excel`, formData, options)
+    this.http.post<any>(`${environment.apiUrl}/ourveterinaires/upload-excel`, formData, options)
       .subscribe({
         next: (response) => {
           this.uploadLoading = false;

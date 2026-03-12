@@ -992,8 +992,8 @@ export class EspaceVeterinaireComponent implements OnInit, OnDestroy {
     }
   }
 
-  @HostListener('document:keydown.escape', ['$event'])
-  onEscapeKey(event: KeyboardEvent): void {
+  @HostListener('document:keydown.escape')
+  onEscapeKey(): void {
     if (this.showDemoModal) {
       this.closeDemoVideo();
     }

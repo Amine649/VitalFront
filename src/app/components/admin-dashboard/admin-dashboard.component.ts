@@ -107,7 +107,7 @@ export class AdminDashboardComponent implements OnInit {
           return of([]);
         })
       ),
-      veterinaires: this.http.get<any[]>(`${environment.apiUrl}/veterinaires/all`, this.getRequestOptions()).pipe(
+      veterinaires: this.http.get<any[]>(`${environment.apiUrl}/ourveterinaires/all`, this.getRequestOptions()).pipe(
         catchError(err => {
           console.error('Error loading veterinaires:', err);
           return of([]);

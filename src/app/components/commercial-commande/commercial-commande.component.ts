@@ -134,7 +134,7 @@ export class CommercialCommandeComponent implements OnInit {
 
     fetchVetDetails(matricule: string) {
         // Fetch fresh details from User table
-        this.http.get<any[]>(`${environment.apiUrl}/veterinaires/all`, { withCredentials: true })
+        this.http.get<any[]>(`${environment.apiUrl}/ourveterinaires/all`, { withCredentials: true })
             .subscribe({
                 next: (users) => {
                     // Case-insensitive and trimmed comparison
