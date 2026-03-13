@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd, RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -29,6 +29,13 @@ export class AppComponent implements OnInit {
   showProfileDropdown: boolean = false;
   mobileMenuOpen: boolean = false;
   userFullName: string = '';
+  
+  // Explicit navbar visibility flag that updates on every route change
+  showNavbar: boolean = true;
+  
+  // Layout flags that update on every route change
+  isEspaceProprietaireLayout: boolean = false;
+  isProduitsVeterinaireLayout: boolean = false;
 
   // Password modal
   showPasswordModal: boolean = false;
@@ -57,10 +64,14 @@ export class AppComponent implements OnInit {
     private authService: AuthService,
     private passwordValidation: PasswordValidationService,
     private http: HttpClient,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private cdr: ChangeDetectorRef
   ) {
     // Initialize current route
     this.currentRoute = this.router.url;
+    
+    // Calculate initial navbar visibility
+    this.updateNavbarVisibility();
     
     // Initialize password form
     this.passwordForm = this.formBuilder.group({
@@ -73,12 +84,16 @@ export class AppComponent implements OnInit {
     this.passwordForm.get('newPassword')?.valueChanges.subscribe(password => {
       this.updatePasswordStrength(password);
     });
-    // Listen to route changes
+    
+    // Listen to route changes - this ensures currentRoute is always up to date
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
-    ).subscribe((event) => {
+    ).subscribe((event: NavigationEnd) => {
       const previousRoute = this.currentRoute;
-      this.currentRoute = event.urlAfterRedirects;
+      
+     this.currentRoute = event.urlAfterRedirects;
+      this.updateNavbarVisibility(event.urlAfterRedirects); // pass it directly
+      this.cdr.detectChanges();
       
       // Parse query parameters from URL
       const urlParams = new URLSearchParams(this.currentRoute.split('?')[1] || '');
@@ -178,8 +193,34 @@ export class AppComponent implements OnInit {
   }
 
   get shouldShowNavbar(): boolean {
-    return !this.isAdmin && !this.isEspaceVeterinaire && !this.isFormulaireVet && !this.isProduitsVeterinaire && !this.isEspaceCommercial && !this.isConseilArticles;
+    return this.showNavbar;
   }
+
+  /**
+   * Update navbar visibility based on current route
+   * This method is called on every route change to ensure navbar state is correct
+   */
+      // Update the method signature
+
+      private updateNavbarVisibility(route?: string): void {
+  const currentPath = (route || this.currentRoute).split('?')[0];
+
+  const hideNavbarRoutes = [
+    '/admin',
+    '/espace-veterinaire',
+    '/formulaireVet',
+    '/produits-veterinaire',
+    '/espace-commercial',
+    '/panier'
+  ];
+
+  if (hideNavbarRoutes.some(r => currentPath.startsWith(r))) {
+    this.showNavbar = false;
+    return;
+  }
+
+  this.showNavbar = true;
+}
 
   get isOuTrouverNosProduits(): boolean {
     return this.currentRoute.includes('/ou-trouver-nos-produits');

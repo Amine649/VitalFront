@@ -50,7 +50,7 @@ export class OuTrouverNosProduitsComponent implements OnInit, AfterViewInit {
 
   // Pagination
   currentPage = 1;
-  itemsPerPage = 3;
+  itemsPerPage = 2;
   paginatedLocations: VeterinaryLocation[] = [];
   Math = Math;
 
@@ -125,9 +125,9 @@ export class OuTrouverNosProduitsComponent implements OnInit, AfterViewInit {
     // Define icons
     // Blue icon for Cabinets
     const cabinetIcon = L.icon({
-      iconUrl: 'assets/marker-icon.png',
-      iconRetinaUrl: 'assets/marker-icon-2x.png',
-      shadowUrl: 'assets/marker-shadow.png',
+      iconUrl: 'assets/Maps/marker-icon.png',
+      iconRetinaUrl: 'assets/Maps/marker-icon-2x.png',
+      shadowUrl: 'assets/Maps/marker-shadow.png',
       iconSize: [25, 41],
       iconAnchor: [12, 41],
       popupAnchor: [1, -34],
@@ -502,9 +502,47 @@ export class OuTrouverNosProduitsComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Get page numbers array
+   * Get page numbers array with ellipsis for better UX
    */
-  getPageNumbers(): number[] {
-    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  getPageNumbers(): (number | string)[] {
+    const totalPages = this.totalPages;
+    const currentPage = this.currentPage;
+    const maxVisiblePages = 5;
+    
+    if (totalPages <= maxVisiblePages + 2) {
+      // Show all pages if total is small
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
+    
+    const pages: (number | string)[] = [];
+    
+    // Always show first page
+    pages.push(1);
+    
+    if (currentPage <= 3) {
+      // Near the beginning
+      for (let i = 2; i <= Math.min(maxVisiblePages, totalPages - 1); i++) {
+        pages.push(i);
+      }
+      pages.push('...');
+      pages.push(totalPages);
+    } else if (currentPage >= totalPages - 2) {
+      // Near the end
+      pages.push('...');
+      for (let i = totalPages - maxVisiblePages + 1; i < totalPages; i++) {
+        pages.push(i);
+      }
+      pages.push(totalPages);
+    } else {
+      // In the middle
+      pages.push('...');
+      for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+        pages.push(i);
+      }
+      pages.push('...');
+      pages.push(totalPages);
+    }
+    
+    return pages;
   }
 }

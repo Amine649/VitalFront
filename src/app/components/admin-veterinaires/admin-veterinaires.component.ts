@@ -8,7 +8,6 @@ import { AuthService } from '../../services/auth.service';
 interface Veterinaire {
   id: number;
   nom: string;
-  prenom: string;
   matricule: string;
   email: string;
 }
@@ -193,14 +192,14 @@ export class AdminVeterinairesComponent implements OnInit {
 
             // Check for header column error
             if (errorText.includes('en-tête') || errorText.includes('colonnes')) {
-              errorMessage = '❌ Format de fichier incorrect : Le fichier Excel doit contenir exactement les colonnes "nom", "prenom" et "matricule" dans l\'en-tête.';
+              errorMessage = '❌ Format de fichier incorrect : Le fichier Excel doit contenir exactement les colonnes "nom" et "matricule" dans l\'en-tête.';
             }
             // Check for incomplete row error
             else if (errorText.includes('incomplète') || errorText.includes('Ligne')) {
               // Extract line number if present
               const lineMatch = errorText.match(/Ligne (\d+)/);
               const lineNumber = lineMatch ? lineMatch[1] : '';
-              errorMessage = `❌ Données incomplètes ${lineNumber ? `à la ligne ${lineNumber}` : ''} : Tous les champs (nom, prénom, matricule) doivent être remplis pour chaque vétérinaire.`;
+              errorMessage = `❌ Données incomplètes ${lineNumber ? `à la ligne ${lineNumber}` : ''} : Tous les champs (nom, matricule) doivent être remplis pour chaque vétérinaire.`;
             }
             else {
               errorMessage = errorText || errorMessage;
@@ -222,7 +221,6 @@ export class AdminVeterinairesComponent implements OnInit {
       const query = this.searchQuery.toLowerCase();
       this.filteredVeterinaires = this.veterinaires.filter(vet =>
         vet.nom.toLowerCase().includes(query) ||
-        vet.prenom.toLowerCase().includes(query) ||
         vet.matricule.toLowerCase().includes(query)
       );
     }
@@ -277,10 +275,48 @@ export class AdminVeterinairesComponent implements OnInit {
   }
 
   /**
-   * Get page numbers array
+   * Get page numbers array with ellipsis for better UX
    */
-  getPageNumbers(): number[] {
-    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  getPageNumbers(): (number | string)[] {
+    const totalPages = this.totalPages;
+    const currentPage = this.currentPage;
+    const maxVisiblePages = 5;
+    
+    if (totalPages <= maxVisiblePages + 2) {
+      // Show all pages if total is small
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
+    
+    const pages: (number | string)[] = [];
+    
+    // Always show first page
+    pages.push(1);
+    
+    if (currentPage <= 3) {
+      // Near the beginning
+      for (let i = 2; i <= Math.min(maxVisiblePages, totalPages - 1); i++) {
+        pages.push(i);
+      }
+      pages.push('...');
+      pages.push(totalPages);
+    } else if (currentPage >= totalPages - 2) {
+      // Near the end
+      pages.push('...');
+      for (let i = totalPages - maxVisiblePages + 1; i < totalPages; i++) {
+        pages.push(i);
+      }
+      pages.push(totalPages);
+    } else {
+      // In the middle
+      pages.push('...');
+      for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+        pages.push(i);
+      }
+      pages.push('...');
+      pages.push(totalPages);
+    }
+    
+    return pages;
   }
 
   /**
@@ -295,8 +331,12 @@ export class AdminVeterinairesComponent implements OnInit {
   /**
    * Get initials from name
    */
-  getInitials(prenom: string, nom: string): string {
-    return `${prenom.charAt(0)}${nom.charAt(0)}`.toUpperCase();
+  getInitials(nom: string): string {
+    const parts = nom.trim().split(' ');
+    if (parts.length >= 2) {
+      return `${parts[0].charAt(0)}${parts[parts.length - 1].charAt(0)}`.toUpperCase();
+    }
+    return nom.substring(0, 2).toUpperCase();
   }
 
   /**

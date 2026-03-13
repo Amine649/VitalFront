@@ -27,7 +27,6 @@ export class PanierCommercialComponent implements OnInit {
     // Vet Info
     vetMatricule: string = '';
     vetName: string = '';
-    vetPrenom: string = '';
     vetEmail: string = '';
     vetId: string = '';
 
@@ -171,7 +170,6 @@ export class PanierCommercialComponent implements OnInit {
         this.vetMatricule = sessionStorage.getItem('validatedMatricule') || '';
         this.vetId = sessionStorage.getItem('vetId') || '';
         this.vetName = sessionStorage.getItem('vetName') || '';
-        this.vetPrenom = sessionStorage.getItem('vetPrenom') || '';
         this.vetEmail = sessionStorage.getItem('vetEmail') || '';
     }
 
@@ -346,7 +344,6 @@ export class PanierCommercialComponent implements OnInit {
         sessionStorage.removeItem('validatedMatricule');
         sessionStorage.removeItem('vetId');
         sessionStorage.removeItem('vetName');
-        sessionStorage.removeItem('vetPrenom');
         sessionStorage.removeItem('vetEmaill');
         this.router.navigate(['/espace-commercial']);
     }

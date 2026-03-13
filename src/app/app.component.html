@@ -3,7 +3,7 @@
 
 <!-- Header -->
 <div class="flex flex-col min-h-screen">
-  <header *ngIf="shouldShowNavbar || isOuTrouverNosProduits" class="bg-white shadow-sm sticky top-0 z-50 flex-shrink-0">
+  <header *ngIf="shouldShowNavbar" class="bg-white shadow-sm sticky top-0 z-50 flex-shrink-0">
     <div class="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center py-4">
         <div class="flex items-center">
@@ -336,9 +336,14 @@
 
   <!-- Main Content -->
   <main class="flex-1">
-    <!-- Sidebar Layout for Espace Proprietaire -->
-    <div *ngIf="isEspaceProprietaire && !isAdmin" class="sidebar-layout">
-      <aside class="sidebar" [class.open]="sidebarOpen">
+    <!-- Conditional Sidebar Layout Wrapper -->
+    <div [ngClass]="{
+  'sidebar-layout': isEspaceProprietaire || isProduitsVeterinaire,
+  '': !isEspaceProprietaire && !isProduitsVeterinaire
+}">
+      
+      <!-- Sidebar for Espace Proprietaire -->
+  <aside *ngIf="isEspaceProprietaire && !isAdmin" class="sidebar" [class.open]="sidebarOpen">
         <div class="sidebar-content">
           <div class="sidebar-section">
             <h3 class="sidebar-title">MON ANIMAL</h3>
@@ -389,14 +394,8 @@
         </div>
       </aside>
 
-      <div class="main-content" [class.sidebar-open]="sidebarOpen">
-        <router-outlet></router-outlet>
-      </div>
-    </div>
-
-    <!-- Sidebar Layout for Produits Veterinaire -->
-    <div *ngIf="isProduitsVeterinaire && !isAdmin" class="sidebar-layout">
-      <aside class="sidebar" [class.open]="produitsSidebarOpen">
+      <!-- Sidebar for Produits Veterinaire -->
+  <aside *ngIf="isProduitsVeterinaire && !isAdmin" class="sidebar" [class.open]="produitsSidebarOpen">
         <div class="sidebar-content">
           <div class="sidebar-section">
             <h3 class="sidebar-title">MON ANIMAL</h3>
@@ -425,20 +424,16 @@
               </button>
             </div>
           </div>
-
-          <!-- Background Image at Bottom -->
-          
         </div>
       </aside>
 
-      <div class="main-content" [class.sidebar-open]="produitsSidebarOpen">
+      <!-- Single Router Outlet with conditional wrapper -->
+      <div [ngClass]="{
+    'main-content': isEspaceProprietaire || isProduitsVeterinaire,
+    'sidebar-open': (isEspaceProprietaire && sidebarOpen) || (isProduitsVeterinaire && produitsSidebarOpen)
+  }">
         <router-outlet></router-outlet>
       </div>
-    </div>
-
-    <!-- Normal layout for other pages -->
-    <div *ngIf="!isEspaceProprietaire && !isProduitsVeterinaire || isAdmin">
-      <router-outlet></router-outlet>
     </div>
   </main>
 

@@ -175,10 +175,6 @@ Le vétérinaire praticien est notre partenaire essentiel
 
             <!-- Pagination -->
             <div *ngIf="filteredLocations.length > itemsPerPage" class="pagination-container">
-              <div class="pagination-info">
-                Affichage {{ (currentPage - 1) * itemsPerPage + 1 }} - {{ Math.min(currentPage * itemsPerPage,
-                filteredLocations.length) }} sur {{ filteredLocations.length }}
-              </div>
               <div class="pagination-controls">
                 <button (click)="previousPage()" [disabled]="currentPage === 1" class="pagination-btn">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -187,10 +183,13 @@ Le vétérinaire praticien est notre partenaire essentiel
                 </button>
 
                 <div class="pagination-pages">
-                  <button *ngFor="let page of getPageNumbers()" (click)="goToPage(page)"
-                    [class.active]="currentPage === page" class="page-btn">
-                    {{ page }}
-                  </button>
+                  <ng-container *ngFor="let page of getPageNumbers()">
+                    <button *ngIf="page !== '...'" (click)="goToPage(+page)"
+                      [class.active]="currentPage === page" class="page-btn">
+                      {{ page }}
+                    </button>
+                    <span *ngIf="page === '...'" class="page-ellipsis">...</span>
+                  </ng-container>
                 </div>
 
                 <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="pagination-btn">
@@ -198,6 +197,11 @@ Le vétérinaire praticien est notre partenaire essentiel
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                   </svg>
                 </button>
+              </div>
+              
+              <div class="pagination-info">
+                Affichage {{ (currentPage - 1) * itemsPerPage + 1 }} - {{ Math.min(currentPage * itemsPerPage,
+                filteredLocations.length) }} sur {{ filteredLocations.length }}
               </div>
             </div>
           </div>

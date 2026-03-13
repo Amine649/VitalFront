@@ -162,9 +162,18 @@ export class EspaceProprietaireComponent implements OnInit {
   /**
    * Handle scroll event to stop navbar at footer
    */
-  @HostListener('window:scroll', ['$event'])
+ @HostListener('window:scroll', ['$event'])
   onWindowScroll(): void {
     this.handleNavbarScroll();
+  }
+
+  ngOnDestroy(): void {
+    // Reset the header transform when leaving this page
+    const header = document.querySelector('header');
+    if (header) {
+      header.style.transform = 'translateY(0)';
+      header.style.transition = 'none';
+    }
   }
 
   /**

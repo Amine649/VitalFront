@@ -34,7 +34,6 @@ export class CommercialCommandeComponent implements OnInit {
     // Validated veterinarian info
     vetMatricule: string = '';
     vetName: string = '';
-    vetPrenom: string = '';
     vetId: string = '';
 
     // Products
@@ -128,7 +127,6 @@ export class CommercialCommandeComponent implements OnInit {
         this.vetMatricule = sessionStorage.getItem('validatedMatricule') || '';
         this.vetId = sessionStorage.getItem('vetId') || '';
         this.vetName = sessionStorage.getItem('vetName') || '';
-        this.vetPrenom = sessionStorage.getItem('vetPrenom') || '';
 
         // If no validated matricule, redirect back
         if (!this.vetMatricule) {
@@ -152,12 +150,10 @@ export class CommercialCommandeComponent implements OnInit {
                     if (vet) {
                         // Update local state with fresh data
                         this.vetName = vet.nom;
-                        this.vetPrenom = vet.prenom;
                         this.vetId = vet.id;
 
                         // Update sessionStorage to persist across refreshes
                         sessionStorage.setItem('vetName', this.vetName);
-                        sessionStorage.setItem('vetPrenom', this.vetPrenom);
                         sessionStorage.setItem('vetId', this.vetId);
                     }
                 },
@@ -338,7 +334,6 @@ export class CommercialCommandeComponent implements OnInit {
         sessionStorage.removeItem('validatedMatricule');
         sessionStorage.removeItem('vetId');
         sessionStorage.removeItem('vetName');
-        sessionStorage.removeItem('vetPrenom');
         this.router.navigate(['/espace-commercial']);
     }
 

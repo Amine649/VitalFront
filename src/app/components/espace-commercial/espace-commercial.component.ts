@@ -74,9 +74,6 @@ export class EspaceCommercialComponent {
                         if (response.nom || response.name) {
                             sessionStorage.setItem('vetName', response.nom || response.name);
                         }
-                        if (response.prenom || response.firstName) {
-                            sessionStorage.setItem('vetPrenom', response.prenom || response.firstName);
-                        }
                     }
 
                     this.success = 'Matricule validé avec succès !';
