@@ -35,14 +35,14 @@
             class="inline-block py-1 px-3 rounded-full text-xs font-bold tracking-wider mb-4 uppercase">
             Gamme Chat
           </span>
-         <h2 class="hero-heading-fixed text-slate-800 mb-6 text-center font-extrabold">
-          L'aliment pour <span class="text-[#74C375]">chat</span> le plus recommandé<br>
-          par les vétérinaires<br>
-          en <span class="text-red-600">Tunisie</span>
-        </h2>
+         <h2 class="hero-heading-fixed text-slate-800 mb-6 text-center font-extrabold" style="font-size: clamp(1.5rem, 4vw, 3rem); line-height: 1.3;">
+  <span style="white-space: nowrap;">COMPLÉMENTS ALIMENTAIRES</span><br>
+  POUR <span style="color: rgb(116, 195, 117);">CHATS</span>
+</h2>
           <p class="hero-text-fixed text-slate-600 mb-8 max-w-lg mx-auto">
-            Notre gamme repose sur un équilibre nutritionnel faible en glucides et riche en protéines adapté aux
-            besoins de votre chat, carnivore depuis toujours !
+            Découvrez notre gamme compléte de compléments alimentaires
+            pour chats, 100% fabriquée en France et développée par des
+            vétérinaires.
           </p>
           <div class="flex flex-col sm:flex-row items-center gap-3 justify-center">
             <button
@@ -61,13 +61,13 @@
               <svg [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
               </svg>
-              Riches en protéines de haute qualité
+              Forumulées par des spécialistes
             </span>
             <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
               <svg [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
               </svg>
-              Pauvre en glucides.
+              Laboratoire VIRBAC
 
             </span>
           </div>
@@ -113,15 +113,11 @@
           </div>
 
           <h2 class="hero-heading-fixed text-slate-800 mb-6 text-center font-extrabold">
-            L'aliment pour <span style="color: rgb(160, 24, 103);">chien</span> le plus recommandé<br>
-            par les vétérinaires en <span style="color: rgb(160, 24, 103);">Tunisie</span>
-          </h2>
-          
-          
-          
+            SOLUTIONS DIAGNOSTIQUES 
+          </h2>  
           <p class="hero-text-fixed text-slate-600 mb-8 max-w-lg mx-auto md:mx-0">
-          Notre gamme repose sur un équilibre nutritionnel faible en glucides et riche en protéines
-          adapté aux besoins de votre chien, carnivore depuis toujours !          
+          Obtenir les réponses dont vous avez besoin sur le lieu
+          d'intervention pour prendre des décisions rapides.        
           </p>
 
           <div class="flex flex-col sm:flex-row items-center gap-4 justify-center">
@@ -140,13 +136,13 @@
               <svg [ngClass]="selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
               </svg>
-              Riches en protéines de haute qualité
+              Faibles et rapides
             </span>
             <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
               <svg [ngClass]="selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
               </svg>
-              Pauvre en glucides.
+              Large gamme
             </span>
           </div>
         </div>
@@ -182,9 +178,9 @@
         <!-- Text Side (Left) -->
         <div class="w-full md:w-7/12 pr-0 md:pr-6 text-center md:text-left mb-10 md:mb-0">
           <h2 class="hero-heading-fixed text-slate-800 mb-6 font-extrabold">
-            Les produits Adaptés à <br>
+            NUTRITION ET SANTÉ <br>
             <span class="text-blue-600 relative inline-block">
-              Votre Chat Ou Votre Chien
+              Chat & Chien
               <svg class="absolute w-full h-3 -bottom-3.5 left-0 text-blue-200 -z-10" viewBox="0 0 100 10"
                 preserveAspectRatio="none">
                 <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none" />
@@ -192,11 +188,10 @@
             </span>
           </h2>
           <div class="hero-text-fixed text-slate-600 mb-8 max-w-3xl mx-auto md:mx-0 font-medium">
-            <p class="mb-2">
-              Votre compagnon, chat ou chien, a des besoins alimentaires, et donc de la nourriture, spécifiques à son
-              espèce.
+            <p class="mb-2 text-sm">
+              Votre compagnon, a des besoins spécifiques à son espèce.
             </p>
-            <p>
+            <p >
               Pour mieux comprendre les différentes diètes félines ou canines, vous pouvez vous rendre dans la section
               qui
               vous intéresse.
@@ -262,10 +257,10 @@
       
       <!-- LEFT: Démystifier les mythes -->
       <div class="lg:w-[65%]">
-<div class="bg-white rounded-2xl shadow-xl p-8 md:p-8 border-l-4 border-r-4 border-[#42636E]">
-        <h2 class="text-gray-900 mb-8 text-center" style="color: #42636E; line-height: 1.3; font-size: 28px; font-weight: 600;">
-          Démystifier les mythes courants sur le rationnement alimentaire des croquettes
-        </h2>
+<div class="bg-white rounded-2xl shadow-xl p-8 md:p-8 border-l-4 border-r-4 border-[#42636E]" style="min-height: 480px;">
+          <h2 class="text-gray-900 mb-8 text-center" style="color: #42636E; line-height: 1.3; font-size: 25px; font-weight: 600;">
+          DÉMYSTIFIER LES MYTHES COURANTS SUR LE RATIONNEMENT ALIMENTAIRE DES CROQUETTES
+          </h2>
         <div class="w-24 h-1 bg-vet-blue mb-8 mx-auto"></div>
           <p class="text-gray-700 mb-2 text-justify leading-relaxed" style="font-size: 18px;">
         La façon traditionnelle de rationner la nourriture consiste simplement à lire le 
@@ -293,7 +288,7 @@
                [style.background-color]="highlightedSection === 'conseils' ? 'rgba(59, 130, 246, 0.15)' : ''"
                [style.box-shadow]="highlightedSection === 'conseils' ? '0 0 0 4px rgba(59, 130, 246, 0.5), 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' : ''">
             <h3 class="text-xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-red-600">
-              Informations & Conseils Vétos  
+              Informations & Conseils Vétos
             </h3>
             
             <div *ngIf="isLoadingBlogs" class="flex justify-center py-8">
@@ -543,10 +538,10 @@
   </div>
 </section>
 
-<div  *ngIf="!selectedCategory"  class="max-w-6xl mx-auto bg-gray-50 py-16 fixed-layout-container section-spacing">
+<div  *ngIf="!selectedCategory"  class="max-w-6xl mx-auto bg-gray-50 py-16 fixed-layout-container section-spacing" style="margin-top: 40px;">
   <div class="bg-white rounded-2xl shadow-xl p-6 md:p-12 border-l-4 border-r-4 border-[#42636E]">
     <h2 class="subheading-fixed text-gray-900 mb-4 text-center" style="color: #42636E; line-height: 1.3;">
-      Besoin de Conseils - De nourriture - Adresse de consultation ?
+      BESOIN DE CONSEILS - DE NOURRITURE - ADRESSE DE CONSULTATION ?
     </h2>
     <div class="w-24 h-1 bg-vet-blue mb-8 mx-auto"></div>
     <p class="text-fixed text-gray-700 mb-10 text-justify">
@@ -570,7 +565,7 @@
   <div *ngIf="!selectedCategory" class="text-center bg-gradient-to-r from-blue-50 to-green-50 rounded-2xl p-3 md:p-4">
     <div class="mb-2">
       <h2 class="subheading-fixed text-gray-900 mb-2" style="color: #42636E; line-height: 1.3;">
-        Tous nos Produits
+        TOUS NOS PRODUITS
       </h2>
       <div class="w-24 h-1 bg-vet-blue mx-auto"></div>
     </div>
@@ -590,7 +585,7 @@
         </div>
         <div class="flex-1 " >
           <h2 class="subheading-fixed text-gray-900 mb-4" style="color: #42636E; line-height: 1.3;">
-            Aliments complémentaires : Agir pour la santé !
+            ALIMENTS COMPLÉMENTAIRES : AGIR POUR LA SANTÉ !
           </h2>
           <p class="text-fixed text-gray-700">
             Le maintien d'une bonne santé représente un effort de tous les jours, et dépend de nos choix quotidiens. C'est pourquoi nous nous efforçons de prendre en charge un large panel de problèmes de santé que peuvent rencontrer les animaux, pour améliorer à la fois leur qualité de vie et la vôtre.
@@ -606,7 +601,7 @@
       <!-- LEFT COLUMN: Information Sections -->
       <div class="lg:w-[65%] space-y-8">
         <!-- Section 1: Comment choisir -->
-    <div class="rounded-2xl p-8 md:p-12 mb-8 shadow-lg mx-4 sm:mx-6 lg:mx-8" [ngClass]="selectedCategory === 'Chat' ? 'bg-gradient-to-br from-green-50 to-emerald-50' : 'bg-gradient-to-br from-purple-50 to-pink-50'">
+      <div class="rounded-2xl p-8 md:p-12 mb-8 shadow-lg w-full" [ngClass]="selectedCategory === 'Chat' ? 'bg-gradient-to-br from-green-50 to-emerald-50' : 'bg-gradient-to-br from-purple-50 to-pink-50'">
       <div class="mx-auto">
         <div class="flex items-start gap-6">
          <div [ngClass]="selectedCategory === 'Chat' ? 'bg-[#74C375]' : selectedCategory === 'Chien' ? 'bg-[#a01867]' : 'bg-blue-600'" class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center">
@@ -614,12 +609,12 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
           </div>
-          <div class="flex-1 text-justify">
-            <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4" style="color: #42636E; line-height: 1.3;">
-              <span *ngIf="selectedCategory === 'Chat'">Pourquoi l’alimentation de votre chat mérite une attention particulière ? </span>
-              <span *ngIf="selectedCategory === 'Chien'" >Pourquoi choisir la meilleure alimentation pour votre chien ? </span>
+          <div class="flex-1 ">
+            <h3 class="text-2xl md:text-2xl font-bold text-gray-900 mb-4" style="color: #42636E; line-height: 1.3;">
+              <span *ngIf="selectedCategory === 'Chat'">POURQUOI L’ALIMENTATION DE VOTRE CHAT MÉRITE UNE ATTENTION PARTICULIÈRE ? </span>
+              <span *ngIf="selectedCategory === 'Chien'" >POURQUOI CHOISIR LA MEILLEURE ALIMENTATION POUR VOTRE CHIEN ? </span>
             </h3>
-            <p class="text-lg text-gray-700 leading-relaxed text-justify" *ngIf="selectedCategory === 'Chat'">
+            <p class="text-lg text-gray-700 leading-relaxed text-justify text-justify" *ngIf="selectedCategory === 'Chat'">
               Une nutrition de qualité supérieure doit impérativement répondre aux besoins physiologiques spécifiques de 
               carnivore strict de votre compagnon. Contrairement à ce que l'on pense, toutes les croquettes pour chat ne se 
               valent pas : leur composition et leur valeur nutritionnelle font toute la différence. L'alimentation influence de 
@@ -637,10 +632,9 @@
 
     <!-- Section 2: Points clés -->
 
-<div class="bg-white rounded-2xl p-8 md:p-12 mb-8 shadow-lg border-l-4 mx-4 sm:mx-6 lg:mx-8" [ngClass]="selectedCategory === 'Chat' ? 'border-[#74C375]' : 'border-[#a01867]'">
-      <div class="mx-auto text-justify">
+<div class="bg-white rounded-2xl p-8 md:p-12 mb-8 shadow-lg border-l-4 w-full" [ngClass]="selectedCategory === 'Chat' ? 'border-[#74C375]' : 'border-[#a01867]'">      <div class="mx-auto text-justify">
         <h3 class="subheading-fixed text-gray-900 mb-6" style="color: #42636E; line-height: 1.3;">
-          Points clés pour bien choisir les croquettes de votre {{ selectedCategory === 'Chien' ? 'chien' : 'chat' }}
+          POINTS CLÉS POUR BIEN CHOISIR LES CROQUETTES DE VOTRE {{ selectedCategory === 'Chien' ? 'CHIEN' : 'CHAT' }}
         </h3>
         
         <!-- Two-column layout: Paragraph left, Points right -->
@@ -653,6 +647,8 @@
             </div>
             <div *ngIf="selectedCategory === 'Chien'" class="text-fixed text-gray-700">
               <p>La qualité de l'alimentation que vous donnez à votre compagnon à quatre pattes joue un rôle très important dans son état de santé général. Mais pour cela, il faut savoir reconnaître des croquettes pour chien de bonne qualité ! Pour vous aider, voici quelques critères de sélections communs que l'on peut retrouver dans des formulations spécifiques pour les chiens :</p>
+              <br>
+              Il est souvent compliqué de choisir parmi la multitude de marques de croquettes pour chien disponibles, seulement votre vétérinaire peut vous aider à décrypter efficacement les compositions et à faire un choix éclairé.
             </div>
           </div>
           
@@ -660,7 +656,7 @@
           <div>
             
             <!-- Cat-specific points -->
-            <div *ngIf="selectedCategory === 'Chat'" class="flex flex-col gap-4 text-justify">
+            <div *ngIf="selectedCategory === 'Chat'" class="flex flex-col gap-2 text-justify">
               <div class="flex items-start gap-3">
                 <div class="bg-green-100 flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mt-1">
                   <svg class="text-[#74C375] w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -704,7 +700,7 @@
             </div>
             
             <!-- Dog-specific points -->
-            <div *ngIf="selectedCategory === 'Chien'" class="flex flex-col gap-4">
+            <div *ngIf="selectedCategory === 'Chien'" class="flex flex-col gap-2">
               <div class="flex items-start gap-3">
                 <div class="bg-red-100 flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mt-1">
                   <svg class="text-[#a01867] w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -753,16 +749,15 @@
     </div>
 
     <!-- Section 3: Que signifie HPM -->
-    <div class="rounded-2xl p-8 md:p-12 mb-8 shadow-lg mx-4 sm:mx-6 lg:mx-8" [ngClass]="selectedCategory === 'Chat' ? 'bg-gradient-to-br from-green-50 to-emerald-50' : 'bg-gradient-to-br from-purple-50 to-pink-50'">
-      <div class="mx-auto text-justify">
-        <div class="flex items-center justify-center gap-4 mb-6">
+        <div class="w-full rounded-2xl p-8 md:p-12 mb-8 shadow-lg" [ngClass]="selectedCategory === 'Chat' ? 'bg-gradient-to-br from-green-50 to-emerald-50' : 'bg-gradient-to-br from-purple-50 to-pink-50'">      <div class="mx-auto text-justify">
+        <div class="flex items-center  gap-4 mb-6">
           <div [ngClass]="selectedCategory === 'Chat' ? 'bg-[#74C375]' : selectedCategory === 'Chien' ? 'bg-[#a01867]' : 'bg-purple-600'" class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center">
             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
           </div>
           <h3 class="subheading-fixed text-gray-900" style="color: #42636E; line-height: 1.3;">
-            Que signifie « HPM » et quel est le concept de la gamme ?
+            QUE SIGNIFIE « HPM » ET QUEL EST LE CONCEPT DE LA GAMME ?
           </h3>
         </div>
         <div class="space-y-4">
@@ -878,7 +873,7 @@
     <div class="max-w-5xl mx-auto">
       <div class="text-center">
         <h2 class="subheading-fixed mb-3" style="color: #42636E; line-height: 1.3;">
-          Des technologies au service du vétérinaire
+          DES TECHNOLOGIES AU SERVICE DU VÉTÉRINAIRE
         </h2>
         <p class="text-fixed text-gray-700 mb-6">
           Basés sur les techniques d'immunochromatographie sur membrane, de microculture en milieu liquide, et d'immunofluorescence, les produits de la gamme Speed sont des outils diagnostic simples et rapides à mettre en oeuvre, dédiés aux vétérinaires.
@@ -894,7 +889,7 @@
         </div>
         
         <h3 class="subheading-fixed mb-3" style="color: #42636E; line-height: 1.3;">
-          Des outils utiles dans la pratique quotidienne
+          DES OUTILS UTILES DANS LA PRATIQUE QUOTIDIENNE
         </h3>
         <p class="text-fixed text-gray-700">
           Nos tests rapides apportent au vétérinaire praticien des réponses rapides et fiables, lui permettant d'avancer dans sa démarche diagnostique et de prévention des maladies, afin d'ajuster au mieux sa prescription médicale.
@@ -906,17 +901,17 @@
 
 <!-- Feeding Guide Section - Only for Aliment type -->
 <section *ngIf="selectedSousCategory === 'Aliment'" class="bg-white" style="padding-top: 1rem; padding-bottom: 3.5rem;">
-  <div class="w-full mx-auto px-4 sm:px-6 lg:px-8 max-w-[1800px]">
+  <div class="w-full mx-auto max-w-[1800px]">
     
     <!-- Two Column Layout -->
     <div class="flex flex-col lg:flex-row gap-8">
       
       <!-- LEFT COLUMN: Feeding Guide Content (65%) -->
-      <div class="lg:w-[65%]">
-        <div class="bg-gradient-to-br from-gray-50 to-white rounded-2xl shadow-xl p-6 md:p-8 border-t-4" [ngClass]="selectedCategory === 'Chat' ? 'border-[#74C375]' : 'border-[#a01867]'">
+      <div class="lg:w-[63%]"style="padding-left: 50px; padding-top: 30px;">
+        <div class="bg-gradient-to-br from-gray-50 to-white rounded-2xl shadow-xl p-6 md:p-8 border-t-4 max-w-5xl mx-auto" [ngClass]="selectedCategory === 'Chat' ? 'border-[#74C375]' : 'border-[#a01867]'" >
           
           <!-- Header with Icon -->
-          <div class="flex items-center gap-3 mb-5">
+          <div class="flex items-center gap-3" style="margin-bottom: 2rem;">
             <div [ngClass]="selectedCategory === 'Chat' ? 'bg-[#74C375]' : 'bg-[#a01867]'" class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
               <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
@@ -924,8 +919,8 @@
             </div>
             <div>
               <h2 class="text-xl md:text-2xl font-bold" style="color: #42636E; line-height: 1.3;">
-                <span *ngIf="selectedCategory === 'Chat'">Comment Nourrir Votre Chat</span>
-                <span *ngIf="selectedCategory === 'Chien'">Comment Nourrir Votre Chien</span>
+                <span *ngIf="selectedCategory === 'Chat'">COMMENT NOURIR VOTRE CHAT</span>
+                <span *ngIf="selectedCategory === 'Chien'">COMMENT NOURIR VOTRE CHIEN</span>
               </h2>
               <p class="text-sm text-gray-600 mt-1">Guide complet pour une alimentation saine</p>
             </div>
@@ -1036,14 +1031,15 @@
       </div>
 
       <!-- RIGHT COLUMN: Blog Section (35%) -->
-      <aside class="lg:w-[35%]">
-        <div class="sticky top-6">
+      <aside class="lg:w-[35%]"style=" padding-top: 30px;">
+        <div class="space-y-6" style="max-width: 550px;">
+          <!-- Blog Section -->
           <div id="conseils" class="rounded-2xl p-6 transition-all duration-500" 
-               [ngClass]="highlightedSection === 'conseils' ? 'ring-8 shadow-2xl scale-105' : 'bg-gray-50 shadow-lg'"
-               [style.background-color]="highlightedSection === 'conseils' ? (selectedCategory === 'Chat' ? 'rgba(116, 195, 117, 0.15)' : 'rgba(160, 24, 103, 0.15)') : ''"
-               [style.box-shadow]="highlightedSection === 'conseils' ? (selectedCategory === 'Chat' ? '0 0 0 4px rgba(116, 195, 117, 0.5), 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' : '0 0 0 4px rgba(160, 24, 103, 0.5), 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)') : ''">
+              [ngClass]="highlightedSection === 'conseils' ? 'ring-8 shadow-2xl scale-105' : 'bg-gray-50 shadow-lg'"
+              [style.background-color]="highlightedSection === 'conseils' ? (selectedCategory === 'Chat' ? 'rgba(116, 195, 117, 0.15)' : 'rgba(160, 24, 103, 0.15)') : ''"
+              [style.box-shadow]="highlightedSection === 'conseils' ? (selectedCategory === 'Chat' ? '0 0 0 4px rgba(116, 195, 117, 0.5), 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' : '0 0 0 4px rgba(160, 24, 103, 0.5), 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)') : ''">
             <h3 class="text-xl font-bold text-gray-900 mb-6 pb-3 border-b-2" [ngClass]="selectedCategory === 'Chat' ? 'border-[#74C375]' : 'border-[#a01867]'">
-              Informations & Conseils Vétos  
+              Informations & Conseils Vétos
             </h3>
             
             <!-- Loading State -->
@@ -1115,17 +1111,21 @@
        [style.borderLeft]="'4px solid ' + (selectedCategory === 'Chat' ? '#74C375' : '#a01867')"
        [style.borderRight]="'4px solid ' + (selectedCategory === 'Chat' ? '#74C375' : '#a01867')">
     <h3 class="text-2xl md:text-3xl font-bold mb-6 text-center" style="color: #42636E; line-height: 1.3;">
-      Quelques conseils pratique :
+      QUELQUES CONSEILS PRATIQUES :
     </h3>
       <!-- Single column layout with text aligned to the right -->
       <div class="flex justify-end">
         <div class="w-full text-justify ">
           <p class="text-lg text-gray-700 leading-relaxed break-words" *ngIf="selectedCategory === 'Chat'">
-            oir absorber les protéines), sont beaucoup plus chères que les sous-praucoup plus chères que les sous-praucoup plus chères que les sous-produits, ce qui explique le coût des croquettes de qualité par rapport à celles bas de gamme.
-          </p>
-          <p class="text-lg text-gray-700 leading-relaxed break-words" *ngIf="selectedCategory === 'Chien'">
-            Les nutriments constitutifs de la croquette pour chat doivent être de qualité. Attention aucoup plus chères que les sous-praucoup plus chères que les sous-prà la rubrique « viande et sous-produits d'origine animale »,
-          </p>
+          Pour la grande majorité des races on ne distingue pas de différences particulières dans les besoins nutritionnels et énergétiques. La proposition de croquettes pour chat adaptées à chaque race n’a donc pas forcément d’intérêt autre que celui du marketing.          </p>
+          <br>
+          <p class="text-lg text-gray-700 leading-relaxed break-words" *ngIf="selectedCategory === 'Chat'">
+          Néanmoins, les races de chats géantes (par exemple Maine Coon ou Norvégien), ont une croissance beaucoup plus forte et longue que les autres. Idem, certaines races comme le Persan, l’Exhotic shortair et le Chartreux sont plus fragiles au niveau rénal ( sont prédisposées à développer une maladie appelée polykystose rénale. Pour ces individus, il est important de sélectionner des croquettes adaptées           </p>
+         <ul class="text-lg text-gray-700 leading-relaxed break-words list-disc pl-6 space-y-2 text-justify" *ngIf="selectedCategory === 'Chien'">
+          <li>Il n'existe pas de meilleures croquettes universelles : le bon choix dépend de l'âge, du gabarit, du niveau d'activité et de l'état de santé du chien.</li>
+          <li>Une croquette de qualité doit apporter des protéines adaptées, des nutriments équilibrés et être cohérente avec le profil du chien (stérilisé, senior, sensible, allergique).</li>
+          <li>Tout changement de croquettes doit être progressif afin d'éviter les troubles digestifs et préserver le confort intestinal.</li>
+        </ul>
         </div>
       </div>
     </div>
@@ -1133,7 +1133,7 @@
 
   <!-- Products Title -->
   <div id="products-section" class="products-header mb-8">
-    <h3 class="section-title text-center text-2xl md:text-3xl font-bold text-gray-800">
+    <h3 class="section-title text-center text-2xl md:text-3xl font-bold text-gray-800" style="margin-top:65px; margin-bottom: 70px;">
       <span *ngIf="selectedCategory && selectedSousCategory && selectedSubSubCategory">
         {{ selectedSubSubCategory }} - {{ selectedSousCategory }} - {{ selectedCategory }}
       </span>
@@ -1293,8 +1293,7 @@
 <!-- Section Démystifier les mythes - Only for "Tous nos produits" -->
 
     <!-- Call to Action - Consultation Vétérinaire (Full Width Below) -->
-    <div class="mt-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl shadow-lg p-8 md:p-10 text-center max-w-6xl mx-auto">
-      <h3 class="text-xl md:text-2xl font-bold text-white mb-4">
+      <div class="mt-12 rounded-2xl shadow-lg p-8 md:p-10 text-center max-w-6xl mx-auto" style="background-color: #42636E;">      <h3 class="text-xl md:text-2xl font-bold text-white mb-4">
         C'est pourquoi une consultation vétérinaire est primordiale.
       </h3>
       <p class="text-lg text-white mb-6 opacity-90">

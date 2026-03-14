@@ -167,8 +167,8 @@ export class AdminDashboardComponent implements OnInit {
 
     // Cabinets statistics
     const cabinets = data.cabinets || [];
-    this.stats.totalCabinets = cabinets.filter((c: any) => c.type === 'BOUTIQUE').length;
-    this.stats.featuredCabinets = cabinets.filter((c: any) => c.featured === true).length;
+    this.stats.totalCabinets = cabinets.filter((c: any) => c.type === 'Cabinet').length;
+    this.stats.featuredCabinets = cabinets.filter((c: any) => c.featured === true && c.type === 'Cabinet').length;
 
     // Veterinaires statistics
     this.stats.totalVeterinaires = (data.veterinaires || []).length;

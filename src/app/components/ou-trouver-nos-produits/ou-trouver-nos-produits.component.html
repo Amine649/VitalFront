@@ -13,10 +13,9 @@
 
     <!-- Hero Section -->
     <div class="hero-section">
-      <h1 class="page-title">Nos Lieux Partenaires VITALFEED</h1>
+      <h1 class="page-title">NOS ALLIÉS PRÉCIEUX</h1>
       <p class="page-description">
-        La santé commence par la nutrition
-Le vétérinaire praticien est notre partenaire essentiel
+        Le vétérinaire praticien est notre partenaire essentiel
       </p>
     </div>
 
@@ -28,16 +27,14 @@ Le vétérinaire praticien est notre partenaire essentiel
           <div class="card-icon">🏥</div>
         </div>
         <div class="card-content">
-          <h2 class="card-title">Où trouver Nos Produits</h2>
-          <p class="card-description">
-            Parce qu'une bonne alimentation c'est avant tout une histoire de santé,Parce que chaque animal est unique, son alimentation doit être adaptée à ses besoins nutritionnels spécifiques, qui varient selon son espèce, sa taille, son âge, son activité ou son état de santé.
-
-            notre gamme est proposée chez votre vétérinaire.
+          <h2 class="card-title">OÙ TROUVER NOS PRODUITS</h2>
+          <p class="card-description text-justify">
+            Nous ne proposons pas de vente directe aux propriétaires. Pour toute question en lien avec un produit , une commande, vous devez vous adresser au vétérinaires le plus proche de vous .
           </p>
           <div class="card-features">
-            <div class="feature-tag">🩺 Soins Experts</div>
-            <div class="feature-tag">💊 Produits VITALFEED</div>
-            <div class="feature-tag">🐾 Suivi Personnalisé</div>
+            <div class="feature-tag">🩺 Aliment physio</div>
+            <div class="feature-tag">💊 Aliment diét</div>
+            <div class="feature-tag">🐾 Complts Alim</div>
           </div>
         </div>
       </div>
@@ -48,17 +45,14 @@ Le vétérinaire praticien est notre partenaire essentiel
           <div class="card-icon">🛍️</div>
         </div>
         <div class="card-content">
-          <h2 class="card-title">Notre Stratégie</h2>
-          <p class="card-description">
-           Nous ne proposons pas de vente directe aux propriétaires.
-            Pour toute question en lien avec un produit , une commande,
-            vous devez vous adresser au vétérinaires le plus proche de
-            vous .
+          <h2 class="card-title">CONSULTATION DIÉTÉTIQUE</h2>
+          <p class="card-description text-justify">
+            Une consultation diététique est un processus personnalisé qui aide à adapter l’alimentation au besoins spécifiques de votre compagnon. VitalNutri vous indique le bon choix
           </p>
           <div class="card-features">
-            <div class="feature-tag">🛒 Large Choix</div>
-            <div class="feature-tag">⭐ Service Premium</div>
-            <div class="feature-tag">📍 Proximité</div>
+            <div class="feature-tag">🛒 Professionnel</div>
+            <div class="feature-tag">⭐ Flexible</div>
+            <div class="feature-tag">📍 Personnalisé</div>
           </div>
         </div>
       </div>
@@ -66,7 +60,7 @@ Le vétérinaire praticien est notre partenaire essentiel
 
     <!-- Map and Locations Section -->
     <div class="map-locations-section">
-      <h2 class="section-title">🗺️ Trouvez Un Cabinet ou Une Boutique Près de Chez Vous</h2>
+      <h2 class="section-title">🗺️ TROUVEZ UNE CLINIQUE VÉTÉRINAIRE PRÈS DE CHEZ VOUS</h2>
 
       <div class="map-content-grid">
         <!-- Interactive Map -->
@@ -107,14 +101,14 @@ Le vétérinaire praticien est notre partenaire essentiel
         <!-- Locations List -->
         <div class="locations-container">
           <div class="locations-header">
-            <h3 class="locations-title">Nos Cabinets ({{ filteredLocations.length }})</h3>
+            <h3 class="locations-title">POINTS DE VENTE ({{ filteredLocations.length }})</h3>
             <div class="filter-buttons">
               <button class="filter-btn" [class.active]="selectedFilter === 'all'"
                 (click)="filterLocations('all')">Tous</button>
               <button class="filter-btn" [class.active]="selectedFilter === 'CABINET'"
-                (click)="filterLocations('CABINET')">Cabinets</button>
+                (click)="filterLocations('CABINET')">VENTE</button>
               <button class="filter-btn" [class.active]="selectedFilter === 'BOUTIQUE'"
-                (click)="filterLocations('BOUTIQUE')">Boutiques</button>
+                (click)="filterLocations('BOUTIQUE')">Vital Nutri</button>
             </div>
           </div>
 

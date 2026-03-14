@@ -234,8 +234,14 @@ export class OuTrouverNosProduitsComponent implements OnInit, AfterViewInit {
           featured: b.featured !== undefined ? b.featured : (b.isFeatured || false)
         }));
 
-        // Merge and shuffle slightly or sort to mix
-        this.locations = [...processedCabinets, ...processedBoutiques];
+        // Merge and sort: featured items first, then by name
+        this.locations = [...processedCabinets, ...processedBoutiques].sort((a, b) => {
+          // Featured items come first
+          if (a.featured && !b.featured) return -1;
+          if (!a.featured && b.featured) return 1;
+          // If both featured or both not featured, sort by name
+          return (a.name || '').localeCompare(b.name || '');
+        });
         this.filteredLocations = this.locations;
 
         this.currentPage = 1;
@@ -277,6 +283,15 @@ export class OuTrouverNosProduitsComponent implements OnInit, AfterViewInit {
       default:
         this.filteredLocations = this.locations;
     }
+
+    // Sort filtered locations: featured first, then by name
+    this.filteredLocations = this.filteredLocations.sort((a, b) => {
+      // Featured items come first
+      if (a.featured && !b.featured) return -1;
+      if (!a.featured && b.featured) return 1;
+      // If both featured or both not featured, sort by name
+      return (a.name || '').localeCompare(b.name || '');
+    });
 
     // Update pagination and map markers when filter changes
     this.currentPage = 1;

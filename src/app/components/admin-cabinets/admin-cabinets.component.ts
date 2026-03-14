@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -9,11 +9,10 @@ interface Cabinet {
     id?: number;
     name: string;
     address: string;
-    city: string;
     phone: string;
     latitude: number;
     longitude: number;
-    featured: boolean;  // Changed from isFeatured to match API
+    featured: boolean;
     type: string;
     matricule: string;
 }
@@ -45,6 +44,19 @@ export class AdminCabinetsComponent implements OnInit {
     showMapModal = false;
     private modalMap: any = null;
 
+    // Excel upload
+    uploadingExcel = false;
+    showUploadModal = false;
+    selectedFile: File | null = null;
+    uploadError = '';
+    uploadSuccess = '';
+    @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+
+    // Pagination
+    currentPage = 1;
+    itemsPerPage = 10;
+    paginatedCabinets: Cabinet[] = [];
+
     constructor(
         private http: HttpClient,
         private authService: AuthService
@@ -61,12 +73,11 @@ export class AdminCabinetsComponent implements OnInit {
         return {
             name: '',
             address: '',
-            city: '',
             phone: '',
             latitude: 0,
             longitude: 0,
             featured: false,
-            type: 'BOUTIQUE',
+            type: 'Cabinet',
             matricule: ''
         };
     }
@@ -81,7 +92,9 @@ export class AdminCabinetsComponent implements OnInit {
         this.http.get<Cabinet[]>(`${environment.apiUrl}/cabinets/all`, this.authService.getRequestOptions())
             .subscribe({
                 next: (data) => {
-                    this.cabinets = data.filter((c: Cabinet) => c.type === 'BOUTIQUE');
+                    this.cabinets = data.filter((c: Cabinet) => c.type === 'Cabinet');
+                    this.currentPage = 1;
+                    this.updatePagination();
                     this.loading = false;
                 },
                 error: (error) => {
@@ -128,7 +141,7 @@ export class AdminCabinetsComponent implements OnInit {
     saveCabinet(): void {
         // Validation
         if (!this.currentCabinet.name || !this.currentCabinet.address ||
-            !this.currentCabinet.city || !this.currentCabinet.phone ||
+            !this.currentCabinet.phone ||
             !this.currentCabinet.matricule) {
             this.error = 'Veuillez remplir tous les champs obligatoires';
             return;
@@ -169,7 +182,7 @@ export class AdminCabinetsComponent implements OnInit {
      */
     addCabinet(): void {
         const cabinetData = { ...this.currentCabinet };
-        cabinetData.type = 'BOUTIQUE'; // Force type to BOUTIQUE
+        cabinetData.type = 'Cabinet'; // Force type to Cabinet
 
         this.http.post<any>(`${environment.apiUrl}/cabinets/add`, cabinetData, this.authService.getRequestOptions())
             .subscribe({
@@ -348,10 +361,103 @@ export class AdminCabinetsComponent implements OnInit {
     }
 
     /**
+     * Update pagination
+     */
+    updatePagination(): void {
+        const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+        const endIndex = startIndex + this.itemsPerPage;
+        this.paginatedCabinets = this.filteredCabinets.slice(startIndex, endIndex);
+    }
+
+    /**
+     * Get total pages
+     */
+    get totalPages(): number {
+        return Math.ceil(this.filteredCabinets.length / this.itemsPerPage);
+    }
+
+    /**
+     * Go to specific page
+     */
+    goToPage(page: number): void {
+        if (page >= 1 && page <= this.totalPages) {
+            this.currentPage = page;
+            this.updatePagination();
+        }
+    }
+
+    /**
+     * Go to previous page
+     */
+    previousPage(): void {
+        if (this.currentPage > 1) {
+            this.currentPage--;
+            this.updatePagination();
+        }
+    }
+
+    /**
+     * Go to next page
+     */
+    nextPage(): void {
+        if (this.currentPage < this.totalPages) {
+            this.currentPage++;
+            this.updatePagination();
+        }
+    }
+
+    /**
+     * Get page numbers array with ellipsis for better UX
+     */
+    getPageNumbers(): (number | string)[] {
+        const totalPages = this.totalPages;
+        const currentPage = this.currentPage;
+        const maxVisiblePages = 5;
+        
+        if (totalPages <= maxVisiblePages + 2) {
+            // Show all pages if total is small
+            return Array.from({ length: totalPages }, (_, i) => i + 1);
+        }
+        
+        const pages: (number | string)[] = [];
+        
+        // Always show first page
+        pages.push(1);
+        
+        if (currentPage <= 3) {
+            // Near the beginning
+            for (let i = 2; i <= Math.min(maxVisiblePages, totalPages - 1); i++) {
+                pages.push(i);
+            }
+            pages.push('...');
+            pages.push(totalPages);
+        } else if (currentPage >= totalPages - 2) {
+            // Near the end
+            pages.push('...');
+            for (let i = totalPages - maxVisiblePages + 1; i < totalPages; i++) {
+                pages.push(i);
+            }
+            pages.push(totalPages);
+        } else {
+            // In the middle
+            pages.push('...');
+            for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+                pages.push(i);
+            }
+            pages.push('...');
+            pages.push(totalPages);
+        }
+        
+        return pages;
+    }
+
+    /**
      * Toggle featured filter
      */
     toggleFeaturedFilter(): void {
         this.filterFeatured = !this.filterFeatured;
+        this.currentPage = 1;
+        this.updatePagination();
     }
 
     /**
@@ -359,6 +465,8 @@ export class AdminCabinetsComponent implements OnInit {
      */
     clearFilters(): void {
         this.filterFeatured = false;
+        this.currentPage = 1;
+        this.updatePagination();
     }
 
     /**
@@ -388,7 +496,7 @@ export class AdminCabinetsComponent implements OnInit {
                         .bindPopup(`
               <div style="min-width: 200px;">
                 <h3 style="margin: 0 0 8px 0; font-size: 14px; font-weight: bold;">${cabinet.name}</h3>
-                <p style="margin: 4px 0; font-size: 12px;">📍 ${cabinet.address}, ${cabinet.city}</p>
+                <p style="margin: 4px 0; font-size: 12px;">📍 ${cabinet.address}</p>
                 <p style="margin: 4px 0; font-size: 12px;">📞 ${cabinet.phone}</p>
                 <p style="margin: 4px 0; font-size: 11px; color: #666;">🔖 ${cabinet.matricule}</p>
                 ${cabinet.featured ? '<span style="background: #10b981; color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px;">⭐ Cabinet Principal</span>' : ''}
@@ -417,4 +525,178 @@ export class AdminCabinetsComponent implements OnInit {
             this.modalMap = null;
         }
     }
+
+    /**
+     * Open upload modal
+     */
+    openUploadModal(): void {
+        this.showUploadModal = true;
+        this.selectedFile = null;
+        this.uploadError = '';
+        this.uploadSuccess = '';
+        document.body.style.overflow = 'hidden';
+    }
+
+    /**
+     * Close upload modal
+     */
+    closeUploadModal(): void {
+        if (!this.uploadingExcel) {
+            this.showUploadModal = false;
+            this.selectedFile = null;
+            this.uploadError = '';
+            this.uploadSuccess = '';
+            document.body.style.overflow = 'auto';
+        }
+    }
+
+    /**
+     * Trigger file input click
+     */
+    triggerFileInput(): void {
+        this.fileInput.nativeElement.click();
+    }
+
+    /**
+     * Handle file selection
+     */
+    onFileSelected(event: Event): void {
+        const input = event.target as HTMLInputElement;
+        if (input.files && input.files.length > 0) {
+            const file = input.files[0];
+            
+            // Validate file type
+            const validTypes = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel'];
+            if (!validTypes.includes(file.type) && !file.name.endsWith('.xlsx') && !file.name.endsWith('.xls')) {
+                this.uploadError = 'Veuillez sélectionner un fichier Excel valide (.xlsx ou .xls)';
+                this.clearUploadErrorAfterDelay();
+                return;
+            }
+
+            this.selectedFile = file;
+            this.uploadError = '';
+        }
+    }
+
+    /**
+     * Handle drag over event
+     */
+    onDragOver(event: DragEvent): void {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
+    /**
+     * Handle drag leave event
+     */
+    onDragLeave(event: DragEvent): void {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
+    /**
+     * Handle drop event
+     */
+    onDrop(event: DragEvent): void {
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (event.dataTransfer?.files && event.dataTransfer.files.length > 0) {
+            const file = event.dataTransfer.files[0];
+            
+            // Validate file type
+            const validTypes = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel'];
+            if (!validTypes.includes(file.type) && !file.name.endsWith('.xlsx') && !file.name.endsWith('.xls')) {
+                this.uploadError = 'Veuillez sélectionner un fichier Excel valide (.xlsx ou .xls)';
+                this.clearUploadErrorAfterDelay();
+                return;
+            }
+
+            this.selectedFile = file;
+            this.uploadError = '';
+        }
+    }
+
+    /**
+     * Clear selected file
+     */
+    clearSelectedFile(event: Event): void {
+        event.stopPropagation();
+        this.selectedFile = null;
+        if (this.fileInput) {
+            this.fileInput.nativeElement.value = '';
+        }
+    }
+
+    /**
+     * Format file size
+     */
+    formatFileSize(bytes: number): string {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+    }
+
+    /**
+     * Upload Excel file to API
+     */
+    uploadExcelFile(): void {
+        if (!this.selectedFile) {
+            this.uploadError = 'Veuillez sélectionner un fichier';
+            return;
+        }
+
+        this.uploadingExcel = true;
+        this.uploadError = '';
+        this.uploadSuccess = '';
+
+        const formData = new FormData();
+        formData.append('file', this.selectedFile);
+
+        this.http.post(`${environment.apiUrl}/cabinets/upload`, formData, {
+            withCredentials: true
+        }).subscribe({
+            next: (response: any) => {
+                this.uploadingExcel = false;
+                this.uploadSuccess = response.message || 'Fichier Excel importé avec succès!';
+                this.loadCabinets(); // Reload the cabinets list
+                
+                // Clear file and close modal after 2 seconds
+                setTimeout(() => {
+                    this.closeUploadModal();
+                }, 2000);
+            },
+            error: (error) => {
+                this.uploadingExcel = false;
+                console.error('Error uploading Excel file:', error);
+                this.uploadError = error.error?.message || 'Erreur lors de l\'importation du fichier Excel';
+                this.clearUploadErrorAfterDelay();
+            }
+        });
+    }
+
+    /**
+     * Clear upload error message after delay
+     */
+    private clearUploadErrorAfterDelay(): void {
+        setTimeout(() => {
+            this.uploadError = '';
+        }, 5000);
+    }
+
+    /**
+     * Clear error message after delay
+     */
+    private clearErrorAfterDelay(): void {
+        setTimeout(() => {
+            this.error = '';
+        }, 5000);
+    }
+
+    /**
+     * Expose Math for template
+     */
+    Math = Math;
 }

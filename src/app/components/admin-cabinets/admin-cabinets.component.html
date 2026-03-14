@@ -109,6 +109,15 @@
                         </svg>
                         Voir sur la carte
                     </button>
+                    <button (click)="openUploadModal()"
+                        class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12">
+                            </path>
+                        </svg>
+                        Importer Excel
+                    </button>
                     <button (click)="openAddForm()"
                         class="bg-vet-blue hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors flex items-center">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -129,19 +138,24 @@
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Nom</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Matricule</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Adresse</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Contact</th>
+                                Téléphone</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Matricule</th>
                             <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Actions</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        <tr *ngFor="let cabinet of filteredCabinets" class="hover:bg-gray-50 transition-colors">
+                        <tr *ngFor="let cabinet of paginatedCabinets; let i = index" class="hover:bg-gray-50 transition-colors">
                             <td class="px-6 py-4">
                                 <div class="flex items-center">
+                                    <div class="w-6 text-center mr-3">
+                                        <span class="text-xs font-semibold text-gray-400">
+                                            {{ (currentPage - 1) * itemsPerPage + i + 1 }}
+                                        </span>
+                                    </div>
                                     <div
                                         class="w-10 h-10 bg-gradient-to-br from-vet-blue to-blue-600 rounded-full flex items-center justify-center mr-3">
                                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor"
@@ -160,15 +174,14 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900 font-mono">{{ cabinet.matricule }}</div>
-                            </td>
                             <td class="px-6 py-4">
                                 <div class="text-sm text-gray-900">{{ cabinet.address }}</div>
-                                <div class="text-xs text-gray-500">{{ cabinet.city }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm text-gray-900">{{ cabinet.phone }}</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-900 font-mono">{{ cabinet.matricule }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <button (click)="openEditForm(cabinet)" class="text-blue-600 hover:text-blue-900 mr-3"
@@ -206,14 +219,57 @@
                     <p class="text-sm text-gray-600 mt-2">{{ filterFeatured ? 'Aucun Cabinet n\'est marqué comme
                         principal' :
                         'Commencez par ajouter votre premier Cabinet' }}</p>
+                        
                     <button *ngIf="!filterFeatured" (click)="openAddForm()"
                         class="mt-4 bg-vet-blue hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg transition-colors">
                         + Ajouter un Cabinet
                     </button>
+
                     <button *ngIf="filterFeatured" (click)="clearFilters()"
                         class="mt-4 bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors">
                         Voir tous les Cabinets
                     </button>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div *ngIf="filteredCabinets.length > 0" class="px-6 py-4 border-t border-gray-200 bg-gray-50">
+                <div class="flex flex-col items-center space-y-3">
+                    <!-- Pagination Buttons -->
+                    <div class="flex items-center space-x-2">
+                        <button (click)="previousPage()" [disabled]="currentPage === 1"
+                            class="px-3 py-1 rounded-lg border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                        </button>
+
+                        <div class="flex space-x-1">
+                            <ng-container *ngFor="let page of getPageNumbers()">
+                                <button *ngIf="page !== '...'" (click)="goToPage(+page)"
+                                    [class.bg-vet-blue]="currentPage === page" [class.text-white]="currentPage === page"
+                                    [class.text-gray-700]="currentPage !== page"
+                                    class="px-3 py-1 rounded-lg text-sm font-medium hover:bg-blue-100 transition-colors">
+                                    {{ page }}
+                                </button>
+                                <span *ngIf="page === '...'" class="px-3 py-1 text-gray-500 text-sm">...</span>
+                            </ng-container>
+                        </div>
+
+                        <button (click)="nextPage()" [disabled]="currentPage === totalPages"
+                            class="px-3 py-1 rounded-lg border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <!-- Page Info -->
+                    <div class="text-sm text-gray-600">
+                        Affichage {{ (currentPage - 1) * itemsPerPage + 1 }} -
+                        {{ Math.min(currentPage * itemsPerPage, filteredCabinets.length) }}
+                        sur {{ filteredCabinets.length }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -276,21 +332,11 @@
                     <!-- Address -->
                     <div class="md:col-span-2">
                         <label class="block text-sm font-medium text-gray-700 mb-2">
-                            Adresse <span class="text-red-500">*</span>
+                            Adresse Complète <span class="text-red-500">*</span>
                         </label>
                         <input type="text" [(ngModel)]="currentCabinet.address" name="address" required
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-vet-blue focus:border-transparent"
-                            placeholder="Ex: 123 Avenue des Champs-Élysées">
-                    </div>
-
-                    <!-- City -->
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">
-                            Ville <span class="text-red-500">*</span>
-                        </label>
-                        <input type="text" [(ngModel)]="currentCabinet.city" name="city" required
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-vet-blue focus:border-transparent"
-                            placeholder="Ex: Paris">
+                            placeholder="Ex: R4 N°131 près de La Mosquée El Hak - Monastir, 5000, Monastir, Tunisia">
                     </div>
 
                     <!-- Phone -->
@@ -300,17 +346,17 @@
                         </label>
                         <input type="tel" [(ngModel)]="currentCabinet.phone" name="phone" required
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-vet-blue focus:border-transparent"
-                            placeholder="Ex: 01 23 45 67 89">
+                            placeholder="Ex: +216 24 688 073">
                     </div>
 
                     <!-- Matricule -->
-                    <div class="md:col-span-2">
+                    <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             Matricule <span class="text-red-500">*</span>
                         </label>
                         <input type="text" [(ngModel)]="currentCabinet.matricule" name="matricule" required
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-vet-blue focus:border-transparent"
-                            placeholder="Ex: BTQ-001">
+                            placeholder="Ex: 1330276X">
                     </div>
 
                     <!-- GPS Coordinates Section -->
@@ -437,6 +483,154 @@
                             </path>
                         </svg>
                         {{ loading ? 'Suppression...' : 'Supprimer' }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Upload Excel Modal -->
+<div *ngIf="showUploadModal" class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog"
+    aria-modal="true">
+    <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" (click)="closeUploadModal()"></div>
+
+        <div
+            class="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-purple-600 to-purple-700 px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-bold text-white flex items-center">
+                        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12">
+                            </path>
+                        </svg>
+                        Importer des Cabinets depuis Excel
+                    </h3>
+                    <button (click)="closeUploadModal()" class="text-white hover:text-gray-200 transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="px-6 py-6">
+                <!-- Error Message -->
+                <div *ngIf="uploadError"
+                    class="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-start">
+                    <svg class="w-5 h-5 mr-2 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>{{ uploadError }}</span>
+                </div>
+
+                <!-- Success Message -->
+                <div *ngIf="uploadSuccess"
+                    class="mb-4 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg flex items-start">
+                    <svg class="w-5 h-5 mr-2 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>{{ uploadSuccess }}</span>
+                </div>
+
+                <!-- Instructions -->
+                <div class="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <div class="flex items-start">
+                        <svg class="w-5 h-5 text-blue-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <div class="text-sm text-blue-800">
+                            <p class="font-medium mb-2">Instructions d'importation</p>
+                            <ul class="list-disc list-inside space-y-1 text-xs">
+                                <li>Le fichier doit être au format Excel (.xlsx ou .xls)</li>
+                                <li>Assurez-vous que les colonnes correspondent au format attendu</li>
+                                <li>Les cabinets existants seront mis à jour si le matricule correspond</li>
+                                <li>Les nouveaux cabinets seront ajoutés automatiquement</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- File Upload Area -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-3">
+                        Sélectionner un fichier Excel <span class="text-red-500">*</span>
+                    </label>
+                    
+                    <!-- Drop Zone -->
+                    <div 
+                        class="border-2 border-dashed rounded-lg p-8 text-center transition-colors"
+                        [ngClass]="selectedFile ? 'border-purple-400 bg-purple-50' : 'border-gray-300 hover:border-purple-400 hover:bg-gray-50'"
+                        (click)="fileInput.click()"
+                        (dragover)="onDragOver($event)"
+                        (dragleave)="onDragLeave($event)"
+                        (drop)="onDrop($event)">
+                        
+                        <input #fileInput type="file" accept=".xlsx,.xls" (change)="onFileSelected($event)" class="hidden">
+                        
+                        <div *ngIf="!selectedFile">
+                            <svg class="w-12 h-12 mx-auto mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12">
+                                </path>
+                            </svg>
+                            <p class="text-sm text-gray-600 mb-1">
+                                <span class="text-purple-600 font-semibold cursor-pointer hover:text-purple-700">Cliquez pour sélectionner</span>
+                                ou glissez-déposez
+                            </p>
+                            <p class="text-xs text-gray-500">Fichiers Excel (.xlsx, .xls)</p>
+                        </div>
+
+                        <div *ngIf="selectedFile" class="flex items-center justify-center">
+                            <svg class="w-10 h-10 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                </path>
+                            </svg>
+                            <div class="text-left">
+                                <p class="text-sm font-semibold text-gray-900">{{ selectedFile.name }}</p>
+                                <p class="text-xs text-gray-500">{{ formatFileSize(selectedFile.size) }}</p>
+                            </div>
+                            <button 
+                                type="button"
+                                (click)="clearSelectedFile($event)"
+                                class="ml-4 text-red-600 hover:text-red-800">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center justify-end space-x-3">
+                    <button type="button" (click)="closeUploadModal()" [disabled]="uploadingExcel"
+                        class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                        Annuler
+                    </button>
+                    <button type="button" (click)="uploadExcelFile()" [disabled]="!selectedFile || uploadingExcel"
+                        class="px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center">
+                        <svg *ngIf="uploadingExcel" class="animate-spin h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                            </circle>
+                            <path class="opacity-75" fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                            </path>
+                        </svg>
+                        {{ uploadingExcel ? 'Importation...' : 'Importer' }}
                     </button>
                 </div>
             </div>

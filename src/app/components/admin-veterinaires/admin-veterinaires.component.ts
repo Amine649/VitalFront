@@ -25,13 +25,21 @@ export class AdminVeterinairesComponent implements OnInit {
 
   loading = false;
   uploadLoading = false;
+  updateLoading = false;
+  deleteLoading = false;
   error = '';
+  editError = '';
   successMessage = '';
   searchQuery = '';
 
   selectedFile: File | null = null;
   isDragging = false;
   showSuccessModal = false;
+  showEditModal = false;
+  showDeleteModal = false;
+  
+  editingVet: Veterinaire = { id: 0, nom: '', matricule: '', email: '' };
+  deletingVet: Veterinaire | null = null;
 
   // Pagination
   currentPage = 1;
@@ -344,6 +352,115 @@ export class AdminVeterinairesComponent implements OnInit {
    */
   closeSuccessModal(): void {
     this.showSuccessModal = false;
+  }
+
+  /**
+   * Open edit modal
+   */
+  openEditModal(vet: Veterinaire): void {
+    this.editingVet = { ...vet };
+    this.showEditModal = true;
+    this.editError = '';
+    document.body.style.overflow = 'hidden';
+  }
+
+  /**
+   * Close edit modal
+   */
+  closeEditModal(): void {
+    if (!this.updateLoading) {
+      this.showEditModal = false;
+      this.editError = '';
+      document.body.style.overflow = 'auto';
+    }
+  }
+
+  /**
+   * Update veterinaire
+   */
+  updateVeterinaire(): void {
+    if (!this.editingVet.nom || !this.editingVet.matricule || !this.editingVet.email) {
+      this.editError = 'Tous les champs sont requis';
+      return;
+    }
+
+    this.updateLoading = true;
+    this.editError = '';
+
+    const updateData = {
+      nom: this.editingVet.nom,
+      matricule: this.editingVet.matricule,
+      email: this.editingVet.email
+    };
+
+    this.http.put(`${environment.apiUrl}/ourveterinaires/update/${this.editingVet.id}`, updateData, {
+      withCredentials: true
+    }).subscribe({
+      next: (response: any) => {
+        this.updateLoading = false;
+        this.successMessage = 'Vétérinaire mis à jour avec succès';
+        this.closeEditModal();
+        this.loadVeterinaires();
+        this.showSuccessModal = true;
+      },
+      error: (error) => {
+        this.updateLoading = false;
+        console.error('Error updating veterinaire:', error);
+        this.editError = error.error?.message || 'Erreur lors de la mise à jour du vétérinaire';
+      }
+    });
+  }
+
+  /**
+   * Confirm delete
+   */
+  confirmDelete(vet: Veterinaire): void {
+    this.deletingVet = vet;
+    this.showDeleteModal = true;
+    document.body.style.overflow = 'hidden';
+  }
+
+  /**
+   * Close delete modal
+   */
+  closeDeleteModal(): void {
+    if (!this.deleteLoading) {
+      this.showDeleteModal = false;
+      this.deletingVet = null;
+      document.body.style.overflow = 'auto';
+    }
+  }
+
+  /**
+   * Delete veterinaire
+   */
+  deleteVeterinaire(): void {
+    if (!this.deletingVet) return;
+
+    this.deleteLoading = true;
+
+    this.http.delete(`${environment.apiUrl}/ourveterinaires/delete/${this.deletingVet.id}`, {
+      withCredentials: true
+    }).subscribe({
+      next: (response: any) => {
+        this.deleteLoading = false;
+        this.successMessage = 'Vétérinaire supprimé avec succès';
+        this.closeDeleteModal();
+        this.loadVeterinaires();
+        this.showSuccessModal = true;
+      },
+      error: (error) => {
+        this.deleteLoading = false;
+        console.error('Error deleting veterinaire:', error);
+        this.error = error.error?.message || 'Erreur lors de la suppression du vétérinaire';
+        this.closeDeleteModal();
+        
+        // Clear error after 5 seconds
+        setTimeout(() => {
+          this.error = '';
+        }, 5000);
+      }
+    });
   }
 
   /**

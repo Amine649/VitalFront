@@ -5,6 +5,16 @@
   animation: fadeIn 0.8s ease-in-out;
 }
 
+
+.image-hover-container:hover .image-hover-overlay {
+  opacity: 1 !important;
+}
+
+.image-hover-container-green:hover .image-hover-overlay-green {
+  opacity: 1 !important;
+}
+
+
 .slide-in {
   animation: slideIn 0.6s ease-out;
 }
