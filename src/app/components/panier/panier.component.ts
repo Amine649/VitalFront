@@ -124,51 +124,20 @@ export class PanierComponent implements OnInit {
           if (item.productId) {
             item.variants = variantsArray[variantIndex];
             
-            // Try multiple keys to find saved variant
-            const keys = [
-              `cart_${item.productId}_${item.id}`,
-              `product_${item.productId}`,
-              `cart_${item.id}`
-            ];
-            
-            let savedVariantId: number | undefined;
-            let usedKey: string | undefined;
-            
-            for (const key of keys) {
-              if (savedVariants[key]) {
-                savedVariantId = savedVariants[key];
-                usedKey = key;
-                break;
-              }
-            }
-            
-            if (savedVariantId) {
-              // Use saved variant selection - THIS IS THE KEY PART
-              const savedVariant = item.variants?.find(v => v.id === savedVariantId);
-              if (savedVariant) {
-                item.selectedVariantId = savedVariantId;
-                item.price = savedVariant.price; // OVERRIDE the backend price
-              } else {
-                const currentVariant = item.variants?.find(v => v.price === item.price);
-                if (currentVariant) {
-                  item.selectedVariantId = currentVariant.id;
-                } else {
-                  const sortedVariants = [...item.variants].sort((a, b) => a.id - b.id);
-                  if (sortedVariants.length > 0) {
-                    item.selectedVariantId = sortedVariants[0].id;
-                    item.price = sortedVariants[0].price;
-                  }
-                }
-              }
+            // Trust the API response - it already has the correct price, packaging, and variantId
+            // Just set selectedVariantId from the API response if available
+            if (item.variantId) {
+              item.selectedVariantId = item.variantId;
             } else {
+              // Fallback: find variant matching the price from API
               const currentVariant = item.variants?.find(v => v.price === item.price);
               if (currentVariant) {
                 item.selectedVariantId = currentVariant.id;
               } else {
+                // Last resort: use first variant
                 const sortedVariants = [...item.variants].sort((a, b) => a.id - b.id);
                 if (sortedVariants.length > 0) {
                   item.selectedVariantId = sortedVariants[0].id;
-                  item.price = sortedVariants[0].price;
                 }
               }
             }
@@ -387,5 +356,28 @@ export class PanierComponent implements OnInit {
    */
   onImageError(event: Event): void {
     this.imageErrorHandler.handleImageError(event);
+  }
+
+  /**
+   * Get the packaging text for the selected variant
+   */
+  getSelectedVariantPackaging(item: CartItem): string {
+    // First, check if the API provided packaging directly
+    if (item.packaging) {
+      return item.packaging;
+    }
+
+    // Fallback: look up in variants array
+    if (!item.variants || item.variants.length === 0) {
+      return '';
+    }
+
+    const selectedVariant = item.variants.find(v => v.id === item.selectedVariantId);
+    if (selectedVariant) {
+      return selectedVariant.packaging;
+    }
+
+    // Last fallback to first variant if no selection
+    return item.variants[0]?.packaging || '';
   }
 }

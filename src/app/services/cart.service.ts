@@ -16,6 +16,8 @@ export interface CartItem {
   imageUrl: string;
   category?: string;
   subCategory?: string;
+  packaging?: string; // Packaging from API response
+  variantId?: number; // Variant ID from API response
   variants?: ProductVariant[]; // Available variants for this product
   selectedVariantId?: number; // Currently selected variant ID
 }
@@ -95,11 +97,13 @@ export class CartService {
         quantity: item.quantity || 0,
         imageUrl: item.imageUrl || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"%3E%3Crect fill="%23f3f4f6" width="200" height="200"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="16" fill="%239ca3af"%3EProduit%3C/text%3E%3C/svg%3E',
         category: item.category || '',
-        subCategory: item.subCategory || ''
+        subCategory: item.subCategory || '',
+        packaging: item.packaging || '', // Include packaging from API
+        variantId: item.variantId // Include variantId from API
       }));
 
-      // Apply stored variant selections to override backend prices
-      this.applyVariantSelections(normalizedItems);
+      // DO NOT apply stored variant selections - trust the API response
+      // this.applyVariantSelections(normalizedItems);
 
       this.updateLocalCart(normalizedItems);
     });
@@ -115,15 +119,17 @@ export class CartService {
     }
 
     const requestBody: any = {
-      productId: product.id,
+      // Use originalProductId if available (for flattened variants), otherwise use id
+      productId: product.originalProductId || product.id,
       quantity: 1
     };
 
     // Include variant ID if a specific variant is selected
-    if (product.selectedVariantId) {
-      requestBody.variantId = product.selectedVariantId;
+    if (product.variantId || product.selectedVariantId) {
+      requestBody.variantId = product.variantId || product.selectedVariantId;
       // Store the selected variant info in localStorage for this product
-      this.storeVariantSelection(product.id, product.selectedVariantId, product.price);
+      const productIdForStorage = product.originalProductId || product.id;
+      this.storeVariantSelection(productIdForStorage, requestBody.variantId, product.price);
     }
 
 
@@ -177,11 +183,13 @@ export class CartService {
           quantity: item.quantity || 0,
           imageUrl: item.imageUrl || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"%3E%3Crect fill="%23f3f4f6" width="200" height="200"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="16" fill="%239ca3af"%3EProduit%3C/text%3E%3C/svg%3E',
           category: item.category || '',
-          subCategory: item.subCategory || ''
+          subCategory: item.subCategory || '',
+          packaging: item.packaging || '', // Include packaging from API
+          variantId: item.variantId // Include variantId from API
         }));
 
-        // Apply stored variant selections to override backend prices
-        this.applyVariantSelections(normalizedItems);
+        // DO NOT apply stored variant selections - trust the API response
+        // this.applyVariantSelections(normalizedItems);
 
 
         this.updateLocalCart(normalizedItems);
@@ -489,7 +497,9 @@ export class CartService {
           quantity: item.quantity || 0,
           imageUrl: item.imageUrl || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"%3E%3Crect fill="%23f3f4f6" width="200" height="200"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="16" fill="%239ca3af"%3EProduit%3C/text%3E%3C/svg%3E',
           category: item.category || '',
-          subCategory: item.subCategory || ''
+          subCategory: item.subCategory || '',
+          packaging: item.packaging || '', // Include packaging from API
+          variantId: item.variantId // Include variantId from API
         }));
 
 
@@ -561,7 +571,9 @@ export class CartService {
           quantity: item.quantity || 0,
           imageUrl: item.imageUrl || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"%3E%3Crect fill="%23f3f4f6" width="200" height="200"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="16" fill="%239ca3af"%3EProduit%3C/text%3E%3C/svg%3E',
           category: item.category || '',
-          subCategory: item.subCategory || ''
+          subCategory: item.subCategory || '',
+          packaging: item.packaging || '', // Include packaging from API
+          variantId: item.variantId // Include variantId from API
         }));
 
 

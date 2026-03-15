@@ -167,16 +167,29 @@ export class CommercialCommandeComponent implements OnInit {
 
         this.productService.getAllProducts().subscribe({
             next: (products: Product[]) => {
-                // Set price from first variant (minimum ID) for each product
-                this.allProducts = products.map(product => {
-                    const p = product as any;
-                    p.price = this.productService.getVariantPrice(product);
-                    // Set the selected variant ID to the first variant
-                    const firstVariant = this.productService.getFirstVariant(product);
-                    if (firstVariant) {
-                        p.selectedVariantId = firstVariant.id;
+                // Flatten products - each variant becomes a separate product card
+                this.allProducts = [];
+                products.forEach(product => {
+                    if (product.variants && product.variants.length > 0) {
+                        // Create a separate product entry for each variant
+                        product.variants.forEach(variant => {
+                            const flattenedProduct = {
+                                ...product,
+                                id: `${product.id}_${variant.id}`, // Composite ID for uniqueness
+                                originalProductId: product.id, // Store original product ID for API calls
+                                variantId: variant.id,
+                                price: variant.price,
+                                packaging: variant.packaging,
+                                selectedVariantId: variant.id
+                            } as any;
+                            this.allProducts.push(flattenedProduct);
+                        });
+                    } else {
+                        // Product without variants
+                        const p = product as any;
+                        p.price = 0;
+                        this.allProducts.push(p);
                     }
-                    return p;
                 });
                 this.updateDisplayedProducts(); // Initial load
                 this.isLoading = false;
@@ -317,7 +330,15 @@ export class CommercialCommandeComponent implements OnInit {
     addToCart(product: Product) {
         const matricule = sessionStorage.getItem('validatedMatricule');
         if (matricule) {
-            this.cartService.addToCommercialCart(product, matricule);
+            // Use originalProductId if available (for flattened variants), otherwise use id
+            const productToAdd = {
+                ...product,
+                id: (product as any).originalProductId || product.id,
+                originalProductId: (product as any).originalProductId || product.id,
+                variantId: (product as any).variantId,
+                selectedVariantId: (product as any).variantId
+            };
+            this.cartService.addToCommercialCart(productToAdd, matricule);
         } else {
             this.cartService.addToCart(product);
         }

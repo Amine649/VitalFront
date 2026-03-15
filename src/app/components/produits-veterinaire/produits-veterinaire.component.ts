@@ -135,10 +135,24 @@ export class ProduitsVeterinaireComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params['animal']) {
         this.selectedCategory = this.capitalizeFirst(params['animal']);
+        
+        // If animal is selected but no type is specified, default to 'Aliment'
+        if (!params['type']) {
+          this.selectedSousCategory = 'Aliment';
+          // Update URL with default type
+          this.router.navigate([], {
+            relativeTo: this.route,
+            queryParams: { animal: params['animal'], type: 'aliment' },
+            queryParamsHandling: 'merge'
+          });
+        } else {
+          this.selectedSousCategory = this.mapProductType(params['type']);
+        }
       } else {
         this.selectedCategory = null;
+        this.selectedSousCategory = null;
       }
-      this.selectedSousCategory = params['type'] || null;
+      
       if (params['highlight']) {
         this.highlightedProductId = +params['highlight'];
         setTimeout(() => {
@@ -153,6 +167,15 @@ export class ProduitsVeterinaireComponent implements OnInit {
 
   private capitalizeFirst(str: string): string {
     return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
+  private mapProductType(type: string): string {
+    const typeMap: { [key: string]: string } = {
+      'aliment': 'Aliment',
+      'complement': 'Complément',
+      'test-rapide': 'Test rapide'
+    };
+    return typeMap[type] || type;
   }
 
   checkAuthentication(): void {
@@ -185,17 +208,34 @@ export class ProduitsVeterinaireComponent implements OnInit {
     this.errorMessage = '';
     this.productService.getAllProducts().subscribe({
       next: (products) => {
-        // Set price from first variant (minimum ID) for each product
-        this.allProducts = products.map(product => {
+        // Flatten products: create a separate product entry for each variant
+        this.allProducts = [];
+        products.forEach(product => {
           const p = product as any;
-          p.price = this.productService.getVariantPrice(product);
-          // Set the selected variant ID to the first variant
-          const firstVariant = this.productService.getFirstVariant(product);
-          if (firstVariant) {
-            p.selectedVariantId = firstVariant.id;
+          
+          if (p.variants && p.variants.length > 0) {
+            // Create a separate product for each variant
+            p.variants.forEach((variant: any) => {
+              const productCopy = {
+                ...p,
+                // Use a composite ID to make each variant unique
+                id: `${p.id}_${variant.id}`,
+                originalProductId: p.id,
+                variantId: variant.id,
+                price: variant.price,
+                packaging: variant.packaging,
+                selectedVariantId: variant.id,
+                // Keep the variants array for reference if needed
+                variants: p.variants
+              };
+              this.allProducts.push(productCopy);
+            });
+          } else {
+            // If no variants, add the product as is
+            this.allProducts.push(p);
           }
-          return p;
         });
+        
         this.isLoading = false;
         this.updateDisplayedProducts();
       },

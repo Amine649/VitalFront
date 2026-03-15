@@ -168,3 +168,24 @@ h2 {
   line-clamp: 2;
   overflow: hidden;
 }
+
+
+// ========== HERO SECTION TYPOGRAPHY ==========
+// Fixed sizes specifically for hero sections to match espace-proprietaire
+.hero-heading-fixed {
+  font-size: 40px !important;
+  line-height: 1.2 !important;
+  
+  @media (max-width: 768px) {
+    font-size: 28px !important;
+  }
+}
+
+.hero-text-fixed {
+  font-size: 18px !important;
+  line-height: 1.6 !important;
+  
+  @media (max-width: 768px) {
+    font-size: 16px !important;
+  }
+}

@@ -243,28 +243,10 @@
                                                     {{ getSubCategoryLabel(item.subCategory) }}
                                                 </span>
                                             </div>
-                                        </div>
-
-                                        <!-- Packaging Selector -->
-                                        <div class="flex-shrink-0">
-                                            <div *ngIf="item.variants && item.variants.length > 1" class="w-48">
-                                                <select 
-                                                    [ngModel]="item.selectedVariantId"
-                                                    (ngModelChange)="onVariantChange(item, $event)"
-                                                    class="w-full text-sm border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white">
-                                                    <option *ngFor="let variant of item.variants" [ngValue]="variant.id">
-                                                        {{ variant.packaging }} - {{ variant.price | number:'1.2-2' }} TND
-                                                    </option>
-                                                </select>
-                                            </div>
-                                            <div *ngIf="item.variants && item.variants.length === 1" class="w-48">
-                                                <div class="text-sm text-gray-600 px-3 py-2 bg-gray-50 rounded-md border border-gray-200 truncate">
-                                                    {{ item.variants[0].packaging }} - {{ item.variants[0].price | number:'1.2-2' }} TND
-                                                </div>
-                                            </div>
-                                            <div *ngIf="!item.variants || item.variants.length === 0" class="w-48">
-                                                <div class="text-sm text-gray-400 px-3 py-2">-</div>
-                                            </div>
+                                            <!-- Display packaging as static text -->
+                                            <p class="text-xs text-gray-600 mt-1">
+                                                <span class="font-medium">{{ getSelectedVariantPackaging(item) }}</span>
+                                            </p>
                                         </div>
 
                                         <!-- Quantity Controls -->
@@ -283,6 +265,12 @@
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                                                 </svg>
                                             </button>
+                                        </div>
+
+                                        <!-- Unit Price -->
+                                        <div class="text-center w-28 flex-shrink-0">
+                                            <p class="text-xs text-gray-500 mb-1">Prix unitaire</p>
+                                            <p class="font-semibold text-gray-700">{{ item.price | number:'1.2-2' }} TND</p>
                                         </div>
 
                                         <!-- Subtotal -->

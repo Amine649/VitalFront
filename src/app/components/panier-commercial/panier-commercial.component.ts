@@ -23,6 +23,7 @@ export class PanierCommercialComponent implements OnInit {
     showSuccessModal = false;
     isCheckingOut = false;
     loadingVariants = false;
+    private itemOrder: number[] = []; // Store the order of items by their IDs
 
     // Vet Info
     vetMatricule: string = '';
@@ -73,7 +74,22 @@ export class PanierCommercialComponent implements OnInit {
 
         // Subscribe to cart updates
         this.cartService.cartItems$.subscribe(items => {
-            this.cartItems = items;
+            // Preserve the order of existing items
+            if (this.itemOrder.length === 0 && items.length > 0) {
+                // First load - store the initial order
+                this.itemOrder = items.map(item => item.id);
+            } else if (items.length > 0) {
+                // Subsequent loads - add new items to the end, keep existing order
+                const newItemIds = items.map(item => item.id);
+                const addedItems = newItemIds.filter(id => !this.itemOrder.includes(id));
+                this.itemOrder = [...this.itemOrder.filter(id => newItemIds.includes(id)), ...addedItems];
+            } else {
+                // Cart is empty
+                this.itemOrder = [];
+            }
+            
+            // Sort items according to stored order
+            this.cartItems = this.sortItemsByOrder(items, this.itemOrder);
             this.cartCount = items.reduce((sum, item) => sum + item.quantity, 0);
             this.cartTotal = items.reduce((total, item) => total + (item.price * item.quantity), 0);
             
@@ -83,6 +99,25 @@ export class PanierCommercialComponent implements OnInit {
                     this.loadVariantsForCartItems();
                 }, 100);
             }
+        });
+    }
+
+    private sortItemsByOrder(items: CartItem[], order: number[]): CartItem[] {
+        return items.sort((a, b) => {
+            const indexA = order.indexOf(a.id);
+            const indexB = order.indexOf(b.id);
+            
+            // If both items are in the order array, sort by their position
+            if (indexA !== -1 && indexB !== -1) {
+                return indexA - indexB;
+            }
+            
+            // If only one item is in the order array, it comes first
+            if (indexA !== -1) return -1;
+            if (indexB !== -1) return 1;
+            
+            // If neither is in the order array, maintain their relative order
+            return 0;
         });
     }
 
@@ -113,16 +148,20 @@ export class PanierCommercialComponent implements OnInit {
                     if (item.productId) {
                         item.variants = variantsArray[variantIndex];
                         
-                        // Match current price to find selected variant
-                        const currentVariant = item.variants?.find(v => v.price === item.price);
-                        if (currentVariant) {
-                            item.selectedVariantId = currentVariant.id;
+                        // Trust the API response - it already has the correct price, packaging, and variantId
+                        if (item.variantId) {
+                            item.selectedVariantId = item.variantId;
                         } else {
-                            // Use first variant as default
-                            const sortedVariants = [...item.variants].sort((a, b) => a.id - b.id);
-                            if (sortedVariants.length > 0) {
-                                item.selectedVariantId = sortedVariants[0].id;
-                                item.price = sortedVariants[0].price;
+                            // Fallback: find variant matching the price from API
+                            const currentVariant = item.variants?.find(v => v.price === item.price);
+                            if (currentVariant) {
+                                item.selectedVariantId = currentVariant.id;
+                            } else {
+                                // Last resort: use first variant
+                                const sortedVariants = [...item.variants].sort((a, b) => a.id - b.id);
+                                if (sortedVariants.length > 0) {
+                                    item.selectedVariantId = sortedVariants[0].id;
+                                }
                             }
                         }
                         
@@ -147,23 +186,27 @@ export class PanierCommercialComponent implements OnInit {
         );
     }
 
-    onVariantChange(item: CartItem, variantId: number | string): void {
-        const numericVariantId = typeof variantId === 'string' ? parseInt(variantId, 10) : variantId;
-        const selectedVariant = item.variants?.find(v => v.id === numericVariantId);
-        
-        if (selectedVariant && item.productId) {
-            item.price = selectedVariant.price;
-            item.selectedVariantId = numericVariantId;
-            
-            // Update on backend
-            const matricule = sessionStorage.getItem('validatedMatricule');
-            if (matricule) {
-                this.cartService.updateCommercialItemQuantity(matricule, item.id, item.productId, item.quantity, numericVariantId);
-            }
-            
-            this.cartItems = [...this.cartItems];
-            this.recalculateTotal();
+    /**
+     * Get the packaging text for the selected variant
+     */
+    getSelectedVariantPackaging(item: CartItem): string {
+        // First, check if the API provided packaging directly
+        if (item.packaging) {
+            return item.packaging;
         }
+
+        // Fallback: look up in variants array
+        if (!item.variants || item.variants.length === 0) {
+            return '';
+        }
+
+        const selectedVariant = item.variants.find(v => v.id === item.selectedVariantId);
+        if (selectedVariant) {
+            return selectedVariant.packaging;
+        }
+
+        // Last fallback to first variant if no selection
+        return item.variants[0]?.packaging || '';
     }
 
     loadVetInfo() {
@@ -186,6 +229,9 @@ export class PanierCommercialComponent implements OnInit {
     }
 
     removeFromCart(itemId: number): void {
+        // Remove from order tracking
+        this.itemOrder = this.itemOrder.filter(id => id !== itemId);
+        
         const matricule = sessionStorage.getItem('validatedMatricule');
         if (matricule) {
             this.cartService.removeCommercialCartItem(matricule, itemId);
@@ -260,6 +306,7 @@ export class PanierCommercialComponent implements OnInit {
 
     clearCart(): void {
         if (confirm('Êtes-vous sûr de vouloir vider le panier ?')) {
+            this.itemOrder = []; // Clear order tracking
             const matricule = sessionStorage.getItem('validatedMatricule');
             if (matricule) {
                 this.cartService.clearCommercialCart(matricule);

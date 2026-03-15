@@ -3,8 +3,8 @@
 
   <!-- Navbar is provided by app component, no need for duplicate navbar here -->
 
-  <!-- Hero Section (Full Width) -->
-  <div class="w-full px-0 mb-6">
+  <!-- Category Hero Section - Image Left, Description Right -->
+  <div class="w-full px-0">
     <div class="category-hero-section relative overflow-hidden bg-white">
       <!-- Decorative Blobs -->
       <div class="absolute top-0 right-0 w-2/3 h-full bg-blue-50/50 -skew-x-12 translate-x-1/4 z-0"></div>
@@ -21,227 +21,329 @@
         <div
           class="w-8 h-8 rounded-full bg-white shadow-sm border border-gray-100 flex items-center justify-center mr-2 group-hover:bg-blue-50 transition-colors">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18">
-            </path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
           </svg>
         </div>
         <span
-          class="flex items-center text-vet-blue hover:text-blue-700 font-semibold transition-colors duration-200 text-lg">
-          Retour à l'espace vétérinaire
-        </span>
+          class="flex items-center text-vet-blue hover:text-blue-700 font-semibold transition-colors duration-200 text-lg">Retour
+          à l'espace vétérinaire</span>
       </button>
 
       <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-
         <!-- Cat Hero -->
         <div *ngIf="selectedCategory === 'Chat'"
-        class="flex flex-col md:flex-row items-center min-h-[400px] py-12 md:py-20">
-        <!-- Text Side (Left) -->
-        <div class="w-full md:w-1/2 pr-0 md:pr-8 text-center mb-10 md:mb-0">
-          <span
-            [ngClass]="selectedCategory === 'Chat' ? 'bg-green-100 text-[#74C375]' : selectedCategory === 'Chien' ? 'bg-red-100 text-[#a01867]' : 'bg-blue-100 text-blue-600'"
-            class="inline-block py-1 px-3 rounded-full text-xs font-bold tracking-wider mb-4 uppercase">
-            Gamme Chat
-          </span>
-          <h2 class="text-4xl md:text-5xl font-extrabold text-slate-800 leading-tight mb-6">
-            Aliments <span class="relative" [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-blue-600'">
-              Pour Chat
-              <svg class="absolute w-full h-3 -bottom-1 left-0 -z-10" [ngClass]="selectedCategory === 'Chat' ? 'text-green-200' : selectedCategory === 'Chien' ? 'text-red-200' : 'text-blue-200'" viewBox="0 0 100 10"
-                preserveAspectRatio="none">
-                <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none" />
-              </svg>
-            </span><br>
-            <span class="whitespace-nowrap">Choisir le bon aliment !!!</span>
+          class="flex flex-col md:flex-row items-center min-h-[400px] py-12 md:py-20">
+          <!-- Text Side (Left) -->
+          <div class="w-full md:w-1/2 pr-0 md:pr-8 text-center mb-10 md:mb-0">
+            <span
+              [ngClass]="selectedCategory === 'Chat' ? 'bg-green-100 text-[#74C375]' : selectedCategory === 'Chien' ? 'bg-red-100 text-[#a01867]' : 'bg-blue-100 text-blue-600'"
+              class="inline-block py-1 px-3 rounded-full text-xs font-bold tracking-wider mb-4 uppercase">
+              Gamme Chat
+            </span>
+           <h2 class="hero-heading-fixed text-slate-800 mb-6 text-center font-extrabold" style="font-size: clamp(1.1rem, 2.8vw, 2rem); line-height: 1.3; max-width: 100%;">
+            <ng-container *ngIf="selectedSousCategory === 'Aliment'">
+              L'ALIMENT POUR <span style="color: rgb(116, 195, 117);">CHAT</span> LE PLUS RECOMMANDÉ PAR LES VÉTÉRINAIRES EN <span style="color: red;">TUNISIE</span>
+            </ng-container>
+            <ng-container *ngIf="selectedSousCategory === 'Complément'">
+              COMPLÉMENTS ALIMENTAIRES POUR <span style="color: rgb(116, 195, 117);">CHATS</span>
+            </ng-container>
+            <ng-container *ngIf="selectedSousCategory === 'Test rapide'">
+              SOLUTIONS DIAGNOSTIQUES
+            </ng-container>
           </h2>
-          <p class="text-lg text-slate-600 mb-8 leading-relaxed max-w-lg mx-auto">
-            Notre gamme repose sur un équilibre nutritionnel faible en glucides et riche en protéines adapté aux
-            besoins de votre chat, carnivore depuis toujours !
-          </p>
-          <div class="flex flex-col sm:flex-row items-center gap-3 justify-center">
-            <button
-              [ngClass]="selectedCategory === 'Chat' ? 'bg-[#74C375] shadow-green-500/30 hover:shadow-green-500/40' : selectedCategory === 'Chien' ? 'bg-[#a01867] shadow-red-500/30 hover:shadow-red-500/40' : 'bg-blue-600 shadow-blue-500/30 hover:shadow-blue-500/40'"
-              class="px-8 py-3 text-white rounded-full font-semibold shadow-lg hover:-translate-y-1 transition-all duration-300 whitespace-nowrap">
-              Voir les produits
-            </button>
-            <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
-              <svg [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              Fabrication française
+            <p class="hero-text-fixed text-slate-600 mb-8 max-w-lg mx-auto">
+              <ng-container *ngIf="selectedSousCategory === 'Aliment'">
+  Notre gamme repose sur un équilibre nutritionnel faible en glucides et riche en protéines adapté aux besoins de votre Chien, carnivore depuis toujours !            </ng-container>
+              <ng-container *ngIf="selectedSousCategory === 'Complément'">
+                Découvrez notre gamme complète de compléments alimentaires pour chats, 100% fabriquée en France et développée par des vétérinaires.
+              </ng-container>
+              <ng-container *ngIf="selectedSousCategory === 'Test rapide'">
+                Obtenir les réponses dont vous avez besoin sur le lieu d'intervention pour prendre des décisions rapides.
+              </ng-container>
+            </p>
+            <div class="flex flex-col sm:flex-row items-center gap-3 justify-center">
+              <button
+                [ngClass]="selectedCategory === 'Chat' ? 'bg-[#74C375] shadow-green-500/30 hover:shadow-green-500/40' : selectedCategory === 'Chien' ? 'bg-[#a01867] shadow-red-500/30 hover:shadow-red-500/40' : 'bg-blue-600 shadow-blue-500/30 hover:shadow-blue-500/40'"
+                class="px-8 py-3 text-white rounded-full font-semibold shadow-lg hover:-translate-y-1 transition-all duration-300 whitespace-nowrap">
+                Voir les produits
+              </button>
+              
+              <!-- Features for Aliment and Complément -->
+              <ng-container *ngIf="selectedSousCategory === 'Aliment' || selectedSousCategory === 'Complément'">
+                <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
+                  <svg [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Fabrication française
+                </span>
+                <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
+                  <svg [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Formulées par des spécialistes
+                </span>
+                <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
+                  <svg [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Laboratoire VIRBAC
+                </span>
+              </ng-container>
+              
+              <!-- Features for Test rapide -->
+              <ng-container *ngIf="selectedSousCategory === 'Test rapide'">
+                <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
+                  <svg [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Fabrication française
+                </span>
+                <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
+                  <svg [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Fiables et rapides
+                </span>
+                <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
+                  <svg [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Large gamme
+                </span>
+              </ng-container>
+            </div>
+          </div>
 
-            </span>
-            <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
-              <svg [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              Riches en protéines de haute qualité
-            </span>
-            <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
-              <svg [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              Pauvre en glucides.
+          <!-- Image Side (Right) -->
+          <div class="w-full md:w-1/2 relative flex justify-center md:justify-end md:pl-16">
+            <div class="relative w-full flex justify-center md:justify-end md:translate-x-16">
+              <!-- Organic Blob Background for Image -->
+              <div
+                class="absolute top-0 right-0 w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob">
+              </div>
+              <div
+                class="absolute top-0 right-20 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000">
+              </div>
+              <div
+                class="absolute -bottom-8 right-10 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000">
+              </div>
 
-            </span>
+              <!-- Aliment Image -->
+              <div *ngIf="selectedSousCategory === 'Aliment'" class="relative transform transition-transform duration-500">
+                <img src="assets/images/Cat.png" 
+                  alt="Chat"
+                  style="width: 650px; max-width: 130%;"
+                  class="w-full h-auto object-cover transform scale-110 hover:scale-100 transition-transform duration-700 drop-shadow-2xl">
+              </div>
+
+              <!-- Complément Image -->
+              <div *ngIf="selectedSousCategory === 'Complément'" class="relative transform transition-transform duration-500 translate-y-12 -translate-x-32">
+                <img src="assets/images/complement_chat.png" 
+                  alt="Chat"
+                  style="width: 540px; max-width: 130%;"
+                  class="w-full h-auto object-cover transform scale-110 hover:scale-100 transition-transform duration-700 drop-shadow-2xl">
+              </div>
+
+              <!-- Test rapide Image -->
+              <div *ngIf="selectedSousCategory === 'Test rapide'" class="relative transform transition-transform duration-500 translate-y-12 -translate-x-32">
+                <img src="assets/images/test_rapide_chat.png" 
+                  alt="Chat"
+                  style="width: 475px; max-width: 130%;"
+                  class="w-full h-auto object-cover transform scale-110 hover:scale-100 transition-transform duration-700 drop-shadow-2xl">
+              </div>
+
+            
+            </div>
           </div>
         </div>
-
-        <!-- Image Side (Right) -->
-        <div class="w-full md:w-1/2 relative flex justify-center md:justify-end md:pl-16">
-          <div class="relative w-full flex justify-center md:justify-end md:translate-x-16">
-            <!-- Organic Blob Background for Image -->
-            <div
-              class="absolute top-0 right-0 w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob">
-            </div>
-            <div
-              class="absolute top-0 right-20 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000">
-            </div>
-            <div
-              class="absolute -bottom-8 right-10 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000">
-            </div>
-
-            <div class="relative transform  transition-transform duration-500">
-              <img src="assets/images/za.png" alt="Chat"
-                style="width: 650px; max-width: 130%;"
-                class="w-full h-auto object-cover transform scale-110 hover:scale-100 transition-transform duration-700 drop-shadow-2xl">
-            </div>
-
-          
-          </div>
-        </div>
-      </div>
 
         <!-- Dog Hero -->
         <div *ngIf="selectedCategory === 'Chien'"
-        class="flex flex-col md:flex-row items-center min-h-[400px] py-12 md:py-20">
-        <!-- Text Side (Left) -->
-        <div class="w-full md:w-1/2 pr-0 md:pr-12 text-center md:text-left mb-10 md:mb-0">
-          <span
-            [ngClass]="selectedCategory === 'Chien' ? 'bg-red-100 text-[#a01867]' : 'bg-blue-100 text-blue-600'"
-            class="inline-block py-1 px-3 rounded-full text-xs font-bold tracking-wider mb-4 uppercase">
-            Gamme Chien
-          </span>
-          <div>
-            
-          </div>
-          <h2 class="text-4xl md:text-5xl font-extrabold text-slate-800 leading-tight mb-6">
-          <span [ngClass]="selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-blue-600'" class="relative inline-block whitespace-nowrap">
-            Aliments pour chiens
-          </span>
-          <br>
-          <span class="whitespace-nowrap">Trouver le bon aliment !!!</span>
-        </h2>
-          
-          <p class="text-lg text-slate-600 mb-8 leading-relaxed max-w-lg mx-auto md:mx-0">
-          Notre gamme repose sur un équilibre nutritionnel faible en glucides et riche en protéines
-          adapté aux besoins de votre chien, carnivore depuis toujours !          
-          </p>
+          class="flex flex-col md:flex-row items-center min-h-[400px] py-12 md:py-20">
+          <!-- Text Side (Left) -->
+          <div class="w-full md:w-1/2 pr-0 md:pr-12 text-center md:text-left mb-10 md:mb-0">
+            <span
+              [ngClass]="selectedCategory === 'Chien' ? 'bg-red-100 text-[#a01867]' : 'bg-blue-100 text-blue-600'"
+              class="inline-block py-1 px-3 rounded-full text-xs font-bold tracking-wider mb-4 uppercase">
+              Gamme Chien
+            </span>
+            <div>
+              
+            </div>
 
-          <div class="flex flex-col sm:flex-row items-center gap-4 justify-center">
-            <button
-              [ngClass]="selectedCategory === 'Chien' ? 'bg-[#a01867] shadow-red-500/30 hover:shadow-red-500/40' : 'bg-blue-600 shadow-blue-500/30 hover:shadow-blue-500/40'"
-              class="px-8 py-3 text-white rounded-full font-semibold shadow-lg hover:-translate-y-1 transition-all duration-300 whitespace-nowrap">
-              Voir les produits
-            </button>
-            <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
-              <svg [ngClass]="selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              Fabrication française
-            </span>
-            <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
-              <svg [ngClass]="selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              Riches en protéines de haute qualité
-            </span>
-            <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
-              <svg [ngClass]="selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              Pauvre en glucides.
-            </span>
+            <h2 class="hero-heading-fixed text-slate-800 mb-6 text-center md:text-left font-extrabold" style="font-size: clamp(1.1rem, 2.8vw, 2rem); line-height: 1.3; max-width: 100%;">
+              <ng-container *ngIf="selectedSousCategory === 'Aliment'">
+                L'ALIMENT POUR <span style="color: #a01867;">CHIEN</span> LE PLUS RECOMMANDÉ PAR LES VÉTÉRINAIRES EN <span style="color: red;">TUNISIE</span>
+              </ng-container>
+              <ng-container *ngIf="selectedSousCategory === 'Complément'">
+                COMPLÉMENTS ALIMENTAIRES POUR <span style="color: #a01867;">CHIEN</span>
+              </ng-container>
+              <ng-container *ngIf="selectedSousCategory === 'Test rapide'">
+                SOLUTIONS DIAGNOSTIQUES
+              </ng-container>
+            </h2>  
+            <p class="hero-text-fixed text-slate-600 mb-8 max-w-lg mx-auto md:mx-0">
+              <ng-container *ngIf="selectedSousCategory === 'Aliment'">
+  Notre gamme repose sur un équilibre nutritionnel faible en glucides et riche en protéines adapté aux
+  besoins de votre Chien, carnivore depuis toujours !
+              </ng-container>
+              <ng-container *ngIf="selectedSousCategory === 'Complément'">
+                Découvrez notre gamme complète de compléments alimentaires pour chiens, 100% fabriquée en France et développée par des vétérinaires.
+              </ng-container>
+              <ng-container *ngIf="selectedSousCategory === 'Test rapide'">
+                Obtenir les réponses dont vous avez besoin sur le lieu d'intervention pour prendre des décisions rapides.
+              </ng-container>
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center gap-4 justify-center">
+              <button
+                [ngClass]="selectedCategory === 'Chien' ? 'bg-[#a01867] shadow-red-500/30 hover:shadow-red-500/40' : 'bg-blue-600 shadow-blue-500/30 hover:shadow-blue-500/40'"
+                class="px-8 py-3 text-white rounded-full font-semibold shadow-lg hover:-translate-y-1 transition-all duration-300 whitespace-nowrap">
+                Voir les produits
+              </button>
+              
+              <!-- Features for Aliment and Complément -->
+              <ng-container *ngIf="selectedSousCategory === 'Aliment' || selectedSousCategory === 'Complément'">
+                <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
+                  <svg [ngClass]="selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Fabrication française
+                </span>
+                <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
+                  <svg [ngClass]="selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Formulées par des spécialistes
+                </span>
+                <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
+                  <svg [ngClass]="selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Laboratoire VIRBAC
+                </span>
+              </ng-container>
+              
+              <!-- Features for Test rapide -->
+              <ng-container *ngIf="selectedSousCategory === 'Test rapide'">
+                <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
+                  <svg [ngClass]="selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Fabrication française
+                </span>
+                <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
+                  <svg [ngClass]="selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Fiables et rapides
+                </span>
+                <span class="text-sm text-slate-500 flex items-center whitespace-nowrap">
+                  <svg [ngClass]="selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-green-500'" class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Large gamme
+                </span>
+              </ng-container>
+            </div>
+          </div>
+
+          <!-- Image Side (Right) -->
+          <div class="w-full md:w-1/2 relative">
+            <div class="relative w-full flex justify-center">
+              <!-- Organic Blob Background for Image -->
+              <div
+                class="absolute top-0 left-1/2 -translate-x-1/2 -left-4 w-72 h-72 bg-orange-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob">
+              </div>
+              <div
+                class="absolute top-0 left-1/2 -translate-x-1/2 -right-4 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000">
+              </div>
+              <div
+                class="absolute -bottom-8 left-1/2 -translate-x-1/2 left-20 w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000">
+              </div>
+
+              <!-- Aliment Image -->
+              <div *ngIf="selectedSousCategory === 'Aliment'" class="relative transform transition-transform duration-500">
+                <img src="assets/images/Dog.png" 
+                  alt="Chien"
+                  style="width: 680px; max-width: 900%;"
+                  class="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700 drop-shadow-2xl">
+              </div>
+
+              <!-- Complément Image -->
+              <div *ngIf="selectedSousCategory === 'Complément'" class="relative transform transition-transform duration-500 translate-x-20">
+                <img src="assets/images/complement_chien.png" 
+                  alt="Chien"
+                  style="width: 470px; max-width: 900%;"
+                  class="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700 drop-shadow-2xl">
+              </div>
+
+              <!-- Test rapide Image -->
+              <div *ngIf="selectedSousCategory === 'Test rapide'" class="relative transform transition-transform duration-500 translate-x-20">
+                <img src="assets/images/test_rapide_chien.png" 
+                  alt="Chien"
+                  style="width: 470px; max-width: 900%;"
+                  class="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700 drop-shadow-2xl">
+              </div>
+
+              <!-- Floating Badge -->
+             
+            </div>
           </div>
         </div>
-
-        <!-- Image Side (Right) -->
-        <div class="w-full md:w-1/2 relative">
-          <div class="relative w-full flex justify-center">
-            <!-- Organic Blob Background for Image -->
-            <div
-              class="absolute top-0 left-1/2 -translate-x-1/2 -left-4 w-72 h-72 bg-orange-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob">
-            </div>
-            <div
-              class="absolute top-0 left-1/2 -translate-x-1/2 -right-4 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000">
-            </div>
-            <div
-              class="absolute -bottom-8 left-1/2 -translate-x-1/2 left-20 w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000">
-            </div>
-
-            <div class="relative transform  transition-transform duration-500">
-              <img src="assets/images/qsqs.png" alt="Chien"
-                style="width: 750px; max-width: 900%;"
-                class="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700 drop-shadow-2xl">
-            </div>
-
-           
-          </div>
-        </div>
-      </div>
 
         <!-- Default Hero (All Products) -->
         <div *ngIf="!selectedCategory" class="flex flex-col md:flex-row items-center min-h-[200px] py-10 md:py-20">
-        <!-- Text Side (Left) -->
-        <div class="w-full md:w-7/12 pr-0 md:pr-6 text-center md:text-left mb-10 md:mb-0">
-          <h2 class="text-4xl md:text-5xl font-extrabold text-slate-800 leading-tight mb-6">
-            Les produits Adaptés à <br>
-            <span class="text-blue-600 relative inline-block">
-              Votre Chat Ou Votre Chien
-              <svg class="absolute w-full h-3 -bottom-3.5 left-0 text-blue-200 -z-10" viewBox="0 0 100 10"
-                preserveAspectRatio="none">
-                <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none" />
-              </svg>
-            </span>
-          </h2>
-          <div class="text-lg text-slate-600 mb-8 leading-relaxed max-w-3xl mx-auto md:mx-0 font-medium">
-            <p class="mb-2">
-              Votre compagnon, chat ou chien, a des besoins alimentaires, et donc de la nourriture, spécifiques à son
-              espèce.
-            </p>
-            <p>
-              Pour mieux comprendre les différentes diètes félines ou canines, vous pouvez vous rendre dans la section
-              qui
-              vous intéresse.
-            </p>
-          </div>
-          <div class="flex flex-col sm:flex-row items-center gap-4 justify-center">
-          <div
-            class="px-8 py-3 bg-blue-600 text-white rounded-full font-semibold shadow-lg shadow-blue-500/30 hover:shadow-blue-500/40 hover:-translate-y-1 transition-all duration-300 inline-flex items-center justify-center">
-            Découvrir la gamme
+          <!-- Text Side (Left) -->
+          <div class="w-full md:w-7/12 pr-0 md:pr-6 text-center md:text-left mb-10 md:mb-0">
+            <h2 class="hero-heading-fixed text-slate-800 mb-6 font-extrabold">
+              NUTRITION ET SANTÉ <br>
+              <span class="text-blue-600 relative inline-block">
+                Chat & Chien
+                <svg class="absolute w-full h-3 -bottom-3.5 left-0 text-blue-200 -z-10" viewBox="0 0 100 10"
+                  preserveAspectRatio="none">
+                  <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none" />
+                </svg>
+              </span>
+            </h2>
+            <div class="hero-text-fixed text-slate-600 mb-8 max-w-3xl mx-auto md:mx-0 font-medium">
+              <p class="mb-2 text-sm">
+                Votre compagnon, a des besoins spécifiques à son espèce.
+              </p>
+              <p >
+                Pour mieux comprendre les différentes diètes félines ou canines, vous pouvez vous rendre dans la section
+                qui
+                vous intéresse.
+              </p>
             </div>
-          <button  class="px-8 py-3 border-2 border-blue-600 text-blue-600 rounded-full font-semibold hover:bg-blue-600 hover:text-white transition-all duration-300 cursor-pointer inline-flex items-center justify-center">
-            <svg class="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-            </svg>
-            Expertise Vétérinaire
-          </button>
-        </div>
-        </div>
+            <div class="flex flex-col sm:flex-row items-center gap-4 justify-center">
+            <div
+              class="px-8 py-3 bg-blue-600 text-white rounded-full font-semibold shadow-lg shadow-blue-500/30 hover:shadow-blue-500/40 hover:-translate-y-1 transition-all duration-300 inline-flex items-center justify-center">
+              Découvrir la gamme
+              </div>
+            <button class="px-8 py-3 border-2 border-blue-600 text-blue-600 rounded-full font-semibold hover:bg-blue-600 hover:text-white transition-all duration-300 cursor-pointer inline-flex items-center justify-center">
+              <svg class="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              Expertise Vétérinaire
+            </button>
+          </div>
+          </div>
 
-        <!-- Image Side (Right) - As Background -->
-        <div class="w-full md:w-5/12 relative z-10">
-          <div class="relative w-full h-full flex items-center justify-center">
-            <!-- Organic Blob Background - Same as Cat/Dog pages -->
-            <div class="absolute top-0 left-1/2 -translate-x-1/2 -left-4 w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-            <div class="absolute top-0 left-1/2 -translate-x-1/2 -right-4 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-            <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 left-20 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
-            
-            <!-- Image without container - just the image itself -->
-            <img src="assets/images/feree.png" alt="Chien et Chat"
-              class="w-[105%] max-w-none h-auto object-contain opacity-100 transform scale-110 hover:scale-115 transition-transform duration-700 pointer-events-none">
+          <!-- Image Side (Right) - As Background -->
+          <div class="w-full md:w-5/12 relative z-10">
+            <div class="relative w-full h-full flex items-center justify-center">
+              <!-- Organic Blob Background - Same as Cat/Dog pages -->
+              <div class="absolute top-0 left-1/2 -translate-x-1/2 -left-4 w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+              <div class="absolute top-0 left-1/2 -translate-x-1/2 -right-4 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+              <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 left-20 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+              
+              <!-- Image without container - just the image itself -->
+              <img src="assets/images/CatDogFriend.png" alt="Chien et Chat"
+                class="w-[80%] max-w-none h-auto object-contain opacity-100 transform scale-110 hover:scale-115 transition-transform duration-700 pointer-events-none">
+            </div>
           </div>
         </div>
-      </div>
       </div>
     </div>
   </div>
