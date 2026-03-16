@@ -1,1 +1,139 @@
 // Panier Component Styles
+
+@media (max-width: 768px) {
+
+  // Cart item row - restructure for mobile
+  .space-y-4 > div {
+    flex-wrap: wrap !important;
+    padding: 0.75rem !important;
+    gap: 0.5rem !important;
+    align-items: flex-start !important;
+  }
+
+  // Product image - smaller on mobile
+  .w-24.h-24 {
+    width: 3.5rem !important;
+    height: 3.5rem !important;
+  }
+
+  // Product info - flexible width
+  .w-48.flex-shrink-0 {
+    width: auto !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+  }
+
+  // Unit price and subtotal - auto width
+  .w-28.flex-shrink-0 {
+    width: auto !important;
+    flex-shrink: 1 !important;
+  }
+
+  // Quantity controls - compact
+  .flex.items-center.gap-2.flex-shrink-0 {
+    gap: 0.25rem !important;
+
+    button {
+      width: 2rem !important;
+      height: 2rem !important;
+    }
+
+    span.w-10 {
+      width: 1.75rem !important;
+      font-size: 0.875rem !important;
+    }
+  }
+
+  // Order summary sticky -> static on mobile
+  .sticky.top-24 {
+    position: static !important;
+  }
+
+  // Section padding
+  section.py-6 {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+
+  // Container padding
+  .container {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+
+  // Header
+  .mb-8 {
+    margin-bottom: 1rem !important;
+    flex-wrap: wrap !important;
+    gap: 0.5rem !important;
+
+    h1 {
+      font-size: 1.25rem !important;
+    }
+
+    button {
+      font-size: 0.8125rem !important;
+    }
+  }
+
+  // Cart items card padding
+  .bg-white.rounded-xl.shadow-sm.p-6 {
+    padding: 0.875rem !important;
+  }
+
+  // Articles header
+  .flex.items-center.justify-between.mb-6 {
+    margin-bottom: 0.75rem !important;
+
+    h2 {
+      font-size: 1rem !important;
+    }
+  }
+
+  // Summary card
+  .bg-white.rounded-xl.shadow-sm.p-6.sticky {
+    padding: 1rem !important;
+    margin-top: 1rem !important;
+
+    h2 {
+      font-size: 1rem !important;
+      margin-bottom: 1rem !important;
+    }
+  }
+
+  // Summary text sizes
+  .space-y-4.mb-6 {
+    margin-bottom: 1rem !important;
+
+    .flex.justify-between {
+      font-size: 0.875rem !important;
+    }
+  }
+
+  // Total text
+  .text-lg.font-bold {
+    font-size: 1rem !important;
+  }
+
+  // Buttons full width
+  button.w-full {
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+    font-size: 0.9375rem !important;
+  }
+
+  // Additional info section
+  .mt-6.pt-6.border-t {
+    margin-top: 1rem !important;
+    padding-top: 1rem !important;
+
+    .text-sm {
+      font-size: 0.8125rem !important;
+    }
+  }
+
+  // Spacer div - hide on mobile
+  .w-48:last-child {
+    display: none !important;
+  }
+}

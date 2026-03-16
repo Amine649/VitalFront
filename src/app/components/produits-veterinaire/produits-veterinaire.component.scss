@@ -189,3 +189,176 @@ h2 {
     font-size: 16px !important;
   }
 }
+
+// ========== MOBILE RESPONSIVENESS ==========
+@media (max-width: 768px) {
+  // Hero section mobile
+  .category-hero-section {
+    padding: 2rem 1rem !important;
+    min-height: auto !important;
+    
+    // Hide decorative blobs on mobile
+    .animate-blob {
+      display: none !important;
+    }
+  }
+  
+  // Hero content
+  .hero-heading-fixed {
+    font-size: 1.75rem !important;
+    line-height: 1.3 !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  .hero-text-fixed {
+    font-size: 0.9375rem !important;
+    line-height: 1.5 !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  // Buttons
+  button, .btn {
+    width: 100% !important;
+    padding: 0.875rem 1.5rem !important;
+    font-size: 0.9375rem !important;
+  }
+  
+  // Hero image
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+  
+  // Center hero images on mobile
+  .category-hero-section {
+    .w-full.md\:w-1\/2.relative {
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+    }
+
+    // Override the translate and justify-end containers
+    [class*="translate-x"],
+    [class*="justify-end"] {
+      transform: none !important;
+      justify-content: center !important;
+    }
+
+    img[src*="Cat.png"],
+    img[src*="Dog.png"],
+    img[src*="complement_chat"],
+    img[src*="complement_chien"],
+    img[src*="test_rapide"] {
+      width: 100% !important;
+      max-width: 380px !important;
+      margin: 0 auto !important;
+      display: block !important;
+    }
+  }
+  
+  // Product grid - 2 columns on mobile (NOT footer grid)
+  section .grid,
+  .products-section .grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+  }
+
+  // Footer grid stays single column on mobile
+  footer .grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+    text-align: center !important;
+  }
+
+  // Footer items centered on mobile
+  footer .flex.items-center.justify-center.md\:justify-start {
+    justify-content: center !important;
+  }
+
+  footer .flex.justify-center.md\:justify-start {
+    justify-content: center !important;
+  }
+
+  footer ul.space-y-3,
+  footer ul.space-y-4 {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  
+  // Product cards
+  .product-card {
+    padding: 0.75rem !important;
+    
+    h3 {
+      font-size: 0.875rem !important;
+    }
+    
+    p {
+      font-size: 0.75rem !important;
+    }
+    
+    .text-lg {
+      font-size: 1rem !important;
+    }
+  }
+  
+  // Filters and search
+  .flex.gap-4 {
+    flex-direction: column !important;
+    gap: 0.75rem !important;
+  }
+  
+  // Pagination
+  .pagination {
+    button {
+      width: auto !important;
+      min-width: 2.5rem !important;
+      padding: 0.5rem !important;
+    }
+  }
+  
+  // Back button
+  .flex.items-center.gap-2 {
+    font-size: 0.875rem !important;
+  }
+  
+  // Typography
+  h1, h2 {
+    font-size: 1.5rem !important;
+  }
+  
+  h3 {
+    font-size: 1.125rem !important;
+  }
+  
+  // Spacing
+  .py-12 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+  
+  .px-8 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  .gap-8 {
+    gap: 1rem !important;
+  }
+  
+  .mb-8 {
+    margin-bottom: 1rem !important;
+  }
+  
+  .mb-12 {
+    margin-bottom: 1.5rem !important;
+  }
+}
+
+// ========== FOOTER Z-INDEX ==========
+// Ensure footer always appears above sidebar
+footer {
+  position: relative;
+  z-index: 9999 !important;
+}

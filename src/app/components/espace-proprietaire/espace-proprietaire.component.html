@@ -127,24 +127,21 @@ Notre gamme repose sur un équilibre nutritionnel faible en glucides et riche en
             <div *ngIf="selectedSousCategory === 'Aliment'" class="relative transform transition-transform duration-500">
               <img src="assets/images/Cat.png" 
                 alt="Chat"
-                style="width: 650px; max-width: 130%;"
-                class="w-full h-auto object-cover transform scale-110 hover:scale-100 transition-transform duration-700 drop-shadow-2xl">
+                class="w-full max-w-[300px] md:max-w-[650px] h-auto object-cover transform md:scale-110 hover:scale-100 transition-transform duration-700 drop-shadow-2xl mx-auto">
             </div>
 
             <!-- Complément Image -->
-            <div *ngIf="selectedSousCategory === 'Complément'" class="relative transform transition-transform duration-500 translate-y-12">
+            <div *ngIf="selectedSousCategory === 'Complément'" class="relative transform transition-transform duration-500 md:translate-y-12">
               <img src="assets/images/complement_chat.png" 
                 alt="Chat"
-                style="width: 540px; max-width: 130%;"
-                class="w-full h-auto object-cover transform scale-110 hover:scale-100 transition-transform duration-700 drop-shadow-2xl">
+                class="w-full max-w-[280px] md:max-w-[540px] h-auto object-cover transform md:scale-110 hover:scale-100 transition-transform duration-700 drop-shadow-2xl mx-auto">
             </div>
 
             <!-- Test rapide Image -->
-            <div *ngIf="selectedSousCategory === 'Test rapide'" class="relative transform transition-transform duration-500 translate-y-12">
+            <div *ngIf="selectedSousCategory === 'Test rapide'" class="relative transform transition-transform duration-500 md:translate-y-12">
               <img src="assets/images/test_rapide_chat.png" 
                 alt="Chat"
-                style="width: 475px; max-width: 130%;"
-                class="w-full h-auto object-cover transform scale-110 hover:scale-100 transition-transform duration-700 drop-shadow-2xl">
+                class="w-full max-w-[260px] md:max-w-[475px] h-auto object-cover transform md:scale-110 hover:scale-100 transition-transform duration-700 drop-shadow-2xl mx-auto">
             </div>
 
           
@@ -261,24 +258,21 @@ besoins de votre Chien, carnivore depuis toujours !
             <div *ngIf="selectedSousCategory === 'Aliment'" class="relative transform transition-transform duration-500">
               <img src="assets/images/Dog.png" 
                 alt="Chien"
-                style="width: 680px; max-width: 900%;"
-                class="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700 drop-shadow-2xl">
+                class="w-full max-w-[320px] md:max-w-[680px] h-auto object-cover transform hover:scale-105 transition-transform duration-700 drop-shadow-2xl mx-auto">
             </div>
 
             <!-- Complément Image -->
-            <div *ngIf="selectedSousCategory === 'Complément'" class="relative transform transition-transform duration-500 translate-x-20">
+            <div *ngIf="selectedSousCategory === 'Complément'" class="relative transform transition-transform duration-500 md:translate-x-20">
               <img src="assets/images/complement_chien.png" 
                 alt="Chien"
-                style="width: 470px; max-width: 900%;"
-                class="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700 drop-shadow-2xl">
+                class="w-full max-w-[260px] md:max-w-[470px] h-auto object-cover transform hover:scale-105 transition-transform duration-700 drop-shadow-2xl mx-auto">
             </div>
 
             <!-- Test rapide Image -->
-            <div *ngIf="selectedSousCategory === 'Test rapide'" class="relative transform transition-transform duration-500 translate-x-20">
+            <div *ngIf="selectedSousCategory === 'Test rapide'" class="relative transform transition-transform duration-500 md:translate-x-20">
               <img src="assets/images/test_rapide_chien.png" 
                 alt="Chien"
-                style="width: 470px; max-width: 900%;"
-                class="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700 drop-shadow-2xl">
+                class="w-full max-w-[260px] md:max-w-[470px] h-auto object-cover transform hover:scale-105 transition-transform duration-700 drop-shadow-2xl mx-auto">
             </div>
 
             <!-- Floating Badge -->
@@ -335,7 +329,7 @@ besoins de votre Chien, carnivore depuis toujours !
             
             <!-- Image without container - just the image itself -->
             <img src="assets/images/CatDogFriend.png" alt="Chien et Chat"
-              class="w-[105%] max-w-none h-auto object-contain opacity-100 transform scale-110 hover:scale-115 transition-transform duration-700 pointer-events-none">
+              class="w-full max-w-[280px] md:max-w-[500px] lg:w-[105%] lg:max-w-none h-auto object-contain opacity-100 transform md:scale-110 hover:scale-105 md:hover:scale-115 transition-transform duration-700 pointer-events-none mx-auto">
           </div>
         </div>
       </div>
@@ -350,14 +344,14 @@ besoins de votre Chien, carnivore depuis toujours !
     <div class="absolute bottom-0 right-1/4 w-32 h-32 bg-red-200 rounded-full blur-3xl"></div>
   </div>
   <div class="container max-w-7xl mx-auto px-4 relative z-10">
-    <div class="flex items-center justify-center gap-4">
-      <div class="flex-grow h-px bg-gradient-to-r from-transparent via-gray-300 to-gray-300 max-w-md"></div>
-      <div class="flex items-center gap-3">
+    <div class="flex flex-row items-center justify-center gap-2 md:gap-4" style="flex-direction: row !important;">
+      <div class="hidden md:block flex-grow h-px bg-gradient-to-r from-transparent via-gray-300 to-gray-300 max-w-md"></div>
+      <div class="flex flex-row items-center gap-3" style="flex-direction: row !important; display: flex !important;">
         <div class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></div>
         <div class="w-3 h-3 rounded-full bg-red-400 animate-pulse" style="animation-delay: 0.2s;"></div>
         <div class="w-2 h-2 rounded-full bg-blue-400 animate-pulse" style="animation-delay: 0.4s;"></div>
       </div>
-      <div class="flex-grow h-px bg-gradient-to-l from-transparent via-gray-300 to-gray-300 max-w-md"></div>
+      <div class="hidden md:block flex-grow h-px bg-gradient-to-l from-transparent via-gray-300 to-gray-300 max-w-md"></div>
     </div>
   </div>
 </div>
@@ -683,7 +677,7 @@ besoins de votre Chien, carnivore depuis toujours !
       </h2>
       <div class="w-24 h-1 bg-vet-blue mx-auto"></div>
     </div>
-    <p class="text-fixed text-gray-700 mx-auto whitespace-nowrap">
+    <p class="text-fixed text-gray-700 mx-auto px-4 md:whitespace-nowrap">
       Notre gamme repose sur un équilibre nutritionnel faible en glucides et riche en protéines adapté aux besoins de votre chien, carnivore depuis toujours !
     </p>
   </div>
@@ -1025,8 +1019,8 @@ besoins de votre Chien, carnivore depuis toujours !
         <div class="bg-gradient-to-br from-gray-50 to-white rounded-2xl shadow-xl p-6 md:p-8 border-t-4 max-w-5xl mx-auto" [ngClass]="selectedCategory === 'Chat' ? 'border-[#74C375]' : 'border-[#a01867]'" >
           
           <!-- Header with Icon -->
-          <div class="flex items-center gap-3" style="margin-bottom: 2rem;">
-            <div [ngClass]="selectedCategory === 'Chat' ? 'bg-[#74C375]' : 'bg-[#a01867]'" class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+          <div class="flex flex-col md:flex-row items-center gap-3 text-center md:text-left" style="margin-bottom: 2rem;">
+            <div [ngClass]="selectedCategory === 'Chat' ? 'bg-[#74C375]' : 'bg-[#a01867]'" class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg mx-auto md:mx-0">
               <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
               </svg>
@@ -1310,11 +1304,11 @@ besoins de votre Chien, carnivore depuis toujours !
 
   
 
-  <!-- Products Grid - Fixed 7 per row, narrow cards -->
+  <!-- Products Grid - Responsive (2 per line on mobile) -->
   <div class="mb-8">
-    <div class="grid gap-3" style="grid-template-columns: repeat(7, 200px); justify-content: center;">
+    <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-7 gap-2 md:gap-3 justify-items-center px-2 md:px-0">
       <div *ngFor="let product of getPaginatedProducts(); trackBy: trackByProductId"
-        class="bg-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 product-card overflow-hidden flex flex-col"
+        class="bg-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 product-card overflow-hidden flex flex-col w-full max-w-[200px]"
         [class.highlighted-product]="highlightedProductId === product.id">
 
       <!-- Product Image -->

@@ -731,7 +731,12 @@ h2 {
   line-height: 1.2 !important;
   
   @media (max-width: 768px) {
-    font-size: 28px !important;
+    font-size: 24px !important;
+    padding: 0 1.5rem;
+    text-align: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
   }
 }
 
@@ -740,6 +745,165 @@ h2 {
   line-height: 1.6 !important;
   
   @media (max-width: 768px) {
-    font-size: 16px !important;
+    font-size: 14px !important;
+    padding: 0 1.5rem;
+    text-align: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+}
+
+// ========== MOBILE RESPONSIVENESS & ZOOM STABILITY ==========
+
+// Prevent zoom from breaking layout
+* {
+  box-sizing: border-box;
+}
+
+// Hero section mobile fixes
+.category-hero-section {
+  overflow-x: hidden !important; // Prevent horizontal scroll
+  
+  @media (max-width: 768px) {
+    padding: 2rem 0 !important;
+    
+    // Ensure container doesn't overflow
+    .container {
+      max-width: 100vw;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    
+    // Fix text wrapping
+    p, h2, span {
+      max-width: 100%;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+    
+    // Hide ALL decorative blobs on mobile for performance and prevent overflow
+    .animate-blob,
+    .absolute.top-0.right-0,
+    .absolute.top-10,
+    .absolute.right-10,
+    .absolute.right-20,
+    .absolute.-bottom-8,
+    .bg-blue-50\/50,
+    .bg-blue-100,
+    .bg-indigo-100,
+    .bg-yellow-200,
+    .bg-blue-200,
+    .bg-pink-200,
+    .bg-purple-200,
+    .bg-green-200 {
+      display: none !important;
+    }
+    
+    // Adjust back button for mobile
+    .absolute.top-6 {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      margin-bottom: 1rem;
+      padding: 0 1rem;
+      
+      span {
+        font-size: 0.875rem !important;
+      }
+    }
+    
+    // Ensure images don't overflow
+    img {
+      max-width: 90% !important;
+      height: auto !important;
+      margin: 0 auto;
+    }
+    
+    // Prevent any translate transforms on mobile
+    .md\:translate-x-16,
+    .md\:translate-y-12,
+    .-translate-x-20 {
+      transform: none !important;
+    }
+  }
+}
+
+// Image responsiveness
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+// Button mobile fixes
+@media (max-width: 640px) {
+  button:not(.close-btn), .btn {
+    padding: 0.75rem 1.25rem !important;
+    font-size: 0.875rem !important;
+    white-space: normal !important;
+    
+    &.px-8 {
+      padding-left: 1.25rem !important;
+      padding-right: 1.25rem !important;
+    }
+  }
+  
+  // Stack feature badges on mobile
+  .flex.gap-3, .flex.gap-4 {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    
+    span {
+      font-size: 0.75rem !important;
+    }
+  }
+}
+
+// Product grid mobile fixes
+@media (max-width: 640px) {
+  .products-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+    padding: 0 1rem;
+  }
+  
+  .blog-grid-fixed {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+    max-width: 100% !important;
+    padding: 0 1rem;
+  }
+  
+  .product-card {
+    max-width: 100%;
+  }
+}
+
+// Prevent horizontal scroll
+body {
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%; // Prevent iOS text zoom
+  -moz-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+// Touch-friendly targets on mobile
+@media (max-width: 768px) {
+  button, a:not(.no-min), .clickable {
+    min-height: 44px;
+  }
+}
+
+// Section spacing mobile
+@media (max-width: 768px) {
+  .section-spacing {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+  
+  .py-12, .py-16, .py-20 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
   }
 }

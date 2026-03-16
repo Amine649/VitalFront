@@ -1,13 +1,14 @@
 <section class="ou-trouver-section">
   <div class="container">
     <!-- Back Button -->
-    <div class="mb-6">
+    <div class="mb-4 md:mb-6">
       <button (click)="navigateBack()"
-        class="flex items-center text-vet-blue hover:text-blue-700 font-semibold transition-colors duration-200 text-lg">
-        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        class="flex items-center text-vet-blue hover:text-blue-700 font-semibold transition-colors duration-200 text-base md:text-lg">
+        <svg class="w-5 h-5 md:w-6 md:h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
         </svg>
-        Retour à l'Espace Propriétaire
+        <span class="hidden sm:inline">Retour à l'Espace Propriétaire</span>
+        <span class="sm:hidden">Retour</span>
       </button>
     </div>
 
@@ -84,14 +85,13 @@
             </div>
 
             <!-- Map Info -->
-            <div class="px-4 py-3 bg-green-50 border-t border-green-100">
-              <div class="flex items-center justify-center text-sm text-green-800">
+            <div class="px-3 py-2 md:px-4 md:py-3 bg-green-50 border-t border-green-100">
+              <div class="flex items-center justify-center text-xs md:text-sm text-green-800">
                 <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                <span class="text-center"><strong>{{ filteredLocations.length }} cabinet(s) affiché(s) sur la
-                    carte.</strong> Cliquez sur les marqueurs pour voir les détails de chaque cabinet.</span>
+                <span class="text-center"><strong>{{ filteredLocations.length }} cabinet(s) affiché(s).</strong> <span class="hidden sm:inline">Cliquez sur les marqueurs pour voir les détails de chaque cabinet.</span></span>
               </div>
             </div>
 

@@ -59,7 +59,7 @@ export class ProduitsVeterinaireComponent implements OnInit {
 
   // Infinite scroll properties
   currentPage = 1;
-  itemsPerPage = 15;
+  itemsPerPage = 10;
 
   Math = Math;
   highlightedProductId: number | null = null;

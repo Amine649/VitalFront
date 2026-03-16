@@ -76,7 +76,10 @@ export class EspaceProprietaireComponent implements OnInit {
     private productService: ProductService,
     private http: HttpClient,
     private imageErrorHandler: ImageErrorHandlerService
-  ) { }
+  ) {
+    // Set initial items per page based on screen size
+    this.updateItemsPerPage();
+  }
 
   ngOnInit() {
     // Load products from API
@@ -165,6 +168,30 @@ export class EspaceProprietaireComponent implements OnInit {
  @HostListener('window:scroll', ['$event'])
   onWindowScroll(): void {
     this.handleNavbarScroll();
+  }
+
+  /**
+   * Handle window resize to update items per page
+   */
+  @HostListener('window:resize', ['$event'])
+  onWindowResize(): void {
+    this.updateItemsPerPage();
+  }
+
+  /**
+   * Update items per page based on screen size
+   */
+  private updateItemsPerPage(): void {
+    if (typeof window !== 'undefined') {
+      const isMobile = window.innerWidth <= 768;
+      const newItemsPerPage = isMobile ? 10 : 15;
+      
+      // Only reset to page 1 if itemsPerPage actually changed
+      if (this.itemsPerPage !== newItemsPerPage) {
+        this.itemsPerPage = newItemsPerPage;
+        this.currentPage = 1; // Reset to first page when changing items per page
+      }
+    }
   }
 
   ngOnDestroy(): void {

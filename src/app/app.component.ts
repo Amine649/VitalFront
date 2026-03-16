@@ -24,8 +24,8 @@ export class AppComponent implements OnInit {
   cartItemsCount: number = 0;
   selectedProductFilter: string = 'tous';
   selectedSubType: string = '';
-  sidebarOpen: boolean = true;
-  produitsSidebarOpen: boolean = true;
+  sidebarOpen: boolean = this.isMobileView() ? false : true;
+  produitsSidebarOpen: boolean = this.isMobileView() ? false : true;
   showProfileDropdown: boolean = false;
   mobileMenuOpen: boolean = false;
   userFullName: string = '';
@@ -145,6 +145,30 @@ export class AppComponent implements OnInit {
     if (storedName) {
       this.userFullName = storedName;
     }
+    
+    // Set initial sidebar state based on screen size
+    this.updateSidebarStateForScreenSize();
+  }
+
+  // Check if current view is mobile
+  isMobileView(): boolean {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth <= 768;
+    }
+    return false;
+  }
+
+  // Update sidebar state based on screen size
+  updateSidebarStateForScreenSize(): void {
+    const isMobile = this.isMobileView();
+    this.sidebarOpen = !isMobile;
+    this.produitsSidebarOpen = !isMobile;
+  }
+
+  // Listen to window resize events
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any): void {
+    this.updateSidebarStateForScreenSize();
   }
 
   get isAdmin(): boolean {
@@ -189,7 +213,7 @@ export class AppComponent implements OnInit {
   }
 
   get showCart(): boolean {
-    return this.isEspaceProprietaire || this.isProduitsVeterinaire;
+    return this.isProduitsVeterinaire;
   }
 
   get shouldShowNavbar(): boolean {
@@ -270,6 +294,15 @@ export class AppComponent implements OnInit {
         queryParams: { animal: filter }
       });
     }
+    
+    // Close sidebar on mobile after selection
+    if (this.isMobileView()) {
+      if (this.isEspaceProprietaire) {
+        this.sidebarOpen = false;
+      } else if (this.isProduitsVeterinaire) {
+        this.produitsSidebarOpen = false;
+      }
+    }
   }
 
   selectSubType(type: string) {
@@ -305,10 +338,28 @@ export class AppComponent implements OnInit {
         });
       }
     }
+    
+    // Close sidebar on mobile after selection
+    if (this.isMobileView()) {
+      if (this.isEspaceProprietaire) {
+        this.sidebarOpen = false;
+      } else if (this.isProduitsVeterinaire) {
+        this.produitsSidebarOpen = false;
+      }
+    }
   }
 
   navigateToProductLocations() {
     this.router.navigate(['/ou-trouver-nos-produits']);
+    
+    // Close sidebar on mobile after navigation
+    if (this.isMobileView()) {
+      if (this.isEspaceProprietaire) {
+        this.sidebarOpen = false;
+      } else if (this.isProduitsVeterinaire) {
+        this.produitsSidebarOpen = false;
+      }
+    }
   }
 
   navigateToVetSpace() {
@@ -394,3 +445,4 @@ export class AppComponent implements OnInit {
     this.authService.logout('/login');
   }
 }
+

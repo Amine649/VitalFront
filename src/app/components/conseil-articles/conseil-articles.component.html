@@ -1,10 +1,11 @@
 <div class="min-h-screen flex flex-col bg-white relative">
   <!-- Background Image - Fixed at Top -->
-  <div class="absolute top-0 left-0 right-0 z-0 pointer-events-none" style="height: 464px;">
+  <div class="absolute top-0 left-0 right-0 z-0 pointer-events-none hero-bg-container">
     <img 
       src="assets/images/Nutrition.png" 
       alt="Background" 
-      style="width: 100%; height: 464px; object-fit: cover; object-position: top;"
+      class="hero-bg-img"
+      style="width: 100%; object-fit: cover; object-position: top;"
     />
   </div>
 
@@ -12,7 +13,7 @@
   <div class="flex-grow w-full relative z-10 flex flex-col items-center">
 
     <!-- Static Article Content -->
-    <article *ngIf="article && !isBlogPdf" class="w-full" style="margin-top: 464px; padding: 32px 16px 32px 160px; max-width: 1400px;">
+    <article *ngIf="article && !isBlogPdf" class="w-full article-wrapper" style="max-width: 1400px;">
       
       <!-- Back Button - aligned left with article content -->
       <div style="margin-bottom: 24px;" class="flex justify-start">
@@ -41,7 +42,7 @@
       </div>
 
       <!-- Article Title -->
-      <h1 style="font-size: 32px; font-weight: 700; margin-bottom: 16px; line-height: 1.2;" class="text-gray-900">
+      <h1 class="article-title text-gray-900">
         {{ article.title }}
       </h1>
 
@@ -68,7 +69,7 @@
     </article>
 
     <!-- Blog PDF Content -->
-    <article *ngIf="isBlogPdf && blogPdfData" class="w-full" style="margin-top: 464px; padding: 32px 16px 32px 160px; max-width: 1400px;">
+    <article *ngIf="isBlogPdf && blogPdfData" class="w-full article-wrapper" style="max-width: 1400px;">
       
       <!-- Back Button -->
       <div style="margin-bottom: 24px;" class="flex justify-start">
@@ -97,7 +98,7 @@
       </div>
 
       <!-- Article Title -->
-      <h1 style="font-size: 32px; font-weight: 700; margin-bottom: 16px; line-height: 1.2;" class="text-gray-900">
+      <h1 class="article-title text-gray-900">
         {{ blogPdfData.title }}
       </h1>
 

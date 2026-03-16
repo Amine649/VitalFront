@@ -34,6 +34,60 @@
   }
 }
 
+// Background image height
+.hero-bg-img {
+  height: 464px;
+}
+
+// Article wrapper - responsive padding
+.article-wrapper {
+  padding: 32px 16px 32px 160px;
+  margin-top: 464px;
+
+  @media (max-width: 768px) {
+    padding: 1rem 1rem 2rem 1rem !important;
+    margin-top: 160px !important;
+  }
+}
+
+// Article title - responsive
+.article-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  line-height: 1.2;
+
+  @media (max-width: 768px) {
+    font-size: 1.375rem;
+    margin-bottom: 12px;
+  }
+}
+
+// Background image - reduce height on mobile
+@media (max-width: 768px) {
+  .hero-bg-container {
+    height: 160px !important;
+  }
+
+  .hero-bg-img {
+    height: 160px !important;
+  }
+
+  // Article content text sizes
+  .article-content {
+    ::ng-deep {
+      h2 {
+        font-size: 1.125rem !important;
+      }
+
+      p {
+        font-size: 0.9375rem !important;
+        line-height: 1.6 !important;
+      }
+    }
+  }
+}
+
 // PDF viewer styling - render PDF as canvas without toolbar
 #pdf-container {
   width: 100%;
