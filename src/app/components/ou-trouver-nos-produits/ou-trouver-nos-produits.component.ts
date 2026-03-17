@@ -100,6 +100,8 @@ export class OuTrouverNosProduitsComponent implements OnInit, AfterViewInit {
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors',
+    //  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+      //  attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/">CARTO</a>',
         maxZoom: 19
       }).addTo(this.map);
     }
@@ -431,8 +433,8 @@ export class OuTrouverNosProduitsComponent implements OnInit, AfterViewInit {
       if (!this.modalMap) {
         this.modalMap = L.map('modalMap').setView([36.8, 10.2], 10);
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '© OpenStreetMap contributors',
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+          attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/">CARTO</a>',
           maxZoom: 19
         }).addTo(this.modalMap);
 

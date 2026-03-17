@@ -3,7 +3,7 @@
 :host {
   display: block;
   min-height: 100vh;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Geometria', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 
@@ -582,23 +582,42 @@ h2 {
 .text-fixed {
   font-size: 16px !important;
   line-height: 1.5 !important;
+  font-family: 'Geometria', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+
+  ::ng-deep span, span {
+    font-family: 'Geometria', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+    font-size: inherit !important;
+  }
 }
 
 .heading-fixed {
   font-size: 32px !important;
   line-height: 1.2 !important;
+  font-weight: 700 !important;
   
   @media (max-width: 768px) {
-    font-size: 24px !important;
+    font-size: 28px !important;
   }
 }
 
 .subheading-fixed {
   font-size: 24px !important;
   line-height: 1.3 !important;
+  font-weight: 700 !important;
+
+  ::ng-deep span, span {
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    font-family: 'Geometria', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+    line-height: 1.3 !important;
+  }
   
   @media (max-width: 768px) {
-    font-size: 20px !important;
+    font-size: 28px !important;
+
+    ::ng-deep span, span {
+      font-size: 28px !important;
+    }
   }
 }
 
@@ -905,5 +924,15 @@ body {
   .py-12, .py-16, .py-20 {
     padding-top: 2rem !important;
     padding-bottom: 2rem !important;
+  }
+}
+
+// Force subheading spans to match h3 size on mobile
+@media (max-width: 768px) {
+  :host ::ng-deep .subheading-fixed span {
+    font-size: 28px !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+    font-family: 'Geometria', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
   }
 }

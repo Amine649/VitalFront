@@ -196,11 +196,33 @@
 .hero-image-wrapper-interactive {
   position: relative;
   width: 100%;
-  max-width: 500px;
   cursor: pointer;
   overflow: visible;
-  padding: 40px; // Extra space for movement
-  margin: -40px; // Compensate padding
+
+  // Desktop: allow movement padding
+  @media (min-width: 769px) {
+    max-width: 500px;
+    padding: 40px;
+    margin: -40px;
+  }
+
+  // Mobile: fully centered, no offset
+  @media (max-width: 768px) {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+
+    img {
+      margin-left: auto !important;
+      margin-right: auto !important;
+      display: block !important;
+      max-width: 320px !important;
+      width: 100% !important;
+    }
+  }
   
   .hero-image-chase {
     width: 100%;
