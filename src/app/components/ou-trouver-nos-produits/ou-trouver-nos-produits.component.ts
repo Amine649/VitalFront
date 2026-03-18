@@ -447,7 +447,9 @@ export class OuTrouverNosProduitsComponent implements OnInit, AfterViewInit {
               <div style="min-width: 200px;">
                 <h3 style="margin: 0 0 8px 0; font-size: 14px; font-weight: bold;">${location.name}</h3>
                 <p style="margin: 4px 0; font-size: 12px;">📍 ${location.address}, ${location.city}</p>
+                <!---
                 <p style="margin: 4px 0; font-size: 12px;">📞 ${location.phone}</p>
+                --->
                 ${location.featured ? '<span style="background: #10b981; color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px;">⭐ Cabinet Principal</span>' : ''}
               </div>
             `);

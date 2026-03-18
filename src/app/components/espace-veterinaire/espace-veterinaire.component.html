@@ -17,8 +17,7 @@
       class="absolute top-1/2 left-1/2 w-48 h-48 bg-gradient-to-br from-blue-300/30 to-green-300/30 rounded-full blur-3xl animate-blob animation-delay-4000">
     </div>
 
-    <div class="relative z-10 flex flex-col items-center text-center" style="width: 600px !important; margin-top: 60px !important;">
-      
+    <div class="relative z-10 flex flex-col items-center text-center" style="width: 600px !important; margin-top: 33px !important;">
         <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg mb-6 hover:shadow-xl transition-all hover:scale-105 cursor-pointer">
         <span class="flex h-2 w-2">
           <span class="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-white opacity-75"></span>
@@ -829,20 +828,20 @@
     
     <!-- Decorative Header -->
     <div class="flex items-center justify-center mb-12">
-      <div class="flex-grow border-t-2 border-green-200 max-w-md"></div>
-      <div class="mx-6 flex items-center space-x-2">
+      <div class="hidden md:block flex-grow border-t-2 border-green-200 max-w-md"></div>
+      <div class="mx-6 flex items-center space-x-2 justify-center">
         <span class="text-3xl">✨</span>
-        <span class="text-gray-600 font-semibold">Votre Identité, Votre Logiciel</span>
+        <span class="text-gray-600 font-semibold text-center">Votre Identité, Votre Logiciel</span>
         <span class="text-3xl">✨</span>
       </div>
-      <div class="flex-grow border-t-2 border-green-200 max-w-md"></div>
+      <div class="hidden md:block flex-grow border-t-2 border-green-200 max-w-md"></div>
     </div>
 
     <!-- Blue Banner -->
     <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl p-8 mb-12 shadow-xl">
-      <div class="flex items-center gap-4 mb-4">
+      <div class="flex items-center gap-4 mb-4 flex-col md:flex-row">
         <div class="text-5xl">🎨</div>
-        <h2 class="subheading-fixed text-white">
+        <h2 class="subheading-fixed text-white text-center md:text-left">
           PERSONNALISEZ LE LOGICIEL AVEC VOTRE NOM ET VOTRE LOGO
         </h2>
       </div>
@@ -858,7 +857,7 @@
       
       <!-- LEFT: Configuration Minimale -->
       <div class="bg-white rounded-2xl shadow-xl p-10 border border-gray-200 flex flex-col">
-        <div class="flex items-center gap-4 mb-8">
+        <div class="flex items-center gap-4 mb-8 flex-col md:flex-row text-center md:text-left">
           <div class="text-5xl">⚙️</div>
           <h3 class="heading-fixed text-gray-900">CONFIGURATION MINIMALE REQUISE :</h3>
         </div>
@@ -916,7 +915,7 @@
 
       <!-- RIGHT: Video Demonstration -->
       <div class="bg-white rounded-2xl shadow-xl p-10 border border-gray-200 flex flex-col">
-        <div class="flex items-center gap-4 mb-8">
+        <div class="flex items-center gap-4 mb-8 flex-col md:flex-row text-center md:text-left">
           <div class="text-5xl">🎥</div>
           <h3 class="heading-fixed text-gray-900">Vidéo de Démonstration</h3>
         </div>
@@ -1280,7 +1279,7 @@
         <h3 class="text-lg font-bold mb-6 text-blue-400">Liens rapides</h3>
         <ul class="space-y-3">
           <li>
-            <a routerLink="/" class="text-gray-300 hover:text-white hover:translate-x-1 transition-all duration-200 inline-flex items-center group">
+            <a routerLink="/espace-veterinaire" class="text-gray-300 hover:text-white hover:translate-x-1 transition-all duration-200 inline-flex items-center group">
               <svg class="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
               </svg>
