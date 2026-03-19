@@ -670,7 +670,6 @@ export class AdminCabinetsComponent implements OnInit {
             },
             error: (error) => {
                 this.uploadingExcel = false;
-                console.error('Error uploading Excel file:', error);
                 this.uploadError = error.error?.message || 'Erreur lors de l\'importation du fichier Excel';
                 this.clearUploadErrorAfterDelay();
             }

@@ -1,4 +1,4 @@
-<section class="ou-trouver-section">
+﻿<section class="ou-trouver-section">
   <div class="container">
     <!-- Back Button -->
     <div class="mb-4 md:mb-6">
@@ -14,8 +14,8 @@
 
     <!-- Hero Section -->
     <div class="hero-section">
-      <h1 class="page-title">NOS ALLIÉS PRÉCIEUX</h1>
-      <p class="page-description">
+      <h1 class="page-title text-3xl md:text-2xl font-bold mb-6" style="color: #42636E; line-height: 1.3;">NOS ALLIÉS PRÉCIEUX</h1>
+      <p class="page-description text-xl text-gray-700 leading-relaxed mb-8 text-center">
         Le vétérinaire praticien est notre partenaire essentiel
       </p>
     </div>
@@ -28,8 +28,8 @@
           <div class="card-icon">🏥</div>
         </div>
         <div class="card-content">
-          <h2 class="card-title">OÙ TROUVER NOS PRODUITS</h2>
-          <p class="card-description text-justify">
+          <h2 class="card-title text-3xl md:text-2xl font-bold mb-6" style="color: #42636E; line-height: 1.3;">OÙ TROUVER NOS PRODUITS ?</h2>
+          <p class="card-description text-xl text-gray-700 leading-relaxed mb-8 text-justify">
             Nous ne proposons pas de vente directe aux propriétaires. Pour toute question en lien avec un produit , une commande, vous devez vous adresser au vétérinaires le plus proche de vous .
           </p>
           <div class="card-features">
@@ -46,8 +46,8 @@
           <div class="card-icon">🛍️</div>
         </div>
         <div class="card-content">
-          <h2 class="card-title">CONSULTATION DIÉTÉTIQUE</h2>
-          <p class="card-description text-justify">
+          <h2 class="card-title text-3xl md:text-2xl font-bold mb-6" style="color: #42636E; line-height: 1.3;">CONSULTATION DIÉTÉTIQUE</h2>
+          <p class="card-description text-xl text-gray-700 leading-relaxed mb-8 text-justify">
             Une consultation diététique est un processus personnalisé qui aide à adapter l’alimentation au besoins spécifiques de votre compagnon. VitalNutri vous indique le bon choix
           </p>
           <div class="card-features">
@@ -61,7 +61,7 @@
 
     <!-- Map and Locations Section -->
     <div class="map-locations-section">
-      <h2 class="section-title">🗺️ TROUVEZ UNE CLINIQUE VÉTÉRINAIRE PRÈS DE CHEZ VOUS</h2>
+      <h2 class="section-title text-3xl md:text-2xl font-bold mb-6" style="color: #42636E; line-height: 1.3;">🗺️ TROUVEZ UNE CLINIQUE VÉTÉRINAIRE PRÈS DE CHEZ VOUS 🗺️</h2>
 
       <div class="map-content-grid">
         <!-- Interactive Map -->
@@ -101,7 +101,7 @@
         <!-- Locations List -->
         <div class="locations-container">
           <div class="locations-header">
-            <h3 class="locations-title">POINTS DE VENTE ({{ filteredLocations.length }})</h3>
+            <h3 class="locations-title text-3xl md:text-2xl font-bold mb-6" style="color: #42636E; line-height: 1.3;">POINTS DE VENTE ({{ filteredLocations.length }})</h3>
             <div class="filter-buttons">
               <button class="filter-btn" [class.active]="selectedFilter === 'all'"
                 (click)="filterLocations('all')">Tous</button>
@@ -205,15 +205,15 @@
 
     <!-- Call to Action Section -->
     <div class="cta-section">
-      <div class="cta-card">
+      <div class="cta-card ">
         <div class="cta-content">
-          <h3 class="cta-title">Vous êtes un vétérinaire ?</h3>
-          <p class="cta-text">
+          <h3 class="cta-title ">Vous êtes un vétérinaire ?</h3>
+          <p class="cta-text text-xl text-white-700 leading-relaxed mb-8 text-justify">
             Rejoignez notre communauté de vétérinaires et découvrez une application innovante
             conçue spécialement pour simplifier votre pratique quotidienne et améliorer
             la qualité des soins pour vos patients à quatre pattes.
           </p>
-          <button class="btn-cta" (click)="navigateToVetSpace()">Découvrir l'Espace Vétérinaire</button>
+          <button class="btn-cta"  (click)="navigateToVetSpace()">Découvrir l'Espace Vétérinaire</button>
         </div>
         <div class="cta-icon">👩‍⚕️</div>
       </div>

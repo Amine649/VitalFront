@@ -56,7 +56,7 @@ export class EspaceProprietaireComponent implements OnInit {
 
   // Blog pagination
   blogCurrentPage = 1;
-  blogItemsPerPage = 2;
+  blogItemsPerPage = 3;
   blogPosts: BlogPost[] = [];
   isLoadingBlogs = false;
   blogError = '';
@@ -284,6 +284,8 @@ export class EspaceProprietaireComponent implements OnInit {
       this.selectedCategory = cat;
       this.selectedSousCategory = null;
       this.selectedSubSubCategory = null;
+      this.blogCurrentPage = 1;
+      this.loadBlogPosts(cat);
     }
   }
 
@@ -402,6 +404,7 @@ export class EspaceProprietaireComponent implements OnInit {
   loadBlogPosts(animal?: string): void {
     this.isLoadingBlogs = true;
     this.blogError = '';
+    this.blogCurrentPage = 1;
 
     // Determine the API endpoint based on animal selection
     let endpoint: string;

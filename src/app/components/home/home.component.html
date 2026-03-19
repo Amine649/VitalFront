@@ -9,27 +9,30 @@
       <!-- Text side -->
       <div class="fade-in w-full md:w-1/2 text-center">
         <div class="flex justify-center mb-4">
-          <div class="inline-block px-3 py-2 md:px-4 md:py-2 rounded-full bg-blue-500">
+          <div class="inline-block px-3 py-2 md:px-4 md:py-2 rounded-full" style="background-color: #42636E;">
             <span class="text-white font-bold text-xs md:text-sm uppercase tracking-wider">Plateforme De Nutrition Vétérinaire</span>
           </div>
         </div>
-        <h1 class="font-bold mb-4 leading-tight text-blue-500" style="font-size: clamp(28px, 8vw, 47px);">
+        <h1 class="font-bold mb-4 leading-tight" style="font-size: clamp(28px, 8vw, 47px); color: #42636E;">
           Nutrition 360°
         </h1>
-        <p class="mb-6 text-gray-600 leading-relaxed px-2 md:px-0" style="font-size: clamp(16px, 4vw, 23px);">
+        <p class="mb-8 text-gray-700 leading-relaxed px-2 md:px-0 text-justify text-xl text-center">
           Aller plus loin que la prise en charge nutritionnelle classique
         </p>
 
         <!-- Button for Veterinarians -->
         <div class="mb-6 flex justify-center">
           <button (click)="navigateToVetSpace()"
-            class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl inline-flex items-center text-sm md:text-base justify-center">
+            class="text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl inline-flex items-center text-sm md:text-base justify-center"
+            style="background-color: #42636E;"
+            onmouseover="this.style.backgroundColor='#354f58'"
+            onmouseout="this.style.backgroundColor='#42636E'">
             <svg class="w-5 h-5 md:w-6 md:h-6 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
               </path>
             </svg>
-            <span class="whitespace-nowrap">Vous êtes vétérinaire ? Découvrez votre espace</span>
+            <span class="whitespace-nowrap" >Vous êtes vétérinaire ? Découvrez votre espace</span>
           </button>
         </div>
       </div>
@@ -86,15 +89,15 @@
         <svg class="w-8 h-8 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
         </svg>
-        <span class="text-lg font-bold text-gray-700">TOUS CE DONT VOUS AVEZ BESOIN</span>
+            <span class="text-lg font-bold text-gray-700">TOUS CE DONT VOUS AVEZ BESOIN</span>
         <svg class="w-8 h-8 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
         </svg>
       </div>
-      <h2 class="text-2xl md:text-3xl font-bold mb-6" style="color: #2c3e50;">
+      <h2 class="text-3xl md:text-2xl font-bold mb-6" style="color: #42636E; line-height: 1.3;">
         BÉNÉFICIER DE LA QUALITÉ, DES CONSEILS ET DE L'ACCOMPAGNEMENT VÉTÉRINAIRE ?
       </h2>
-      <p class="text-xl text-gray-600 mx-auto text-justify" style="max-width: 1900px; padding-left: 2px; padding-right: 2px;">
+        <p class="text-xl text-gray-700 leading-relaxed mb-8 text-justify mx-auto" style="max-width: 1900px; padding-left: 2px; padding-right: 2px;">
           Le choix de l'alimentation de votre compagnon ne devrait pas être difficile. Si vous avez besoin d'aide pour faire votre choix parmi les nombreuses possibilités qui s'offrent à vous, commencez par réduire les options en fonction de la tranche d'âge de votre compagnon. Ensuite, consultez votre vétérinaire pour tout aspect nutritionnel. Le vétérinaire vous aider à faire votre choix via notre plateforme complète qui combine expertise vétérinaire, nutrition premium et technologie innovante pour la santé de votre compagnon
       </p>
     </div>
@@ -107,24 +110,24 @@
     <!-- Card -->
     <div class="group bg-white rounded-2xl p-4 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border-2 border-transparent hover:border-blue-400 transform hover:-translate-y-2 relative flex-1 min-w-0">
       <div class="absolute top-3 right-3 md:top-6 md:right-6">
-        <span class="bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xs md:text-sm font-bold px-3 py-1 md:px-4 md:py-2 rounded-full shadow-lg">
-          Nouveau
-        </span>
+       <span class="text-white text-xs md:text-sm font-bold px-3 py-1 md:px-4 md:py-2 rounded-full shadow-lg" style="background-color: #42636E">
+        Nouveau
+      </span>
       </div>
       <div class="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-8 pt-8 md:pt-0">
         <div class="flex-shrink-0">
-          <div class="w-20 h-20 md:w-28 md:h-28 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
-            <svg class="w-10 h-10 md:w-14 md:h-14 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-            </svg>
-          </div>
+        <div class="w-20 h-20 md:w-28 md:h-28 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg" style="background: linear-gradient(to bottom right, #42636E, #2a4148)">
+          <svg class="w-10 h-10 md:w-14 md:h-14 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+          </svg>
+        </div>
         </div>
         <div class="flex-1 text-center md:text-left">
-          <h3 class="text-xl md:text-3xl font-bold mb-2 md:mb-3 text-blue-500 px-2 md:px-0">VOUS ÊTES VÉTÉRINAIRE ?</h3>
-          <h4 class="text-base md:text-xl font-semibold mb-3 md:mb-4 text-red-600 px-2 md:px-0">
+          <h3 class="text-3xl md:text-2xl font-bold mb-6 text-center md:text-left px-2 md:px-0" style="color: #42636E; line-height: 1.3;">VOUS ÊTES VÉTÉRINAIRE ?</h3>
+          <h4 class="text-base md:text-xl font-semibold mb-3 md:mb-4 text-blue-600 px-2 md:px-0">
             VitalNutri : Une nécessité pour gagner en efficacité !!!
           </h4>
-          <p class="text-gray-600 leading-relaxed text-sm md:text-base text-justify px-2 md:px-0">
+          <p class="text-xl text-gray-700 leading-relaxed mb-8 text-justify px-2 md:px-0">
             En clinique des animaux de compagnie et souhaitez en apprendre davantage sur la nutrition diététique, ses facettes, ses exigences, ses débouchés et les synergies avec les autres actes de la médicine préventive, nous mettons à votre disposition notre logiciel VitalNutri pour une meilleure vision de l'alimentation canine et féline et de l'évolution dans l'accompagnement en santé et le bien-être animal.
           </p>
         </div>
@@ -181,24 +184,24 @@
     <!-- Card -->
     <div class="group bg-white rounded-2xl p-4 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border-2 border-transparent hover:border-green-400 transform hover:-translate-y-2 relative flex-1 min-w-0">
       <div class="absolute top-3 right-3 md:top-6 md:right-6">
-        <span class="bg-gradient-to-r from-green-500 to-green-600 text-white text-xs md:text-sm font-bold px-3 py-1 md:px-4 md:py-2 rounded-full shadow-lg">
-          Premium
-        </span>
+        <span class="text-white text-xs md:text-sm font-bold px-3 py-1 md:px-4 md:py-2 rounded-full shadow-lg" style="background-color: #42636E">
+        Premium
+      </span>
       </div>
       <div class="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-8 pt-8 md:pt-0">
         <div class="flex-shrink-0">
-          <div class="w-20 h-20 md:w-28 md:h-28 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
-            <svg class="w-10 h-10 md:w-14 md:h-14 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-            </svg>
-          </div>
+          <div class="w-20 h-20 md:w-28 md:h-28 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg" style="background-color: #42636E">
+          <svg class="w-10 h-10 md:w-14 md:h-14 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+          </svg>
+        </div>
         </div>
         <div class="flex-1 text-center md:text-left">
-          <h3 class="text-xl md:text-3xl font-bold mb-2 md:mb-3 text-blue-500 px-2 md:px-0">VOUS ÊTES PROPRIÉTAIRE ?</h3>
+          <h3 class="text-3xl md:text-2xl font-bold mb-6 text-center md:text-left px-2 md:px-0" style="color: #42636E; line-height: 1.3;">VOUS ÊTES PROPRIÉTAIRE ?</h3>
           <h4 class="text-base md:text-xl font-semibold mb-3 md:mb-4 text-green-600 px-2 md:px-0">
             Procurer des bienfaits supplémentaires pour la santé !!!
           </h4>
-          <p class="text-gray-600 leading-relaxed text-sm md:text-base text-justify px-2 md:px-0">
+          <p class="text-xl text-gray-700 leading-relaxed mb-8 text-justify px-2 md:px-0">
             Si vous êtes parent d'un chat ou d'un chien, nous mettons à votre disposition une gamme complète qui offre une gestion nutritionnelle avancée grâce à son approche novatrice et de soins vétérinaires globaux, qui va au-delà de besoins physiologiques et la gestion de l'affection principale pour soutenir les affections concomitantes, rétablir la composition corporelle et procurer des bienfaits supplémentaires pour la santé.
           </p>
         </div>
@@ -340,7 +343,7 @@
     <div class="flex flex-col lg:flex-row gap-8">
       
       <!-- Left Sidebar Navigation - Sticky -->
-      <aside class="lg:w-64 flex-shrink-0">
+      <aside class="hidden lg:block lg:w-64 flex-shrink-0">
         <div class="sticky top-24 bg-gray-100 rounded-2xl p-6 h-[calc(100vh-8rem)]">
           
           <nav class="space-y-2">
@@ -469,17 +472,21 @@
 
 <!-- Section Caractéristiques Nutritionnelles – Chat  -->
     <section id="caracteristiques-nutritionnelles" class="mb-12">
-    <h2 class="text-4xl md:text-5xl font-bold mb-4 text-gray-800 text-center" style="color: rgb(59 130 246); line-height: 1.3;">– CARACTÉRISTIQUES NUTRITIONNELLES CHAT –</h2>    <div class="w-32 h-1 bg-vet-blue mx-auto mb-8"></div>
+    <div class="flex items-center gap-4 mb-6">
+      <div class="flex-grow h-0.5" style="background-color: #42636E;"></div>
+      <h2 class="text-3xl md:text-2xl font-bold text-center whitespace-nowrap" style="color: #42636E; line-height: 1.3;"> CARACTÉRISTIQUES NUTRITIONNELLES CHAT </h2>
+      <div class="flex-grow h-0.5" style="background-color: #42636E;"></div>
+    </div>
         
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       <!-- Chaton -->
       <div class="nutrition-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
         <div class="nutrition-image-wrapper">
-          <img src="assets/images/cat-kitten.jpg" alt="Chaton - Besoins nutritionnels" class="w-full h-64 object-cover">
+          <img src="assets/images/cat-kitten.png" alt="Chaton - Besoins nutritionnels" class="w-full h-64 object-cover">
         </div>
         <div class="p-8">
-          <h3 class="text-2xl font-bold mb-4 text-vet-blue text-center">CHATON</h3>
-          <p class="text-gray-600 text-base leading-relaxed text-justify">
+          <h3 class="text-3xl md:text-2xl font-bold mb-6 text-center" style="color: #42636E; line-height: 1.3;">CHATON</h3>
+          <p class="text-xl text-gray-700 leading-relaxed mb-8 text-justify">
             La demande en énergie peut aller d'un besoin 50 % plus élevé chez les chatons de 9 à 12 mois, jusqu'à 150 % plus élevé chez les chats jusqu'à 4 mois. Les chatons auront besoin de deux fois plus de calories dans leur nourriture par rapport à un adulte (selon leur poids).
           </p>
         </div>
@@ -488,11 +495,11 @@
       <!-- Adulte Entier -->
       <div class="nutrition-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
         <div class="nutrition-image-wrapper">
-          <img src="assets/images/cat-adult-entire.jpg" alt="Chat adulte entier - Besoins nutritionnels" class="w-full h-64 object-cover">
+          <img src="assets/images/cat-adult-entire.png" alt="Chat adulte entier - Besoins nutritionnels" class="w-full h-64 object-cover">
         </div>
         <div class="p-8">
-          <h3 class="text-2xl font-bold mb-4 text-vet-blue text-center">ADULTE ENTIER</h3>
-          <p class="text-gray-600 text-base leading-relaxed text-justify">
+          <h3 class="text-3xl md:text-2xl font-bold mb-6 text-center" style="color: #42636E; line-height: 1.3;">ADULTE ENTIER</h3>
+          <p class="text-xl text-gray-700 leading-relaxed mb-8 text-justify">
             À l'âge adulte, il est important de regarder la quantité de nourriture fournie. Les chats non stérilisés et en particulier ceux qui vont en extérieur ont besoin de consommer plus (protéines et graisses) que les chats stérilisés et/ou sédentaires.
           </p>
         </div>
@@ -501,11 +508,11 @@
       <!-- Adulte Stérilisé -->
       <div class="nutrition-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
         <div class="nutrition-image-wrapper">
-          <img src="assets/images/cat-adult-sterilized.jpg" alt="Chat adulte stérilisé - Besoins nutritionnels" class="w-full h-64 object-cover">
+          <img src="assets/images/cat-adult-sterilized.png" alt="Chat adulte stérilisé - Besoins nutritionnels" class="w-full h-64 object-cover">
         </div>
         <div class="p-8">
-          <h3 class="text-2xl font-bold mb-4 text-vet-blue text-center">ADULTE STÉRILISÉ</h3>
-          <p class="text-gray-600 text-base leading-relaxed text-justify">
+          <h3 class="text-3xl md:text-2xl font-bold mb-6 text-center" style="color: #42636E; line-height: 1.3;">ADULTE STÉRILISÉ</h3>
+          <p class="text-xl text-gray-700 leading-relaxed mb-8 text-justify">
             Les chats stérilisés ont des besoins énergétiques plus faibles en raison de la rareté des comportements liés à la reproduction. Les changements hormonaux réduisent également le taux métabolique. Il faut donc proposer des aliments moins caloriques.
           </p>
         </div>
@@ -514,11 +521,11 @@
       <!-- Senior -->
       <div class="nutrition-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
         <div class="nutrition-image-wrapper">
-          <img src="assets/images/cat-senior.jpg" alt="Chat senior - Besoins nutritionnels" class="w-full h-64 object-cover">
+          <img src="assets/images/cat-senior.png" alt="Chat senior - Besoins nutritionnels" class="w-full h-64 object-cover">
         </div>
         <div class="p-8">
-          <h3 class="text-2xl font-bold mb-4 text-vet-blue text-center">SENIOR</h3>
-          <p class="text-gray-600 text-base leading-relaxed text-justify">
+          <h3 class="text-3xl md:text-2xl font-bold mb-6 text-center" style="color: #42636E; line-height: 1.3;">SENIOR</h3>
+          <p class="text-xl text-gray-700 leading-relaxed mb-8 text-justify">
             Les chats âgés ont tendance à réduire considérablement la quantité d'activité physique, passant plus d'heures à dormir. Cette réduction des calories consommées appelle une alimentation pauvre en glucides et riche en protéines.
           </p>
         </div>
@@ -528,17 +535,21 @@
 
 <!-- Section Caractéristiques Nutritionnelles – Chien -->
     <section id="caracteristiques-nutritionnelles-chien" class="mb-12">
-    <h2 class="text-4xl md:text-5xl font-bold mb-4 text-gray-800 text-center" style="color: rgb(59 130 246); line-height: 1.3;">– CARACTÉRISTIQUES NUTRITIONNELLES CHIEN –</h2>    <div class="w-32 h-1 bg-vet-blue mx-auto mb-8"></div>
+    <div class="flex items-center gap-4 mb-6" style="margin-top: 50px;">
+      <div class="flex-grow h-0.5" style="background-color: #42636E;"></div>
+      <h2 class="text-3xl md:text-2xl font-bold text-center whitespace-nowrap" style="color: #42636E; line-height: 1.3;"> CARACTÉRISTIQUES NUTRITIONNELLES CHIEN </h2>
+      <div class="flex-grow h-0.5" style="background-color: #42636E;"></div>
+    </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       <!-- Chiot -->
       <div class="nutrition-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
         <div class="nutrition-image-wrapper">
-          <img src="assets/images/Chiot.jpg" alt="Chiot - Besoins nutritionnels" class="w-full h-64 object-cover">
+          <img src="assets/images/Chiot.png" alt="Chiot - Besoins nutritionnels" class="w-full h-64 object-cover">
         </div>
         <div class="p-8">
-          <h3 class="text-2xl font-bold mb-4 text-vet-blue text-center">CHIOT</h3>
-          <p class="text-gray-600 text-base leading-relaxed text-justify">
+          <h3 class="text-3xl md:text-2xl font-bold mb-6 text-center" style="color: #42636E; line-height: 1.3;">CHIOT</h3>
+          <p class="text-xl text-gray-700 leading-relaxed mb-8 text-justify">
             Bien 
             nourrir 
             nécessite d'être vigilant non
@@ -560,11 +571,11 @@
       <!-- Adulte Actif -->
       <div class="nutrition-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
         <div class="nutrition-image-wrapper">
-          <img src="assets/images/dog-adult-active.jpg" alt="Chien adulte actif - Besoins nutritionnels" class="w-full h-64 object-cover">
+          <img src="assets/images/dog-adult-active.png" alt="Chien adulte actif - Besoins nutritionnels" class="w-full h-64 object-cover">
         </div>
         <div class="p-8">
-          <h3 class="text-2xl font-bold mb-4 text-vet-blue text-center">ADULTE ENTIER</h3>
-          <p class="text-gray-600 text-base leading-relaxed text-justify">
+          <h3 class="text-3xl md:text-2xl font-bold mb-6 text-center" style="color: #42636E; line-height: 1.3;">ADULTE ENTIER</h3>
+          <p class="text-xl text-gray-700 leading-relaxed mb-8 text-justify">
             A l’âge adulte, pour avoir un
             chien en pleine forme, il faut
             répondre à ses besoins
@@ -587,11 +598,11 @@
       <!-- Adulte Stérilisé -->
       <div class="nutrition-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
         <div class="nutrition-image-wrapper">
-          <img src="assets/images/dog-adult-sterilized.jpg" alt="Chien adulte stérilisé - Besoins nutritionnels" class="w-full h-64 object-cover">
+          <img src="assets/images/dog-adult-sterilized.png" alt="Chien adulte stérilisé - Besoins nutritionnels" class="w-full h-64 object-cover">
         </div>
         <div class="p-8">
-          <h3 class="text-2xl font-bold mb-4 text-vet-blue text-center">ADULTE STÉRILISÉ</h3>
-          <p class="text-gray-600 text-base leading-relaxed text-justify">
+          <h3 class="text-3xl md:text-2xl font-bold mb-6 text-center" style="color: #42636E; line-height: 1.3;">ADULTE STÉRILISÉ</h3>
+          <p class="text-xl text-gray-700 leading-relaxed mb-8 text-justify">
             Chez le chien stérilisé ou
             castré il faut  se montrer plus
             vigilant 
@@ -619,11 +630,11 @@
       <!-- Senior -->
       <div class="nutrition-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
         <div class="nutrition-image-wrapper">
-          <img src="assets/images/dog-senior.jpg" alt="Chien senior - Besoins nutritionnels" class="w-full h-64 object-cover">
+          <img src="assets/images/dog-senior.png" alt="Chien senior - Besoins nutritionnels" class="w-full h-64 object-cover">
         </div>
         <div class="p-8">
-          <h3 class="text-2xl font-bold mb-4 text-vet-blue text-center">SENIOR</h3>
-          <p class="text-gray-600 text-base leading-relaxed text-justify">
+          <h3 class="text-3xl md:text-2xl font-bold mb-6 text-center" style="color: #42636E; line-height: 1.3;">SENIOR</h3>
+          <p class="text-xl text-gray-700 leading-relaxed mb-8 text-justify">
           Un chien âgé n'a plus les
           mêmes besoins énergétiques
           que lorsqu'il était plus jeune.
@@ -645,7 +656,7 @@
 </section>
 
 <!-- Decorative Divider -->
-<div class="relative py-8 bg-gradient-to-b from-vet-beige to-white">
+<div class="relative py-8 bg-gradient-to-b from-vet-white to-white">
   <div class="container max-w-7xl mx-auto px-4">
     <div class="flex items-center justify-center">
       <div class="flex-grow border-t-2 border-gray-300"></div>
@@ -726,13 +737,13 @@
         <div class="mx-6">
           <div class="flex items-center space-x-3">
             <span class="text-3xl">🛒</span>
-            <span class="text-2xl font-bold text-vet-blue">Nos Produits</span>
+            <span class="text-2xl font-bold" style="color: #42636E; line-height: 1.3;">NOS PRODUITS</span>
             <span class="text-3xl">🐕</span>
           </div>
         </div>
         <div class="flex-grow border-t-2 border-blue-300 max-w-xs"></div>
       </div>
-      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+      <p class="text-xl text-gray-700 leading-relaxed mb-8 text-justify max-w-2xl mx-auto">
         Découvrez notre sélection de produits vétérinaires de qualité premium
       </p>
     </div>
@@ -847,17 +858,20 @@
 
     <!-- Lien vers le catalogue complet -->
     <div class="text-center mt-8">
-      <a routerLink="/espace-proprietaire"
-        class="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 inline-flex items-center shadow-lg hover:shadow-xl transform hover:scale-105">
-        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-        </svg>
-        Voir tous nos produits
-        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-        </svg>
-      </a>
+    <a routerLink="/espace-proprietaire"
+      class="text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 inline-flex items-center shadow-lg hover:shadow-xl transform hover:scale-105"
+      style="background-color: #42636E"
+      onmouseover="this.style.backgroundColor='#355059'"
+      onmouseout="this.style.backgroundColor='#42636E'">
+      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+      </svg>
+      Voir tous nos produits
+      <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+      </svg>
+    </a>
     </div>
   </div>
 </section>
@@ -867,3 +881,4 @@
       
     </div>
   </div>
+

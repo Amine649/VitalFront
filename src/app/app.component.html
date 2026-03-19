@@ -46,9 +46,9 @@
             <a routerLink="/" routerLinkActive="text-vet-blue font-medium" [routerLinkActiveOptions]="{exact: true}"
               class="text-gray-600 hover:text-vet-blue transition-colors">Accueil</a>
             <a routerLink="/espace-proprietaire" routerLinkActive="text-vet-blue font-medium"
-              class="text-gray-600 hover:text-vet-blue transition-colors">Proprietaire</a>
+              class="text-gray-600 hover:text-vet-blue transition-colors">Propriétaire</a>
             <a routerLink="/login" routerLinkActive="text-vet-blue font-medium"
-              class="text-gray-600 hover:text-vet-blue transition-colors">Veterinaire</a>
+              class="text-gray-600 hover:text-vet-blue transition-colors">Vétérinaire</a>
           </ng-container>
           <!-- Cart and Profile for Produits Veterinaire -->
           <ng-container *ngIf="isProduitsVeterinaire && !isAdmin">
@@ -452,7 +452,7 @@
   </main>
 
   <!-- Footer -->
-  <footer *ngIf="!isAdmin && !isEspaceVeterinaire && !isProduitsVeterinaire && !isPanier && !isEspaceCommercial || isConseilArticles" class="bg-gray-900 text-white py-8 md:py-12 flex-shrink-0">
+  <footer *ngIf="!isAdmin && !isEspaceVeterinaire && !isProduitsVeterinaire && !isPanier && !isEspaceCommercial || isConseilArticles" class="bg-gray-900 text-white py-8 md:py-12 flex-shrink-0" >
     <div class="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-8">
         
@@ -475,7 +475,7 @@
 
         <!-- Column 2: ESPACE PROPRIETAIRE -->
         <div class="text-center md:text-left">
-          <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4 text-blue-400">Espace Proprietaire</h3>
+          <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4 text-blue-400">Espace Propriétaire</h3>
           <ul class="space-y-2 text-sm">
             <li><a routerLink="/ou-trouver-nos-produits" class="text-gray-400 hover:text-white transition-colors">Cliniques Partenaires</a></li>
             <li><a routerLink="/espace-proprietaire" fragment="informations-conseils" class="text-gray-400 hover:text-white transition-colors">Informations & Conseils Vetos</a></li>

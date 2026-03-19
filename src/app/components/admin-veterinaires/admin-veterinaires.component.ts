@@ -405,7 +405,6 @@ export class AdminVeterinairesComponent implements OnInit {
       },
       error: (error) => {
         this.updateLoading = false;
-        console.error('Error updating veterinaire:', error);
         this.editError = error.error?.message || 'Erreur lors de la mise à jour du vétérinaire';
       }
     });
@@ -451,7 +450,6 @@ export class AdminVeterinairesComponent implements OnInit {
       },
       error: (error) => {
         this.deleteLoading = false;
-        console.error('Error deleting veterinaire:', error);
         this.error = error.error?.message || 'Erreur lors de la suppression du vétérinaire';
         this.closeDeleteModal();
         
