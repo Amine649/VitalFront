@@ -5,7 +5,7 @@
     <!-- Header -->
     <div class="mb-8 flex items-center justify-between flex-wrap gap-2 relative">
       <button (click)="continueShopping()"
-        class="flex items-center text-vet-blue hover:text-blue-700 font-medium transition-colors duration-200 text-sm md:text-base lg:bg-white lg:border lg:border-blue-200 lg:rounded-xl lg:px-4 lg:py-2 lg:shadow-sm lg:hover:shadow-md lg:hover:bg-blue-50">
+        class="flex items-center text-vet-blue hover:text-[#0f9088] font-medium transition-colors duration-200 text-sm md:text-base lg:bg-white lg:border lg:border-[#18b1a5]/30 lg:rounded-xl lg:px-4 lg:py-2 lg:shadow-sm lg:hover:shadow-md lg:hover:bg-[#e6f7f6]">
         <svg class="w-4 h-4 md:w-5 md:h-5 mr-1 md:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
         </svg>
@@ -14,11 +14,12 @@
       </button>
 
       <div class="absolute left-1/2 -translate-x-1/2 flex items-center gap-3">
-        <div class="hidden lg:flex w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl items-center justify-center shadow-md">
-          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-          </svg>
-        </div>
+        <div class="hidden lg:flex w-10 h-10 rounded-xl items-center justify-center shadow-md"
+        style="background: linear-gradient(to bottom right, #20c9bc, #18b1a5);">
+        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+        </svg>
+      </div>
         <h1 class="text-xl md:text-3xl font-bold text-gray-800">Mon Panier</h1>
       </div>
 
@@ -311,7 +312,7 @@
                 </path>
               </svg>
             </div>
-            <span>vitalnutri&#64;vitalfeed.com.tn</span>
+            <span>vitalnutri&#64;vetcare-pro.fr</span>
           </li>
           <li class="flex items-center justify-center md:justify-start group">
             <div class="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center mr-3 group-hover:bg-green-500/30 transition-colors">
@@ -350,7 +351,7 @@
 
     <div class="border-t border-gray-700 mt-10 pt-8">
       <div class="flex flex-col md:flex-row justify-between items-center">
-        <p class="text-gray-400 text-center md:text-left mb-4 md:mb-0">&copy; 2024 VITALFEED. Tous droits réservés.</p>
+        <p class="text-gray-400 text-center md:text-left mb-4 md:mb-0">&copy; 2026 VITALFEED. Tous droits réservés.</p>
         <div class="flex items-center space-x-6 text-sm text-gray-400">
           <a href="#" class="hover:text-white transition-colors">Politique de confidentialité</a>
           <a href="#" class="hover:text-white transition-colors">Conditions d'utilisation</a>
@@ -468,9 +469,12 @@
         </div>
       </div>
       <button (click)="closeSuccessModal()"
-        class="w-full bg-vet-blue hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg">
-        Retour à l'espace vétérinaire
-      </button>
+      class="w-full text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg"
+      style="background-color: #18b1a5;"
+      onmouseover="this.style.backgroundColor='#149e93';"
+      onmouseout="this.style.backgroundColor='#18b1a5';">
+      Retour à l'espace vétérinaire
+    </button>
     </div>
   </div>
 </div>

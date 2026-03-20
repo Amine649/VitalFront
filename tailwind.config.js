@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'vet-blue': '#3b82f6',
+        'vet-blue': '#18b1a5',
         'vet-green': '#10b981',
         'vet-beige': '#f5f5dc',
       }
@@ -15,3 +15,4 @@ module.exports = {
   plugins: [],
 }
 
+/** blue color :3b82f6 */

@@ -362,3 +362,16 @@ footer {
   position: relative;
   z-index: 9999 !important;
 }
+
+// ========== FOOTER SIDEBAR OFFSET (desktop only) ==========
+@media (min-width: 768px) {
+  .footer-sidebar-offset {
+    position: relative;
+    left: -280px;
+    width: calc(100% + 280px);
+  }
+
+  .footer-sidebar-padding {
+    padding-left: 296px !important;
+  }
+}

@@ -59,7 +59,7 @@ export class ProduitsVeterinaireComponent implements OnInit {
 
   // Infinite scroll properties
   currentPage = 1;
-  itemsPerPage = 10;
+  itemsPerPage = typeof window !== 'undefined' && window.innerWidth <= 768 ? 10 : 18;
 
   Math = Math;
   highlightedProductId: number | null = null;
@@ -430,6 +430,16 @@ export class ProduitsVeterinaireComponent implements OnInit {
 
   toggleProfileDropdown(): void {
     this.showProfileDropdown = !this.showProfileDropdown;
+  }
+
+  @HostListener('window:resize')
+  onResize(): void {
+    const newItemsPerPage = window.innerWidth <= 768 ? 10 : 18;
+    if (this.itemsPerPage !== newItemsPerPage) {
+      this.itemsPerPage = newItemsPerPage;
+      this.currentPage = 1;
+      this.updateDisplayedProducts();
+    }
   }
 
   @HostListener('document:click', ['$event'])

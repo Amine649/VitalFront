@@ -184,7 +184,7 @@ export class EspaceProprietaireComponent implements OnInit {
   private updateItemsPerPage(): void {
     if (typeof window !== 'undefined') {
       const isMobile = window.innerWidth <= 768;
-      const newItemsPerPage = isMobile ? 10 : 15;
+      const newItemsPerPage = isMobile ? 10 : 21;
       
       // Only reset to page 1 if itemsPerPage actually changed
       if (this.itemsPerPage !== newItemsPerPage) {

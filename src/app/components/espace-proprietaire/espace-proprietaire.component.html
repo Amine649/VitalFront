@@ -128,7 +128,7 @@
             <div *ngIf="selectedSousCategory === 'Aliment'" class="relative transform transition-transform duration-500">
               <img src="assets/images/Cat.png" 
                 alt="Chat"
-                style="width: 650px; max-width: 130%;"
+                style="width: 550px; max-width: 150%;"
                 class="w-full max-w-[300px] md:max-w-[650px] h-auto object-cover transform md:scale-110 hover:scale-100 transition-transform duration-700 drop-shadow-2xl mx-auto">
             </div>
 
@@ -260,7 +260,7 @@ besoins de votre Chien, carnivore depuis toujours !
             <div *ngIf="selectedSousCategory === 'Aliment'" class="relative transform transition-transform duration-500 md:translate-x-28">
               <img src="assets/images/Dog.png" 
                 alt="Chien"
-                style="width: 650px; max-width: 130%;"
+                style="width: 650px; max-width: 150%;"
                 class="h-auto object-cover transform hover:scale-105 transition-transform duration-700 drop-shadow-2xl">
             </div>
 
@@ -290,19 +290,29 @@ besoins de votre Chien, carnivore depuis toujours !
         <div class="w-full md:w-7/12 pr-0 md:pr-6 text-center md:text-left mb-10 md:mb-0">
           <h2 class="hero-heading-fixed text-slate-800 mb-6 font-extrabold">
             NUTRITION ET SANTÉ <br>
-            <span class="text-blue-600 relative inline-block">
-              Chat & Chien
-              <svg class="absolute w-full h-3 -bottom-3.5 left-0 text-blue-200 -z-10" viewBox="0 0 100 10"
-                preserveAspectRatio="none">
-                <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none" />
-              </svg>
-            </span>
+            <span class="relative inline-block">
+            <span style="color: #74c375;">Chat</span>
+            <span class="text-gray-800"> & </span>
+            <span style="color: #a01867;">Chien</span>
+            <svg class="absolute w-full h-3 -bottom-3.5 left-0 -z-10" viewBox="0 0 100 10"
+              preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="underlineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" style="stop-color:#74c375;" />
+                  <stop offset="50%" style="stop-color:#74c375;" />
+                  <stop offset="50%" style="stop-color:#a01867;" />
+                  <stop offset="100%" style="stop-color:#a01867;" />
+                </linearGradient>
+              </defs>
+              <path d="M0 5 Q 50 10 100 5" stroke="url(#underlineGradient)" stroke-width="8" fill="none" />
+            </svg>
+          </span>
           </h2>
-          <div class="hero-text-fixed text-slate-600 mb-8 max-w-3xl mx-auto md:mx-0 font-medium">
-            <p class="mb-2 text-ms">
+          <div class="hero-text-fixed text-slate-600 mb-8 max-w-3xl mx-auto md:mx-0" style="margin-top: 35px;">
+            <p class="text-xl font-medium">
               Votre compagnon, a des besoins spécifiques à son espèce.
             </p>
-            <p >
+            <p class="text-xl font-medium">
               Pour mieux comprendre les différentes diètes félines ou canines, vous pouvez vous rendre dans la section
               qui
               vous intéresse.
@@ -313,12 +323,17 @@ besoins de votre Chien, carnivore depuis toujours !
             class="px-8 py-3 bg-blue-600 text-white rounded-full font-semibold shadow-lg shadow-blue-500/30 hover:shadow-blue-500/40 hover:-translate-y-1 transition-all duration-300 inline-flex items-center justify-center" style="background: #18b1a5;">
             Découvrir la gamme
             </div>
-          <button (click)="scrollToSection('demystifier-section')" class="px-8 py-3 border-2 border-blue-600 text-blue-600 rounded-full font-semibold hover:bg-blue-600 hover:text-white transition-all duration-300 cursor-pointer inline-flex items-center justify-center">
-            <svg class="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-            </svg>
-            Expertise Vétérinaire
-          </button>
+         <button 
+          (click)="scrollToSection('demystifier-section')" 
+          class="px-8 py-3 rounded-full font-semibold transition-all duration-300 cursor-pointer inline-flex items-center justify-center"
+          style="border: 2px solid #18b1a5; color: #18b1a5;"
+          onmouseover="this.style.backgroundColor='#18b1a5'; this.style.color='white';"
+          onmouseout="this.style.backgroundColor='transparent'; this.style.color='#18b1a5';">
+          <svg class="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          Expertise Vétérinaire
+        </button>
         </div>
         </div>
 

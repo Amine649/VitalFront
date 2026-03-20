@@ -208,7 +208,17 @@ header {
     flex: 1;
     min-width: 0;
     transition: margin-left 0.3s ease;
-    // Removed margin manipulation, relying on flexbox
+  }
+
+  // Footer inside main-content should always be full viewport width
+  .main-content footer {
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    width: 100vw;
+    max-width: 100vw;
   }
 }
 
