@@ -43,11 +43,9 @@ export class AuthMonitorService {
    */
   private checkRouteTransition(currentUrl: string): void {
     const isPublicPage = this.isPublicRoute(currentUrl);
-    const hasUserToken = localStorage.getItem('user_token');
-    const hasAdminToken = localStorage.getItem('admin_token');
 
     // If user has credentials and navigates to a public page, clear credentials
-    if (isPublicPage && (hasUserToken || hasAdminToken)) {
+    if (isPublicPage  ) {
       this.clearCredentials();
     }
   }
@@ -71,8 +69,6 @@ export class AuthMonitorService {
    * Clear all authentication credentials
    */
   private clearCredentials(): void {
-    localStorage.removeItem('user_token');
-    localStorage.removeItem('admin_token');
     localStorage.removeItem('isAdmin');
     localStorage.removeItem('userId');
   }

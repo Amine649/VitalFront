@@ -102,9 +102,7 @@ export class CartService {
         variantId: item.variantId // Include variantId from API
       }));
 
-      // DO NOT apply stored variant selections - trust the API response
-      // this.applyVariantSelections(normalizedItems);
-
+     
       this.updateLocalCart(normalizedItems);
     });
   }
@@ -188,8 +186,7 @@ export class CartService {
           variantId: item.variantId // Include variantId from API
         }));
 
-        // DO NOT apply stored variant selections - trust the API response
-        // this.applyVariantSelections(normalizedItems);
+      
 
 
         this.updateLocalCart(normalizedItems);
@@ -738,25 +735,5 @@ export class CartService {
     localStorage.setItem(key, JSON.stringify(selections));
   }
 
-  /**
-   * Apply stored variant selections to cart items
-   */
-  private applyVariantSelections(items: CartItem[]): void {
-    const key = 'variantSelections';
-    const stored = localStorage.getItem(key);
-    if (!stored) return;
-
-    try {
-      const selections = JSON.parse(stored);
-      items.forEach(item => {
-        const productId = item.productId || item.id;
-        if (selections[productId]) {
-          const selection = selections[productId];
-          item.price = selection.price;
-          item.selectedVariantId = selection.variantId;
-        }
-      });
-    } catch (error) {
-    }
-  }
+ 
 }
