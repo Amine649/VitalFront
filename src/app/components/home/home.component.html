@@ -470,7 +470,7 @@
     <section id="caracteristiques-nutritionnelles" class="mb-12">
     <div class="flex items-center gap-4 mb-6">
       <div class="flex-grow h-0.5" style="background-color: #42636E;"></div>
-      <h2 class="text-3xl md:text-2xl font-bold text-center whitespace-nowrap" style="color: #42636E; line-height: 1.3;"> CARACTÉRISTIQUES NUTRITIONNELLES CHAT </h2>
+      <h2 class="text-3xl md:text-2xl font-bold text-center" style="color: #42636E; line-height: 1.3;"> CARACTÉRISTIQUES NUTRITIONNELLES CHAT </h2>
       <div class="flex-grow h-0.5" style="background-color: #42636E;"></div>
     </div>
         
@@ -533,7 +533,7 @@
     <section id="caracteristiques-nutritionnelles-chien" class="mb-12">
     <div class="flex items-center gap-4 mb-6" style="margin-top: 50px;">
       <div class="flex-grow h-0.5" style="background-color: #42636E;"></div>
-      <h2 class="text-3xl md:text-2xl font-bold text-center whitespace-nowrap" style="color: #42636E; line-height: 1.3;"> CARACTÉRISTIQUES NUTRITIONNELLES CHIEN </h2>
+      <h2 class="text-3xl md:text-2xl font-bold text-center" style="color: #42636E; line-height: 1.3;"> CARACTÉRISTIQUES NUTRITIONNELLES CHIEN </h2>
       <div class="flex-grow h-0.5" style="background-color: #42636E;"></div>
     </div>
 
@@ -779,7 +779,9 @@
     <!-- Automatic Product Carousel -->
     <div *ngIf="!isLoading && !errorMessage && displayProducts.length > 0" class="relative">
       <!-- Carousel Container -->
-      <div class="overflow-hidden">
+      <div class="overflow-hidden"
+        (touchstart)="onTouchStart($event)"
+        (touchend)="onTouchEnd($event)">
         <div class="flex transition-transform duration-500 ease-in-out" [style.transform]="getTransformValue()">
           <div *ngFor="let product of displayProducts; trackBy: trackByProductId"
             class="flex-shrink-0 w-full md:w-1/3 lg:w-1/5 px-2">
@@ -827,28 +829,45 @@
         </div>
       </div>
 
-      <!-- Navigation Arrows -->
+      <!-- Navigation Arrows - hidden on mobile, shown on desktop -->
       <button (click)="prevSlide()"
-        class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white shadow-lg rounded-full p-3 transition-all duration-200 z-10">
+        class="hidden md:block absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white shadow-lg rounded-full p-3 transition-all duration-200 z-10">
         <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
         </svg>
       </button>
 
       <button (click)="nextSlide()"
-        class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white shadow-lg rounded-full p-3 transition-all duration-200 z-10">
+        class="hidden md:block absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white shadow-lg rounded-full p-3 transition-all duration-200 z-10">
         <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
         </svg>
       </button>
+
+      <!-- Mobile Navigation Arrows - below card -->
+      <div class="flex md:hidden justify-between mt-4 px-4">
+        <button (click)="prevSlide()"
+          class="bg-white shadow-lg rounded-full p-3 transition-all duration-200">
+          <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </button>
+        <button (click)="nextSlide()"
+          class="bg-white shadow-lg rounded-full p-3 transition-all duration-200">
+          <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </button>
+      </div>
     </div>
 
     <!-- Slide Indicators -->
-    <div class="flex justify-center mt-6 space-x-2">
+    <div class="flex justify-center mt-6 space-x-1.5">
       <button *ngFor="let indicator of getSlideIndicators(); let i = index; trackBy: trackByIndex"
-        (click)="goToSlide(i)" [class.bg-blue-500]="getCurrentIndicator() === i"
-        [class.bg-gray-300]="getCurrentIndicator() !== i"
-        class="w-2 h-2 rounded-full transition-colors duration-200 hover:bg-blue-400">
+        (click)="goToSlide(i)"
+        class="h-1.5 rounded-full transition-all duration-300"
+        [style.width]="getCurrentIndicator() === i ? '24px' : '8px'"
+        [style.background-color]="getCurrentIndicator() === i ? '#42636E' : '#CBD5E1'">
       </button>
     </div>
 

@@ -22,6 +22,7 @@
   min-height: 100vh;
   background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   padding: 2rem 0;
+  overflow-x: hidden;
   
   @media (min-width: 768px) {
     padding: 3rem 0;
@@ -32,6 +33,7 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
+  overflow-x: hidden;
 }
 
 .hero-section {
@@ -242,29 +244,40 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
+  min-width: 0;
+  justify-items: center;
 
   @media (min-width: 1024px) {
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
+    justify-items: stretch;
   }
 }
 
 // Map Container
 .map-container {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  
   .map-card {
     background: white;
     border-radius: 1rem;
     overflow: hidden;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .map-header {
-    padding: 0.75rem 1rem;
+    padding: 0.75rem 0.75rem;
     border-bottom: 1px solid #e2e8f0;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
+    overflow: hidden;
     
     @media (min-width: 768px) {
       padding: 1rem 1.5rem;
@@ -877,5 +890,21 @@
 @media (max-width: 640px) {
   .pagination-container {
     padding: 0.875rem;
+  }
+}
+
+// Fix Leaflet overflow on mobile
+@media (max-width: 768px) {
+  ::ng-deep .leaflet-container {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  ::ng-deep .leaflet-control-attribution {
+    max-width: 60vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 9px;
   }
 }

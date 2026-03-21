@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
@@ -28,7 +28,23 @@ export class HomeComponent implements OnInit, OnDestroy {
   // Carousel properties
   currentSlide = 0;
   autoSlideInterval: any;
-  itemsPerSlide = 5; // Number of items to show per slide on desktop
+  itemsPerSlide = this.getItemsPerSlide();
+
+  private getItemsPerSlide(): number {
+    if (typeof window === 'undefined') return 5;
+    if (window.innerWidth < 768) return 1;
+    if (window.innerWidth < 1024) return 3;
+    return 5;
+  }
+
+  @HostListener('window:resize')
+  onResize(): void {
+    const newItems = this.getItemsPerSlide();
+    if (newItems !== this.itemsPerSlide) {
+      this.itemsPerSlide = newItems;
+      this.currentSlide = 0;
+    }
+  }
 
   // Interactive image properties
   imageTransform = 'translate(0, 0) scale(1)';
@@ -213,6 +229,19 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.autoSlideInterval) {
       clearInterval(this.autoSlideInterval);
       this.startAutoSlide();
+    }
+  }
+
+  private touchStartX = 0;
+
+  onTouchStart(event: TouchEvent): void {
+    this.touchStartX = event.touches[0].clientX;
+  }
+
+  onTouchEnd(event: TouchEvent): void {
+    const diff = this.touchStartX - event.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      diff > 0 ? this.nextSlide() : this.prevSlide();
     }
   }
 

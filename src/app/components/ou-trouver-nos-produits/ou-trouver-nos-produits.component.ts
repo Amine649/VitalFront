@@ -96,7 +96,7 @@ export class OuTrouverNosProduitsComponent implements OnInit, AfterViewInit {
 
     // Initialize main map
     if (!this.map) {
-      this.map = L.map('map').setView([36.8, 10.2], 10);
+      this.map = L.map('map').setView([46.6, 2.3], 6);
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors',
