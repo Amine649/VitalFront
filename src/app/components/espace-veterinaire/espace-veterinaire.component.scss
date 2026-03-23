@@ -1,8 +1,14 @@
 :host {
   display: block;
-  min-height: 100vh;
   background: transparent;
   font-family: 'Geometria', 'Sans-serif', -apple-system, BlinkMacSystemFont, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+body, html {
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 * {
@@ -1033,10 +1039,19 @@
 // Fixed spacing for sections
 .section-spacing {
   padding-top: 50px;
-  padding-bottom: 80px;
+  padding-bottom: 0px;
   
   @media (max-width: 768px) {
     padding-top: 40px;
+    padding-bottom: 0px;
+  }
+}
+
+// CTA section keeps the bottom padding
+.cta-section.section-spacing {
+  padding-bottom: 80px;
+  
+  @media (max-width: 768px) {
     padding-bottom: 40px;
   }
 }
@@ -1471,7 +1486,7 @@
   // ========== VITAL NUTRI SECTION ==========
   .vital-nutri-section {
     padding-top: 2rem !important;
-    padding-bottom: 3rem !important;
+   
   }
 
   // ========== TWO-COLUMN LAYOUT (Blog + Content) ==========
