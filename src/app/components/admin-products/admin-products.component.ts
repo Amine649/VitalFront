@@ -24,6 +24,7 @@ export class AdminProductsComponent implements OnInit {
   searchTerm = '';
   selectedCategory = '';
   selectedSubCategory = '';
+  selectedStockStatus = ''; // New filter for stock status
   viewMode: 'grid' | 'list' = 'grid'; // Toggle between grid and list view
 
   // Pagination
@@ -60,6 +61,7 @@ export class AdminProductsComponent implements OnInit {
     subCategory: '',
     subSubCategory: '',
     detailsUrl: '',
+    imageUrl:'',
     inStock: true,
     packaging: ''
   };
@@ -152,7 +154,11 @@ export class AdminProductsComponent implements OnInit {
       const matchesSubCategory = !this.selectedSubCategory ||
         product.subCategory === this.selectedSubCategory;
 
-      return matchesSearch && matchesCategory && matchesSubCategory;
+      const matchesStockStatus = !this.selectedStockStatus ||
+        (this.selectedStockStatus === 'inStock' && product.inStock) ||
+        (this.selectedStockStatus === 'outOfStock' && !product.inStock);
+
+      return matchesSearch && matchesCategory && matchesSubCategory && matchesStockStatus;
     });
     
     // Reset to first page when filtering
@@ -174,6 +180,11 @@ export class AdminProductsComponent implements OnInit {
     this.filterProducts();
   }
 
+  onStockStatusChange(value: string) {
+    this.selectedStockStatus = value;
+    this.filterProducts();
+  }
+
   toggleViewMode(mode: 'grid' | 'list') {
     this.viewMode = mode;
   }
@@ -182,6 +193,7 @@ export class AdminProductsComponent implements OnInit {
     this.searchTerm = '';
     this.selectedCategory = '';
     this.selectedSubCategory = '';
+    this.selectedStockStatus = '';
     this.filterProducts();
   }
 
@@ -204,6 +216,7 @@ export class AdminProductsComponent implements OnInit {
     this.productForm = {
       name: product.name,
       description: product.description,
+      imageUrl: product.imageUrl || '',
       price: product.variants && product.variants.length > 0 ? product.variants[0].price : 0,
       category: product.category,
       subCategory: product.subCategory,
@@ -237,6 +250,7 @@ export class AdminProductsComponent implements OnInit {
       subCategory: '',
       subSubCategory: '',
       detailsUrl: '',
+      imageUrl:'',
       inStock: true,
       packaging: ''
     };
@@ -315,7 +329,7 @@ export class AdminProductsComponent implements OnInit {
     const productData: any = {
       name: this.productForm.name,
       description: this.productForm.description,
-      imageUrl: '', // Always empty as per requirement
+      imageUrl: this.productForm.imageUrl || '',
       category: this.productForm.category as 'CHAT' | 'CHIEN',
       subCategory: this.productForm.subCategory as 'ALIMENT' | 'COMPLEMENT' | 'TEST_RAPIDE',
       subSubCategory: (this.productForm.subCategory === 'ALIMENT') ? (this.productForm.subSubCategory as 'DIETETIQUE' | 'PHYSIO') : undefined,

@@ -26,9 +26,9 @@ export class FormulaireVetComponent implements OnInit {
   submittedData: any = null;
 
   subscriptionTypes = [
-    { value: 'ONE_MONTH', label: '1 mois', price: '29€/mois' },
-    { value: 'THREE_MONTHS', label: '3 mois', price: '25€/mois (75€ total)' },
-    { value: 'SIX_MONTHS', label: '6 mois', price: '20€/mois (120€ total)' }
+    { value: 'ONE_MONTH', label: '1 mois', price: '29 TND/mois' },
+    { value: 'THREE_MONTHS', label: '3 mois', price: '25 TND/mois (75 TND total)' },
+    { value: 'SIX_MONTHS', label: '6 mois', price: '20 TND/mois (120 TND total)' }
   ];
 
   constructor(

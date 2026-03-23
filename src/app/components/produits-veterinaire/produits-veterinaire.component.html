@@ -17,7 +17,7 @@
 
       <!-- Back Button -->
       <button (click)="navigateToVetSpace()"
-        class="absolute top-6 left-6 z-20 group flex items-center text-gray-500 hover:text-[#18b1a5] transition-all duration-300" style="margin-left: 25px;">
+        class="absolute top-6 left-6 z-20 group flex items-center text-gray-500 hover:text-[#18b1a5] transition-all duration-300" >
         <div
           class="w-8 h-8 rounded-full bg-white shadow-sm border border-gray-100 flex items-center justify-center mr-2 group-hover:bg-[#e6f7f6] transition-colors">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -465,20 +465,6 @@
               <img appLazyLoadImage [src]="product.imageUrl"
                 [alt]="'Image du produit ' + product.name + ' - ' + product.description"
                 class="w-full h-full object-contain">
-
-              <!-- Category Badge - Top Right -->
-              <div class="absolute top-2 right-2">
-                <span class="bg-blue-600 text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-md">
-                  {{ getSubCategoryLabel(product.subCategory) }}
-                </span>
-              </div>
-
-              <!-- Out of Stock Badge - Top Left -->
-              <div class="absolute top-2 left-2" *ngIf="!product.inStock">
-                <span class="bg-red-500 text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-md">
-                  Rupture
-                </span>
-              </div>
             </div>
 
             <!-- Product Info -->
@@ -497,18 +483,17 @@
                 <p class="text-xl font-bold text-blue-700">{{ product.price | number:'1.2-2' }} TND</p>
               </div>
 
-              <!-- Packaging Selector
-              <div *ngIf="product.variants && product.variants.length > 1" class="mb-3">
-                <select 
-                  [ngModel]="product.selectedVariantId"
-                  (ngModelChange)="product.selectedVariantId = $event; onProductVariantChange(product)"
-                  class="w-full text-xs border border-gray-300 rounded-md px-2 py-1.5 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white">
-                  <option *ngFor="let variant of product.variants" [ngValue]="variant.id">
-                    {{ variant.packaging }} - {{ variant.price | number:'1.2-2' }} TND
-                  </option>
-                </select>
+              <!-- Status Badges (Rupture and SubCategory) -->
+              <div class="mb-2 flex justify-center gap-2 flex-wrap">
+                <!-- Out of Stock Badge -->
+                <span *ngIf="!product.inStock" class="bg-red-500 text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-md">
+                  Rupture
+                </span>
+                <!-- SubCategory Badge -->
+                <span class="bg-blue-600 text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-md">
+                  {{ getSubCategoryLabel(product.subCategory) }}
+                </span>
               </div>
-               -->
 
               <!-- Category Badge -->
               <div class="mb-2 flex justify-center">
@@ -534,14 +519,15 @@
 
                 <!-- Add to Cart Button (below) -->
                 <button
-                  class="w-full bg-blue-900 hover:bg-blue-800 text-white font-bold text-xs py-2.5 px-3 rounded transition-all duration-300 flex items-center justify-center shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed uppercase tracking-wide whitespace-nowrap"
+                  class="w-full bg-blue-900 hover:bg-blue-800 text-white font-bold text-xs sm:text-sm py-2 sm:py-2.5 px-2 sm:px-3 rounded transition-all duration-300 flex items-center justify-center shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed uppercase tracking-wide"
                   (click)="addToCart(product)" [disabled]="!product.inStock">
-                  <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg class="w-3.5 h-3.5 mr-1 sm:mr-1.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
                     </path>
                   </svg>
-                  {{ product.inStock ? 'Ajouter au panier' : 'Indisponible' }}
+                  <span class="hidden sm:inline">{{ product.inStock ? 'Ajouter au panier' : 'Indisponible' }}</span>
+                  <span class="sm:hidden">{{ product.inStock ? 'Ajouter' : 'Rupture' }}</span>
                 </button>
               </div>
             </div>

@@ -47,8 +47,16 @@
             <option value="TEST_RAPIDE"> Test rapide</option>
           </select>
 
+          <!-- Stock Status Filter -->
+          <select [(ngModel)]="selectedStockStatus" (ngModelChange)="onStockStatusChange($event)"
+            class="w-full sm:w-auto px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 shadow-sm bg-white">
+            <option value="">Tous les statuts</option>
+            <option value="inStock">En stock</option>
+            <option value="outOfStock">Rupture</option>
+          </select>
+
           <!-- Reset Filters Button -->
-          <button *ngIf="searchTerm || selectedCategory || selectedSubCategory" (click)="resetFilters()"
+          <button *ngIf="searchTerm || selectedCategory || selectedSubCategory || selectedStockStatus" (click)="resetFilters()"
             class="px-4 py-2.5 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors flex items-center gap-2">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
