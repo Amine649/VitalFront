@@ -130,26 +130,26 @@
 
               <!-- Aliment Image -->
               <div *ngIf="selectedSousCategory === 'Aliment'" class="relative transform transition-transform duration-500" style="transform: translateX(-60px);">
-                <img src="assets/images/Cat.png" 
+                <img src="assets/images/Cat.webp" 
                   alt="Chat"
                   style="width: 550px; max-width: 150%;"
-                  class="w-full h-auto object-cover hover:scale-100 transition-transform duration-700 drop-shadow-2xl">
+                  class="w-full h-auto object-cover hover:scale-100 transition-transform duration-700 drop-shadow-2xl" loading="lazy">
               </div>
 
               <!-- Complément Image -->
               <div *ngIf="selectedSousCategory === 'Complément'" class="relative transform transition-transform duration-500" style="transform: translateX(-80px);">
-                <img src="assets/images/complement_chat.png" 
+                <img src="assets/images/complement_chat.webp" 
                   alt="Chat"
                   style="width: 540px; max-width: 130%;"
-                  class="w-full h-auto object-cover mx-auto hover:scale-100 transition-transform duration-700 drop-shadow-2xl">
+                  class="w-full h-auto object-cover mx-auto hover:scale-100 transition-transform duration-700 drop-shadow-2xl" loading="lazy">
               </div>
 
               <!-- Test rapide Image -->
               <div *ngIf="selectedSousCategory === 'Test rapide'" class="relative transform transition-transform duration-500" style="transform: translateX(-80px);">
-                <img src="assets/images/test_rapide_chat.png" 
+                <img src="assets/images/test_rapide_chat.webp" 
                   alt="Chat"
                   style="width: 550px; max-width: 130%;"
-                  class="w-full h-auto object-cover mx-auto hover:scale-100 transition-transform duration-700 drop-shadow-2xl">
+                  class="w-full h-auto object-cover mx-auto hover:scale-100 transition-transform duration-700 drop-shadow-2xl" loading="lazy">
               </div>
 
             
@@ -264,26 +264,26 @@
 
               <!-- Aliment Image -->
               <div *ngIf="selectedSousCategory === 'Aliment'" class="relative transform transition-transform duration-500">
-                <img src="assets/images/Dog.png" 
+                <img src="assets/images/Dog.webp" 
                   alt="Chien"
                   style="width: 650px; max-width: 900%;"
-                  class="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700 drop-shadow-2xl">
+                  class="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700 drop-shadow-2xl" loading="lazy">
               </div>
 
               <!-- Complément Image -->
               <div *ngIf="selectedSousCategory === 'Complément'" class="relative transform transition-transform duration-500">
-                <img src="assets/images/complement_chien.png" 
+                <img src="assets/images/complement_chien.webp" 
                   alt="Chien"
                   style="width: 470px; max-width: 900%;"
-                  class="w-full h-auto object-cover mx-auto transform hover:scale-105 transition-transform duration-700 drop-shadow-2xl">
+                  class="w-full h-auto object-cover mx-auto transform hover:scale-105 transition-transform duration-700 drop-shadow-2xl" loading="lazy">
               </div>
 
               <!-- Test rapide Image -->
               <div *ngIf="selectedSousCategory === 'Test rapide'" class="relative transform transition-transform duration-500">
-                <img src="assets/images/test_rapide_chien.png" 
+                <img src="assets/images/test_rapide_chien.webp" 
                   alt="Chien"
                   style="width: 570px; max-width: 900%;"
-                  class="w-full h-auto object-cover mx-auto transform hover:scale-105 transition-transform duration-700 drop-shadow-2xl">
+                  class="w-full h-auto object-cover mx-auto transform hover:scale-105 transition-transform duration-700 drop-shadow-2xl" loading="lazy">
               </div>
 
               <!-- Floating Badge -->
@@ -354,8 +354,8 @@
               <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 left-20 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
               
               <!-- Image without container - just the image itself -->
-              <img src="assets/images/CatDogFriend.png" alt="Chien et Chat"
-                class="w-[80%] max-w-none h-auto object-contain opacity-100 transform scale-110 hover:scale-115 transition-transform duration-700 pointer-events-none">
+              <img src="assets/images/CatDogFriend.webp" alt="Chien et Chat"
+                class="w-[80%] max-w-none h-auto object-contain opacity-100 transform scale-110 hover:scale-115 transition-transform duration-700 pointer-events-none" loading="lazy">
             </div>
           </div>
         </div>
@@ -464,7 +464,7 @@
             <div class="relative bg-white p-4 flex items-center justify-center" style="height: 200px;">
               <img appLazyLoadImage [src]="product.imageUrl"
                 [alt]="'Image du produit ' + product.name + ' - ' + product.description"
-                class="w-full h-full object-contain">
+                class="w-full h-full object-contain" loading="lazy">
             </div>
 
             <!-- Product Info -->

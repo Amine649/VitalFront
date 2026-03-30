@@ -48,10 +48,10 @@
           <div class="hidden md:block absolute -bottom-8 left-0 w-80 h-80 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
 
           <!-- Image -->
-          <img src="assets/images/catDog2.png" alt="Chien et Chat"
+          <img src="assets/images/catDog2.webp" alt="Chien et Chat"
             class="relative z-10 h-auto object-contain block"
             style="width: 2 00%; max-width: 500px; margin: 0 auto;"
-            [style.transform]="imageTransform">
+            [style.transform]="imageTransform" loading="lazy">
         </div>
       </div>
     </div>
@@ -117,7 +117,7 @@
       <div class="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-8 pt-8 md:pt-0">
         <div class="flex-shrink-0">
         <div class="w-20 h-20 md:w-28 md:h-28 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg overflow-hidden" style="background: linear-gradient(to bottom right, #42636E, #2a4148)">
-          <img src="assets/images/VetDog.png" alt="Vétérinaire" class="w-full h-full object-contain" />
+          <img src="assets/images/VetDog.webp" alt="Vétérinaire" class="w-full h-full object-contain" loading="lazy">
         </div>
         </div>
         <div class="flex-1 text-center md:text-left">
@@ -137,11 +137,9 @@
        class="hidden lg:block relative cursor-pointer image-hover-container" 
        style="width: 320px; align-self: stretch; border-radius: 1rem; overflow: hidden;">
       
-      <img 
-        src="assets/images/apphome.png" 
+      <img src="assets/images/apphome.webp" 
         alt="Application VitalNutri" 
-        style="width: 100%; height: 100%; object-fit: contain; object-position: center;"
-      />
+        style="width: 100%; height: 100%; object-fit: contain; object-position: center;" loading="lazy">
 
       <!-- Hover Overlay -->
       <div class="image-hover-overlay absolute inset-0 flex flex-col items-center justify-center rounded-2xl"
@@ -189,12 +187,12 @@
       <div class="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-8 pt-8 md:pt-0">
         <div class="flex-shrink-0">
           <div class="w-20 h-20 md:w-28 md:h-28 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg overflow-hidden" style="background-color: #42636E">
-          <img src="assets/images/PropDog.png" alt="Propriétaire" class="w-full h-full object-contain" />
+          <img src="assets/images/PropDog.webp" alt="Propriétaire" class="w-full h-full object-contain" loading="lazy">
         </div>
         </div>
         <div class="flex-1 text-center md:text-left">
           <h3 class="text-3xl md:text-2xl font-bold mb-6 text-center md:text-left px-2 md:px-0" style="color: #42636E; line-height: 1.3;">VOUS ÊTES PROPRIÉTAIRE ?</h3>
-          <h4 class="text-base md:text-xl font-semibold mb-3 md:mb-4 text-green-600 px-2 md:px-0">
+          <h4 class="text-base md:text-xl font-semibold mb-3 md:mb-4 text-green-700 px-2 md:px-0">
             Procurer des bienfaits supplémentaires pour la santé !!!
           </h4>
           <p class="text-xl text-gray-700 leading-relaxed mb-8 text-justify px-2 md:px-0">
@@ -209,11 +207,9 @@
        class="hidden lg:block relative cursor-pointer image-hover-container-green" 
        style="width: 320px; align-self: stretch; border-radius: 1rem; overflow: hidden;">
       
-      <img 
-        src="assets/images/Produits.png" 
+      <img src="assets/images/Produits.webp" 
         alt="Produits Premium" 
-  style="width: 120%; height: 100%; object-fit: contain; object-position: center center;"
-      />
+  style="width: 120%; height: 100%; object-fit: contain; object-position: center center;" loading="lazy">
 
       <!-- Hover Overlay -->
       <div class="image-hover-overlay-green absolute inset-0 flex flex-col items-center justify-center rounded-2xl"
@@ -348,7 +344,7 @@
             <div class="mb-6 relative">
               <div class="flex items-center gap-3 px-4 py-2 mb-2">
                 <span class="text-xl">🐾</span>
-                <span class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Mon Animal</span>
+                <span class="text-sm font-semibold text-gray-700 uppercase tracking-wide">Mon Animal</span>
               </div>
               
               <!-- Tree connector line -->
@@ -390,7 +386,7 @@
             <div class="mb-6 relative">
               <div class="flex items-center gap-3 px-4 py-2 mb-2">
                 <span class="text-xl">💚</span>
-                <span class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Conseils</span>
+                <span class="text-sm font-semibold text-gray-700 uppercase tracking-wide">Conseils</span>
               </div>
               
               <!-- Tree connector line -->
@@ -450,7 +446,7 @@
             <div class="border-t border-gray-300 my-4"></div>
 
             <!-- Nous contacter -->
-            <a (click)="scrollToFooter()" 
+            <a href="#footer" (click)="scrollToFooter(); $event.preventDefault()" 
                class="flex items-center justify-between px-4 py-3 rounded-xl bg-white hover:bg-gray-50 transition-all duration-200 group cursor-pointer">
               <div class="flex items-center gap-3">
                 <span class="text-lg">✉️</span>
@@ -478,7 +474,7 @@
       <!-- Chaton -->
       <div class="nutrition-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
         <div class="nutrition-image-wrapper">
-          <img src="assets/images/cat-kitten.png" alt="Chaton - Besoins nutritionnels" class="w-full h-64 object-cover">
+          <img src="assets/images/cat-kitten.webp" alt="Chaton - Besoins nutritionnels" class="w-full h-64 object-cover" loading="lazy">
         </div>
         <div class="p-8">
           <h3 class="text-3xl md:text-2xl font-bold mb-6 text-center" style="color: #42636E; line-height: 1.3;">CHATON</h3>
@@ -491,7 +487,7 @@
       <!-- Adulte Entier -->
       <div class="nutrition-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
         <div class="nutrition-image-wrapper">
-          <img src="assets/images/cat-adult-entire.png" alt="Chat adulte entier - Besoins nutritionnels" class="w-full h-64 object-cover">
+          <img src="assets/images/cat-adult-entire.webp" alt="Chat adulte entier - Besoins nutritionnels" class="w-full h-64 object-cover" loading="lazy">
         </div>
         <div class="p-8">
           <h3 class="text-3xl md:text-2xl font-bold mb-6 text-center" style="color: #42636E; line-height: 1.3;">ADULTE ENTIER</h3>
@@ -504,7 +500,7 @@
       <!-- Adulte Stérilisé -->
       <div class="nutrition-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
         <div class="nutrition-image-wrapper">
-          <img src="assets/images/cat-adult-sterilized.png" alt="Chat adulte stérilisé - Besoins nutritionnels" class="w-full h-64 object-cover">
+          <img src="assets/images/cat-adult-sterilized.webp" alt="Chat adulte stérilisé - Besoins nutritionnels" class="w-full h-64 object-cover" loading="lazy">
         </div>
         <div class="p-8">
           <h3 class="text-3xl md:text-2xl font-bold mb-6 text-center" style="color: #42636E; line-height: 1.3;">ADULTE STÉRILISÉ</h3>
@@ -517,7 +513,7 @@
       <!-- Senior -->
       <div class="nutrition-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
         <div class="nutrition-image-wrapper">
-          <img src="assets/images/cat-senior.png" alt="Chat senior - Besoins nutritionnels" class="w-full h-64 object-cover">
+          <img src="assets/images/cat-senior.webp" alt="Chat senior - Besoins nutritionnels" class="w-full h-64 object-cover" loading="lazy">
         </div>
         <div class="p-8">
           <h3 class="text-3xl md:text-2xl font-bold mb-6 text-center" style="color: #42636E; line-height: 1.3;">SENIOR</h3>
@@ -541,7 +537,7 @@
       <!-- Chiot -->
       <div class="nutrition-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
         <div class="nutrition-image-wrapper">
-          <img src="assets/images/Chiot.png" alt="Chiot - Besoins nutritionnels" class="w-full h-64 object-cover">
+          <img src="assets/images/Chiot.webp" alt="Chiot - Besoins nutritionnels" class="w-full h-64 object-cover" loading="lazy">
         </div>
         <div class="p-8">
           <h3 class="text-3xl md:text-2xl font-bold mb-6 text-center" style="color: #42636E; line-height: 1.3;">CHIOT</h3>
@@ -567,7 +563,7 @@
       <!-- Adulte Actif -->
       <div class="nutrition-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
         <div class="nutrition-image-wrapper">
-          <img src="assets/images/dog-adult-active.png" alt="Chien adulte actif - Besoins nutritionnels" class="w-full h-64 object-cover">
+          <img src="assets/images/dog-adult-active.webp" alt="Chien adulte actif - Besoins nutritionnels" class="w-full h-64 object-cover" loading="lazy">
         </div>
         <div class="p-8">
           <h3 class="text-3xl md:text-2xl font-bold mb-6 text-center" style="color: #42636E; line-height: 1.3;">ADULTE ENTIER</h3>
@@ -594,7 +590,7 @@
       <!-- Adulte Stérilisé -->
       <div class="nutrition-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
         <div class="nutrition-image-wrapper">
-          <img src="assets/images/dog-adult-sterilized.png" alt="Chien adulte stérilisé - Besoins nutritionnels" class="w-full h-64 object-cover">
+          <img src="assets/images/dog-adult-sterilized.webp" alt="Chien adulte stérilisé - Besoins nutritionnels" class="w-full h-64 object-cover" loading="lazy">
         </div>
         <div class="p-8">
           <h3 class="text-3xl md:text-2xl font-bold mb-6 text-center" style="color: #42636E; line-height: 1.3;">ADULTE STÉRILISÉ</h3>
@@ -626,7 +622,7 @@
       <!-- Senior -->
       <div class="nutrition-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
         <div class="nutrition-image-wrapper">
-          <img src="assets/images/dog-senior.png" alt="Chien senior - Besoins nutritionnels" class="w-full h-64 object-cover">
+          <img src="assets/images/dog-senior.webp" alt="Chien senior - Besoins nutritionnels" class="w-full h-64 object-cover" loading="lazy">
         </div>
         <div class="p-8">
           <h3 class="text-3xl md:text-2xl font-bold mb-6 text-center" style="color: #42636E; line-height: 1.3;">SENIOR</h3>
@@ -670,11 +666,10 @@
       <!-- Left Side: Image -->
       <div class="lg:w-1/2">
         <div class="rounded-2xl overflow-hidden shadow-xl">
-          <img 
-            src="assets/images/ownDog.png" 
+          <img src="assets/images/ownDog.webp" 
             alt="Veterinary HPM" 
             class="w-full h-auto object-cover"
-            (error)="onImageError($event)">
+            (error)="onImageError($event)" loading="lazy">
         </div>
       </div>
 
@@ -763,7 +758,7 @@
           d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
       </svg>
       <p class="text-red-600 mb-4">{{ errorMessage }}</p>
-      <button (click)="loadProducts()" class="text-vet-blue hover:underline">Réessayer</button>
+      <button (click)="loadProducts()" class="hover:underline" style="color: #0d7a72;">Réessayer</button>
     </div>
 
     <!-- No Products State -->
@@ -830,14 +825,14 @@
       </div>
 
       <!-- Navigation Arrows - hidden on mobile, shown on desktop -->
-      <button (click)="prevSlide()"
+      <button (click)="prevSlide()" aria-label="Produit précédent"
         class="hidden md:block absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white shadow-lg rounded-full p-3 transition-all duration-200 z-10">
         <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
         </svg>
       </button>
 
-      <button (click)="nextSlide()"
+      <button (click)="nextSlide()" aria-label="Produit suivant"
         class="hidden md:block absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white shadow-lg rounded-full p-3 transition-all duration-200 z-10">
         <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -846,13 +841,13 @@
 
       <!-- Mobile Navigation Arrows - below card -->
       <div class="flex md:hidden justify-between mt-4 px-4">
-        <button (click)="prevSlide()"
+        <button (click)="prevSlide()" aria-label="Produit précédent"
           class="bg-white shadow-lg rounded-full p-3 transition-all duration-200">
           <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
           </svg>
         </button>
-        <button (click)="nextSlide()"
+        <button (click)="nextSlide()" aria-label="Produit suivant"
           class="bg-white shadow-lg rounded-full p-3 transition-all duration-200">
           <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -865,6 +860,8 @@
     <div class="flex justify-center mt-6 space-x-1.5">
       <button *ngFor="let indicator of getSlideIndicators(); let i = index; trackBy: trackByIndex"
         (click)="goToSlide(i)"
+        [attr.aria-label]="'Aller au produit ' + (i + 1)"
+        [attr.aria-current]="getCurrentIndicator() === i ? 'true' : 'false'"
         class="h-1.5 rounded-full transition-all duration-300"
         [style.width]="getCurrentIndicator() === i ? '24px' : '8px'"
         [style.background-color]="getCurrentIndicator() === i ? '#42636E' : '#CBD5E1'">

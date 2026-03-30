@@ -1,58 +1,116 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
-import { FormulaireComponent } from './components/formulaire/formulaire.component';
-import { ConfirmationComponent } from './components/confirmation/confirmation.component';
-import { LoginComponent } from './components/login/login.component';
-import { AdminLayoutComponent } from './components/admin-layout/admin-layout.component';
-import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
-import { AdminProductsComponent } from './components/admin-products/admin-products.component';
-import { AdminSubscriptionsComponent } from './components/admin-subscriptions/admin-subscriptions.component';
-import { AdminVeterinairesComponent } from './components/admin-veterinaires/admin-veterinaires.component';
-import { AdminCabinetsComponent } from './components/admin-cabinets/admin-cabinets.component';
-import { AdminBoutiquesComponent } from './components/admin-boutiques/admin-boutiques.component';
-import { AdminBlogsComponent } from './components/admin-blogs/admin-blogs.component';
-import { EspaceProprietaireComponent } from './components/espace-proprietaire/espace-proprietaire.component';
-import { OuTrouverNosProduitsComponent } from './components/ou-trouver-nos-produits/ou-trouver-nos-produits.component';
-import { EspaceVeterinaireComponent } from './components/espace-veterinaire/espace-veterinaire.component';
-import { ProduitsVeterinaireComponent } from './components/produits-veterinaire/produits-veterinaire.component';
-import { PanierComponent } from './components/panier/panier.component';
-import { FormulaireVetComponent } from './components/formulaire-vet/formulaire-vet.component';
-import { EspaceCommercialComponent } from './components/espace-commercial/espace-commercial.component';
-import { PanierCommercialComponent } from './components/panier-commercial/panier-commercial.component';
-import { CommercialCommandeComponent } from './components/commercial-commande/commercial-commande.component';
-import { ConseilArticlesComponent } from './components/conseil-articles/conseil-articles.component';
 import { authGuard } from './guards/auth.guard';
 import { CommercialGuard } from './guards/commercial.guard';
 import { MatriculeValidatedGuard } from './guards/matricule-validated.guard';
 
-
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'formulaireUser', component: FormulaireComponent },
-  { path: 'formulaireVet', component: FormulaireVetComponent },
-  { path: 'confirmation', component: ConfirmationComponent },
-  { path: 'login', component: LoginComponent },
+  // Home and public pages - Keep in initial bundle (most visited)
+  { 
+    path: '', 
+    loadComponent: () => import('./components/home/home.component').then(m => m.HomeComponent)
+  },
+  { 
+    path: 'login', 
+    loadComponent: () => import('./components/login/login.component').then(m => m.LoginComponent)
+  },
+  
+  // Formulaires - Lazy loaded
+  { 
+    path: 'formulaireUser', 
+    loadComponent: () => import('./components/formulaire/formulaire.component').then(m => m.FormulaireComponent)
+  },
+  { 
+    path: 'formulaireVet', 
+    loadComponent: () => import('./components/formulaire-vet/formulaire-vet.component').then(m => m.FormulaireVetComponent)
+  },
+  { 
+    path: 'confirmation', 
+    loadComponent: () => import('./components/confirmation/confirmation.component').then(m => m.ConfirmationComponent)
+  },
+  
+  // Admin section - Lazy loaded (heavy module)
   {
     path: 'admin',
-    component: AdminLayoutComponent,
+    loadComponent: () => import('./components/admin-layout/admin-layout.component').then(m => m.AdminLayoutComponent),
     children: [
-      { path: '', component: AdminDashboardComponent },
-      { path: 'subscriptions', component: AdminSubscriptionsComponent },
-      { path: 'veterinaires', component: AdminVeterinairesComponent },
-      { path: 'cabinets', component: AdminCabinetsComponent },
-      { path: 'boutiques', component: AdminBoutiquesComponent },
-      { path: 'products', component: AdminProductsComponent },
-      { path: 'blogs', component: AdminBlogsComponent }
+      { 
+        path: '', 
+        loadComponent: () => import('./components/admin-dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent)
+      },
+      { 
+        path: 'subscriptions', 
+        loadComponent: () => import('./components/admin-subscriptions/admin-subscriptions.component').then(m => m.AdminSubscriptionsComponent)
+      },
+      { 
+        path: 'veterinaires', 
+        loadComponent: () => import('./components/admin-veterinaires/admin-veterinaires.component').then(m => m.AdminVeterinairesComponent)
+      },
+      { 
+        path: 'cabinets', 
+        loadComponent: () => import('./components/admin-cabinets/admin-cabinets.component').then(m => m.AdminCabinetsComponent)
+      },
+      { 
+        path: 'boutiques', 
+        loadComponent: () => import('./components/admin-boutiques/admin-boutiques.component').then(m => m.AdminBoutiquesComponent)
+      },
+      { 
+        path: 'products', 
+        loadComponent: () => import('./components/admin-products/admin-products.component').then(m => m.AdminProductsComponent)
+      },
+      { 
+        path: 'blogs', 
+        loadComponent: () => import('./components/admin-blogs/admin-blogs.component').then(m => m.AdminBlogsComponent)
+      }
     ]
   },
-  { path: 'espace-proprietaire', component: EspaceProprietaireComponent },
-  { path: 'ou-trouver-nos-produits', component: OuTrouverNosProduitsComponent },
-  { path: 'conseil-articles/:id', component: ConseilArticlesComponent },
-  { path: 'espace-veterinaire', component: EspaceVeterinaireComponent, canActivate: [authGuard] },
-  { path: 'produits-veterinaire', component: ProduitsVeterinaireComponent, canActivate: [authGuard] },
-  { path: 'panier', component: PanierComponent, canActivate: [authGuard] },
-  { path: 'espace-commercial', component: EspaceCommercialComponent, canActivate: [CommercialGuard] },
-  { path: 'espace-commercial/commande', component: CommercialCommandeComponent, canActivate: [CommercialGuard, MatriculeValidatedGuard] },
-  { path: 'espace-commercial/panier', component: PanierCommercialComponent, canActivate: [CommercialGuard, MatriculeValidatedGuard] },
+  
+  // Public pages - Lazy loaded
+  { 
+    path: 'espace-proprietaire', 
+    loadComponent: () => import('./components/espace-proprietaire/espace-proprietaire.component').then(m => m.EspaceProprietaireComponent)
+  },
+  { 
+    path: 'ou-trouver-nos-produits', 
+    loadComponent: () => import('./components/ou-trouver-nos-produits/ou-trouver-nos-produits.component').then(m => m.OuTrouverNosProduitsComponent)
+  },
+  { 
+    path: 'conseil-articles/:id', 
+    loadComponent: () => import('./components/conseil-articles/conseil-articles.component').then(m => m.ConseilArticlesComponent)
+  },
+  
+  // Veterinaire section - Lazy loaded with auth guard
+  { 
+    path: 'espace-veterinaire', 
+    loadComponent: () => import('./components/espace-veterinaire/espace-veterinaire.component').then(m => m.EspaceVeterinaireComponent),
+    canActivate: [authGuard]
+  },
+  { 
+    path: 'produits-veterinaire', 
+    loadComponent: () => import('./components/produits-veterinaire/produits-veterinaire.component').then(m => m.ProduitsVeterinaireComponent),
+    canActivate: [authGuard]
+  },
+  { 
+    path: 'panier', 
+    loadComponent: () => import('./components/panier/panier.component').then(m => m.PanierComponent),
+    canActivate: [authGuard]
+  },
+  
+  // Commercial section - Lazy loaded with guards
+  { 
+    path: 'espace-commercial', 
+    loadComponent: () => import('./components/espace-commercial/espace-commercial.component').then(m => m.EspaceCommercialComponent),
+    canActivate: [CommercialGuard]
+  },
+  { 
+    path: 'espace-commercial/commande', 
+    loadComponent: () => import('./components/commercial-commande/commercial-commande.component').then(m => m.CommercialCommandeComponent),
+    canActivate: [CommercialGuard, MatriculeValidatedGuard]
+  },
+  { 
+    path: 'espace-commercial/panier', 
+    loadComponent: () => import('./components/panier-commercial/panier-commercial.component').then(m => m.PanierCommercialComponent),
+    canActivate: [CommercialGuard, MatriculeValidatedGuard]
+  },
+  
   { path: '**', redirectTo: '' },
 ];

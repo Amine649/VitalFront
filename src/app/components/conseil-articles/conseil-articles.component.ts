@@ -273,26 +273,25 @@ export class ConseilArticlesComponent implements OnInit {
   }
 
   renderPdfWithPdfJs(pdfUrl: string): void {
+    // Dynamically load PDF.js if not already loaded
+    if (typeof (window as any).pdfjsLib === 'undefined') {
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+      script.onload = () => {
+        this.initializePdfRendering(pdfUrl);
+      };
+      script.onerror = () => {
+        this.showPdfError(pdfUrl, 'Impossible de charger la bibliothèque PDF.');
+      };
+      document.head.appendChild(script);
+    } else {
+      this.initializePdfRendering(pdfUrl);
+    }
+  }
+
+  private initializePdfRendering(pdfUrl: string): void {
     // Wait for DOM to be ready
     setTimeout(() => {
-      // Check if PDF.js is loaded
-      if (typeof (window as any).pdfjsLib === 'undefined') {
-        this.isPdfLoading = false;
-        // Fallback: show error message
-        const container = document.getElementById('pdf-container');
-        if (container) {
-          container.innerHTML = `
-            <div class="text-center py-8">
-              <p class="text-gray-600 mb-4">Impossible de charger le visualiseur PDF.</p>
-              <a href="${pdfUrl}" target="_blank" class="px-6 py-2.5 rounded-full font-semibold text-white bg-pink-500 hover:bg-pink-600 inline-block">
-                Ouvrir le PDF dans un nouvel onglet
-              </a>
-            </div>
-          `;
-        }
-        return;
-      }
-
       const pdfjsLib = (window as any).pdfjsLib;
       
       // Set worker source
@@ -341,6 +340,21 @@ export class ConseilArticlesComponent implements OnInit {
         }
       });
     }, 100); // Small delay to ensure DOM is ready
+  }
+
+  private showPdfError(pdfUrl: string, message: string): void {
+    this.isPdfLoading = false;
+    const container = document.getElementById('pdf-container');
+    if (container) {
+      container.innerHTML = `
+        <div class="text-center py-8">
+          <p class="text-gray-600 mb-4">${message}</p>
+          <a href="${pdfUrl}" target="_blank" class="px-6 py-2.5 rounded-full font-semibold text-white bg-pink-500 hover:bg-pink-600 inline-block">
+            Ouvrir le PDF dans un nouvel onglet
+          </a>
+        </div>
+      `;
+    }
   }
 
   renderPage(pdf: any, pageNum: number, container: HTMLElement): Promise<void> {
