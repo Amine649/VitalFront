@@ -50,8 +50,9 @@
           <!-- Image -->
           <img src="assets/images/catDog2.webp" alt="Chien et Chat"
             class="relative z-10 h-auto object-contain block"
-            style="width: 2 00%; max-width: 500px; margin: 0 auto;"
-            [style.transform]="imageTransform" loading="lazy">
+            style="width: 100%; max-width: 500px; margin: 0 auto;"
+            width="500" height="316"
+            [style.transform]="imageTransform" loading="eager" fetchpriority="high">
         </div>
       </div>
     </div>
@@ -742,7 +743,7 @@
 </div>
 
 <!-- Section Espace de Vente - Produits -->
-<section id="produits" class="py-12">
+<section id="produits" class="py-12 carousel-section">
   <div class="w-full">
     
     <!-- Loading State -->

@@ -65,7 +65,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.loadProducts();
+    // Defer product loading - load when carousel section is near viewport
+    this.setupDeferredProductLoading();
   }
 
   ngOnDestroy() {
@@ -75,6 +76,34 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.chaseInterval) {
       clearInterval(this.chaseInterval);
     }
+  }
+
+  /**
+   * Setup deferred product loading using Intersection Observer
+   */
+  private setupDeferredProductLoading(): void {
+    // Use setTimeout to defer until after initial render
+    setTimeout(() => {
+      const carouselSection = document.querySelector('.carousel-section');
+      if (!carouselSection) {
+        // Fallback: load immediately if section not found
+        this.loadProducts();
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && this.allProducts.length === 0) {
+            this.loadProducts();
+            observer.disconnect(); // Stop observing after loading
+          }
+        });
+      }, {
+        rootMargin: '200px' // Start loading 200px before section is visible
+      });
+
+      observer.observe(carouselSection);
+    }, 100);
   }
 
   /**

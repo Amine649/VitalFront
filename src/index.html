@@ -48,7 +48,10 @@
   </style>
   
   <!-- Preload LCP image -->
-  <link rel="preload" href="assets/images/Loading.webp" as="image" type="image/webp">
+  <link rel="preload" href="assets/images/Loading.webp" as="image" type="image/webp" fetchpriority="high">
+  
+  <!-- Preload hero image for home page -->
+  <link rel="preload" href="assets/images/catDog2.webp" as="image" type="image/webp" fetchpriority="high">
 </head>
 <body>
   <app-root>
