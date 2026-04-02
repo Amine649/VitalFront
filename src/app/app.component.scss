@@ -219,7 +219,6 @@ header {
     margin-right: -50vw;
     width: 100vw;
     max-width: 100vw;
-    min-height: 450px; // Reserve space to prevent layout shift
     contain: layout style; // Optimize rendering and prevent layout shifts
     content-visibility: auto; // Lazy render when near viewport
   }
@@ -227,14 +226,13 @@ header {
 
 // Global footer styles to prevent layout shift
 .site-footer {
-  min-height: 450px !important;
   contain: layout style;
   content-visibility: auto;
 }
 
 @media (max-width: 768px) {
   .site-footer {
-    min-height: 600px !important; // More height on mobile due to stacked layout
+    // Mobile footer adjusts to content
   }
 }
 

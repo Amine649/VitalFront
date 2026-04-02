@@ -81,7 +81,7 @@ export class EspaceVeterinaireComponent implements OnInit, OnDestroy {
 
   // Blog properties
   blogCurrentPage = 1;
-  blogItemsPerPage = 10;
+  blogItemsPerPage = 17;
   blogPosts: BlogPost[] = [];
   isLoadingBlogs = false;
   blogError = '';

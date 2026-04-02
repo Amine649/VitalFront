@@ -363,17 +363,18 @@
 
 <!-- Decorative Divider -->
 <div class="relative py-8 bg-gradient-to-r from-blue-50 via-white to-blue-50">
-  <div class="container max-w-7xl mx-auto px-4">
-    <div class="flex items-center justify-center">
-      <div class="flex-grow border-t-2 border-blue-200 max-w-md hidden md:block"></div>
-      <div class="mx-2 md:mx-6 flex items-center space-x-2 text-center">
+  <div class="w-full px-6 lg:px-12 xl:px-16">
+    <div class="flex items-center justify-center max-w-[1400px] mx-auto">
+      <div class="flex-grow border-t-2 border-blue-200 hidden md:block"></div>
+      <div class="mx-2 md:mx-6 flex items-center space-x-2 text-center flex-shrink-0">
         <span class="text-2xl md:text-3xl">✨</span>
-        <span class="text-gray-600 font-semibold text-sm md:text-base">Consultation de nutrition vétérinaire</span>
+        <span class="text-gray-600 font-semibold text-sm md:text-base whitespace-nowrap">Consultation de nutrition vétérinaire</span>
         <span class="text-2xl md:text-3xl">✨</span>
       </div>
-      <div class="flex-grow border-t-2 border-blue-200 max-w-md hidden md:block"></div>
+      <div class="flex-grow border-t-2 border-blue-200 hidden md:block"></div>
     </div>
   </div>
+</div>
 
 
 <!-- Two-Column Layout: Main Content + Blog -->
@@ -391,8 +392,9 @@
       <h2 class="heading-fixed text-center text-slate-900 mb-6" style="color: #42636E; line-height: 1.3;">
         Les Directives D'évaluation Nutritionnelle
       </h2>
-      <p class="text-lg text-slate-700 text-center max-w-4xl mx-auto leading-relaxed px-4">
-        L'AAHA et la WSAVA (2011) recommandent de suivre les directives d'évaluation nutritionnelle afin d'assurer une bonne qualité et une bonne espérance de vie à tous les animaux de compagnie. Pour débuter une évaluation nutritionnelle, il est important de suivre les étapes suivantes.
+      <p class="text-lg text-slate-700 text-center mx-auto leading-relaxed px-4">
+        L'AAHA et la WSAVA (2011) recommandent de suivre les directives d'évaluation nutritionnelle afin d'assurer une bonne qualité et une bonne espérance de vie à tous les animaux de compagnie . Pour débuter une évaluation nutritionnelle, il est important de suivre les étapes suivantes.<br>
+        
       </p>
     </div>
 
@@ -418,7 +420,7 @@
 
           <!-- Title -->
           <h3 class="text-2xl font-bold text-slate-900 mb-6 text-center group-hover:text-blue-600 transition-colors">
-           Evaluer l’état nutritionnel de l’animal 
+           Evaluer l’état nutritionnel 
           </h3>
 
           <!-- Description -->
@@ -456,7 +458,7 @@
     </div>
 
     <h3 class="subheading-fixed text-slate-900 mb-6 text-center group-hover:text-green-600 transition-colors">
-      Évaluer l'état clinique de l'animal
+      Évaluer l'état clinique
     </h3>
 
     <p class="text-slate-600 leading-relaxed mb-8 text-lg text-justify">
@@ -488,7 +490,7 @@
     </div>
 
     <h3 class="subheading-fixed text-slate-900 mb-6 text-center group-hover:text-purple-600 transition-colors">
-      Analyser la ration actuelle journalière ; VitalNutri
+      Analyser la ration actuelle
     </h3>
 
     <p class="text-slate-600 leading-relaxed mb-8 text-lg text-justify">
@@ -525,8 +527,7 @@
           <img src="assets/images/Logo2.webp" alt="VitalNutri Logo" class="w-full h-full object-contain" loading="lazy">
         </div>
         <h3 class="subheading-fixed text-slate-900 mb-4 text-center lg:text-left group-hover:text-teal-600 transition-colors">
-         Proposer une ration adaptée :<br>
-         VitalNutri 
+         Proposer une ration adaptée :<br> 
         </h3>
       </div>
 
@@ -607,7 +608,7 @@
       <div class="bg-white rounded-3xl p-10 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 border-l-4 border-blue-500 group flex flex-col">
         <div class="flex items-center gap-4 mb-8">
           <div class="text-6xl group-hover:scale-110 transition-transform duration-300">💡</div>
-          <h3 class="text-3xl font-bold text-blue-600">DESCRIPTION</h3>
+          <h3 class="subheading-fixed text-purple-600">DESCRIPTION</h3>
         </div>
         <p class="text-gray-700 mb-8 leading-relaxed text-base">VITAL NUTRI est le premier et l’unique logiciel tunisien en ligne pour l'élaboration de 
         plans nutritionnels vétérinaires. C’est un outil de recommandation et de suivi nutritionnels 
@@ -667,7 +668,7 @@
         <div class="bg-white rounded-3xl p-10 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 border-l-4 border-green-500 group flex-1 flex flex-col text-justify">
           <div class="flex items-center gap-4 mb-6">
             <div class="text-5xl group-hover:scale-110 transition-transform duration-300">🎯</div>
-            <h3 class="text-3xl font-bold text-green-600">À QUOI SERT</h3>
+            <h3 class="subheading-fixed text-purple-600">À QUOI SERT</h3>
           </div>
           <p class="text-gray-700 mb-6 leading-relaxed text-base">L’ère des menus génériques est révolue ! Les solutions récentes « VitalNutri » affichent 
           les valeurs nutritionnelles immédiatement lors de la composition d’une ration ménagère 
@@ -744,10 +745,10 @@
 
       <!-- RIGHT COLUMN: Blog/News Section (25% width) -->
       <aside class="w-full lg:w-[25%] lg:sticky lg:top-24 self-start flex-shrink-0">
-        <div class="bg-white rounded-lg border border-gray-200 p-6">
+        <div class="bg-white rounded-lg border border-gray-250 p-6">
           
           <!-- Blog Header -->
-          <div class="mb-6">
+          <div class="mb-6 border-l-4 border-red-600 pl-3">
             <h2 class="subheading-fixed text-gray-900 mb-1">Actualités</h2>
             <div class="w-12 h-1 bg-red-600"></div>
           </div>
@@ -822,7 +823,7 @@
 
 <!-- Votre Identité Section - Full Width -->
 <section class="pb-16 bg-gradient-to-r from-green-50 via-white to-green-50 fixed-layout-container pt-12">
-  <div class="container max-w-7xl mx-auto px-4">
+  <div class="w-full px-6 lg:px-12 xl:px-16">
     
     <!-- Decorative Header -->
     <div class="flex items-center justify-center mb-12">
@@ -835,18 +836,37 @@
       <div class="hidden md:block flex-grow border-t-2 border-green-200 max-w-md"></div>
     </div>
 
-    <!-- Blue Banner -->
-    <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl p-8 mb-12 shadow-xl">
-      <div class="flex items-center justify-center gap-4 mb-4">
-        <div class="text-5xl">🎨</div>
-        <h2 class="subheading-fixed text-white text-center">
-          PERSONNALISEZ LE LOGICIEL AVEC VOTRE NOM ET VOTRE LOGO
-        </h2>
-        <div class="text-5xl">🎨</div>
+    <!-- Two Column Layout: PERSONNALISEZ + CTA -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12 max-w-[1800px] mx-auto">
+      
+      <!-- LEFT: Blue Banner - PERSONNALISEZ -->
+      <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl p-10 shadow-xl flex flex-col justify-center">
+        <div class="flex items-center justify-center gap-4 mb-4">
+          <div class="text-5xl">🎨</div>
+          <h2 class="subheading-fixed text-white text-center">
+            PERSONNALISEZ LE LOGICIEL AVEC VOTRE NOM ET VOTRE LOGO
+          </h2>
+          <div class="text-5xl">🎨</div>
+        </div>
+        <p class="text-white text-xl leading-relaxed text-center">
+          Vous pouvez insérer vos propres coordonnées et logos dans les documents imprimables du logiciel. Ainsi vous augmentez votre valeur ajoutée et votre crédibilité auprès de vos clients et patients !
+        </p>
       </div>
-      <p class="text-white text-xl leading-relaxed text-center">
-        Vous pouvez insérer vos propres coordonnées et logos dans les documents imprimables du logiciel. Ainsi vous augmentez votre valeur ajoutée et votre crédibilité auprès de vos clients et patients !
-      </p>
+
+      <!-- RIGHT: CTA Card -->
+      <div class="bg-gradient-to-br from-purple-600 to-blue-600 rounded-2xl p-10 shadow-xl flex flex-col justify-center">
+        <h2 class="subheading-fixed text-white text-center" style="margin-bottom: 30px;">
+            Prêt à révolutionner votre pratique ?
+        </h2>
+         <p class="text-white text-xl leading-relaxed text-center"style="margin-bottom: 20px;">
+            Rejoignez des centaines de vétérinaires qui font déjà confiance à VITALFEED Vet pour gérer leur pratique quotidienne.
+        </p>
+        <div class="flex justify-center">
+          <button class="bg-white text-purple-600 font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1" routerLink="/formulaireVet">
+            Choisir mon abonnement
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -878,16 +898,18 @@
             </div>
           </div>
 
+          <!--
           <div class="flex items-start gap-4">
-            <span class="text-purple-500 text-2xl mt-1">�</span>
+            <span class="text-purple-500 text-2xl mt-1"> </span>
             <div>
               <span class="font-semibold text-gray-900 text-lg">Tableur obligatoire :</span>
               <span class="text-gray-700 text-lg"> Excel® 2013 et + ou Excel® for iMac / ne fonctionne pas sur Numbers, OpenOffice, GoogleSheet, Excel en ligne (cloud). Il faut avoir tableur en ligne.</span>
             </div>
           </div>
+          -->
 
           <div class="flex items-start gap-4">
-            <span class="text-orange-500 text-2xl mt-1">�</span>
+            <span class="text-orange-500 text-2xl mt-1"> </span>
             <div>
               <span class="font-semibold text-gray-900 text-lg">Taille du fichier :</span>
               <span class="text-gray-700 text-lg"> 4,5 Mo</span>
@@ -1110,40 +1132,6 @@
   </div>
 </section>
 -->
-
-<!-- Decorative Divider -->
-<div class="relative py-8 bg-gradient-to-b from-white to-purple-50">
-  <div class="container max-w-7xl mx-auto px-4">
-    <div class="flex items-center justify-center">
-      <div class="flex-grow border-t-2 border-purple-200 max-w-md"></div>
-      <div class="mx-6 flex items-center space-x-2">
-        <span class="text-3xl">🚀</span>
-        <span class="text-gray-600 font-semibold">Prêt à commencer ?</span>
-        <span class="text-3xl">🚀</span>
-      </div>
-      <div class="flex-grow border-t-2 border-purple-200 max-w-md"></div>
-    </div>
-  </div>
-</div>
-
-<!-- CTA Section -->
-<section class="cta-section fixed-layout-container section-spacing" id="ctaCard" >
-  <div class="container">
-    <div class="cta-card">
-      <div class="cta-content">
-        <h3 class="cta-title" style="color: white;">Prêt à révolutionner votre pratique ?</h3>
-        <p class="cta-text">
-          Rejoignez des centaines de vétérinaires qui font déjà confiance à VITALFEED Vet
-          pour gérer leur pratique quotidienne.
-        </p>
-        <button class="btn-cta" routerLink="/formulaireVet">Choisir mon abonnement</button>
-      </div>
-      <div class="cta-icon">🚀</div>
-    </div>
-  </div>
-</section>
-
-
 
 <!-- PDF Modal -->
 <div *ngIf="showPdfModal" 

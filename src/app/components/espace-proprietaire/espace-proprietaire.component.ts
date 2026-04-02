@@ -45,7 +45,7 @@ export class EspaceProprietaireComponent implements OnInit {
   products: Product[] = [];
 
   selectedCategory: string | null = null;
-  selectedSousCategory: string | null = null;
+  selectedSousCategory: 'Aliment' | 'Complément' | 'Test rapide' | null = null;
   selectedSubSubCategory: string | null = null;
 
   currentPage = 1;
@@ -54,9 +54,14 @@ export class EspaceProprietaireComponent implements OnInit {
   highlightedProductId: number | null = null;
   highlightedSection: string | null = null;
 
-  // Blog pagination
-  blogCurrentPage = 1;
-  blogItemsPerPage = 3;
+  // Blog pagination for INFORMATIONS & CONSEILS VÉTOS (right column with filtre)
+  conseilCurrentPage = 1;
+  conseilItemsPerPage = 7;
+  
+  // Blog pagination for INFORMATIONS & CONSEILS VÉTOS (bottom section)
+  infosCurrentPage = 1;
+  infosItemsPerPage = 3;
+  
   blogPosts: BlogPost[] = [];
   isLoadingBlogs = false;
   blogError = '';
@@ -257,13 +262,13 @@ export class EspaceProprietaireComponent implements OnInit {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
-  private mapProductType(type: string): string {
-    const typeMap: { [key: string]: string } = {
+  private mapProductType(type: string): 'Aliment' | 'Complément' | 'Test rapide' | null {
+    const typeMap: { [key: string]: 'Aliment' | 'Complément' | 'Test rapide' } = {
       'aliment': 'Aliment',
       'complement': 'Complément',
       'test-rapide': 'Test rapide'
     };
-    return typeMap[type] || type;
+    return typeMap[type] || null;
   }
 
 
@@ -284,13 +289,15 @@ export class EspaceProprietaireComponent implements OnInit {
       this.selectedCategory = cat;
       this.selectedSousCategory = null;
       this.selectedSubSubCategory = null;
-      this.blogCurrentPage = 1;
+      this.conseilCurrentPage = 1;
+      this.infosCurrentPage = 1;
       this.loadBlogPosts(cat);
     }
   }
 
   selectSousCategory(sub: string) {
-    this.selectedSousCategory = this.selectedSousCategory === sub ? null : sub;
+    const validSub = sub as 'Aliment' | 'Complément' | 'Test rapide';
+    this.selectedSousCategory = this.selectedSousCategory === validSub ? null : validSub;
     this.selectedSubSubCategory = null;
   }
 
@@ -404,7 +411,8 @@ export class EspaceProprietaireComponent implements OnInit {
   loadBlogPosts(animal?: string): void {
     this.isLoadingBlogs = true;
     this.blogError = '';
-    this.blogCurrentPage = 1;
+    this.conseilCurrentPage = 1;
+    this.infosCurrentPage = 1;
 
     // Determine the API endpoint based on animal selection
     let endpoint: string;
@@ -517,36 +525,70 @@ export class EspaceProprietaireComponent implements OnInit {
   }
 
   /**
-   * Get paginated blog posts
+   * Get paginated blog posts for Conseil Technique (right column)
    */
-  getPaginatedBlogPosts(): BlogPost[] {
-    const startIndex = (this.blogCurrentPage - 1) * this.blogItemsPerPage;
-    const endIndex = startIndex + this.blogItemsPerPage;
+  getPaginatedConseilPosts(): BlogPost[] {
+    const startIndex = (this.conseilCurrentPage - 1) * this.conseilItemsPerPage;
+    const endIndex = startIndex + this.conseilItemsPerPage;
     return this.blogPosts.slice(startIndex, endIndex);
   }
 
   /**
-   * Get total blog pages
+   * Get total pages for Conseil Technique
    */
-  getBlogTotalPages(): number {
-    return Math.ceil(this.blogPosts.length / this.blogItemsPerPage);
+  getConseilTotalPages(): number {
+    return Math.ceil(this.blogPosts.length / this.conseilItemsPerPage);
   }
 
   /**
-   * Navigate to next blog page
+   * Navigate to next page in Conseil Technique
    */
-  nextBlogPage(): void {
-    if (this.blogCurrentPage < this.getBlogTotalPages()) {
-      this.blogCurrentPage++;
+  nextConseilPage(): void {
+    if (this.conseilCurrentPage < this.getConseilTotalPages()) {
+      this.conseilCurrentPage++;
     }
   }
 
   /**
-   * Navigate to previous blog page
+   * Navigate to previous page in Conseil Technique
    */
-  previousBlogPage(): void {
-    if (this.blogCurrentPage > 1) {
-      this.blogCurrentPage--;
+  previousConseilPage(): void {
+    if (this.conseilCurrentPage > 1) {
+      this.conseilCurrentPage--;
+    }
+  }
+
+  /**
+   * Get paginated blog posts for INFORMATIONS & CONSEILS VÉTOS (bottom section)
+   */
+  getPaginatedInfosPosts(): BlogPost[] {
+    const startIndex = (this.infosCurrentPage - 1) * this.infosItemsPerPage;
+    const endIndex = startIndex + this.infosItemsPerPage;
+    return this.blogPosts.slice(startIndex, endIndex);
+  }
+
+  /**
+   * Get total pages for INFORMATIONS & CONSEILS VÉTOS
+   */
+  getInfosTotalPages(): number {
+    return Math.ceil(this.blogPosts.length / this.infosItemsPerPage);
+  }
+
+  /**
+   * Navigate to next page in INFORMATIONS & CONSEILS VÉTOS
+   */
+  nextInfosPage(): void {
+    if (this.infosCurrentPage < this.getInfosTotalPages()) {
+      this.infosCurrentPage++;
+    }
+  }
+
+  /**
+   * Navigate to previous page in INFORMATIONS & CONSEILS VÉTOS
+   */
+  previousInfosPage(): void {
+    if (this.infosCurrentPage > 1) {
+      this.infosCurrentPage--;
     }
   }
 }

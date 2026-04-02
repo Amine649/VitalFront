@@ -430,7 +430,7 @@ besoins de votre Chien, carnivore depuis toujours !
             </div>
 
             <div *ngIf="!isLoadingBlogs && !blogError" class="space-y-6 mb-6">
-              <article *ngFor="let post of getPaginatedBlogPosts()" class="border-b border-gray-200 pb-6 last:border-0 last:pb-0">
+              <article *ngFor="let post of getPaginatedInfosPosts()" class="border-b border-gray-200 pb-6 last:border-0 last:pb-0">
                 <time class="text-sm text-gray-500 block mb-2">{{ formatBlogDate(post.createdAt) }}</time>
                 <h4 class="text-base font-bold text-gray-900 mb-2 leading-tight">{{ post.title }}</h4>
                 <p class="text-sm text-gray-600 mb-3 line-clamp-2">{{ post.description }}</p>
@@ -446,10 +446,10 @@ besoins de votre Chien, carnivore depuis toujours !
               </div>
             </div>
 
-            <div *ngIf="!isLoadingBlogs && blogPosts.length > blogItemsPerPage" class="flex items-center justify-between pt-4 border-t border-gray-200">
+            <div *ngIf="!isLoadingBlogs && getInfosTotalPages() > 1" class="flex items-center justify-between pt-4 border-t border-gray-200">
               <button 
-                (click)="previousBlogPage()" 
-                [disabled]="blogCurrentPage === 1"
+                (click)="previousInfosPage()" 
+                [disabled]="infosCurrentPage === 1"
                 class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
@@ -458,12 +458,12 @@ besoins de votre Chien, carnivore depuis toujours !
               </button>
               
               <span class="text-sm text-gray-600 font-medium">
-                {{ blogCurrentPage }} / {{ getBlogTotalPages() }}
+                Page {{ infosCurrentPage }} / {{ getInfosTotalPages() }}
               </span>
               
               <button 
-                (click)="nextBlogPage()" 
-                [disabled]="blogCurrentPage === getBlogTotalPages()"
+                (click)="nextInfosPage()" 
+                [disabled]="infosCurrentPage === getInfosTotalPages()"
                 class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200">
                 <span>Suivant</span>
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -506,9 +506,9 @@ besoins de votre Chien, carnivore depuis toujours !
               </div>
               <h3 class="text-xl font-bold text-gray-800 mb-3">Les vétérinaires</h3>
               <p class="text-xl text-gray-700 leading-relaxed mb-8 text-justify">
-  92 à 94% d'acceptation chez les chiens (selon la race) et 84% par les chats (source : 
-  données internes études appétence en France)
-</p>
+              92 à 94% d'acceptation chez les chiens (selon la race) et 84% par les chats 
+              <span class="text-sm">(source : données internes études appétence en France)</span>
+            </p>
             </div>
 
             <div class="text-center">
@@ -519,8 +519,8 @@ besoins de votre Chien, carnivore depuis toujours !
               </div>
               <h3 class="text-xl font-bold text-gray-800 mb-3">Les propriétaires</h3>
               <p class="text-xl text-gray-700 leading-relaxed mb-8 text-justify">
-            Nos aliments obtiennent des notes supérieures à 4/5 (sources : conso animo, 60 
-            millions de consommateurs en France)               </p>
+            Nos aliments obtiennent des notes supérieures à 4/5 <span class="text-sm">(sources : conso animo, 60 
+            millions de consommateurs en France)   </span>            </p>
             </div>
 
             <div class="text-center">
@@ -531,8 +531,8 @@ besoins de votre Chien, carnivore depuis toujours !
               </div>
               <h3 class="text-xl font-bold text-gray-800 mb-3">Les animaux</h3>
               <p class="text-xl text-gray-700 leading-relaxed mb-8 text-justify">
-              80% des vétérinaires interrogés recommandent notre gamme (source : données 
-              internes 2020 - 2 970 vétérinaires répondants en France)               </p>
+              80% des vétérinaires interrogés recommandent notre gamme <span class="text-sm">(source : données 
+              internes 2020 - 2 970 vétérinaires répondants en France)   </span>            </p>
             </div>
           </div>
         </div>
@@ -712,7 +712,7 @@ besoins de votre Chien, carnivore depuis toujours !
           <span style="color: #42636E; font-size: 1.1rem; letter-spacing: 0.3em;">✦ ✦ ✦</span>
           <div class="h-px w-16" style="background: linear-gradient(to left, transparent, #42636E);"></div>
         </div>    </div>
-    <p class="text-xl text-gray-700 leading-relaxed mb-8 text-justify text-center">
+    <p class="text-xl text-gray-700 leading-relaxed mb-8 text-center">
       Notre gamme repose sur un équilibre nutritionnel faible en glucides et riche en protéines adapté aux besoins de votre chien, carnivore depuis toujours !
     </p>
   </div>
@@ -924,6 +924,129 @@ besoins de votre Chien, carnivore depuis toujours !
         </div>
       </div>
     </div>
+
+    <!-- Section 4: COMMENT NOURIR - Added to left column -->
+    <div class="bg-gradient-to-br from-gray-50 to-white rounded-2xl shadow-xl p-8 md:p-12 border-t-4 w-full mt-8" [ngClass]="selectedCategory === 'Chat' ? 'border-[#74C375]' : 'border-[#a01867]'">
+      <div class="mx-auto">
+        <!-- Header with Icon -->
+        <div class="flex items-center gap-3 mb-6">
+          <div [ngClass]="selectedCategory === 'Chat' ? 'bg-[#74C375]' : 'bg-[#a01867]'" class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-2xl md:text-xl font-bold" style="color: #42636E; line-height: 1.3;">
+              <span *ngIf="selectedCategory === 'Chat'">COMMENT NOURIR VOTRE CHAT</span>
+              <span *ngIf="selectedCategory === 'Chien'">COMMENT NOURIR VOTRE CHIEN</span>
+            </h3>
+            <p class="text-sm text-gray-600 mt-1">Guide complet pour une alimentation saine</p>
+          </div>
+        </div>
+
+        <!-- Content Cards -->
+        <div class="space-y-4">
+          <!-- Card 1 -->
+          <div class="bg-white rounded-xl p-3 shadow-md hover:shadow-lg transition-shadow border-l-4" [ngClass]="selectedCategory === 'Chat' ? 'border-[#74C375]' : 'border-[#a01867]'">
+            <div class="flex items-start gap-3">
+              <div [ngClass]="selectedCategory === 'Chat' ? 'bg-green-100' : 'bg-red-100'" class="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                <span [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : 'text-[#a01867]'" class="font-bold text-sm">1</span>
+              </div>
+              <div class="flex-1">
+                <h4 class="text-base font-bold text-gray-900 mb-2">
+                  <span *ngIf="selectedCategory === 'Chat'">Quels besoins nutritionnels pour mon chaton ?</span>
+                  <span *ngIf="selectedCategory === 'Chien'">Quels besoins nutritionnels pour mon chiot ?</span>
+                </h4>
+                <p class="text-sm text-gray-700 leading-relaxed">
+                  <span *ngIf="selectedCategory === 'Chat'">
+                  Votre petit chaton va connaître une période de croissance incroyable au cours de sa première année de vie. À 
+                  titre d'exemple, nous, les humains, atteindrons en 18 ans environ 20 fois notre poids de naissance.
+                  </span>
+                  <span *ngIf="selectedCategory === 'Chien'">
+                  Les besoins énergétiques d'un jeune chiot sont proportionnellement plus élevés que ceux d'un chien adulte. 
+                  Il n'est pas question de le nourrir avec un aliment standard pour chien adulte.
+                  </span>
+                  <a [routerLink]="['/conseil-articles', selectedCategory === 'Chat' ? 'chat-1' : 'chien-1']"
+                     class="inline-flex items-center gap-1 text-sm font-semibold transition-colors ml-1 underline text-red-600 hover:text-blue-600">
+                    <span>Lire plus</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    </svg>
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="bg-white rounded-xl p-3 shadow-md hover:shadow-lg transition-shadow border-l-4" [ngClass]="selectedCategory === 'Chat' ? 'border-[#74C375]' : 'border-[#a01867]'">
+            <div class="flex items-start gap-3">
+              <div [ngClass]="selectedCategory === 'Chat' ? 'bg-green-100' : 'bg-red-100'" class="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                <span [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : 'text-[#a01867]'" class="font-bold text-sm">2</span>
+              </div>
+              <div class="flex-1">
+                <h4 class="text-base font-bold text-gray-900 mb-2">
+                  <span *ngIf="selectedCategory === 'Chat'">Quels besoins nutritionnels pour mon chat adulte ?</span>
+                  <span *ngIf="selectedCategory === 'Chien'">Quels besoins nutritionnels pour mon chien adulte ?</span>
+                </h4>
+                <p class="text-sm text-gray-700 leading-relaxed">
+                  <span *ngIf="selectedCategory === 'Chat'">
+                  Plus de 80 % des chats adultes sont stérilisés. La stérilisation peut prédisposer à l'apparition de deux 
+                  risques majeurs : l'excès de poids (qui peut lui-même favoriser l'apparition du diabète sucré) et les 
+                  affections du bas appareil urinaire.
+                  </span>
+                  <span *ngIf="selectedCategory === 'Chien'">
+                  A l'âge adulte, le chien doit bénéficier d'une alimentation qui couvre ses besoins nutritionnels de 
+                  carnivore. Divers troubles peuvent apparaître à cette période : surpoids (près de 40% des 
+                  chiens), arthrose...
+                  </span>
+                  <a [routerLink]="['/conseil-articles', selectedCategory === 'Chat' ? 'chat-2' : 'chien-2']"
+                     class="inline-flex items-center gap-1 text-sm font-semibold transition-colors ml-1 underline text-red-600 hover:text-blue-600">
+                    <span>Lire plus</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    </svg>
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="bg-white rounded-xl p-3 shadow-md hover:shadow-lg transition-shadow border-l-4" [ngClass]="selectedCategory === 'Chat' ? 'border-[#74C375]' : 'border-[#a01867]'">
+            <div class="flex items-start gap-3">
+              <div [ngClass]="selectedCategory === 'Chat' ? 'bg-green-100' : 'bg-red-100'" class="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                <span [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : 'text-[#a01867]'" class="font-bold text-sm">3</span>
+              </div>
+              <div class="flex-1">
+                <h4 class="text-base font-bold text-gray-900 mb-2">
+                  <span *ngIf="selectedCategory === 'Chat'">Quels besoins nutritionnels pour mon chat senior ?</span>
+                  <span *ngIf="selectedCategory === 'Chien'">Quels besoins nutritionnels pour mon chien senior ?</span>
+                </h4>
+                <p class="text-sm text-gray-700 leading-relaxed">
+                  <span *ngIf="selectedCategory === 'Chat'">
+                  Aujourd'hui, grâce aux progrès importants réalisés en médecine et en nutrition, un chat peut facilement 
+                  vivre 16 à 20 ans. Vers 10 ans, un chat senior entame donc seulement le dernier tiers de son espérance 
+                  de vie : il a atteint l'équivalent de 55 à 60 ans chez l'homme.
+                  </span>
+                  <span *ngIf="selectedCategory === 'Chien'">
+                  Le vieillissement est un processus naturel qui peut arriver relativement tôt chez les grandes races. Votre 
+                  chien est en bonne santé mais ses besoins évoluent.
+                  </span>
+                  <a [routerLink]="['/conseil-articles', selectedCategory === 'Chat' ? 'chat-3' : 'chien-3']"
+                     class="inline-flex items-center gap-1 text-sm font-semibold transition-colors ml-1 underline text-red-600 hover:text-blue-600">
+                    <span>Lire plus</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    </svg>
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
       </div>
 
       <!-- RIGHT COLUMN: Featured Product Promotion -->
@@ -1003,6 +1126,54 @@ besoins de votre Chien, carnivore depuis toujours !
               </div>
             </div>
           </div>
+
+	<!-- Conseil Technique Blog Section -->
+          <div class="mt-6">
+            <div id="conseils" class="rounded-2xl p-6 transition-all duration-500" 
+                [ngClass]="highlightedSection === 'conseils' ? 'ring-8 shadow-2xl scale-105' : 'bg-gray-50 shadow-lg'"
+                [style.background-color]="highlightedSection === 'conseils' ? (selectedCategory === 'Chat' ? 'rgba(116, 195, 117, 0.15)' : 'rgba(160, 24, 103, 0.15)') : ''"
+                [style.box-shadow]="highlightedSection === 'conseils' ? (selectedCategory === 'Chat' ? '0 0 0 4px rgba(116, 195, 117, 0.5), 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' : '0 0 0 4px rgba(160, 24, 103, 0.5), 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)') : ''">
+              <h3 class="text-2xl md:text-xl font-bold mb-6 pb-3 border-b-2 border-red-600" style="color: #42636E; line-height: 1.3;">
+                INFORMATIONS & CONSEILS VÉTOS
+              </h3>
+              
+              <!-- Loading State -->
+              <div *ngIf="isLoadingBlogs" class="flex justify-center py-8">
+                <div class="animate-spin rounded-full h-8 w-8 border-2 border-blue-600 border-t-transparent"></div>
+              </div>
+
+              <!-- Error State -->
+              <div *ngIf="blogError && !isLoadingBlogs" class="text-center py-8 text-red-600">
+                {{ blogError }}
+              </div>
+
+              <!-- Blog Posts -->
+              <div *ngIf="!isLoadingBlogs && !blogError" class="space-y-6 mb-6">
+                <article *ngFor="let post of getPaginatedConseilPosts()" class="border-b border-gray-200 pb-6 last:border-0 last:pb-0">
+                  <time class="text-sm text-gray-500 block mb-2">{{ formatBlogDate(post.createdAt) }}</time>
+                  <h4 class="text-lg font-bold text-gray-900 mb-2">{{ post.title }}</h4>
+                  <p class="text-sm text-gray-600 mb-3 line-clamp-2">{{ post.description }}</p>
+                  <a [routerLink]="['/conseil-articles', post.id]" class="inline-flex items-center gap-1 text-sm font-semibold text-red-600 hover:text-blue-600 transition-colors">
+                    <span>Lire la suite</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    </svg>
+                  </a>
+                </article>
+              </div>
+
+              <!-- Pagination -->
+              <div *ngIf="!isLoadingBlogs && !blogError && getConseilTotalPages() > 1" class="flex justify-center gap-2 pt-4 border-t border-gray-200">
+                <button (click)="previousConseilPage()" [disabled]="conseilCurrentPage === 1" class="px-3 py-1 rounded-lg border transition-colors disabled:opacity-50 disabled:cursor-not-allowed" [ngClass]="selectedCategory === 'Chat' ? 'border-[#74C375] text-[#74C375] hover:bg-green-50' : 'border-[#a01867] text-[#a01867] hover:bg-red-50'">
+                  Précédent
+                </button>
+                <span class="px-3 py-1 text-sm text-gray-600">Page {{ conseilCurrentPage }} / {{ getConseilTotalPages() }}</span>
+                <button (click)="nextConseilPage()" [disabled]="conseilCurrentPage === getConseilTotalPages()" class="px-3 py-1 rounded-lg border transition-colors disabled:opacity-50 disabled:cursor-not-allowed" [ngClass]="selectedCategory === 'Chat' ? 'border-[#74C375] text-[#74C375] hover:bg-green-50' : 'border-[#a01867] text-[#a01867] hover:bg-red-50'">
+                  Suivant
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       
@@ -1041,214 +1212,8 @@ besoins de votre Chien, carnivore depuis toujours !
   </div>
 </div>
 
-<!-- Feeding Guide Section - Only for Aliment type -->
-<section *ngIf="selectedSousCategory === 'Aliment'" class="bg-white" style="padding-top: 1rem; padding-bottom: 3.5rem;">
-  <div class="w-full mx-auto max-w-[1800px]">
-    
-    <!-- Two Column Layout -->
-    <div class="flex flex-col lg:flex-row gap-8 mx-4 sm:mx-6 lg:mx-8">
-      
-      <!-- LEFT COLUMN: Feeding Guide Content (65%) -->
-      <div class="lg:w-[65%] flex flex-col" style="padding-top: 30px;">
-        <div class="bg-gradient-to-br from-gray-50 to-white rounded-2xl shadow-xl p-8 md:p-12 border-t-4 w-full flex-1" [ngClass]="selectedCategory === 'Chat' ? 'border-[#74C375]' : 'border-[#a01867]'" >
-          
-          <!-- Header with Icon -->
-          <div class="flex items-center gap-3 text-left" style="margin-bottom: 2rem;">
-            <div [ngClass]="selectedCategory === 'Chat' ? 'bg-[#74C375]' : 'bg-[#a01867]'" class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
-              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-              </svg>
-            </div>
-            <div>
-              <h2 class="text-2xl md:text-xl font-bold mb-6" style="color: #42636E; line-height: 1.3;">
-                <span *ngIf="selectedCategory === 'Chat'">COMMENT NOURIR VOTRE CHAT</span>
-                <span *ngIf="selectedCategory === 'Chien'">COMMENT NOURIR VOTRE CHIEN</span>
-              </h2>
-              <p >Guide complet pour une alimentation saine</p>
-            </div>
-          </div>
-
-          <!-- Content Cards -->
-          <div class="space-y-4">
-            
-            <!-- Card 1 -->
-            <div class="bg-white rounded-xl p-3 shadow-md hover:shadow-lg transition-shadow border-l-4" [ngClass]="selectedCategory === 'Chat' ? 'border-[#74C375]' : 'border-[#a01867]'">
-              <div class="flex items-start gap-3">
-                <div [ngClass]="selectedCategory === 'Chat' ? 'bg-green-100' : 'bg-red-100'" class="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                  <span [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : 'text-[#a01867]'" class="font-bold text-sm">1</span>
-                </div>
-                <div class="flex-1">
-                  <h3 class="text-base font-bold text-gray-900 mb-2">
-                    <span *ngIf="selectedCategory === 'Chat'"> Quels besoins nutritionnels pour mon chaton ? </span>
-                    <span *ngIf="selectedCategory === 'Chien'">Quels besoins nutritionnels pour mon chiot ? </span>
-                  </h3>
-                  <p class="text-sm text-gray-700 leading-relaxed">
-                    <span *ngIf="selectedCategory === 'Chat'">
-                    Votre petit chaton va connaître une période de croissance incroyable au cours de sa première année de vie. À 
-                    titre d’exemple, nous, les humains, atteindrons en 18 ans environ 20 fois notre poids de naissance.                     </span>
-                    <span *ngIf="selectedCategory === 'Chien'">
-                    Les besoins énergétiques d'un jeune chiot sont proportionnellement plus élevés que ceux d'un chien adulte. 
-                    Il n'est pas question de le nourrir avec un aliment standard pour chien adulte.                    </span>
-                    <a [routerLink]="['/conseil-articles', selectedCategory === 'Chat' ? 'chat-1' : 'chien-1']"
-                       class="inline-flex items-center gap-1 text-sm font-semibold transition-colors ml-1 underline text-red-600 hover:text-blue-600">
-                      <span>Lire plus</span>
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                      </svg>
-                    </a>
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="bg-white rounded-xl p-3 shadow-md hover:shadow-lg transition-shadow border-l-4" [ngClass]="selectedCategory === 'Chat' ? 'border-[#74C375]' : 'border-[#a01867]'">
-              <div class="flex items-start gap-3">
-                <div [ngClass]="selectedCategory === 'Chat' ? 'bg-green-100' : 'bg-red-100'" class="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                  <span [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : 'text-[#a01867]'" class="font-bold text-sm">2</span>
-                </div>
-                <div class="flex-1">
-                  <h3 class="text-base font-bold text-gray-900 mb-2">
-                    <span *ngIf="selectedCategory === 'Chat'">Quels besoins nutritionnels pour mon chat adulte ? </span>
-                    <span *ngIf="selectedCategory === 'Chien'">Quels besoins nutritionnels pour mon chien adulte ?</span>
-                  </h3>
-               
-                    <span *ngIf="selectedCategory === 'Chat'">
-                  Plus de 80 % des chats adultes sont stérilisés. La stérilisation peut prédisposer à l’apparition de deux 
-                  risques majeurs : l'excès de poids (qui peut lui-même favoriser l'apparition du diabète sucré) et les 
-                  affections du bas appareil urinaire.                    </span>
-                    <span *ngIf="selectedCategory === 'Chien'">
-                  A l'âge adulte, le chien doit bénéficier d'une alimentation qui couvre ses besoins nutritionnels de 
-                  carnivore. Divers troubles peuvent apparaître à cette période : surpoids (près de 40% des 
-                  chiens), arthrose...                    </span>
-                   <a [routerLink]="['/conseil-articles', selectedCategory === 'Chat' ? 'chat-2' : 'chien-2']"
-                       class="inline-flex items-center gap-1 text-sm font-semibold transition-colors ml-1 underline text-red-600 hover:text-blue-600">
-                      <span>Lire plus</span>
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                      </svg>
-                    </a>
-                  
-                 
-                </div>
-              </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="bg-white rounded-xl p-3 shadow-md hover:shadow-lg transition-shadow border-l-4" [ngClass]="selectedCategory === 'Chat' ? 'border-[#74C375]' : 'border-[#a01867]'">
-              <div class="flex items-start gap-3">
-                <div [ngClass]="selectedCategory === 'Chat' ? 'bg-green-100' : 'bg-red-100'" class="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                  <span [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : 'text-[#a01867]'" class="font-bold text-sm">3</span>
-                </div>
-                <div class="flex-1">
-                  <h3 class="text-base font-bold text-gray-900 mb-2">
-                    <span *ngIf="selectedCategory === 'Chat'">Quels besoins nutritionnels pour mon chat senior ? </span>
-                    <span *ngIf="selectedCategory === 'Chien'">Quels besoins nutritionnels pour mon chien senior ? </span>
-                  </h3>
-                  <p class="text-sm text-gray-700 leading-relaxed">
-                    <span *ngIf="selectedCategory === 'Chat'">
-                    Aujourd'hui, grâce aux progrès importants réalisés en médecine et en nutrition, un chat peut facilement 
-                    vivre 16 à 20 ans. Vers 10 ans, un chat senior entame donc seulement le dernier tiers de son espérance 
-                    de vie : il a atteint l'équivalent de 55 à 60 ans chez l'homme.                    </span>
-                    <span *ngIf="selectedCategory === 'Chien'">
-                    Le vieillissement est un processus naturel qui peut arriver relativement tôt chez les grandes races. Votre 
-                    chien est en bonne santé mais ses besoins évoluent.                    </span>
-                    <a [routerLink]="['/conseil-articles', selectedCategory === 'Chat' ? 'chat-3' : 'chien-3']"
-                       class="inline-flex items-center gap-1 text-sm font-semibold transition-colors ml-1 underline text-red-600 hover:text-blue-600">
-                      <span>Lire plus</span>
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                      </svg>
-                    </a>
-                  </p>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-        
-
-        </div>
-      </div>
-
-      <!-- RIGHT COLUMN: Blog Section (35%) -->
-      <aside class="lg:w-[35%] flex flex-col"style=" padding-top: 30px;">
-        <div class="space-y-6 flex-1 flex flex-col" style="max-width: 550px;">
-          <!-- Blog Section -->
-          <div id="conseils" class="rounded-2xl p-6 transition-all duration-500 flex-1" 
-              [ngClass]="highlightedSection === 'conseils' ? 'ring-8 shadow-2xl scale-105' : 'bg-gray-50 shadow-lg'"
-              [style.background-color]="highlightedSection === 'conseils' ? (selectedCategory === 'Chat' ? 'rgba(116, 195, 117, 0.15)' : 'rgba(160, 24, 103, 0.15)') : ''"
-              [style.box-shadow]="highlightedSection === 'conseils' ? (selectedCategory === 'Chat' ? '0 0 0 4px rgba(116, 195, 117, 0.5), 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' : '0 0 0 4px rgba(160, 24, 103, 0.5), 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)') : ''">
-            <h3 class="text-2xl md:text-xl font-bold mb-6 pb-3 border-b-2 border-red-600" style="color: #42636E; line-height: 1.3;">
-            INFORMATIONS & CONSEILS VÉTOS
-          </h3>
-            
-            <!-- Loading State -->
-            <div *ngIf="isLoadingBlogs" class="flex justify-center py-8">
-              <div class="animate-spin rounded-full h-8 w-8 border-2 border-blue-600 border-t-transparent"></div>
-            </div>
-
-            <!-- Error State -->
-            <div *ngIf="blogError && !isLoadingBlogs" class="text-center py-8 text-red-600">
-              {{ blogError }}
-            </div>
-
-            <!-- Blog Posts -->
-            <div *ngIf="!isLoadingBlogs && !blogError" class="space-y-6 mb-6">
-              <article *ngFor="let post of getPaginatedBlogPosts()" class="border-b border-gray-200 pb-6 last:border-0 last:pb-0">
-                <time class="text-sm text-gray-500 block mb-2">{{ formatBlogDate(post.createdAt) }}</time>
-                <h4 class="text-base font-bold text-gray-900 mb-2 leading-tight">{{ post.title }}</h4>
-                <p class="text-sm text-gray-600 mb-3 line-clamp-2">{{ post.description }}</p>
-                <button 
-                  (click)="openPdfModal(post)" 
-                  class="text-sm font-semibold transition-colors underline text-red-600 hover:text-blue-600">
-                  Lire la suite
-                </button>
-              </article>
-
-              <!-- Empty State -->
-              <div *ngIf="blogPosts.length === 0" class="text-center py-8 text-gray-500">
-                Aucun article disponible pour le moment
-              </div>
-            </div>
-
-            <!-- Pagination Controls -->
-            <div *ngIf="!isLoadingBlogs && blogPosts.length > blogItemsPerPage" class="flex items-center justify-between pt-4 border-t border-gray-200">
-              <button 
-                (click)="previousBlogPage()" 
-                [disabled]="blogCurrentPage === 1"
-                class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <span>Précédent</span>
-              </button>
-              
-              <span class="text-sm text-gray-600 font-medium">
-                {{ blogCurrentPage }} / {{ getBlogTotalPages() }}
-              </span>
-              
-              <button 
-                (click)="nextBlogPage()" 
-                [disabled]="blogCurrentPage === getBlogTotalPages()"
-                class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200">
-                <span>Suivant</span>
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </aside>
-
-    </div>
-  </div>
-</section>
-
 <!-- Quelques conseils pratique section - Show only for Aliment type -->
-  <div *ngIf="selectedCategory && selectedSousCategory === 'Aliment'" class="mx-4 sm:mx-6 lg:mx-8 mb-8">
+  <div *ngIf="selectedCategory && selectedSousCategory === 'Aliment'" class="mx-4 sm:mx-6 lg:mx-8 mb-8" style="margin-top: 50px;">
  <div class="rounded-2xl p-8 md:p-12 shadow-lg" [ngClass]="selectedCategory === 'Chat' ? 'bg-gradient-to-br from-green-50 to-emerald-50' : 'bg-gradient-to-br from-purple-50 to-pink-50'"
        [style.borderLeft]="'4px solid ' + (selectedCategory === 'Chat' ? '#74C375' : '#a01867')"
        [style.borderRight]="'4px solid ' + (selectedCategory === 'Chat' ? '#74C375' : '#a01867')">
@@ -1274,8 +1239,8 @@ besoins de votre Chien, carnivore depuis toujours !
   </div>
 
   <!-- Products Title -->
-  <div id="products-section" class="products-header mb-8">
-    <h3 class="section-title text-center text-2xl md:text-3xl font-bold text-gray-800 uppercase" style="margin-top:65px; margin-bottom: 70px;">
+  <div id="products-section" class="products-header mb-8 text-center">
+    <h3 class="section-title text-center text-2xl md:text-3xl font-bold text-gray-800 uppercase mx-auto" style="margin-top:65px; margin-bottom: 70px;">
       <span *ngIf="selectedCategory && selectedSousCategory && selectedSubSubCategory">
         {{ selectedSubSubCategory }} - {{ selectedSousCategory }} - {{ selectedCategory }}
       </span>
