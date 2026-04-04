@@ -96,9 +96,11 @@ header {
     transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: sticky;
     top: 4rem;
-    height: calc(100vh - 4rem);
+    max-height: calc(100vh - 4rem);
+    align-self: flex-start;
     z-index: 40;
     padding-top: 2rem; // Add top padding to match main content spacing
+    padding-bottom: 2rem; // Add bottom padding
 
     &.open {
       width: 280px;
@@ -208,6 +210,8 @@ header {
     flex: 1;
     min-width: 0;
     transition: margin-left 0.3s ease;
+    display: flex;
+    flex-direction: column;
   }
 
   // Footer inside main-content should always be full viewport width
@@ -219,6 +223,8 @@ header {
     margin-right: -50vw;
     width: 100vw;
     max-width: 100vw;
+    margin-top: auto;
+    z-index: 50; // Higher than sidebar z-index (40)
     contain: layout style; // Optimize rendering and prevent layout shifts
     content-visibility: auto; // Lazy render when near viewport
   }
