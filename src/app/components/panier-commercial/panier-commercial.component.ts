@@ -8,6 +8,7 @@ import { environment } from '../../../environments/environment';
 import { forkJoin } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { ImageErrorHandlerService } from '../../services/image-error-handler.service';
+import { ErrorSanitizerService } from '../../services/error-sanitizer.service';
 
 @Component({
     selector: 'app-panier-commercial',
@@ -53,7 +54,8 @@ export class PanierCommercialComponent implements OnInit {
         private http: HttpClient,
         private fb: FormBuilder,
         private authService: AuthService,
-        private imageErrorHandler: ImageErrorHandlerService
+        private imageErrorHandler: ImageErrorHandlerService,
+        private errorSanitizer: ErrorSanitizerService
     ) {
         this.passwordForm = this.fb.group({
             oldPassword: ['', Validators.required],
@@ -271,7 +273,7 @@ export class PanierCommercialComponent implements OnInit {
                     },
                     error: (error) => {
                         this.isCheckingOut = false;
-                        alert('Erreur lors de la commande. Veuillez réessayer.');
+                        alert(this.errorSanitizer.sanitizeOperationError(error, 'commande'));
                     }
                 });
             } else {
@@ -291,7 +293,7 @@ export class PanierCommercialComponent implements OnInit {
                     },
                     error: (error) => {
                         this.isCheckingOut = false;
-                        alert('Erreur lors de la commande. Veuillez réessayer.');
+                        alert(this.errorSanitizer.sanitizeOperationError(error, 'commande'));
                     }
                 });
             }
@@ -430,14 +432,7 @@ export class PanierCommercialComponent implements OnInit {
             },
             error: (error) => {
                 this.passwordLoading = false;
-
-                if (error.status === 401) {
-                    this.passwordError = 'Ancien mot de passe incorrect.';
-                } else if (error.status === 400) {
-                    this.passwordError = error.error?.message || 'Données invalides.';
-                } else {
-                    this.passwordError = 'Erreur lors du changement de mot de passe.';
-                }
+                this.passwordError = this.errorSanitizer.sanitizeOperationError(error, 'changement de mot de passe');
             }
         });
     }

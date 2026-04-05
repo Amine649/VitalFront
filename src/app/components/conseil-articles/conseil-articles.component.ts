@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule, Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ErrorSanitizerService } from '../../services/error-sanitizer.service';
 
 interface Article {
   id: string;
@@ -195,7 +196,8 @@ export class ConseilArticlesComponent implements OnInit {
     private router: Router,
     private location: Location,
     private http: HttpClient,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private errorSanitizer: ErrorSanitizerService
   ) {}
 
   ngOnInit(): void {
@@ -331,7 +333,7 @@ export class ConseilArticlesComponent implements OnInit {
         if (container) {
           container.innerHTML = `
             <div class="text-center py-8">
-              <p class="text-red-600 mb-4">Erreur lors du chargement du PDF: ${error.message || 'Erreur inconnue'}</p>
+              <p class="text-red-600 mb-4">Erreur lors du chargement du PDF. Veuillez réessayer.</p>
               <a href="${pdfUrl}" target="_blank" class="px-6 py-2.5 rounded-full font-semibold text-white bg-pink-500 hover:bg-pink-600 inline-block">
                 Ouvrir le PDF dans un nouvel onglet
               </a>

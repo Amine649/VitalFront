@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { ErrorSanitizerService } from './error-sanitizer.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,8 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private errorSanitizer: ErrorSanitizerService
   ) {
     this.initNavigationWatcher();
   }
@@ -164,28 +166,32 @@ export class AuthService {
    * Parse password change error and return user-friendly message
    */
   getPasswordChangeErrorMessage(error: any): string {
+    // Use sanitizer for most errors
     if (error.status === 401) {
       return 'Session expirée. Veuillez vous reconnecter.';
     } else if (error.status === 400) {
-      // Check if there's a specific error message from the API
+      // Check for specific password-related errors only
       let apiError = '';
       if (error.error && typeof error.error === 'string') {
-        apiError = error.error;
+        apiError = error.error.toLowerCase();
       } else if (error.error?.message) {
-        apiError = error.error.message;
+        apiError = error.error.message.toLowerCase();
       }
 
-      // Translate common API errors to French
-      if (apiError.toLowerCase().includes('current password is incorrect') ||
-          apiError.toLowerCase().includes('mot de passe actuel incorrect')) {
+      // Only translate known safe error messages
+      if (apiError.includes('current password is incorrect') ||
+          apiError.includes('mot de passe actuel incorrect')) {
         return 'Le mot de passe actuel est incorrect.';
-      } else if (apiError) {
-        return apiError;
-      } else {
+      } else if (apiError.includes('password') || apiError.includes('mot de passe')) {
         return 'Le mot de passe ne respecte pas les critères requis.';
       }
+      
+      // For any other 400 error, use generic message
+      return 'Le mot de passe ne respecte pas les critères requis.';
     }
-    return 'Une erreur est survenue. Veuillez réessayer.';
+    
+    // Use sanitizer for all other errors
+    return this.errorSanitizer.sanitizeError(error);
   }
 
   /**

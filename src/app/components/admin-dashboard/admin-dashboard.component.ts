@@ -7,6 +7,7 @@ import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ProductService } from '../../services/product.service';
 import { AuthService } from '../../services/auth.service';
+import { ErrorSanitizerService } from '../../services/error-sanitizer.service';
 
 interface DashboardStats {
   // Users & Subscriptions
@@ -61,7 +62,8 @@ export class AdminDashboardComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private productService: ProductService,
-    private authService: AuthService
+    private authService: AuthService,
+    private errorSanitizer: ErrorSanitizerService
   ) { }
 
   ngOnInit() {
@@ -107,7 +109,7 @@ export class AdminDashboardComponent implements OnInit {
         this.loading = false;
       },
       error: (err) => {
-        this.error = 'Erreur lors du chargement du tableau de bord';
+        this.error = this.errorSanitizer.sanitizeOperationError(err, 'chargement du tableau de bord');
         this.loading = false;
       }
     });

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { ErrorSanitizerService } from '../../services/error-sanitizer.service';
 
 interface Blog {
   id: number;
@@ -69,7 +70,8 @@ export class AdminBlogsComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private errorSanitizer: ErrorSanitizerService
   ) {}
 
   ngOnInit() {
@@ -87,7 +89,7 @@ export class AdminBlogsComponent implements OnInit {
           this.isLoading = false;
         },
         error: (error) => {
-          this.showErrorMessage('Erreur lors du chargement des blogs');
+          this.showErrorMessage(this.errorSanitizer.sanitizeOperationError(error, 'chargement des blogs'));
           this.isLoading = false;
         }
       });
@@ -205,7 +207,7 @@ export class AdminBlogsComponent implements OnInit {
           this.loadBlogs();
         },
         error: (error) => {
-          this.showErrorMessage('Erreur lors de l\'ajout du blog');
+          this.showErrorMessage(this.errorSanitizer.sanitizeOperationError(error, 'ajout du blog'));
           this.isLoading = false;
         }
       });
@@ -244,7 +246,7 @@ export class AdminBlogsComponent implements OnInit {
           this.loadBlogs();
         },
         error: (error) => {
-          this.showErrorMessage('Erreur lors de la modification du blog');
+          this.showErrorMessage(this.errorSanitizer.sanitizeOperationError(error, 'modification du blog'));
           this.isLoading = false;
         }
       });
@@ -263,7 +265,7 @@ export class AdminBlogsComponent implements OnInit {
           this.loadBlogs();
         },
         error: (error) => {
-          this.showErrorMessage('Erreur lors de la suppression du blog');
+          this.showErrorMessage(this.errorSanitizer.sanitizeOperationError(error, 'suppression du blog'));
           this.isLoading = false;
         }
       });

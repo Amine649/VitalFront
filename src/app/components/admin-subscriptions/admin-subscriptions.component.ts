@@ -4,6 +4,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../services/auth.service';
+import { ErrorSanitizerService } from '../../services/error-sanitizer.service';
 
 interface User {
   id: number;
@@ -70,7 +71,8 @@ export class AdminSubscriptionsComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private errorSanitizer: ErrorSanitizerService
   ) { }
 
   ngOnInit(): void {
@@ -88,7 +90,7 @@ export class AdminSubscriptionsComponent implements OnInit {
           this.users = data;
         },
         error: (error) => {
-          this.error = this.getFriendlyErrorMessage(error);
+          this.error = this.errorSanitizer.sanitizeOperationError(error, 'chargement des utilisateurs');
         }
       });
   }
@@ -106,7 +108,7 @@ export class AdminSubscriptionsComponent implements OnInit {
           this.loading = false;
         },
         error: (error) => {
-          this.error = this.getFriendlyErrorMessage(error);
+          this.error = this.errorSanitizer.sanitizeOperationError(error, 'chargement des abonnements');
           this.loading = false;
         }
       });
@@ -247,7 +249,7 @@ export class AdminSubscriptionsComponent implements OnInit {
             this.closeAssignModal();
           }, 2000);
         } else {
-          this.error = this.getFriendlyErrorMessage(error);
+          this.error = this.errorSanitizer.sanitizeOperationError(error, 'assignation de l\'abonnement');
         }
       }
     });
@@ -425,7 +427,7 @@ export class AdminSubscriptionsComponent implements OnInit {
             this.closeUpdateModal();
           }, 2000);
         } else {
-          this.error = this.getFriendlyErrorMessage(error);
+          this.error = this.errorSanitizer.sanitizeOperationError(error, 'mise à jour de l\'abonnement');
         }
       }
     });
@@ -461,7 +463,7 @@ export class AdminSubscriptionsComponent implements OnInit {
       },
       error: (error) => {
         this.deleteLoading = false;
-        this.error = this.getFriendlyErrorMessage(error);
+        this.error = this.errorSanitizer.sanitizeOperationError(error, 'suppression de l\'abonnement');
       }
     });
   }

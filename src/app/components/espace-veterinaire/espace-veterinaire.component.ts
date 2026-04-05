@@ -10,6 +10,7 @@ import { environment } from '../../../environments/environment';
 import { SafePipe } from '../../pipes/safe.pipe';
 import { AuthService } from '../../services/auth.service';
 import { PasswordValidationService } from '../../services/password-validation.service';
+import { ErrorSanitizerService } from '../../services/error-sanitizer.service';
 import { ImageErrorHandlerService } from '../../services/image-error-handler.service';
 
 interface BlogPost {
@@ -213,6 +214,7 @@ export class EspaceVeterinaireComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private passwordValidation: PasswordValidationService,
+    private errorSanitizer: ErrorSanitizerService,
     private imageErrorHandler: ImageErrorHandlerService
   ) {
     this.passwordForm = this.formBuilder.group({
@@ -250,6 +252,21 @@ export class EspaceVeterinaireComponent implements OnInit, OnDestroy {
 
   toggleConfirmPasswordVisibility(): void {
     this.showConfirmPassword = !this.showConfirmPassword;
+  }
+
+  hasMinLength(): boolean {
+    const password = this.passwordForm.get('newPassword')?.value || '';
+    return password.length >= 8;
+  }
+
+  hasUpperCase(): boolean {
+    const password = this.passwordForm.get('newPassword')?.value || '';
+    return /[A-Z]/.test(password);
+  }
+
+  hasSpecialChar(): boolean {
+    const password = this.passwordForm.get('newPassword')?.value || '';
+    return /[!@#$%^&*(),.?":{}|<>]/.test(password);
   }
 
   ngOnInit() {
@@ -349,7 +366,35 @@ export class EspaceVeterinaireComponent implements OnInit, OnDestroy {
    * Change password
    */
   changePassword(): void {
+    // Mark all fields as touched to show validation errors
+    Object.keys(this.passwordForm.controls).forEach(key => {
+      this.passwordForm.get(key)?.markAsTouched();
+    });
+
     if (this.passwordForm.invalid) {
+      // Show which fields are invalid
+      const errors: string[] = [];
+      
+      if (this.passwordForm.get('currentPassword')?.invalid) {
+        errors.push('Mot de passe actuel requis');
+      }
+      if (this.passwordForm.get('newPassword')?.hasError('required')) {
+        errors.push('Nouveau mot de passe requis');
+      }
+      if (this.passwordForm.get('newPassword')?.hasError('minlength')) {
+        errors.push('Le nouveau mot de passe doit contenir au moins 8 caractères');
+      }
+      if (this.passwordForm.get('newPassword')?.hasError('passwordStrength')) {
+        errors.push('Le nouveau mot de passe doit contenir au moins 1 majuscule et 1 caractère spécial');
+      }
+      if (this.passwordForm.get('confirmPassword')?.invalid) {
+        errors.push('Confirmation du mot de passe requise');
+      }
+      if (this.passwordForm.hasError('passwordMismatch')) {
+        errors.push('Les mots de passe ne correspondent pas');
+      }
+      
+      this.passwordError = errors.join('. ');
       return;
     }
 
@@ -415,7 +460,7 @@ export class EspaceVeterinaireComponent implements OnInit, OnDestroy {
         this.startAutoSlide();
       },
       error: (error) => {
-        this.errorMessage = error.message;
+        this.errorMessage = this.errorSanitizer.sanitizeError(error);
         this.isLoading = false;
       }
     });

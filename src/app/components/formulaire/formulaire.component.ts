@@ -5,6 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { DemandeService } from '../../services/demande.service';
 import { Demande } from '../../models/demande.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorSanitizerService } from '../../services/error-sanitizer.service';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input';
 
@@ -39,7 +40,8 @@ export class FormulaireComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private demandeService: DemandeService
+    private demandeService: DemandeService,
+    private errorSanitizer: ErrorSanitizerService
   ) {
     this.demandeForm = this.formBuilder.group({
       nom: ['', [Validators.required, Validators.minLength(2)]],
@@ -106,7 +108,7 @@ export class FormulaireComponent implements OnInit {
       error: (error: any) => {
         this.loading = false;
 
-        // Handle different error scenarios with user-friendly messages
+        // Handle specific error scenarios with user-friendly messages
         if (error.error && typeof error.error === 'string') {
           const errorText = error.error.toLowerCase();
 
@@ -115,14 +117,10 @@ export class FormulaireComponent implements OnInit {
           } else if (errorText.includes('email')) {
             this.error = 'Cette adresse email est déjà utilisée.';
           } else {
-            this.error = 'Une erreur est survenue lors de l\'inscription. Veuillez réessayer.';
+            this.error = this.errorSanitizer.sanitizeError(error);
           }
-        } else if (error.status === 400) {
-          this.error = 'Les informations fournies sont incorrectes. Veuillez vérifier vos données.';
-        } else if (error.status === 500) {
-          this.error = 'Une erreur serveur est survenue. Veuillez réessayer plus tard.';
         } else {
-          this.error = 'Une erreur est survenue lors de l\'inscription. Veuillez réessayer.';
+          this.error = this.errorSanitizer.sanitizeOperationError(error, 'inscription');
         }
       }
     });

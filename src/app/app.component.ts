@@ -407,6 +407,21 @@ export class AppComponent implements OnInit {
     this.showConfirmPassword = !this.showConfirmPassword;
   }
 
+  hasMinLength(): boolean {
+    const password = this.passwordForm.get('newPassword')?.value || '';
+    return password.length >= 8;
+  }
+
+  hasUpperCase(): boolean {
+    const password = this.passwordForm.get('newPassword')?.value || '';
+    return /[A-Z]/.test(password);
+  }
+
+  hasSpecialChar(): boolean {
+    const password = this.passwordForm.get('newPassword')?.value || '';
+    return /[!@#$%^&*(),.?":{}|<>]/.test(password);
+  }
+
   updatePasswordStrength(password: string): void {
     const info = this.passwordValidation.getPasswordStrengthInfo(password);
     this.passwordStrength = info.percentage;
@@ -415,7 +430,35 @@ export class AppComponent implements OnInit {
   }
 
   changePassword(): void {
+    // Mark all fields as touched to show validation errors
+    Object.keys(this.passwordForm.controls).forEach(key => {
+      this.passwordForm.get(key)?.markAsTouched();
+    });
+
     if (this.passwordForm.invalid) {
+      // Show which fields are invalid
+      const errors: string[] = [];
+      
+      if (this.passwordForm.get('currentPassword')?.invalid) {
+        errors.push('Mot de passe actuel requis');
+      }
+      if (this.passwordForm.get('newPassword')?.hasError('required')) {
+        errors.push('Nouveau mot de passe requis');
+      }
+      if (this.passwordForm.get('newPassword')?.hasError('minlength')) {
+        errors.push('Le nouveau mot de passe doit contenir au moins 8 caractères');
+      }
+      if (this.passwordForm.get('newPassword')?.hasError('passwordStrength')) {
+        errors.push('Le nouveau mot de passe doit contenir au moins 1 majuscule et 1 caractère spécial');
+      }
+      if (this.passwordForm.get('confirmPassword')?.invalid) {
+        errors.push('Confirmation du mot de passe requise');
+      }
+      if (this.passwordForm.hasError('passwordMismatch')) {
+        errors.push('Les mots de passe ne correspondent pas');
+      }
+      
+      this.passwordError = errors.join('. ');
       return;
     }
     

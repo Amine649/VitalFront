@@ -5,6 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../services/auth.service';
+import { ErrorSanitizerService } from '../../services/error-sanitizer.service';
 
 @Component({
   selector: 'app-formulaire-vet',
@@ -35,7 +36,8 @@ export class FormulaireVetComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private errorSanitizer: ErrorSanitizerService
   ) {
     this.subscriptionForm = this.formBuilder.group({
       subscriptionType: ['', Validators.required],
@@ -59,7 +61,7 @@ export class FormulaireVetComponent implements OnInit {
         this.loading = false;
         this.authService.storeUserData(data);
       },
-      error: (error) => {
+      error: () => {
         this.loading = false;
         // Don't show error - it's okay if user is not logged in
       }
@@ -149,14 +151,7 @@ export class FormulaireVetComponent implements OnInit {
       },
       error: (error) => {
         this.submitting = false;
-        
-        if (error.status === 401) {
-          this.error = 'Session expirée. Veuillez vous reconnecter.';
-        } else if (error.status === 400) {
-          this.error = 'Données invalides. Veuillez vérifier vos informations.';
-        } else {
-          this.error = 'Une erreur est survenue. Veuillez réessayer.';
-        }
+        this.error = this.errorSanitizer.sanitizeOperationError(error, 'souscription');
       }
     });
   }

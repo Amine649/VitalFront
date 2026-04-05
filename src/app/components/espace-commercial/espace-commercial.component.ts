@@ -5,6 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../services/auth.service';
+import { ErrorSanitizerService } from '../../services/error-sanitizer.service';
 
 @Component({
     selector: 'app-espace-commercial',
@@ -34,7 +35,8 @@ export class EspaceCommercialComponent {
         private formBuilder: FormBuilder,
         private router: Router,
         private http: HttpClient,
-        private authService: AuthService
+        private authService: AuthService,
+        private errorSanitizer: ErrorSanitizerService
     ) {
         this.matriculeForm = this.formBuilder.group({
             matricule: ['', [Validators.required, Validators.minLength(3)]]
@@ -92,7 +94,7 @@ export class EspaceCommercialComponent {
                         this.error = 'Accès non autorisé. Veuillez vous reconnecter.';
                         setTimeout(() => this.router.navigate(['/login']), 2000);
                     } else {
-                        this.error = 'Erreur lors de la validation. Veuillez réessayer.';
+                        this.error = this.errorSanitizer.sanitizeOperationError(error, 'validation');
                     }
                 }
             });
@@ -160,14 +162,7 @@ export class EspaceCommercialComponent {
             },
             error: (error) => {
                 this.passwordLoading = false;
-
-                if (error.status === 401) {
-                    this.passwordError = 'Ancien mot de passe incorrect.';
-                } else if (error.status === 400) {
-                    this.passwordError = error.error?.message || 'Données invalides.';
-                } else {
-                    this.passwordError = 'Erreur lors du changement de mot de passe.';
-                }
+                this.passwordError = this.errorSanitizer.sanitizeOperationError(error, 'changement de mot de passe');
             }
         });
     }

@@ -12,6 +12,7 @@ import { ProductSkeletonComponent } from '../product-skeleton/product-skeleton.c
 import { LazyLoadImageDirective } from '../../directives/lazy-load-image.directive';
 import { AuthService } from '../../services/auth.service';
 import { ImageErrorHandlerService } from '../../services/image-error-handler.service';
+import { ErrorSanitizerService } from '../../services/error-sanitizer.service';
 
 @Component({
     selector: 'app-commercial-commande',
@@ -93,7 +94,8 @@ export class CommercialCommandeComponent implements OnInit {
         private fb: FormBuilder,
         private cdr: ChangeDetectorRef,
         private authService: AuthService,
-        private imageErrorHandler: ImageErrorHandlerService
+        private imageErrorHandler: ImageErrorHandlerService,
+        private errorSanitizer: ErrorSanitizerService
     ) {
         this.passwordForm = this.fb.group({
             oldPassword: ['', Validators.required],
@@ -195,7 +197,7 @@ export class CommercialCommandeComponent implements OnInit {
                 this.isLoading = false;
             },
             error: (error: any) => {
-                this.errorMessage = 'Erreur lors du chargement des produits';
+                this.errorMessage = this.errorSanitizer.sanitizeOperationError(error, 'chargement des produits');
                 this.isLoading = false;
             }
         });
@@ -432,14 +434,7 @@ export class CommercialCommandeComponent implements OnInit {
             },
             error: (error) => {
                 this.passwordLoading = false;
-
-                if (error.status === 401) {
-                    this.passwordError = 'Ancien mot de passe incorrect.';
-                } else if (error.status === 400) {
-                    this.passwordError = error.error?.message || 'Données invalides.';
-                } else {
-                    this.passwordError = 'Erreur lors du changement de mot de passe.';
-                }
+                this.passwordError = this.errorSanitizer.sanitizeOperationError(error, 'changement de mot de passe');
             }
         });
     }

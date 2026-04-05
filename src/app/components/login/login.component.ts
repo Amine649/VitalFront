@@ -5,6 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { HttpClient, HttpErrorResponse, HttpClientModule } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { PasswordValidationService } from '../../services/password-validation.service';
+import { ErrorSanitizerService } from '../../services/error-sanitizer.service';
 
 @Component({
   selector: 'app-login',
@@ -35,7 +36,8 @@ export class LoginComponent {
     private formBuilder: FormBuilder,
     private router: Router,
     private http: HttpClient,
-    private passwordValidation: PasswordValidationService
+    private passwordValidation: PasswordValidationService,
+    private errorSanitizer: ErrorSanitizerService
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -272,27 +274,11 @@ export class LoginComponent {
       error: (error: any) => {
         this.forgotPasswordLoading = false;
 
-        // WORKAROUND: Multiple checks for CORS issues where backend actually succeeded
-        const isCorsError = error.status === 0 ||
-          error.statusText === 'Unknown Error' ||
-          (error.status === 200 && error.ok === false) ||
-          error.name === 'HttpErrorResponse';
-
-        if (isCorsError && error.status !== 404 && error.status !== 500 && error.status !== 400) {
-          this.forgotPasswordSuccess = 'Un code OTP a été envoyé à votre adresse email.';
-          setTimeout(() => {
-            this.forgotPasswordStep = 2;
-            this.forgotPasswordSuccess = '';
-          }, 1500);
-          return;
-        }
-
+        // Handle specific error cases with custom messages
         if (error.status === 404) {
           this.forgotPasswordError = 'Aucun compte trouvé avec cet email.';
-        } else if (error.status === 500) {
-          this.forgotPasswordError = 'Erreur serveur. Veuillez réessayer plus tard.';
         } else {
-          this.forgotPasswordError = `Erreur lors de l'envoi du code . Veuillez réessayer.`;
+          this.forgotPasswordError = this.errorSanitizer.sanitizeOperationError(error, 'envoi du code OTP');
         }
       }
     });
@@ -345,28 +331,13 @@ export class LoginComponent {
       error: (error: any) => {
         this.forgotPasswordLoading = false;
 
-        // WORKAROUND: Multiple checks for CORS issues where backend actually succeeded
-        const isCorsError = error.status === 0 ||
-          error.statusText === 'Unknown Error' ||
-          (error.status === 200 && error.ok === false) ||
-          error.name === 'HttpErrorResponse';
-
-        if (isCorsError && error.status !== 404 && error.status !== 500 && error.status !== 400) {
-          this.forgotPasswordSuccess = 'Votre mot de passe a été réinitialisé avec succès. Vous pouvez maintenant vous connecter.';
-          setTimeout(() => {
-            this.backToLogin();
-          }, 2500);
-          return;
-        }
-
+        // Handle specific error cases with custom messages
         if (error.status === 400) {
           this.forgotPasswordError = 'Code OTP invalide ou expiré.';
         } else if (error.status === 404) {
           this.forgotPasswordError = 'Utilisateur non trouvé.';
-        } else if (error.status === 500) {
-          this.forgotPasswordError = 'Erreur serveur. Veuillez réessayer plus tard.';
         } else {
-          this.forgotPasswordError = `Erreur lors de la réinitialisation (${error.status}). Veuillez réessayer.`;
+          this.forgotPasswordError = this.errorSanitizer.sanitizeOperationError(error, 'réinitialisation du mot de passe');
         }
       }
     });

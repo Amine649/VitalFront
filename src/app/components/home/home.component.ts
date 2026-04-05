@@ -4,6 +4,7 @@ import { RouterModule, Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { CartService } from '../../services/cart.service';
 import { ProductService } from '../../services/product.service';
+import { ErrorSanitizerService } from '../../services/error-sanitizer.service';
 import { Product } from '../../models/product.model';
 import { LazyLoadImageDirective } from '../../directives/lazy-load-image.directive';
 import { ImageErrorHandlerService } from '../../services/image-error-handler.service';
@@ -61,7 +62,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     private cartService: CartService, 
     private router: Router,
     private productService: ProductService,
-    private imageErrorHandler: ImageErrorHandlerService
+    private imageErrorHandler: ImageErrorHandlerService,
+    private errorSanitizer: ErrorSanitizerService
   ) { }
 
   ngOnInit() {
@@ -122,7 +124,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.startAutoSlide();
       },
       error: (error) => {
-        this.errorMessage = error.message;
+        this.errorMessage = this.errorSanitizer.sanitizeError(error);
         this.isLoading = false;
       }
     });

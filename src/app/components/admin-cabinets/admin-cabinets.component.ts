@@ -4,6 +4,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../services/auth.service';
+import { ErrorSanitizerService } from '../../services/error-sanitizer.service';
 
 interface Cabinet {
     id?: number;
@@ -59,7 +60,8 @@ export class AdminCabinetsComponent implements OnInit {
 
     constructor(
         private http: HttpClient,
-        private authService: AuthService
+        private authService: AuthService,
+        private errorSanitizer: ErrorSanitizerService
     ) { }
 
     ngOnInit(): void {
@@ -98,7 +100,7 @@ export class AdminCabinetsComponent implements OnInit {
                     this.loading = false;
                 },
                 error: (error) => {
-                    this.error = 'Erreur lors du chargement des cabinets';
+                    this.error = this.errorSanitizer.sanitizeOperationError(error, 'chargement des cabinets');
                     this.loading = false;
                 }
             });
@@ -197,33 +199,7 @@ export class AdminCabinetsComponent implements OnInit {
                 },
                 error: (error) => {
                     this.loading = false;
-
-                    // Handle specific error messages
-                    let errorMessage = 'Erreur lors de l\'ajout du cabinet';
-
-                    if (error.status === 400) {
-                        const errorText = error.error?.message || error.error?.error || error.error || '';
-
-                        // Check for matricule not found error
-                        if (errorText.includes('matricule') && errorText.includes('n\'existe pas')) {
-                            const matriculeMatch = errorText.match(/Le matricule ([^\s]+)/);
-                            const matricule = matriculeMatch ? matriculeMatch[1] : this.currentCabinet.matricule;
-                            errorMessage = `❌ Matricule invalide : Le matricule "${matricule}" n'existe pas dans la base de données des vétérinaires. Veuillez vérifier le matricule ou ajouter d'abord le vétérinaire.`;
-                        }
-                        // Check for JSON parse error (invalid number format)
-                        else if (errorText.includes('JSON parse error') || errorText.includes('Cannot deserialize') || errorText.includes('not a valid')) {
-                            if (errorText.includes('double') || errorText.includes('latitude') || errorText.includes('longitude')) {
-                                errorMessage = '❌ Format de coordonnées invalide : Les coordonnées GPS (latitude et longitude) doivent être des nombres décimaux valides. Exemple: 48.8566 ou 2.3522';
-                            } else {
-                                errorMessage = '❌ Format de données invalide : Veuillez vérifier que tous les champs contiennent des valeurs valides.';
-                            }
-                        }
-                        else {
-                            errorMessage = errorText || errorMessage;
-                        }
-                    }
-
-                    this.error = errorMessage;
+                    this.error = this.errorSanitizer.sanitizeOperationError(error, 'ajout du cabinet');
                 }
             });
     }
@@ -251,33 +227,7 @@ export class AdminCabinetsComponent implements OnInit {
                 },
                 error: (error) => {
                     this.loading = false;
-
-                    // Handle specific error messages
-                    let errorMessage = 'Erreur lors de la modification du cabinet';
-
-                    if (error.status === 400) {
-                        const errorText = error.error?.message || error.error?.error || error.error || '';
-
-                        // Check for matricule not found error
-                        if (errorText.includes('matricule') && errorText.includes('n\'existe pas')) {
-                            const matriculeMatch = errorText.match(/Le matricule ([^\s]+)/);
-                            const matricule = matriculeMatch ? matriculeMatch[1] : this.currentCabinet.matricule;
-                            errorMessage = `❌ Matricule invalide : Le matricule "${matricule}" n'existe pas dans la base de données des vétérinaires. Veuillez vérifier le matricule ou ajouter d'abord le vétérinaire.`;
-                        }
-                        // Check for JSON parse error (invalid number format)
-                        else if (errorText.includes('JSON parse error') || errorText.includes('Cannot deserialize') || errorText.includes('not a valid')) {
-                            if (errorText.includes('double') || errorText.includes('latitude') || errorText.includes('longitude')) {
-                                errorMessage = '❌ Format de coordonnées invalide : Les coordonnées GPS (latitude et longitude) doivent être des nombres décimaux valides. Exemple: 48.8566 ou 2.3522';
-                            } else {
-                                errorMessage = '❌ Format de données invalide : Veuillez vérifier que tous les champs contiennent des valeurs valides.';
-                            }
-                        }
-                        else {
-                            errorMessage = errorText || errorMessage;
-                        }
-                    }
-
-                    this.error = errorMessage;
+                    this.error = this.errorSanitizer.sanitizeOperationError(error, 'modification du cabinet');
                 }
             });
     }
@@ -336,7 +286,7 @@ export class AdminCabinetsComponent implements OnInit {
                         setTimeout(() => this.successMessage = '', 3000);
                     } else {
                         this.loading = false;
-                        this.error = error.error?.message || 'Erreur lors de la suppression du cabinet';
+                        this.error = this.errorSanitizer.sanitizeOperationError(error, 'suppression du cabinet');
                         this.closeDeleteModal();
                     }
                 }
@@ -670,7 +620,7 @@ export class AdminCabinetsComponent implements OnInit {
             },
             error: (error) => {
                 this.uploadingExcel = false;
-                this.uploadError = error.error?.message || 'Erreur lors de l\'importation du fichier Excel';
+                this.uploadError = this.errorSanitizer.sanitizeOperationError(error, 'importation du fichier Excel');
                 this.clearUploadErrorAfterDelay();
             }
         });

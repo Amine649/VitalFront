@@ -4,6 +4,7 @@ import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CartService } from '../../services/cart.service';
 import { ProductService } from '../../services/product.service';
+import { ErrorSanitizerService } from '../../services/error-sanitizer.service';
 import { Product } from '../../models/product.model';
 import { environment } from '../../../environments/environment';
 import { SafePipe } from '../../pipes/safe.pipe';
@@ -80,6 +81,7 @@ export class EspaceProprietaireComponent implements OnInit {
     private cartService: CartService,
     private productService: ProductService,
     private http: HttpClient,
+    private errorSanitizer: ErrorSanitizerService,
     private imageErrorHandler: ImageErrorHandlerService
   ) {
     // Set initial items per page based on screen size
@@ -252,7 +254,7 @@ export class EspaceProprietaireComponent implements OnInit {
         this.isLoading = false;
       },
       error: (error) => {
-        this.errorMessage = error.message;
+        this.errorMessage = this.errorSanitizer.sanitizeError(error);
         this.isLoading = false;
       }
     });

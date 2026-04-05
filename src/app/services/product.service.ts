@@ -4,6 +4,7 @@ import { Observable, throwError, of } from 'rxjs';
 import { catchError, map, retry } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Product } from '../models/product.model';
+import { ErrorSanitizerService } from './error-sanitizer.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,10 @@ import { Product } from '../models/product.model';
 export class ProductService {
   private apiUrl = `${environment.apiUrl}/products`;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private errorSanitizer: ErrorSanitizerService
+  ) { }
 
   /**
    * Get request options with credentials
@@ -69,14 +73,7 @@ export class ProductService {
    * Handle update errors
    */
   private handleUpdateError(error: HttpErrorResponse): Observable<never> {
-    let errorMessage = 'Une erreur est survenue lors de la mise à jour du produit.';
-
-    if (error.error instanceof ErrorEvent) {
-      errorMessage = `Erreur: ${error.error.message}`;
-    } else {
-      errorMessage = `Erreur ${error.status}: ${error.message}`;
-    }
-
+    const errorMessage = this.errorSanitizer.sanitizeOperationError(error, 'update');
     return throwError(() => new Error(errorMessage));
   }
 
@@ -84,14 +81,7 @@ export class ProductService {
    * Handle delete errors
    */
   private handleDeleteError(error: HttpErrorResponse): Observable<never> {
-    let errorMessage = 'Une erreur est survenue lors de la suppression du produit.';
-
-    if (error.error instanceof ErrorEvent) {
-      errorMessage = `Erreur: ${error.error.message}`;
-    } else {
-      errorMessage = `Erreur ${error.status}: ${error.message}`;
-    }
-
+    const errorMessage = this.errorSanitizer.sanitizeOperationError(error, 'delete');
     return throwError(() => new Error(errorMessage));
   }
 
@@ -99,14 +89,7 @@ export class ProductService {
    * Handle add errors
    */
   private handleAddError(error: HttpErrorResponse): Observable<never> {
-    let errorMessage = 'Une erreur est survenue lors de l\'ajout du produit.';
-
-    if (error.error instanceof ErrorEvent) {
-      errorMessage = `Erreur: ${error.error.message}`;
-    } else {
-      errorMessage = `Erreur ${error.status}: ${error.message}`;
-    }
-
+    const errorMessage = this.errorSanitizer.sanitizeOperationError(error, 'create');
     return throwError(() => new Error(errorMessage));
   }
 
@@ -196,9 +179,7 @@ export class ProductService {
    * Handle HTTP errors
    */
   private handleError(error: HttpErrorResponse): Observable<never> {
-    // User-friendly error message without exposing API details
-    const errorMessage = 'Impossible de charger les produits pour le moment. Veuillez réessayer plus tard.';
-
+    const errorMessage = this.errorSanitizer.sanitizeOperationError(error, 'load');
     return throwError(() => new Error(errorMessage));
   }
 

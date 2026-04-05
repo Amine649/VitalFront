@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { tap, catchError, map } from 'rxjs/operators';
 import { ToastService } from './toast.service';
+import { ErrorSanitizerService } from './error-sanitizer.service';
 import { environment } from '../../environments/environment';
 
 export interface CartItem {
@@ -48,7 +49,8 @@ export class CartService {
 
   constructor(
     private http: HttpClient,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private errorSanitizer: ErrorSanitizerService
   ) {
     // Load cart from backend on service initialization
     this.loadCartFromBackend();
@@ -416,7 +418,8 @@ export class CartService {
         return { success: false, error: 'Une erreur inconnue est survenue' };
       }),
       catchError(error => {
-        return of({ success: false, error: error.message || 'Erreur lors de la confirmation' });
+        const sanitizedError = this.errorSanitizer.sanitizeOperationError(error, 'checkout');
+        return of({ success: false, error: sanitizedError });
       })
     );
   }
@@ -640,7 +643,8 @@ export class CartService {
         return response;
       }),
       catchError(error => {
-        return of({ error: error.message || 'Checkout failed' });
+        const sanitizedError = this.errorSanitizer.sanitizeOperationError(error, 'checkout');
+        return of({ error: sanitizedError });
       })
     );
   }

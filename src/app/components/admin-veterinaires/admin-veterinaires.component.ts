@@ -4,6 +4,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../services/auth.service';
+import { ErrorSanitizerService } from '../../services/error-sanitizer.service';
 
 interface Veterinaire {
   id: number;
@@ -48,7 +49,8 @@ export class AdminVeterinairesComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private errorSanitizer: ErrorSanitizerService
   ) { }
 
   ngOnInit(): void {
@@ -72,7 +74,7 @@ export class AdminVeterinairesComponent implements OnInit {
           this.loading = false;
         },
         error: (error) => {
-          this.error = 'Erreur lors du chargement des vétérinaires';
+          this.error = this.errorSanitizer.sanitizeOperationError(error, 'chargement des vétérinaires');
           this.loading = false;
         }
       });
@@ -191,30 +193,7 @@ export class AdminVeterinairesComponent implements OnInit {
         },
         error: (error) => {
           this.uploadLoading = false;
-
-          // Handle specific error messages
-          let errorMessage = 'Erreur lors de l\'importation du fichier';
-
-          if (error.status === 400) {
-            const errorText = error.error?.message || error.error || '';
-
-            // Check for header column error
-            if (errorText.includes('en-tête') || errorText.includes('colonnes')) {
-              errorMessage = '❌ Format de fichier incorrect : Le fichier Excel doit contenir exactement les colonnes "nom" et "matricule" dans l\'en-tête.';
-            }
-            // Check for incomplete row error
-            else if (errorText.includes('incomplète') || errorText.includes('Ligne')) {
-              // Extract line number if present
-              const lineMatch = errorText.match(/Ligne (\d+)/);
-              const lineNumber = lineMatch ? lineMatch[1] : '';
-              errorMessage = `❌ Données incomplètes ${lineNumber ? `à la ligne ${lineNumber}` : ''} : Tous les champs (nom, matricule) doivent être remplis pour chaque vétérinaire.`;
-            }
-            else {
-              errorMessage = errorText || errorMessage;
-            }
-          }
-
-          this.error = errorMessage;
+          this.error = this.errorSanitizer.sanitizeOperationError(error, 'importation du fichier');
         }
       });
   }
@@ -405,7 +384,7 @@ export class AdminVeterinairesComponent implements OnInit {
       },
       error: (error) => {
         this.updateLoading = false;
-        this.editError = error.error?.message || 'Erreur lors de la mise à jour du vétérinaire';
+        this.editError = this.errorSanitizer.sanitizeOperationError(error, 'mise à jour du vétérinaire');
       }
     });
   }
@@ -450,7 +429,7 @@ export class AdminVeterinairesComponent implements OnInit {
       },
       error: (error) => {
         this.deleteLoading = false;
-        this.error = error.error?.message || 'Erreur lors de la suppression du vétérinaire';
+        this.error = this.errorSanitizer.sanitizeOperationError(error, 'suppression du vétérinaire');
         this.closeDeleteModal();
         
         // Clear error after 5 seconds

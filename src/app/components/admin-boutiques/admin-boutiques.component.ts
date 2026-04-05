@@ -4,6 +4,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../services/auth.service';
+import { ErrorSanitizerService } from '../../services/error-sanitizer.service';
 
 interface Boutique {
   id?: number;
@@ -43,7 +44,8 @@ export class AdminBoutiquesComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private errorSanitizer: ErrorSanitizerService
   ) { }
 
   ngOnInit(): void {
@@ -75,7 +77,7 @@ export class AdminBoutiquesComponent implements OnInit {
           this.loading = false;
         },
         error: (error) => {
-          this.error = 'Erreur lors du chargement des boutiques';
+          this.error = this.errorSanitizer.sanitizeOperationError(error, 'chargement des boutiques');
           this.loading = false;
         }
       });
@@ -149,7 +151,7 @@ export class AdminBoutiquesComponent implements OnInit {
         },
         error: (error) => {
           this.loading = false;
-          this.error = error.error?.message || 'Erreur lors de l\'ajout de la boutique';
+          this.error = this.errorSanitizer.sanitizeOperationError(error, 'ajout de la boutique');
         }
       });
   }
@@ -166,7 +168,7 @@ export class AdminBoutiquesComponent implements OnInit {
         },
         error: (error) => {
           this.loading = false;
-          this.error = error.error?.message || 'Erreur lors de la modification de la boutique';
+          this.error = this.errorSanitizer.sanitizeOperationError(error, 'modification de la boutique');
         }
       });
   }
@@ -191,7 +193,7 @@ export class AdminBoutiquesComponent implements OnInit {
         },
         error: (error) => {
           this.loading = false;
-          this.error = 'Erreur lors de la suppression de la boutique';
+          this.error = this.errorSanitizer.sanitizeOperationError(error, 'suppression de la boutique');
           this.showDeleteModal = false;
         }
       });
