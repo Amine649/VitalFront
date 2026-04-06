@@ -116,31 +116,92 @@ export class ConseilArticlesComponent implements OnInit {
     // Cat Articles
     {
       id: 'chat-1',
-      title: 'Les besoins spécifiques du chat',
+      title: 'Nourriture pour chatons : répondre à leurs besoins nutritionnels',
+      category: 'Comment Nourrir Votre Chat',
+      animal: 'chat',
+      content: `
+    <h2>Introduction</h2>
+    <p>Votre petit chaton va connaître une période de croissance incroyable au cours de sa première année de vie. À titre d'exemple, nous, les humains, atteindrons en 18 ans environ 20 fois notre poids de naissance. Votre chaton, quant à lui, atteindra un poids 50 fois supérieur à son poids de naissance en seulement 12 mois ! Votre chaton a besoin de nutriments très spécifiques pour accomplir cet exploit, mais n'importe quel aliment ne peut pas les lui fournir.</p>
+
+    <h2>Comprendre la croissance du chaton</h2>
+    <p>Au cours des deux ou trois premiers mois de sa vie, le poids d'un chaton nouveau-né est multiplié par dix. La plupart des chats atteignent leur taille maximale à l'âge d'un an, mais les chats de grande race peuvent continuer à grandir jusqu'à l'âge de 15 à 18 mois.</p>
+    <p>Il n'est pas question de nourrir un chaton avec un aliment standard pour chat adulte : il a besoin d'une nourriture très riche et spécifique pour prendre le meilleur départ possible dans la vie et l'aider à se développer harmonieusement. Votre chaton est encore fragile, il a besoin d'être soutenu pour faire face à 3 impératifs : grandir harmonieusement, s'habituer à digérer autre chose que le lait maternel et obtenir un système immunitaire compétent.</p>
+    <p>Contrôler régulièrement le poids de votre chaton est un excellent moyen de s'assurer qu'il grandit comme il se doit. L'obésité est malheureusement fréquente chez les chats et peut entraîner un certain nombre de problèmes de santé, tels que des maladies articulaires.</p>
+    <p>Pour suivre la croissance de votre chaton, pesez-le toutes les deux semaines et reportez son poids sur une courbe de croissance. Il s'agit d'un tableau qui vous permet de comparer la croissance de votre chaton dans le temps à la croissance attendue d'un chaton en bonne santé de la même race, du même âge et du même sexe. Votre vétérinaire peut vous fournir une courbe de croissance appropriée, vous aider à interpréter la croissance de votre chaton et vous donner des conseils si votre chaton ne grandit pas comme prévu.</p>
+
+    <h2>Pourquoi une alimentation de qualité est-elle si importante pour votre chaton ?</h2>
+    <p>Pendant cette période de croissance intense, le chaton a des besoins nutritionnels très spécifiques. Les meilleures croquettes pour chaton pour répondre à ces besoins sont celles qui sont complètes et équilibrées.</p>
+    <p>Un aliment complet contient tous les nutriments essentiels dont un chaton a besoin pour une croissance et un développement sains :</p>
+    <ul>
+      <li>Des protéines animales de haute qualité pour la croissance musculaire et osseuse, la fonction articulaire, la santé de la peau et du pelage, la santé urinaire et la santé immunitaire.</li>
+      <li>L'ajout de prébiotiques, probiotiques et d'argiles aidera également à limiter les troubles digestifs, fréquents chez le jeune animal, et permettra ainsi une utilisation optimale des protéines.</li>
+      <li>Des acides gras essentiels pour soutenir la vision et le système nerveux.</li>
+      <li>Des vitamines et minéraux, tels que le calcium et le phosphore, pour un développement osseux sain.</li>
+      <li>Une nourriture riche en matières grasses pour fournir de l'énergie sous forme concentrée, adaptée aux capacités d'ingestion limitées du chaton.</li>
+      <li>Un aliment enrichi en béta glucanes (extraits de levures de bière) aide à l'acquisition des défenses naturelles propres du chaton au moment où la protection immunitaire apportée par sa mère disparaît progressivement.</li>
+    </ul>
+    <p>« Équilibré » signifie que tous les nutriments nécessaires sont présents dans les bonnes quantités et les bons rapports pour les chatons en pleine croissance. Les aliments contenant trop ou pas assez de certains nutriments peuvent causer de graves problèmes de santé à votre chaton. Par exemple :</p>
+    <ul>
+      <li>Une carence en vitamine A peut altérer la vision et la coordination musculaire.</li>
+      <li>Une carence en protéines peut freiner la croissance et provoquer une mue (perte de poils) chronique.</li>
+      <li>L'excès de glucides peut surcharger le système digestif de votre chaton, entraîner une prise de poids excessive et contribuer au diabète.</li>
+    </ul>
+
+    <h2>Choisir les meilleures croquettes pour chatons pour une santé optimale</h2>
+    <p>Les besoins nutritionnels de votre chaton évolueront au fur et à mesure de sa croissance, et il doit en être de même pour son alimentation.</p>
+    <p>Lorsque vous choisissez les meilleures croquettes pour chatons, recherchez des aliments complets et équilibrés contenant des ingrédients de la plus haute qualité. La formule idéale contient :</p>
+    <ul>
+      <li>Beaucoup de protéines animales hautement digestibles pour favoriser la croissance.</li>
+      <li>Des bêta-glucanes pour renforcer le système immunitaire immature de votre chaton.</li>
+      <li>Des quantités élevées de DHA pour soutenir la vision et le système nerveux.</li>
+    </ul>
+
+    <h2>Comment sevrer votre chaton avec des croquettes ?</h2>
+    <p>Lorsque vous adoptez un chaton, il doit déjà avoir été sevré du lait de sa mère et avoir reçu une alimentation pour chaton. Il est conseillé de garder votre chaton avec le même aliment jusqu'à ce qu'il se soit installé dans son nouveau foyer, car un changement de régime alimentaire pourrait ajouter au stress lié au départ de la portée.</p>
+    <p>Lorsque votre chaton est prêt, vous pouvez lui donner des croquettes pour chatons, de manière progressive. Pour commencer, mélangez sa nourriture actuelle avec une petite quantité de nouvelles croquettes. Commencez par un mélange à 75/25 % pendant les premiers jours, en surveillant votre chaton en cas de troubles digestifs. Ensuite, augmentez progressivement la quantité de croquettes et réduisez la quantité de l'ancienne nourriture jusqu'à ce que la transition soit complète.</p>
+    <p>Veillez également à ce que votre chaton dispose de beaucoup d'eau fraîche. Placez ses gamelles d'eau et de nourriture loin de la litière, dans un endroit propre et calme où il ne sera pas dérangé.</p>
+    <p>Après avoir été sevré du lait de sa mère, votre chaton ne sera plus capable de digérer le lactose (un sucre présent dans le lait), mais il ne pourra pas encore digérer correctement les féculents comme un chat adulte. Les meilleures croquettes pour chatons en tiennent compte : elles ont une faible teneur en glucides et contiennent des prébiotiques et des probiotiques pour nourrir le système digestif délicat du chaton.</p>
+
+    <h2>Quelle quantité de nourriture devez-vous donner à votre chaton ?</h2>
+    <p>Les besoins énergétiques et alimentaires quotidiens de votre chaton varient en fonction de son âge, de son sexe et de sa race. Utilisez les recommandations du fabricant figurant sur l'emballage ou demandez conseil à votre vétérinaire.</p>
+    <p>La plupart des chatons s'accommodent bien de l'alimentation libre, qui consiste à distribuer en une seule fois la totalité de la ration quotidienne et à laisser le chaton manger à sa guise tout au long de la journée. Cependant, certains chatons peuvent se suralimenter s'ils sont laissés en liberté, ce qui peut entraîner une prise de poids excessive. Ces chatons peuvent bénéficier de repas plus petits tout au long de la journée, avec un horaire d'alimentation fixe et cohérent.</p>
+    <p>Pour vous assurer que votre chaton mange la bonne quantité, surveillez son poids à l'aide de la courbe de croissance. Vous pouvez vous en servir pour ajuster sa ration alimentaire et ses horaires d'alimentation si nécessaire.</p>
+
+    <h2>Autres régimes pour les chatons</h2>
+    <p>Les aliments faits maison, le végétarisme et les régimes à base de viande crue ont gagné en popularité auprès de certains propriétaires d'animaux, mais nous déconseillons ces régimes à votre chaton.</p>
+    <p>Les aliments faits maison (sauf s'ils sont recommandés par un vétérinaire et suivis correctement) et les régimes à base de viande crue entraînent souvent des carences en nutriments chez les chatons, ce qui les expose à des problèmes de santé tout au long de leur vie. En outre, les chats sont des carnivores de nature, ce qui signifie qu'ils ne peuvent pas obtenir les nutriments dont ils ont besoin pour survivre uniquement à partir d'aliments d'origine végétale. C'est pourquoi les chatons ne doivent jamais être nourris avec des régimes végétariens ou végétaliens.</p>
+
+    <h2>Conclusion</h2>
+    <p>L'alimentation que vous donnez à votre chaton aujourd'hui déterminera sa santé pour les années à venir. Pour aider votre chaton à devenir un chat heureux et bien dans ses pattes, veillez à ne lui donner que des aliments complets, équilibrés et recommandés par les vétérinaires, adaptés à son stade de vie. Surveillez la croissance de votre chaton et consultez régulièrement votre vétérinaire ; celui-ci peut vous aider à répondre à toute question ou préoccupation d'ordre nutritionnel, à repérer les problèmes à un stade précoce et à conseiller l'alimentation qui permettra à votre chaton de s'épanouir pleinement.</p>
+  `
+},
+    {
+      id: 'chat-2',
+      title: 'Quels besoins nutritionnels pour mon chat adulte ?',
       category: 'Comment Nourrir Votre Chat',
       animal: 'chat',
       content: `
         <h2>Introduction</h2>
-        <p>Le chat est un carnivore strict dont les besoins nutritionnels diffèrent fondamentalement de ceux du chien. Comprendre ces spécificités est essentiel pour assurer une alimentation optimale à votre félin.</p>
+        <p>Plus de 80 % des chats adultes sont stérilisés. La stérilisation peut prédisposer à l'apparition de deux risques majeurs : l'excès de poids (qui peut lui-même favoriser l'apparition du diabète sucré) et les affections du bas appareil urinaire. Une alimentation adaptée est essentielle pour maintenir votre chat adulte en bonne santé.</p>
         
-        <h2>Le chat, un carnivore obligatoire</h2>
-        <p>Contrairement au chien, le chat ne peut pas synthétiser certains nutriments essentiels comme la taurine, l'arginine et la vitamine A. Ces éléments doivent impérativement être apportés par l'alimentation, principalement d'origine animale. Une carence en taurine peut entraîner de graves problèmes cardiaques et oculaires.</p>
+        <h2>Les besoins nutritionnels du chat adulte</h2>
+        <p>Le chat est un carnivore strict dont les besoins en protéines animales sont élevés. Un chat adulte nécessite environ 30 à 40% de protéines dans son alimentation. Les protéines de qualité favorisent le maintien de la masse musculaire et soutiennent le système immunitaire.</p>
         
-        <h2>Les protéines, base de l'alimentation féline</h2>
-        <p>Les protéines doivent représenter au minimum 30 à 35% de l'alimentation du chat adulte, et jusqu'à 40% pour un chaton. Ces protéines doivent être de haute qualité et d'origine animale pour assurer une digestibilité optimale et un apport complet en acides aminés essentiels.</p>
+        <h2>Impact de la stérilisation</h2>
+        <p>La stérilisation réduit les besoins énergétiques de 20 à 30% tout en augmentant l'appétit. Sans ajustement alimentaire, le risque d'obésité est multiplié par deux. Les aliments pour chats stérilisés sont moins caloriques et enrichis en fibres pour favoriser la satiété.</p>
         
-        <h2>La gestion de l'hydratation</h2>
-        <p>Les chats ont naturellement une faible sensation de soif, héritage de leurs ancêtres désertiques. Ils sont donc prédisposés aux problèmes urinaires. L'alimentation humide (pâtée) contribue significativement à l'hydratation et à la prévention des calculs urinaires.</p>
+        <h2>Prévention des troubles urinaires</h2>
+        <p>Les chats stérilisés sont plus sujets aux calculs urinaires. Une alimentation adaptée maintient un pH urinaire optimal et favorise la dilution des urines. L'hydratation est cruciale : encouragez votre chat à boire en multipliant les points d'eau et en proposant de l'alimentation humide.</p>
         
-        <h2>Les glucides : à limiter</h2>
-        <p>Le métabolisme félin est peu adapté à la digestion des glucides. Un excès de glucides peut favoriser l'obésité et le diabète. Les croquettes de qualité limitent les céréales et privilégient les protéines animales.</p>
+        <h2>Fréquence et quantité des repas</h2>
+        <p>Un chat adulte doit être nourri 2 à 3 fois par jour avec des rations contrôlées. Évitez l'alimentation à volonté qui favorise la suralimentation. Pesez les rations quotidiennes selon les recommandations du fabricant et ajustez selon l'état corporel de votre chat.</p>
         
         <h2>Conclusion</h2>
-        <p>Respecter les besoins spécifiques du chat en tant que carnivore strict est la clé d'une alimentation saine. Privilégiez toujours des aliments riches en protéines animales de qualité.</p>
+        <p>Une alimentation équilibrée, adaptée au statut de stérilisation et au niveau d'activité de votre chat adulte, est la clé d'une vie longue et en bonne santé. Consultez régulièrement votre vétérinaire pour ajuster l'alimentation selon les besoins évolutifs de votre compagnon.</p>
       `
     },
     {
-      id: 'chat-2',
+      id: 'chat-3',
       title: 'Prévenir l\'obésité féline',
       category: 'Comment Nourrir Votre Chat',
       animal: 'chat',
@@ -165,7 +226,7 @@ export class ConseilArticlesComponent implements OnInit {
       `
     },
     {
-      id: 'chat-3',
+      id: 'chat-4',
       title: 'La santé urinaire du chat',
       category: 'Comment Nourrir Votre Chat',
       animal: 'chat',

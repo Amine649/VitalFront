@@ -29,13 +29,14 @@ export class FormulaireComponent implements OnInit {
   CountryISO = CountryISO;
   PhoneNumberFormat = PhoneNumberFormat;
   preferredCountries: CountryISO[] = [
+    CountryISO.Tunisia,
     CountryISO.France,
-    CountryISO.Belgium,
-    CountryISO.Switzerland,
     CountryISO.Morocco,
     CountryISO.Algeria,
-    CountryISO.Tunisia
+    CountryISO.Belgium,
+    CountryISO.Switzerland
   ];
+  selectedCountryISO = CountryISO.Tunisia; // Default country
 
   constructor(
     private formBuilder: FormBuilder,

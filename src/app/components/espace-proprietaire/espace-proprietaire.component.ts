@@ -404,7 +404,10 @@ export class EspaceProprietaireComponent implements OnInit {
    * Scroll to products section
    */
   scrollToProducts(): void {
-    this.scrollToSection('products-section');
+    // If a category is selected, scroll to filtered products section
+    // Otherwise scroll to all products section
+    const sectionId = this.selectedCategory ? 'filtered-products-section' : 'products-section';
+    this.scrollToSection(sectionId);
   }
 
   /**

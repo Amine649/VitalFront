@@ -59,8 +59,9 @@
         </p>
           <div class="flex flex-col sm:flex-row items-center gap-3 justify-center">
             <button
+              (click)="scrollToProducts()"
               [ngClass]="selectedCategory === 'Chat' ? 'bg-[#74C375] shadow-green-500/30 hover:shadow-green-500/40' : selectedCategory === 'Chien' ? 'bg-[#a01867] shadow-red-500/30 hover:shadow-red-500/40' : 'bg-blue-600 shadow-blue-500/30 hover:shadow-blue-500/40'"
-              class="px-8 py-3 text-white rounded-full font-semibold shadow-lg hover:-translate-y-1 transition-all duration-300 whitespace-nowrap">
+              class="px-8 py-3 text-white rounded-full font-semibold shadow-lg hover:-translate-y-1 transition-all duration-300 whitespace-nowrap cursor-pointer">
               Voir les produits
             </button>
             
@@ -191,8 +192,9 @@ besoins de votre Chien, carnivore depuis toujours !
 
           <div class="flex flex-col sm:flex-row items-center gap-4 justify-center">
             <button
+              (click)="scrollToProducts()"
               [ngClass]="selectedCategory === 'Chien' ? 'bg-[#a01867] shadow-red-500/30 hover:shadow-red-500/40' : 'bg-blue-600 shadow-blue-500/30 hover:shadow-blue-500/40'"
-              class="px-8 py-3 text-white rounded-full font-semibold shadow-lg hover:-translate-y-1 transition-all duration-300 whitespace-nowrap">
+              class="px-8 py-3 text-white rounded-full font-semibold shadow-lg hover:-translate-y-1 transition-all duration-300 whitespace-nowrap cursor-pointer">
               Voir les produits
             </button>
             
@@ -319,12 +321,14 @@ besoins de votre Chien, carnivore depuis toujours !
             </p>
           </div>
           <div class="flex flex-col sm:flex-row items-center gap-4 justify-center" >
-            <div
-            class="px-8 py-3 text-white rounded-full font-semibold shadow-lg hover:shadow-blue-500/40 hover:-translate-y-1 transition-all duration-300 inline-flex items-center justify-center" style="background: #0d7a72; box-shadow: 0 10px 25px -5px rgba(13, 122, 114, 0.3);">
+            <button
+            (click)="scrollToProducts()"
+            class="px-8 py-3 text-white rounded-full font-semibold shadow-lg hover:shadow-blue-500/40 hover:-translate-y-1 transition-all duration-300 inline-flex items-center justify-center cursor-pointer" style="background: #0d7a72; box-shadow: 0 10px 25px -5px rgba(13, 122, 114, 0.3);">
             Découvrir la gamme
-            </div>
-         <div 
-          class="px-8 py-3 rounded-full font-semibold transition-all duration-300  inline-flex items-center justify-center"
+            </button>
+         <button 
+          (click)="navigateTo('ou-trouver-nos-produits')"
+          class="px-8 py-3 rounded-full font-semibold transition-all duration-300  inline-flex items-center justify-center cursor-pointer"
           style="border: 2px solid #0d7a72; color: #0d7a72;"
           onmouseover="this.style.backgroundColor='#0d7a72'; this.style.color='white';"
           onmouseout="this.style.backgroundColor='transparent'; this.style.color='#0d7a72';">
@@ -332,7 +336,7 @@ besoins de votre Chien, carnivore depuis toujours !
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
           </svg>
           Expertise Vétérinaire
-        </div>
+        </button>
         </div>
         </div>
 
@@ -400,7 +404,7 @@ besoins de votre Chien, carnivore depuis toujours !
         complet "VitalNutri" permet de personnaliser les rations (ménagères ou 
         industrielles) pour chiens et chats, facilitant le suivi médical et le conseil 
         nutritionnel. VitalNutri est un outil né de la volonté de rendre les dernières 
-        avancées scientifiques en nutrition à la portée de des propriétaires des chats et des 
+        avancées scientifiques en nutrition à la portée des propriétaires des chats et des 
         chiens via le vétérinaire praticien. Des données précises, des informations issues 
         d'examen clinique vétérinaire complet, des commémoratifs sont nécessaires pour 
         avoir le plan de nutrition dynamique sur mesure.
@@ -553,25 +557,25 @@ besoins de votre Chien, carnivore depuis toujours !
           <div class="grid grid-cols-2 gap-3 mb-3">
             <div class="bg-white rounded-xl p-3 text-center shadow-sm hover:shadow-md transition-shadow">
               <div class="text-4xl font-bold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent mb-0.5">100%</div>
-              <div class="text-xs text-gray-600 font-medium">Exclusivement vétérinaire </div>
+              <div class="text-xs text-gray-600 font-medium">Produits vétérinaires </div>
             </div>
             <div class="bg-white rounded-xl p-3 text-center shadow-sm hover:shadow-md transition-shadow">
               <div class="text-4xl font-bold bg-gradient-to-r from-green-600 to-green-700 bg-clip-text text-transparent mb-0.5">4.8/5</div>
-              <div class="text-xs text-gray-600 font-medium">noter par les vétérinaires  </div>
+              <div class="text-xs text-gray-600 font-medium">Noter par les vétérinaires  </div>
             </div>
             <div class="bg-white rounded-xl p-3 text-center shadow-sm hover:shadow-md transition-shadow">
               <div class="text-4xl font-bold bg-gradient-to-r from-purple-600 to-purple-700 bg-clip-text text-transparent mb-0.5">85%</div>
-              <div class="text-xs text-gray-600 font-medium">de présence dans les cliniques</div>
+              <div class="text-xs text-gray-600 font-medium">Présence dans les cliniques</div>
             </div>
             <div class="bg-white rounded-xl p-3 text-center shadow-sm hover:shadow-md transition-shadow">
               <div class="text-4xl font-bold bg-gradient-to-r from-orange-600 to-orange-700 bg-clip-text text-transparent mb-0.5">98%</div>
-              <div class="text-xs text-gray-600 font-medium">atisfaction des résultats en Diet  </div>
+              <div class="text-xs text-gray-600 font-medium">Satisfaction des résultats en Diet  </div>
             </div>
           </div>
           
           <div class="bg-blue-50 rounded-lg p-2 border border-blue-100">
             <p class="text-xs text-gray-700 text-center leading-relaxed">
-              <span class="font-semibold text-blue-700">Source:</span> Données internes 2020 - 2,970 vétérinaires répondants
+              <span class="font-semibold text-blue-700">Source:</span> Données internes 2022 - 285 vétérinaires répondants
             </p>
           </div>
         </div>
@@ -655,11 +659,11 @@ besoins de votre Chien, carnivore depuis toujours !
 
       <!-- Right Side: Video Section -->
       <div class="lg:w-1/2">
-        <div class="rounded-2xl overflow-hidden shadow-2xl">
+        <div class="rounded-2xl overflow-hidden shadow-2xl h-full flex items-center">
           <!-- YouTube Video Embed - Privacy Enhanced Mode with Loading Attribute -->
           <iframe 
-            class="w-full aspect-video" 
-            src="https://www.youtube-nocookie.com/embed/0wIr5zqDMfA" 
+            class="w-full h-[350px]" 
+            src="https://www.youtube-nocookie.com/embed/_Nt7xvdCvGo" 
             title="YouTube video player" 
             frameborder="0" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -684,14 +688,10 @@ besoins de votre Chien, carnivore depuis toujours !
           <span style="color: #42636E; font-size: 1.1rem; letter-spacing: 0.3em;">✦ ✦ ✦</span>
           <div class="h-px w-16" style="background: linear-gradient(to left, transparent, #42636E);"></div>
         </div>    <p class="text-xl text-gray-700 leading-relaxed mb-8 text-justify">
-      On vous propose de vous accompagner et de vous conseiller sur les différentes 
-      facettes de la nutrition de votre animal, afin que pitou ou minou grandisse et 
-      vieillisse en santé, à vos côtés.
+      L’adoption d’un régime alimentaire sain tout au long de la vie contribue à prévenir toutes les formes de malnutrition, ainsi qu’un grand nombre de maladies et d’affections non transmissibles.
     </p>
     <p class="text-xl text-gray-700 leading-relaxed mb-8 text-justify">
-      Parce qu'une bonne alimentation c'est avant tout une histoire de santé, notre gamme 
-      est proposée exclusivement chez votre vétérinaire. Notre carte " Cliniques 
-      partenaires " vous permet de retrouver votre clinique vétérinaire.
+      Tous les praticiens-partenaires sont tous des vétérinaires. Ils sont tous spécialistes, exercent leur profession depuis plusieurs années et désireux de donner l’accès à la nutrition par de nouveaux moyens de communication.
     </p>
   </div>
 </div>
@@ -699,7 +699,7 @@ besoins de votre Chien, carnivore depuis toujours !
 
 
 <!-- All Products with Pagination -->
-<section   class="all-products bg-white section-spacing fixed-layout-container">
+<section id="products-section" class="all-products bg-white section-spacing fixed-layout-container">
   <!-- "Tous nos Produits" Header - Only show when no category is selected -->
   <div *ngIf="!selectedCategory" class="text-center bg-gradient-to-r from-blue-50 to-green-50 rounded-2xl p-3 md:p-4">
     <div class="mb-2">
@@ -718,24 +718,32 @@ besoins de votre Chien, carnivore depuis toujours !
         
   <!-- Complément Section - Only show when Complément type is selected -->
   <div *ngIf="selectedSousCategory === 'Complément'" class="w-full mb-6 fixed-layout-container">
-    <div [ngClass]="selectedCategory === 'Chat' ? 'border-[#74C375]' : selectedCategory === 'Chien' ? 'border-[#a01867]' : 'border-teal-500'" class="rounded-xl p-6 mx-4 sm:mx-6 lg:mx-8 border-l-4 shadow-md" [class]="selectedCategory === 'Chat' ? 'bg-gradient-to-r from-green-50 to-emerald-50' : selectedCategory === 'Chien' ? 'bg-gradient-to-r from-purple-50 to-pink-50' : 'bg-gradient-to-r from-teal-50 to-cyan-50'">
-      <div class="max-w-5xl mx-auto flex items-center gap-4">
-        <div [ngClass]="selectedCategory === 'Chat' ? 'bg-[#74C375]' : selectedCategory === 'Chien' ? 'bg-[#a01867]' : 'bg-teal-500'" class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center">
-          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-          </svg>
-        </div>
-        <div class="flex-1 " >
-          <h2 class="text-2xl md:text-xl font-bold mb-6" style="color: #42636E; line-height: 1.3;">
-            ALIMENTS COMPLÉMENTAIRES : AGIR POUR LA SANTÉ !
-          </h2>
-          <p class="text-xl text-gray-700 leading-relaxed  text-justify">
-            Le maintien d'une bonne santé représente un effort de tous les jours, et dépend de nos choix quotidiens. C'est pourquoi nous nous efforçons de prendre en charge un large panel de problèmes de santé que peuvent rencontrer les animaux, pour améliorer à la fois leur qualité de vie et la vôtre.
-          </p>
-        </div>
-      </div>
+  <div 
+    [ngClass]="selectedCategory === 'Chat' ? 'border-[#74C375]' : selectedCategory === 'Chien' ? 'border-[#a01867]' : 'border-teal-500'" 
+    class="relative rounded-xl p-6 pl-24 mx-4 sm:mx-6 lg:mx-8 border-l-4 shadow-md"
+    [class]="selectedCategory === 'Chat' ? 'bg-gradient-to-r from-green-50 to-emerald-50' : selectedCategory === 'Chien' ? 'bg-gradient-to-r from-purple-50 to-pink-50' : 'bg-gradient-to-r from-teal-50 to-cyan-50'">
+    
+    <!-- Icon absolutely positioned, centered vertically and horizontally on the left edge -->
+    <div 
+      [ngClass]="selectedCategory === 'Chat' ? 'bg-[#74C375]' : selectedCategory === 'Chien' ? 'bg-[#a01867]' : 'bg-teal-500'" 
+      class="absolute left-20 top-1/2 -translate-y-1/2 w-16 h-16 rounded-xl flex items-center justify-center">
+      <svg class="w-10 h-10 text-white " fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+      </svg>
     </div>
-  </div>  <!-- Three Informational Sections - Show ONLY when Aliment type is selected (not on all products page) -->
+
+    <!-- Content -->
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-2xl md:text-xl font-bold mb-4 text-center" style="color: #42636E; line-height: 1.3;">
+        ALIMENTS COMPLÉMENTAIRES : AGIR POUR LA SANTÉ !
+      </h2>
+      <p class="text-xl text-gray-700 leading-relaxed text-justify">
+        Le maintien d'une bonne santé représente un effort de tous les jours, et dépend de nos choix quotidiens. C'est pourquoi nous nous efforçons de prendre en charge un large panel de problèmes de santé que peuvent rencontrer les animaux, pour améliorer à la fois leur qualité de vie et la vôtre.
+      </p>
+    </div>
+  </div>
+</div>
+  <!-- Three Informational Sections - Show ONLY when Aliment type is selected (not on all products page) -->
   <div *ngIf="selectedCategory && selectedSousCategory === 'Aliment'" class="w-full mb-12 fixed-layout-container section-spacing">
     <!-- Two Column Layout: Left = Info Sections, Right = Featured Product -->
     <div class="flex flex-col lg:flex-row gap-8 mx-4 sm:mx-6 lg:mx-8">
@@ -788,10 +796,8 @@ besoins de votre Chien, carnivore depuis toujours !
               <p class="text-xl text-gray-700 leading-relaxed mb-8 text-justify">Les nutriments constitutifs de la croquette pour chat doivent être de qualité. Attention à la rubrique « viande et sous-produits d'origine animale », la viande pouvant ne représenter qu'un très faible pourcentage. Les viandes de qualité, dont la valeur biologique est élevée (la valeur biologique VB correspond à l'efficacité avec laquelle l'organisme du chat va pouvoir absorber les protéines), sont beaucoup plus chères que les sous-produits, ce qui explique le coût des croquettes de qualité par rapport à celles bas de gamme.</p>
             </div>
             <div *ngIf="selectedCategory === 'Chien'" class="text-fixed text-gray-700">
-              <p class="text-xl text-gray-700 leading-relaxed mb-8 text-justify">La qualité de l'alimentation que vous donnez à votre compagnon à quatre pattes joue un rôle très important dans son état de santé général. Mais pour cela, il faut savoir reconnaître des croquettes pour chien de bonne qualité ! Pour vous aider, voici quelques critères de sélections communs que l'on peut retrouver dans des formulations spécifiques pour les chiens :</p>
-              <br>
-              <p class="text-xl text-gray-700 leading-relaxed mb-8 text-justify">Il est souvent compliqué de choisir parmi la multitude de marques de croquettes pour chien disponibles, seulement votre vétérinaire peut vous aider à décrypter efficacement les compositions et à faire un choix éclairé.
-</p>
+              <p class="text-xl text-gray-700 leading-relaxed mb-8 text-justify">La qualité de l'alimentation que vous donnez à votre compagnon joue un rôle très important dans son état de santé général. Mais pour cela, il faut savoir reconnaître des croquettes de bonne qualité ! Pour vous aider, voici quelques critères de sélections communes que l'on peut retrouver dans des formulations spécifiques pour les chiens sachant que seulement votre vétérinaire peut vous aider à décrypter efficacement les compositions et à faire un choix éclairé :</p>
+              
             </div>
           </div>
           
@@ -892,7 +898,7 @@ besoins de votre Chien, carnivore depuis toujours !
     </div>
 
     <!-- Section 3: Que signifie HPM -->
-        <div class="w-full rounded-2xl p-8 md:p-12 mb-8 shadow-lg" [ngClass]="selectedCategory === 'Chat' ? 'bg-gradient-to-br from-green-50 to-emerald-50' : 'bg-gradient-to-br from-purple-50 to-pink-50'">      <div class="mx-auto text-justify">
+        <div class="w-full rounded-2xl p-8 md:p-12 mb-8 shadow-lg" [ngClass]="selectedCategory === 'Chat' ? 'bg-gradient-to-br from-green-50 to-emerald-50' : 'bg-gradient-to-br from-purple-50 to-pink-50'">      <div class="mx-auto text-left md:text-justify">
         <div class="flex items-center  gap-4 mb-6">
           <div [ngClass]="selectedCategory === 'Chat' ? 'bg-[#74C375]' : selectedCategory === 'Chien' ? 'bg-[#a01867]' : 'bg-purple-600'" class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center">
             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -908,16 +914,16 @@ besoins de votre Chien, carnivore depuis toujours !
             <div [ngClass]="selectedCategory === 'Chat' ? 'bg-green-100' : selectedCategory === 'Chien' ? 'bg-red-100' : 'bg-purple-100'" class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mt-1">
               <span [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-purple-600'" class="font-bold">1</span>
             </div>
-            <p class="text-xl text-gray-700 leading-relaxed mb-8 text-justify">
-              Le terme <span [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-purple-600'" class="font-bold">« HPM »</span> signifie <span class="font-semibold">Hyper-Premium</span>, car nous positionnons notre marque au plus haut niveau en termes de qualité des ingrédients et d'équilibre nutritionnel.
+            <p class="text-xl text-gray-700 leading-relaxed mb-8 text-left md:text-justify">
+              Le terme <span [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-purple-600'" class="font-bold">« HPM »</span> signifie <span class="font-semibold whitespace-nowrap">Hyper-Premium</span>, car nous positionnons notre marque au plus haut niveau en termes de qualité des ingrédients et d'équilibre nutritionnel.
             </p>
           </div>
           <div class="flex items-start gap-3">
             <div [ngClass]="selectedCategory === 'Chat' ? 'bg-green-100' : selectedCategory === 'Chien' ? 'bg-red-100' : 'bg-purple-100'" class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mt-1">
               <span [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-purple-600'" class="font-bold">2</span>
             </div>
-            <p class="text-xl text-gray-700 leading-relaxed mb-8 text-justify">
-              Avec <span [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-purple-600'" class="font-bold">VETERINARY HPM®</span>, nous souhaitons nous rapprocher au mieux des besoins et préférences des {{ selectedCategory === 'Chien' ? 'chiens' : 'chats' }}. Or ceux-ci étant des carnivores, ils ont besoin de beaucoup de protéines et de peu de glucides. Les protéines apportent de nombreux bénéfices pour la santé. Nous nous sommes donc naturellement dirigés vers un concept <span class="font-semibold">LC-HP (Low carbohydrate – High protein)</span>, pauvre en glucides et riche en protéines. Par ailleurs, dans le respect du régime carnivore nous privilégions les <span class="font-semibold">protéines animales (90% des protéines en moyenne)</span> qui sont par ailleurs bien mieux digestibles que les protéines végétales.
+            <p class="text-xl text-gray-700 leading-relaxed mb-8 text-left md:text-justify">
+              Avec <span [ngClass]="selectedCategory === 'Chat' ? 'text-[#74C375]' : selectedCategory === 'Chien' ? 'text-[#a01867]' : 'text-purple-600'" class="font-bold whitespace-nowrap">VETERINARY HPM®</span>, nous souhaitons nous rapprocher au mieux des besoins et préférences des {{ selectedCategory === 'Chien' ? 'chiens' : 'chats' }}. Or ceux-ci étant des carnivores, ils ont besoin de beaucoup de protéines et de peu de glucides. Les protéines apportent de nombreux bénéfices pour la santé. Nous nous sommes donc naturellement dirigés vers un concept <span class="font-semibold whitespace-nowrap">LC-HP (Low carbohydrate – High protein)</span>, pauvre en glucides et riche en protéines. Par ailleurs, dans le respect du régime carnivore nous privilégions les <span class="font-semibold">protéines animales (90% des protéines en moyenne)</span> qui sont par ailleurs bien mieux digestibles que les protéines végétales.
             </p>
           </div>
         </div>
@@ -1217,40 +1223,41 @@ besoins de votre Chien, carnivore depuis toujours !
        [style.borderLeft]="'4px solid ' + (selectedCategory === 'Chat' ? '#74C375' : '#a01867')"
        [style.borderRight]="'4px solid ' + (selectedCategory === 'Chat' ? '#74C375' : '#a01867')">
     <h3 class="text-2xl md:text-xl font-bold mb-6 text-center" style="color: #42636E; line-height: 1.3;">
-      QUELQUES CONSEILS PRATIQUES :
+      LE SAVIEZ - VOUS !
     </h3>
       <!-- Single column layout with text aligned to the right -->
       <div class="flex justify-end">
         <div class="w-full text-justify ">
           <p class="text-xl text-gray-700 leading-relaxed mb-8 text-justify" *ngIf="selectedCategory === 'Chat'">
           Pour la grande majorité des races on ne distingue pas de différences particulières dans les besoins nutritionnels et énergétiques. La proposition de croquettes pour chat adaptées à chaque race n’a donc pas forcément d’intérêt autre que celui du marketing.          </p>
-          <br>
+          <div class="my-2">
           <p class="text-xl text-gray-700 leading-relaxed mb-8 text-justify" *ngIf="selectedCategory === 'Chat'">
-          Néanmoins, les races de chats géantes (par exemple Maine Coon ou Norvégien), ont une croissance beaucoup plus forte et longue que les autres. Idem, certaines races comme le Persan, l’Exhotic shortair et le Chartreux sont plus fragiles au niveau rénal ( sont prédisposées à développer une maladie appelée polykystose rénale. Pour ces individus, il est important de sélectionner des croquettes adaptées           </p>
+          Néanmoins, les races de chats géantes (par exemple Maine Coon ou Norvégien), ont une croissance beaucoup plus forte et longue que les autres. Idem, certaines races comme le Persan, l’Exhotic shortair et le Chartreux sont plus fragiles au niveau rénal ( sont prédisposées à développer une maladie appelée polykystose rénale ). Pour ces individus, il est important de sélectionner des croquettes adaptées           </p>
          <ul class="text-lg text-gray-700 leading-relaxed break-words list-disc pl-6 space-y-2 text-justify" *ngIf="selectedCategory === 'Chien'">
           <li>Il n'existe pas de meilleures croquettes universelles : le bon choix dépend de l'âge, du gabarit, du niveau d'activité et de l'état de santé du chien.</li>
-          <li>Une croquette de qualité doit apporter des protéines adaptées, des nutriments équilibrés et être cohérente avec le profil du chien (stérilisé, senior, sensible, allergique).</li>
+          <li>Une croquette de qualité doit apporter des protéines adaptées, des nutriments équilibrés et être cohérente avec le profil du chien (stérilisé, sénior, sensible, allergique).</li>
           <li>Tout changement de croquettes doit être progressif afin d'éviter les troubles digestifs et préserver le confort intestinal.</li>
         </ul>
+        </div>
         </div>
       </div>
     </div>
   </div>
 
   <!-- Products Title -->
-  <div id="products-section" class="products-header mb-8 text-center">
+  <div id="filtered-products-section" class="products-header mb-8 text-center">
     <h3 class="section-title text-center text-2xl md:text-3xl font-bold text-gray-800 uppercase mx-auto" style="margin-top:65px; margin-bottom: 70px;">
       <span *ngIf="selectedCategory && selectedSousCategory && selectedSubSubCategory">
-        {{ selectedSubSubCategory }} - {{ selectedSousCategory }} - {{ selectedCategory }}
+        {{ selectedSubSubCategory }} - {{ selectedSousCategory === 'Complément' ? 'COMPLÉMENTS ALIMENTAIRES' : selectedSousCategory }} - {{ selectedCategory }}
       </span>
       <span *ngIf="selectedCategory && selectedSousCategory && !selectedSubSubCategory">
-        {{ selectedSousCategory }} - {{ selectedCategory }}
+        {{ selectedSousCategory === 'Complément' ? 'COMPLÉMENTS ALIMENTAIRES' : selectedSousCategory }} - {{ selectedCategory }}
       </span>
       <span *ngIf="selectedCategory && !selectedSousCategory">
         PRODUITS {{ selectedCategory }}
       </span>
       <span *ngIf="!selectedCategory && selectedSousCategory">
-        {{ selectedSousCategory }}
+        {{ selectedSousCategory === 'Complément' ? 'COMPLÉMENTS ALIMENTAIRES' : selectedSousCategory }}
       </span>
       <!--
       <span *ngIf="!selectedCategory && !selectedSousCategory">
@@ -1399,7 +1406,7 @@ besoins de votre Chien, carnivore depuis toujours !
 <!-- Section Démystifier les mythes - Only for "Tous nos produits" -->
 
     <!-- Call to Action - Consultation Vétérinaire (Full Width Below) -->
-      <div class="mt-12 rounded-2xl shadow-lg p-8 md:p-10 text-center max-w-6xl mx-auto" style="background-color: #42636E;">      <h3 class="text-xl md:text-2xl font-bold text-white mb-4">
+      <div class="mt-12 rounded-2xl shadow-lg p-8 md:p-10 text-center mx-4 sm:mx-6 lg:mx-8" style="background-color: #42636E;">      <h3 class="text-xl md:text-2xl font-bold text-white mb-4">
         Parce qu'une bonne alimentation c'est avant tout une histoire de santé, une consultation vétérinaire est primordiale !!!
       </h3>
       

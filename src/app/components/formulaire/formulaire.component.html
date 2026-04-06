@@ -1,9 +1,9 @@
 <section class="py-16 bg-gradient-to-b from-white to-vet-beige">
   <div class="container max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-12">
-      <h1 class="text-3xl md:text-4xl font-bold mb-4 text-vet-blue">Inscription Utilisateur VITALFEED</h1>
+      <h1 class="text-3xl md:text-4xl font-bold mb-4 text-vet-blue">Inscription Utilisateur VitalNutri</h1>
       <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-        Complétez le formulaire ci-dessous pour créer votre compte.
+        Complétez le formulaire ci-dessous pour créer votre compte.<br>
         Notre équipe vous contactera dans les plus brefs délais.
       </p>
     </div>
@@ -53,7 +53,7 @@
               <ngx-intl-tel-input [cssClass]="'form-control custom-tel-input'" [preferredCountries]="preferredCountries"
                 [enableAutoCountrySelect]="true" [enablePlaceholder]="false" [searchCountryFlag]="true"
                 [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
-                [selectedCountryISO]="CountryISO.France" [phoneValidation]="true" [separateDialCode]="separateDialCode"
+                [selectedCountryISO]="selectedCountryISO" [phoneValidation]="true" [separateDialCode]="separateDialCode"
                 [numberFormat]="PhoneNumberFormat.International" name="telephone" formControlName="telephone"
                 placeholder="Entrez Votre Numéro de Téléphone ou bien de cabinet"></ngx-intl-tel-input>
             </div>
