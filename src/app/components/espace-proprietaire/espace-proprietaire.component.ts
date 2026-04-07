@@ -57,7 +57,7 @@ export class EspaceProprietaireComponent implements OnInit {
 
   // Blog pagination for INFORMATIONS & CONSEILS VÉTOS (right column with filtre)
   conseilCurrentPage = 1;
-  conseilItemsPerPage = 7;
+  conseilItemsPerPage = 5;
   
   // Blog pagination for INFORMATIONS & CONSEILS VÉTOS (bottom section)
   infosCurrentPage = 1;

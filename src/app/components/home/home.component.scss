@@ -449,6 +449,19 @@
   }
 }
 
+// Nutrition card image wrapper styling
+.nutrition-image-wrapper {
+  background-color: #f9fafb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  
+  img {
+    display: block;
+  }
+}
+
 // Prevent text from scaling too much
 .text-fixed {
   font-size: 16px !important;
@@ -487,6 +500,23 @@
   // Hero section mobile adjustments
   section {
     overflow-x: hidden !important;
+  }
+  
+  // Nutrition card images - ensure full display on mobile
+  .nutrition-image-wrapper {
+    background-color: #f9fafb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 256px;
+    
+    img {
+      object-fit: contain !important;
+      max-height: 256px;
+      min-width: 900px;
+      width: auto !important;
+      height: auto !important;
+    }
   }
   
   // Scale adjustments for desktop only
