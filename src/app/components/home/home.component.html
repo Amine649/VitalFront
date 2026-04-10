@@ -788,10 +788,7 @@
                     product.subCategory === 'ALIMENT' ? 'Aliment' : product.subCategory === 'COMPLEMENT' ? 'Complément'
                     : 'Test rapide' }}</span>
                 </div>
-                <div class="absolute top-3 left-3" *ngIf="!product.inStock">
-                  <span
-                    class="bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full shadow-md">Rupture</span>
-                </div>
+                
               </div>
               <div class="p-4 flex flex-col flex-grow">
                 <h3 class="text-lg font-semibold mb-2 text-gray-800 h-14 line-clamp-2">{{ product.name }}</h3>

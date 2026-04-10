@@ -118,7 +118,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.productService.getAllProducts().subscribe({
       next: (products) => {
         this.allProducts = products;
-        this.products = this.getFeaturedProducts();
+        this.products = products; // Show all products instead of just featured
         this.createDisplayProducts();
         this.isLoading = false;
         this.startAutoSlide();
@@ -159,16 +159,16 @@ export class HomeComponent implements OnInit, OnDestroy {
           !featured.includes(p)
         );
         
-        if (productInCategory && featured.length < 6) {
+        if (productInCategory && featured.length < 20) {
           featured.push(productInCategory);
         }
       }
     }
     
     // If we don't have enough, add some random popular products
-    if (featured.length < 6) {
+    if (featured.length < 20) {
       const remaining = this.allProducts.filter(p => !featured.includes(p) && p.inStock);
-      while (featured.length < 6 && remaining.length > 0) {
+      while (featured.length < 20 && remaining.length > 0) {
         const randomIndex = Math.floor(Math.random() * remaining.length);
         featured.push(remaining.splice(randomIndex, 1)[0]);
       }

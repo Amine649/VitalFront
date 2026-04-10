@@ -1316,7 +1316,8 @@ besoins de votre Chien, carnivore depuis toujours !
     <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-7 gap-2 md:gap-3 justify-items-center px-2 md:px-0">
       <div *ngFor="let product of getPaginatedProducts(); trackBy: trackByProductId"
         class="bg-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 product-card overflow-hidden flex flex-col w-full max-w-[200px]"
-        [class.highlighted-product]="highlightedProductId === product.id">
+        [class.highlighted-product]="highlightedProductId === product.id"
+        [attr.data-product-id]="product.id">
 
       <!-- Product Image -->
       <div class="relative bg-white p-4 flex items-center justify-center" style="height: 200px;">

@@ -375,3 +375,30 @@ footer {
     padding-left: 296px !important;
   }
 }
+
+
+// Additional mobile image centering fix
+@media (max-width: 768px) {
+  .category-hero-section {
+    // Force center all image containers
+    .relative.w-full.flex {
+      justify-content: center !important;
+      margin: 0 auto !important;
+    }
+
+    // Center divs with inline transform styles
+    div[style*="translateX"] {
+      transform: none !important;
+      display: flex !important;
+      justify-content: center !important;
+      margin: 0 auto !important;
+    }
+
+    // Ensure all images are centered
+    img {
+      margin-left: auto !important;
+      margin-right: auto !important;
+      display: block !important;
+    }
+  }
+}

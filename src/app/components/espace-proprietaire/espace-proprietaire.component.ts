@@ -123,8 +123,21 @@ export class EspaceProprietaireComponent implements OnInit {
       // Check for highlighted product
       if (params['highlight']) {
         this.highlightedProductId = +params['highlight'];
-        // Scroll to top first
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        // Wait for products to load and DOM to update, then scroll to the product
+        setTimeout(() => {
+          const productElement = document.querySelector(`[data-product-id="${this.highlightedProductId}"]`);
+          if (productElement) {
+            productElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          } else {
+            // Fallback: scroll to products section if product element not found
+            const productsSection = document.getElementById('products-section');
+            if (productsSection) {
+              productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }
+        }, 500);
+        
         // Remove highlight after animation completes
         setTimeout(() => {
           this.highlightedProductId = null;

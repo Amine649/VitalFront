@@ -177,9 +177,9 @@
           <tbody class="bg-white divide-y divide-gray-200">
           <tr *ngFor="let blog of getPaginatedBlogs()" class="hover:bg-gray-50 transition-colors">
             <td class="px-6 py-4">
-              <div>
-                <p class="text-sm font-semibold text-gray-900">{{ blog.title }}</p>
-                <p class="text-sm text-gray-500 mt-1 line-clamp-2">{{ blog.description }}</p>
+              <div class="max-w-md">
+                <p class="text-sm font-semibold text-gray-900 truncate">{{ blog.title }}</p>
+                <p class="text-sm text-gray-500 mt-1 line-clamp-2 break-words">{{ blog.description }}</p>
               </div>
             </td>
             <td class="px-6 py-4">
