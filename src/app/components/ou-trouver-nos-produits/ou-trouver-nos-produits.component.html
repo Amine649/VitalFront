@@ -72,13 +72,55 @@
                 <h3 class="map-title">Carte Interactive</h3>
                 <p class="map-subtitle">{{ filteredLocations.length }} cabinet(s) avec marqueurs</p>
               </div>
-              <button class="maximize-btn hidden md:flex" (click)="maximizeMap()" title="Agrandir la carte">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4">
-                  </path>
-                </svg>
-              </button>
+              <div class="flex items-center gap-2">
+                <!-- Mobile Geolocation Button (only on small screens) -->
+                <button 
+                  *ngIf="!userLocation"
+                  (click)="getUserLocation()" 
+                  [disabled]="isLoadingLocation"
+                  class="md:hidden flex items-center gap-2 px-3 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-xs font-medium shadow-md"
+                  title="Trouver près de moi">
+                  <div *ngIf="isLoadingLocation" class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                  <span>{{ isLoadingLocation ? 'Localisation...' : '📍 Trouver près de moi' }}</span>
+                </button>
+                
+                <!-- Mobile Success indicator (only on small screens) -->
+                <div *ngIf="userLocation" class="md:hidden flex items-center gap-1 px-3 py-2 bg-green-500 text-white rounded-lg text-xs font-medium shadow-md">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  <span>Position détectée</span>
+                </div>
+                
+                <!-- Desktop Geolocation Button -->
+                <button 
+                  *ngIf="!userLocation"
+                  (click)="getUserLocation()" 
+                  [disabled]="isLoadingLocation"
+                  class="hidden md:flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium shadow-md"
+                  title="Trouver près de moi">
+                  
+                  <div *ngIf="isLoadingLocation" class="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
+                  <span>{{ isLoadingLocation ? 'Localisation...' : '📍 Trouver près de moi' }}</span>
+                </button>
+                
+                <!-- Desktop Success indicator -->
+                <div *ngIf="userLocation" class="hidden md:flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg text-sm font-medium shadow-md">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  <span>Position détectée - Triés par distance</span>
+                </div>
+                
+                <!-- Maximize Button -->
+                <button class="maximize-btn hidden md:flex" (click)="maximizeMap()" title="Agrandir la carte">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4">
+                    </path>
+                  </svg>
+                </button>
+              </div>
             </div>
             <div class="map-embed">
               <div id="map"></div>
@@ -110,6 +152,11 @@
               <button class="filter-btn" [class.active]="selectedFilter === 'BOUTIQUE'"
                 (click)="filterLocations('BOUTIQUE')">Vital Nutri</button>
             </div>
+            
+            <!-- Error message (shown on all screen sizes) -->
+            <p *ngIf="locationError" class="text-sm text-red-600 mt-2 bg-red-50 p-3 rounded-lg border border-red-200">
+              ⚠️ {{ locationError }}
+            </p>
           </div>
 
           <!-- Loading State -->
@@ -151,6 +198,12 @@
                   {{ (location.type === 'BOUTIQUE' || location.type === 'Boutique') ? '🛍️ Boutique' : '🏥 Cabinet' }}
                 </span>
               </div>
+              
+              <!-- Distance Badge -->
+              <div *ngIf="location.distance" class="absolute top-3 right-3 bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-md">
+                📍 {{ getFormattedDistance(location) }}
+              </div>
+              
               <h4 class="location-name">{{ location.name }}</h4>
               <div class="location-details">
                 <div class="location-info">

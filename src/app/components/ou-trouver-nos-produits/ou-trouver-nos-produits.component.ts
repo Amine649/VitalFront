@@ -31,6 +31,7 @@ interface VeterinaryLocation {
   type: string; // 'CABINET' or 'BOUTIQUE'
   featured: boolean;
   matricule?: string; // Optional since Cabinets might not have it or it's named differently
+  distance?: number; // Distance from user in km
 }
 
 @Component({
@@ -47,6 +48,13 @@ export class OuTrouverNosProduitsComponent implements OnInit, AfterViewInit {
   loading: boolean = false;
   error: string = '';
   selectedFilter: string = 'all';
+  
+  // Geolocation
+  userLocation: { lat: number; lng: number } | null = null;
+  userMarker: L.Marker | null = null;
+  isLoadingLocation: boolean = false;
+  locationError: string = '';
+  private geolocationAttemptId: number = 0;
 
   // Pagination
   currentPage = 1;
@@ -72,6 +80,162 @@ export class OuTrouverNosProduitsComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.initMap();
     }, 500);
+  }
+
+  /**
+   * Request user's geolocation
+   */
+  getUserLocation(): void {
+    if (!navigator.geolocation) {
+      this.locationError = 'La géolocalisation n\'est pas supportée par votre navigateur';
+      return;
+    }
+
+    this.isLoadingLocation = true;
+    this.locationError = '';
+    this.userLocation = null;
+    this.geolocationAttemptId++;
+    const currentAttemptId = this.geolocationAttemptId;
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        // Success callback
+        if (currentAttemptId !== this.geolocationAttemptId) {
+          return;
+        }
+        
+        this.userLocation = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        this.isLoadingLocation = false;
+        this.locationError = '';
+        
+        // Add user marker to map
+        this.addUserMarkerToMap();
+        
+        // Sort locations by distance
+        this.sortLocationsByDistance();
+        
+        // Update map view to show user location
+        if (this.map) {
+          this.map.setView([this.userLocation.lat, this.userLocation.lng], 12);
+        }
+      },
+      (error) => {
+        // Error callback
+        if (currentAttemptId !== this.geolocationAttemptId) {
+          return;
+        }
+        
+        // Wait to see if success callback comes through
+        setTimeout(() => {
+          if (!this.userLocation && currentAttemptId === this.geolocationAttemptId) {
+            this.isLoadingLocation = false;
+            
+            if (error.code === 1) {
+              this.locationError = 'Permission de géolocalisation refusée';
+            } else if (error.code === 2) {
+              this.locationError = 'Position non disponible';
+            } else if (error.code === 3) {
+              this.locationError = 'Délai d\'attente dépassé';
+            } else {
+              this.locationError = 'Erreur de géolocalisation';
+            }
+          }
+        }, 100);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
+      }
+    );
+  }
+
+  /**
+   * Add user marker to map
+   */
+  addUserMarkerToMap(): void {
+    if (!this.map || !this.userLocation) return;
+
+    // Remove existing user marker
+    if (this.userMarker) {
+      this.userMarker.remove();
+    }
+
+    // Create custom icon for user location
+    const userIcon = L.divIcon({
+      className: 'custom-user-icon',
+      html: `<div style="background-color: #3b82f6; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3); position: relative;">
+               <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 8px; height: 8px; background-color: white; border-radius: 50%;"></div>
+             </div>`,
+      iconSize: [26, 26],
+      iconAnchor: [13, 13]
+    });
+
+    this.userMarker = L.marker([this.userLocation.lat, this.userLocation.lng], { icon: userIcon })
+      .addTo(this.map)
+      .bindPopup(`
+        <div style="text-align: center;">
+          <strong>📍 Votre position</strong>
+        </div>
+      `);
+  }
+
+  /**
+   * Calculate distance between two coordinates (Haversine formula)
+   * Returns distance in kilometers
+   */
+  calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
+    const R = 6371; // Earth's radius in km
+    const dLat = this.toRad(lat2 - lat1);
+    const dLon = this.toRad(lon2 - lon1);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(this.toRad(lat1)) * Math.cos(this.toRad(lat2)) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  }
+
+  /**
+   * Convert degrees to radians
+   */
+  private toRad(degrees: number): number {
+    return degrees * (Math.PI / 180);
+  }
+
+  /**
+   * Sort locations by distance from user
+   */
+  sortLocationsByDistance(): void {
+    if (!this.userLocation) return;
+
+    this.filteredLocations = this.filteredLocations.map(location => ({
+      ...location,
+      distance: this.calculateDistance(
+        this.userLocation!.lat,
+        this.userLocation!.lng,
+        location.latitude,
+        location.longitude
+      )
+    })).sort((a, b) => (a.distance || 0) - (b.distance || 0));
+
+    this.currentPage = 1;
+    this.updatePagination();
+    this.updateMapMarkers();
+  }
+
+  /**
+   * Get formatted distance
+   */
+  getFormattedDistance(location: any): string {
+    if (!location.distance) return '';
+    if (location.distance < 1) {
+      return `${Math.round(location.distance * 1000)} m`;
+    }
+    return `${location.distance.toFixed(1)} km`;
   }
 
   /**
@@ -431,34 +595,97 @@ export class OuTrouverNosProduitsComponent implements OnInit, AfterViewInit {
     // Initialize modal map after a short delay
     setTimeout(() => {
       if (!this.modalMap) {
-        this.modalMap = L.map('modalMap').setView([36.8, 10.2], 10);
+        // Set initial view - use user location if available, otherwise default
+        const initialLat = this.userLocation ? this.userLocation.lat : 36.8;
+        const initialLng = this.userLocation ? this.userLocation.lng : 10.2;
+        const initialZoom = this.userLocation ? 13 : 10;
+        
+        this.modalMap = L.map('modalMap').setView([initialLat, initialLng], initialZoom);
 
         L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
           attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/">CARTO</a>',
           maxZoom: 19
         }).addTo(this.modalMap);
 
-        // Add markers to modal map
+        // Add user location marker if available
+        if (this.userLocation) {
+          const userIcon = L.divIcon({
+            className: 'custom-user-icon',
+            html: `<div style="background-color: #3b82f6; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3); position: relative;">
+                     <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 8px; height: 8px; background-color: white; border-radius: 50%;"></div>
+                   </div>`,
+            iconSize: [26, 26],
+            iconAnchor: [13, 13]
+          });
+
+          L.marker([this.userLocation.lat, this.userLocation.lng], { icon: userIcon })
+            .addTo(this.modalMap)
+            .bindPopup(`
+              <div style="text-align: center;">
+                <strong>📍 Votre position</strong>
+              </div>
+            `);
+        }
+
+        // Add location markers to modal map
         const bounds: L.LatLngBoundsExpression = [];
+        
+        // Define icons for locations
+        const cabinetIcon = L.icon({
+          iconUrl: 'assets/Maps/marker-icon.png',
+          iconRetinaUrl: 'assets/Maps/marker-icon-2x.png',
+          shadowUrl: 'assets/Maps/marker-shadow.png',
+          iconSize: [25, 41],
+          iconAnchor: [12, 41],
+          popupAnchor: [1, -34],
+          shadowSize: [41, 41]
+        });
+
+        const boutiqueIcon = L.divIcon({
+          className: 'custom-div-icon',
+          html: `<div style="background-color: #ea580c; width: 25px; height: 25px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;">
+                   <span style="color: white; font-size: 14px;">🛍️</span>
+                 </div>`,
+          iconSize: [30, 42],
+          iconAnchor: [15, 42],
+          popupAnchor: [1, -34]
+        });
+        
         this.filteredLocations.forEach(location => {
-          L.marker([location.latitude, location.longitude])
+          // Determine icon based on type
+          let icon: any = cabinetIcon;
+          if (location.type === 'BOUTIQUE' || location.type === 'Boutique') {
+            icon = boutiqueIcon;
+          }
+          
+          L.marker([location.latitude, location.longitude], { icon: icon })
             .addTo(this.modalMap!)
             .bindPopup(`
               <div style="min-width: 200px;">
-                <h3 style="margin: 0 0 8px 0; font-size: 14px; font-weight: bold;">${location.name}</h3>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  ${(location.type === 'BOUTIQUE' || location.type === 'Boutique') ? '<span style="font-size: 16px;">🛍️</span>' : '<span style="font-size: 16px;">🏥</span>'}
+                  <h3 style="margin: 0; font-size: 14px; font-weight: bold;">${location.name}</h3>
+                </div>
                 <p style="margin: 4px 0; font-size: 12px;">📍 ${location.address}, ${location.city}</p>
-                <!---
-                <p style="margin: 4px 0; font-size: 12px;">📞 ${location.phone}</p>
-                --->
-                ${location.featured ? '<span style="background: #10b981; color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px;">⭐ Cabinet Principal</span>' : ''}
+                ${location.distance ? `<p style="margin: 4px 0; font-size: 12px; color: #3b82f6; font-weight: bold;">📏 ${this.getFormattedDistance(location)}</p>` : ''}
+                <div style="margin-top: 8px;">
+                  ${location.featured ? '<span style="background: #10b981; color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px;">⭐ Principal</span>' : ''}
+                  ${(location.type === 'BOUTIQUE' || location.type === 'Boutique') ?
+                    '<span style="background: #ea580c; color: white; padding: 2px 8px; border-radius: 12px; font-size: 10px; font-weight: bold; margin-left: 4px;">Boutique</span>' :
+                    '<span style="background: #2563eb; color: white; padding: 2px 8px; border-radius: 12px; font-size: 10px; font-weight: bold; margin-left: 4px;">Cabinet</span>'}
+                </div>
               </div>
             `);
           bounds.push([location.latitude, location.longitude]);
         });
 
-        if (bounds.length > 0) {
+        // Only fit bounds if user location is not available
+        // If user location exists, keep the centered view on user
+        if (!this.userLocation && bounds.length > 0) {
           this.modalMap.fitBounds(bounds, { padding: [50, 50] });
         }
+        // If user location exists, the map is already centered on user position with zoom 13
+        // Don't call fitBounds to maintain the zoom level
       }
     }, 100);
   }
