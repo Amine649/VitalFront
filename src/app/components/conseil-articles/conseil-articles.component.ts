@@ -115,13 +115,12 @@ export class ConseilArticlesComponent implements OnInit {
     },
     // Cat Articles
     {
-      id: 'chat-1',
-      title: 'Nourriture pour chatons : répondre à leurs besoins nutritionnels',
-      category: 'Comment Nourrir Votre Chat',
-      animal: 'chat',
-      content: `
-    <h2>Introduction</h2>
-    <p>Votre petit chaton va connaître une période de croissance incroyable au cours de sa première année de vie. À titre d'exemple, nous, les humains, atteindrons en 18 ans environ 20 fois notre poids de naissance. Votre chaton, quant à lui, atteindra un poids 50 fois supérieur à son poids de naissance en seulement 12 mois ! Votre chaton a besoin de nutriments très spécifiques pour accomplir cet exploit, mais n'importe quel aliment ne peut pas les lui fournir.</p>
+  id: 'chat-1',
+  title: 'Nourriture pour chatons : répondre à leurs besoins nutritionnels',
+  category: 'Comment Nourrir Votre Chat',
+  animal: 'chat',
+  content: `
+    <p><strong>Votre petit chaton va connaître une période de croissance incroyable au cours de sa première année de vie. À titre d'exemple, nous, les humains, atteindrons en 18 ans environ 20 fois notre poids de naissance. Votre chaton, quant à lui, atteindra un poids 50 fois supérieur à son poids de naissance en seulement 12 mois ! Votre chaton a besoin de nutriments très spécifiques pour accomplir cet exploit, mais n'importe quel aliment ne peut pas les lui fournir. Lisez la suite pour savoir comment nourrir votre chaton pour l’aider à devenir un chat adulte bien dans ses pattes et en bonne santé.</strong></p>
 
     <h2>Comprendre la croissance du chaton</h2>
     <p>Au cours des deux ou trois premiers mois de sa vie, le poids d'un chaton nouveau-né est multiplié par dix. La plupart des chats atteignent leur taille maximale à l'âge d'un an, mais les chats de grande race peuvent continuer à grandir jusqu'à l'âge de 15 à 18 mois.</p>
@@ -137,19 +136,20 @@ export class ConseilArticlesComponent implements OnInit {
       <li>L'ajout de prébiotiques, probiotiques et d'argiles aidera également à limiter les troubles digestifs, fréquents chez le jeune animal, et permettra ainsi une utilisation optimale des protéines.</li>
       <li>Des acides gras essentiels pour soutenir la vision et le système nerveux.</li>
       <li>Des vitamines et minéraux, tels que le calcium et le phosphore, pour un développement osseux sain.</li>
-      <li>Une nourriture riche en matières grasses pour fournir de l'énergie sous forme concentrée, adaptée aux capacités d'ingestion limitées du chaton.</li>
-      <li>Un aliment enrichi en béta glucanes (extraits de levures de bière) aide à l'acquisition des défenses naturelles propres du chaton au moment où la protection immunitaire apportée par sa mère disparaît progressivement.</li>
-    </ul>
-    <p>« Équilibré » signifie que tous les nutriments nécessaires sont présents dans les bonnes quantités et les bons rapports pour les chatons en pleine croissance. Les aliments contenant trop ou pas assez de certains nutriments peuvent causer de graves problèmes de santé à votre chaton. Par exemple :</p>
+      <li>La croissance rapide du chaton et ses capacités d'ingestion limitées (petit estomac) nécessitent de lui donner une nourriture riche en matières grasses pour lui fournir de l'énergie sous forme concentrée.</li>
+      <li>Un aliment enrichi en béta glucanes (extraits de levures de bière) aide à l'acquisition des défenses naturelles propres du chaton au moment où la protection immunitaire apportée par sa mère disparaît progressivement.<p>« Équilibré » signifie que tous les nutriments nécessaires sont présents dans les bonnes quantités et les bons rapports pour les chatons en pleine croissance. Les aliments contenant trop ou pas assez de certains nutriments peuvent causer de graves problèmes de santé à votre chaton. Par exemple :</p> </li>
+
     <ul>
       <li>Une carence en vitamine A peut altérer la vision et la coordination musculaire.</li>
       <li>Une carence en protéines peut freiner la croissance et provoquer une mue (perte de poils) chronique.</li>
       <li>L'excès de glucides peut surcharger le système digestif de votre chaton, entraîner une prise de poids excessive et contribuer au diabète.</li>
     </ul>
 
+    </ul>
+
     <h2>Choisir les meilleures croquettes pour chatons pour une santé optimale</h2>
     <p>Les besoins nutritionnels de votre chaton évolueront au fur et à mesure de sa croissance, et il doit en être de même pour son alimentation.</p>
-    <p>Lorsque vous choisissez les meilleures croquettes pour chatons, recherchez des aliments complets et équilibrés contenant des ingrédients de la plus haute qualité. La formule idéale contient :</p>
+    <p>Lorsque vous choisissez les meilleures croquettes pour chatons, recherchez des aliments complets et équilibrés contenant des ingrédients de la plus haute qualité. Sa formule contient :</p>
     <ul>
       <li>Beaucoup de protéines animales hautement digestibles pour favoriser la croissance.</li>
       <li>Des bêta-glucanes pour renforcer le système immunitaire immature de votre chaton.</li>
@@ -171,8 +171,9 @@ export class ConseilArticlesComponent implements OnInit {
     <p>Les aliments faits maison, le végétarisme et les régimes à base de viande crue ont gagné en popularité auprès de certains propriétaires d'animaux, mais nous déconseillons ces régimes à votre chaton.</p>
     <p>Les aliments faits maison (sauf s'ils sont recommandés par un vétérinaire et suivis correctement) et les régimes à base de viande crue entraînent souvent des carences en nutriments chez les chatons, ce qui les expose à des problèmes de santé tout au long de leur vie. En outre, les chats sont des carnivores de nature, ce qui signifie qu'ils ne peuvent pas obtenir les nutriments dont ils ont besoin pour survivre uniquement à partir d'aliments d'origine végétale. C'est pourquoi les chatons ne doivent jamais être nourris avec des régimes végétariens ou végétaliens.</p>
 
-    <h2>Conclusion</h2>
-    <p>L'alimentation que vous donnez à votre chaton aujourd'hui déterminera sa santé pour les années à venir. Pour aider votre chaton à devenir un chat heureux et bien dans ses pattes, veillez à ne lui donner que des aliments complets, équilibrés et recommandés par les vétérinaires, adaptés à son stade de vie. Surveillez la croissance de votre chaton et consultez régulièrement votre vétérinaire ; celui-ci peut vous aider à répondre à toute question ou préoccupation d'ordre nutritionnel, à repérer les problèmes à un stade précoce et à conseiller l'alimentation qui permettra à votre chaton de s'épanouir pleinement.</p>
+    <h2>Donnez à votre chaton le meilleur départ possible dans la vie</h2>
+    <p>L'alimentation que vous donnez à votre chaton aujourd'hui déterminera sa santé pour les années à venir.</p>
+    <p>Pour aider votre chaton à devenir un chat heureux et bien dans ses pattes, veillez à ne lui donner que des aliments complets, équilibrés et recommandés par les vétérinaires, adaptés à son stade de vie. Surveillez la croissance de votre chaton et consultez régulièrement votre vétérinaire ; celui-ci peut vous aider à répondre à toute question ou préoccupation d'ordre nutritionnel, à repérer les problèmes à un stade précoce et à conseiller l'alimentation qui permettra à votre chaton de s'épanouir pleinement.</p>
   `
 },
     {
@@ -453,7 +454,27 @@ export class ConseilArticlesComponent implements OnInit {
       URL.revokeObjectURL(this.pdfBlobUrl);
       this.pdfBlobUrl = null;
     }
-    this.location.back();
+    
+    // Determine the animal type from article or blog data
+    const animalType = this.article?.animal || this.blogPdfData?.animal;
+    
+    // Navigate to espace-proprietaire with the appropriate category
+    if (animalType) {
+      this.router.navigate(['/espace-proprietaire'], {
+        queryParams: { animal: animalType, type: 'aliment' }
+      }).then(() => {
+        // Scroll to the articles section after navigation
+        setTimeout(() => {
+          const element = document.querySelector('.bg-gradient-to-br.from-gray-50.to-white.rounded-2xl.shadow-xl');
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 300);
+      });
+    } else {
+      // Fallback to browser back
+      this.location.back();
+    }
   }
 
   ngOnDestroy(): void {
