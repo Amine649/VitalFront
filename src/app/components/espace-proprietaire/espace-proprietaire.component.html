@@ -1248,7 +1248,7 @@ besoins de votre Chien, carnivore depuis toujours !
 
   <!-- Products Title -->
   <div id="filtered-products-section" class="products-header mb-8 text-center">
-    <h3 class="section-title text-center text-2xl md:text-3xl font-bold text-gray-800 uppercase mx-auto" style="margin-top:65px; margin-bottom: 70px;">
+    <div class="section-title text-center text-2xl md:text-3xl font-bold text-gray-800 uppercase mx-auto" style="margin-top:65px; margin-bottom: 70px;">
       <span *ngIf="selectedCategory && selectedSousCategory && selectedSubSubCategory">
         {{ selectedSubSubCategory }} - {{ selectedSousCategory === 'Complément' ? 'COMPLÉMENTS ALIMENTAIRES' : selectedSousCategory }} - {{ selectedCategory }}
       </span>
@@ -1266,7 +1266,7 @@ besoins de votre Chien, carnivore depuis toujours !
         Tous nos Produits
       </span>
       -->
-    </h3>
+    </div>
   </div>
 
   <!-- Type Aliment Filter (DIETETIQUE/PHYSIO) - Only show when pet and Aliment are selected -->
